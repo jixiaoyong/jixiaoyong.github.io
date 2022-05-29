@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"jixiaoyong.github.io","root":"/blog/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"jixiaoyong.github.io","root":"/blog/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="在Flutter中，当需要填充容器（Row, Column, or Flex）剩余空间的时候，可以使用Expanded或Flexible，本文对这二者的差异做一分析。 分析Expanded 比较容易理解，他会强制child改变大小，占据容器的剩余空间，如果有多个Expanded的话，会按照他们的flex占比来分配每个child可以占据的空间大小。   Flexible 稍微特殊一些，有时候看起来似">
@@ -29,7 +29,7 @@
 <meta property="og:description" content="在Flutter中，当需要填充容器（Row, Column, or Flex）剩余空间的时候，可以使用Expanded或Flexible，本文对这二者的差异做一分析。 分析Expanded 比较容易理解，他会强制child改变大小，占据容器的剩余空间，如果有多个Expanded的话，会按照他们的flex占比来分配每个child可以占据的空间大小。   Flexible 稍微特殊一些，有时候看起来似">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://s3.bmp.ovh/imgs/2022/05/11/8559625d0d49ae28.png">
-<meta property="og:updated_time" content="2022-05-29T10:02:28.182Z">
+<meta property="og:updated_time" content="2022-05-29T10:19:21.951Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Flutter Expanded VS Flexible">
 <meta name="twitter:description" content="在Flutter中，当需要填充容器（Row, Column, or Flex）剩余空间的时候，可以使用Expanded或Flexible，本文对这二者的差异做一分析。 分析Expanded 比较容易理解，他会强制child改变大小，占据容器的剩余空间，如果有多个Expanded的话，会按照他们的flex占比来分配每个child可以占据的空间大小。   Flexible 稍微特殊一些，有时候看起来似">
@@ -177,10 +177,6 @@
     </header>
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
 
 
     <main class="main">
@@ -225,7 +221,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-29 18:02:28" itemprop="dateModified" datetime="2022-05-29T18:02:28+08:00">2022-05-29</time>
+                <time title="修改时间：2022-05-29 18:19:21" itemprop="dateModified" datetime="2022-05-29T18:19:21+08:00">2022-05-29</time>
               </span>
 
           
@@ -412,6 +408,10 @@
 
 
       </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
 
     </div>
   </aside>
