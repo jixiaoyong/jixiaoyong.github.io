@@ -1,4 +1,4 @@
-# [我的博客](https://jixiaoyong.github.io)  [![Hexo Deploy](https://github.com/jixiaoyong/jixiaoyong.github.io/actions/workflows/deploy.yml/badge.svg)](https://github.com/jixiaoyong/jixiaoyong.github.io/actions/workflows/deploy.yml)
+# [我的博客](https://jixiaoyong.github.io)  [![pages-build-deployment](https://github.com/jixiaoyong/jixiaoyong.github.io/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/jixiaoyong/jixiaoyong.github.io/actions/workflows/pages/pages-build-deployment)
 
 ![Logo of Blog](https://jixiaoyong.github.io/images/20191026161934.png)
 
