@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://github.com/jixiaoyong/Notes-Files/blob/master/draw-io/png/JVMClassLoader.png?raw=true">
 <meta property="article:published_time" content="2018-02-26T11:28:56.000Z">
-<meta property="article:modified_time" content="2022-05-30T10:06:27.623Z">
+<meta property="article:modified_time" content="2022-05-30T11:23:54.605Z">
 <meta property="article:author" content="JI, XIAOYONG">
 <meta property="article:tag" content="jvm">
 <meta name="twitter:card" content="summary">
@@ -145,7 +145,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">简述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6"><span class="nav-number">2.</span> <span class="nav-text">类加载机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6%E5%85%B7%E4%BD%93%E8%BF%87%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">类加载机制具体过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#I-Loading"><span class="nav-number">3.1.</span> <span class="nav-text">I.Loading </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#II-Linking"><span class="nav-number">3.2.</span> <span class="nav-text">II.Linking </span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Verification"><span class="nav-number">3.2.1.</span> <span class="nav-text">Verification</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Preparation"><span class="nav-number">3.2.2.</span> <span class="nav-text">Preparation </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Resolution"><span class="nav-number">3.2.3.</span> <span class="nav-text">Resolution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#III-Initialization"><span class="nav-number">3.3.</span> <span class="nav-text">III.Initialization</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="nav-number">4.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">简述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6"><span class="nav-number">2.</span> <span class="nav-text">类加载机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6%E5%85%B7%E4%BD%93%E8%BF%87%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">类加载机制具体过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#I-Loading"><span class="nav-number">3.1.</span> <span class="nav-text">**I.Loading **</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#II-Linking"><span class="nav-number">3.2.</span> <span class="nav-text">**II.Linking **</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Verification"><span class="nav-number">3.2.1.</span> <span class="nav-text">Verification</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Preparation"><span class="nav-number">3.2.2.</span> <span class="nav-text">**Preparation **</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Resolution"><span class="nav-number">3.2.3.</span> <span class="nav-text">Resolution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#III-Initialization"><span class="nav-number">3.3.</span> <span class="nav-text">III.Initialization</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="nav-number">4.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -248,7 +248,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-05-30 18:06:27" itemprop="dateModified" datetime="2022-05-30T18:06:27+08:00">2022-05-30</time>
+      <time title="修改时间：2022-05-30 19:23:54" itemprop="dateModified" datetime="2022-05-30T19:23:54+08:00">2022-05-30</time>
     </span>
 
   
@@ -296,7 +296,7 @@
 </ul>
 <p><a target="_blank" rel="noopener" href="http://blog.csdn.net/ns_code/article/details/17881581">http://blog.csdn.net/ns_code/article/details/17881581</a></p>
 </blockquote>
-<h1 id="类加载机制具体过程"><a href="#类加载机制具体过程" class="headerlink" title="类加载机制具体过程"></a>类加载机制具体过程</h1><h2 id="I-Loading"><a href="#I-Loading" class="headerlink" title="I.Loading "></a><strong>I.Loading </strong></h2><p><strong>加载</strong>，JVM将文件（class，jar，zip，网络等）中的二进制字节流保存到虚拟机方法区和堆中,并用该二进制表示形式创建类或者接口的过程。</p>
+<h1 id="类加载机制具体过程"><a href="#类加载机制具体过程" class="headerlink" title="类加载机制具体过程"></a>类加载机制具体过程</h1><h2 id="I-Loading"><a href="#I-Loading" class="headerlink" title="**I.Loading **"></a>**I.Loading **</h2><p><strong>加载</strong>，JVM将文件（class，jar，zip，网络等）中的二进制字节流保存到虚拟机方法区和堆中,并用该二进制表示形式创建类或者接口的过程。</p>
 <blockquote>
 <p>Loading is the process of finding the binary representation of a class or interface type with a particular name and <em>creating</em> a class or interface from that binary representation</p>
 <p><a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/specs/jvms/se9/html/jvms-5.html">https://docs.oracle.com/javase/specs/jvms/se9/html/jvms-5.html</a> (<em>英文文档若无特殊说明都是引用官方文档，下同</em>)</p>
@@ -314,7 +314,7 @@
 <p>类加载的地方是开发人员可控性最强的地方。除了可以使用系统的ClassLoader外还可以自定义ClassLoader（后文详述）。</p>
 <p>类加载根据加载的类不同分为两种：</p>
 <ul>
-<li>非数组类 使用系统/自定义的类加载器完成加载</li>
+<li>非数组类 使用系统&#x2F;自定义的类加载器完成加载</li>
 <li>数组类 数组类不通过类加载器创建，而是通过JVM直接创建，但是数组类的元素类型要通过类加载器创建</li>
 </ul>
 <p>数组类的元素加载，根据数组元素的类型不同，分为两类：</p>
@@ -324,7 +324,7 @@
 </ul>
 <p>数组类的可见性与其元素类的可见性一致。</p>
 <hr>
-<h2 id="II-Linking"><a href="#II-Linking" class="headerlink" title="II.Linking "></a><strong>II.Linking </strong></h2><p><strong>连接</strong>，是将类或者接口组合到java虚拟机运行状态的过程，这样他就可以被运行。</p>
+<h2 id="II-Linking"><a href="#II-Linking" class="headerlink" title="**II.Linking **"></a>**II.Linking **</h2><p><strong>连接</strong>，是将类或者接口组合到java虚拟机运行状态的过程，这样他就可以被运行。</p>
 <blockquote>
 <p>Linking is the process of taking a class or interface and combining(组合) it into the run-time state of the Java Virtual Machine so that it can be executed(运行)</p>
 </blockquote>
@@ -343,7 +343,7 @@
 <li>字节码验证</li>
 <li>符号引用验证</li>
 </ol>
-<h3 id="Preparation"><a href="#Preparation" class="headerlink" title="Preparation "></a><strong>Preparation </strong></h3><p><strong>准备</strong>，在方法区对类变量分配内存，<strong>初始化为默认值</strong>（“零值”）。</p>
+<h3 id="Preparation"><a href="#Preparation" class="headerlink" title="**Preparation **"></a>**Preparation **</h3><p><strong>准备</strong>，在方法区对类变量分配内存，<strong>初始化为默认值</strong>（“零值”）。</p>
 <p>比如：<code>static int i = 5；</code>在这一步只会进行到<code>i = 0</code> ，而<code>i = 5</code>要在初始化那一步才进行；</p>
 <p>但是如果是final修饰的<strong>常量</strong>，则在此分配具体值。</p>
 <blockquote>
@@ -374,7 +374,7 @@
 <p>类或接口在被初始化之前，必须先被连接linked（ verified, prepared, and optionally（可选） resolved.）。</p>
 <p>初始化有且只有以下五种情况：</p>
 <ul>
-<li><code>new</code>、读取/设置类（只有直接定义其的类才会，子类等不受影响）的静态变量（final修饰的常量除外）、执行静态方法</li>
+<li><code>new</code>、读取&#x2F;设置类（只有直接定义其的类才会，子类等不受影响）的静态变量（final修饰的常量除外）、执行静态方法</li>
 <li><code>java.lang.reflect</code>反射调用类</li>
 <li>初始化时，如果父类未初始化，先触发父类的初始化（接口类除外）</li>
 <li>虚拟机等启动时执行主类的<code>main()</code>方法时，需要先初始化主类</li>
@@ -386,7 +386,7 @@
 <li>类 父类的<code>clinit()</code>方法会先于子类执行</li>
 <li>接口  接口<code>clinit()</code>方法无需调用父类接口的<code>clinit()</code>方法；接口的实现类也无需执行接口的<code>clinit()</code>方法</li>
 </ol>
-<p><code>clinit()</code> 是线程安全的，在同一个类加载器中，多个线程的中只会有<strong>一个线程执行一次<code>clinit()</code></strong>，其余线程阻塞等待</p>
+<p><code>clinit()</code> 是线程安全的，在同一个类加载器中，多个线程的中只会有**一个线程执行一次<code>clinit()</code>**，其余线程阻塞等待</p>
 <p><code>clinit()</code>和<code>init()</code>不同如下：</p>
 <blockquote>
 <p><strong>init</strong>是对象构造器方法，也就是说在程序执行 new 一个对象调用该对象类的 constructor 方法时才会执行init方法<u>（是在<strong>new对象</strong>的时候<strong>初始化非静态变量</strong>）</u>；</p>
@@ -396,7 +396,7 @@
 <p>如果类没有静态赋值、静态语句块等则不会有<code>clinit()</code>方法。</p>
 <p><code>clinit()</code>先于<code>init()</code>执行。</p>
 <h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><p><a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/specs/jvms/se9/html/jvms-5.html">Java Virtual Machine Specification Chapter 5. Loading, Linking, and Initializing</a></p>
-<p><a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/specs/jvms/se9/html/jvms-2.html#jvms-2.5.2">Chapter 2. The Structure of the Java Virtual Machine</a></p>
+<p><a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/specs/jvms/se9/html/jvms-2.html#jvms-2.5.2">Chapter 2. The Structure of the Java Virtual Machine</a></p>
 <p><a target="_blank" rel="noopener" href="http://blog.csdn.net/ns_code/article/details/17881581">【深入Java虚拟机】之四：类加载机制</a></p>
 <p><a target="_blank" rel="noopener" href="http://blog.csdn.net/zhangliangzi/article/details/51319033">JVM类加载机制详解（一）JVM类加载过程</a></p>
 <p><a target="_blank" rel="noopener" href="http://gityuan.com/2015/10/25/jvm-class-loading/">Jvm系列3—类的加载 - Gityuan博客 | 袁辉辉博客  </a></p>

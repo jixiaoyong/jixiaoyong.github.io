@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://jixiaoyong.github.io/images/20191221171816.png">
 <meta property="og:image" content="https://jixiaoyong.github.io/images/20191221172243.png">
 <meta property="article:published_time" content="2019-12-21T01:44:32.000Z">
-<meta property="article:modified_time" content="2022-05-30T10:06:27.623Z">
+<meta property="article:modified_time" content="2022-05-30T11:23:54.605Z">
 <meta property="article:author" content="JI, XIAOYONG">
 <meta property="article:tag" content="java">
 <meta name="twitter:card" content="summary">
@@ -251,7 +251,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-05-30 18:06:27" itemprop="dateModified" datetime="2022-05-30T18:06:27+08:00">2022-05-30</time>
+      <time title="修改时间：2022-05-30 19:23:54" itemprop="dateModified" datetime="2022-05-30T19:23:54+08:00">2022-05-30</time>
     </span>
 
   
@@ -296,8 +296,7 @@
 <th>备注</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>对象头</td>
 <td>8</td>
 <td>保存对象的 class 信息、ID、在虚拟机中的状态</td>
@@ -322,8 +321,7 @@
 <td></td>
 <td>将对象总大小对齐到8字节所需的填充</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <blockquote>
 <p>此外，如果是（非静态）内部类的话，由于他默认持有外部类的引用，所以会比普通类的对象多4个byte。</p>
 <p><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/12193259/8389461">https://stackoverflow.com/a/12193259/8389461</a></p>
@@ -336,9 +334,10 @@
 <p>#示例</p>
 <p>根据<a target="_blank" rel="noopener" href="https://speakerdeck.com/romainguy">Romain Guy</a>在<a target="_blank" rel="noopener" href="https://speakerdeck.com/romainguy/android-memories?slide=34">SpeakerDeck</a>中的说法：</p>
 <blockquote>
-<p>一个空的class占用了4+8=12个byte的内存，再加上8比特对齐，实际占用大小为16比特。</p>
+<p>一个空的class占用了4+8&#x3D;12个byte的内存，再加上8比特对齐，实际占用大小为16比特。</p>
 </blockquote>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Empty</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>占用大小：</p>
 <table>
@@ -348,8 +347,7 @@
 <th>Size in bytes</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>dlmalloc 引用</td>
 <td>4</td>
 </tr>
@@ -357,17 +355,17 @@
 <td>Object overhead（对象头）</td>
 <td>8</td>
 </tr>
-</tbody>
-</table>
-<p>Total  = 4 + 8 =12 bytes</p>
-<p>经过<em>8-byte aligned</em>后： total = 16 bytes</p>
+</tbody></table>
+<p>Total  &#x3D; 4 + 8 &#x3D;12 bytes</p>
+<p>经过<em>8-byte aligned</em>后： total &#x3D; 16 bytes</p>
 <p><a target="_blank" rel="noopener" href="https://speakerdeck.com/romainguy/android-memories?slide=34">https://speakerdeck.com/romainguy/android-memories?slide=34</a></p>
 </blockquote>
 <p>此外还有<strong>包含了数据的对象</strong>大小计算方式如下：</p>
 <p><img src="https://jixiaoyong.github.io/images/20191221171816.png" alt="图片来自https://speakerdeck.com/romainguy/android-memories?slide=42"></p>
-<p>对于数组的大小计算（参考<a target="_blank" rel="noopener" href="https://www.cnblogs.com/zhanjindong/p/3757767.html">一个Java对象到底占用多大内存？</a>和<a target="_blank" rel="noopener" href="https://speakerdeck.com/romainguy/android-memories?slide=54">romainguy/android-memories</a>，后者关于数组大小的计算中<code>width&amp;padding = 8</code>的意义存疑）:</p>
-<p>按照开头的公式：<code>数组大小 = 8 对象头 + 4 Oop指针 + 4 数组大小标记length + 数组数据占用大小 + 8比特对齐</code></p>
+<p>对于数组的大小计算（参考<a target="_blank" rel="noopener" href="https://www.cnblogs.com/zhanjindong/p/3757767.html">一个Java对象到底占用多大内存？</a>和<a target="_blank" rel="noopener" href="https://speakerdeck.com/romainguy/android-memories?slide=54">romainguy&#x2F;android-memories</a>，后者关于数组大小的计算中<code>width&amp;padding = 8 </code>的意义存疑）:</p>
+<p>按照开头的公式：<code>数组大小 = 8 对象头 + 4 Oop指针 + 4 数组大小标记length + 数组数据占用大小 + 8比特对齐 </code></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// arr0大小 = 8 + 4 + 4 + 0 + 8比特对齐(0) = 16 bytes</span></span><br><span class="line"><span class="type">int</span> <span class="variable">arr0</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">0</span>];</span><br><span class="line"><span class="comment">// arr1大小 = 8 + 4 + 4 + 4*1 + 8比特对齐(4) = 16 + 4 = 20 + 8比特对齐(4) = 24 bytes</span></span><br><span class="line"><span class="type">int</span> <span class="variable">arr1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">1</span>];</span><br><span class="line"><span class="comment">// arr1大小 = 8 + 4 + 4 + 4*10 + 8比特对齐(0) = 16 + 40 = 56 + 8比特对齐(0) = 56 bytes</span></span><br><span class="line"><span class="type">int</span> <span class="variable">arra10</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">10</span>];</span><br></pre></td></tr></table></figure>
+
 <h1 id="计算对象大小的工具"><a href="#计算对象大小的工具" class="headerlink" title="计算对象大小的工具"></a>计算对象大小的工具</h1><p>具体的如何计算Java中Object大小，可以参考<a target="_blank" rel="noopener" href="https://stackoverflow.com/a/52682/8389461">stackoverflow的这个回答</a>（<a target="_blank" rel="noopener" href="https://github.com/cirosantilli/java-cheat/tree/a907ad2243dce2109c54d27323f9387065b5ca5c/instrument">这里</a>有一份Github上面的实现源码）</p>
 <p>可以参考文章：</p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/ITer_ZC/article/details/41822719">聊聊JVM（三）两种计算Java对象大小的方法</a></p>
@@ -376,39 +374,52 @@
 <p>这里提供一个实例（<a target="_blank" rel="noopener" href="https://github.com/cirosantilli/java-cheat/tree/a907ad2243dce2109c54d27323f9387065b5ca5c/instrument">参考自这里</a>）：</p>
 <p><code>Sizeof.java</code></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.lang.instrument.Instrumentation;</span><br><span class="line"></span><br><span class="line"><span class="keyword">final</span> <span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Sizeof</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Instrumentation instrumentation;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">premain</span><span class="params">(String args, Instrumentation inst)</span> &#123;</span><br><span class="line">        instrumentation = inst;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">long</span> <span class="title function_">sizeof</span><span class="params">(Object o)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> instrumentation.getObjectSize(o);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><code>Makefile</code></p>
 <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//Makefile文件</span><br><span class="line"><span class="section">.POSIX:</span></span><br><span class="line"><span class="meta"><span class="keyword">.PHONY</span>: all clean</span></span><br><span class="line"></span><br><span class="line"><span class="section">all:</span></span><br><span class="line">	javac *.java</span><br><span class="line">	jar -cfm Sizeof.jar META-INF/MANIFEST.MF Sizeof.class</span><br><span class="line">	java -ea -javaagent:Sizeof.jar Main</span><br><span class="line"></span><br><span class="line"><span class="section">clean:</span></span><br><span class="line">	rm -f *.class *.jar</span><br></pre></td></tr></table></figure>
+
 <p>在使用时先新建一个Java类，在其中调用<code>sizeof()</code>方法：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    System.out.println(Sizeof.sizeof(<span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">0</span>]));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>可以用如下命令：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">javac *.java //编译当前目录下的java文件</span><br><span class="line">jar -cfm Sizeof.jar META-INF/MANIFEST.MF Sizeof.class //将Sizeof.class打包为Sizeof.jar</span><br><span class="line">java -ea -javaagent:Sizeof.jar Main //输出sizeOf计算结果</span><br></pre></td></tr></table></figure>
+
 <h1 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h1><h2 id="String最长为65534"><a href="#String最长为65534" class="headerlink" title="String最长为65534"></a><code>String</code>最长为65534</h2><p><code>String s = “”;</code>中，在编译期最多可以有65534个字符</p>
 <blockquote>
 <p><del>原因是，Java中的UTF-8编码的Unicode字符串在常量池中以<code>CONSTANT_Utf8</code>类型表示，常量池中的所有字面量几乎都是通过<code>CONSTANT_Utf8_info</code>描述的。</del></p>
-<p><del>这里面的<code>u2 length</code>表明了该类型存储数据的长度，而<code>u2</code>是无符号的16位整数，因此理论上允许的的最大长度是<code>2^16=65536</code>。而 Java class 文件是使用一种变体<code>UTF-8</code>格式来存放字符的，<code>null</code> 值使用两个字节来表示，因此只剩下<code>65536－ 2 ＝ 65534</code>个字节。</del></p>
+<p><del>这里面的<code>u2 length</code>表明了该类型存储数据的长度，而<code>u2</code>是无符号的16位整数，因此理论上允许的的最大长度是<code>2^16=65536</code>。而 Java class 文件是使用一种变体<code>UTF-8</code>格式来存放字符的，<code>null</code> 值使用两个字节来表示，因此只剩下<code> 65536－ 2 ＝ 65534</code>个字节。</del></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;CONSTANT_Utf8_info &#123;</span><br><span class="line">&gt;u1 tag;</span><br><span class="line">&gt;u2 length;</span><br><span class="line">&gt;u1 bytes[length];</span><br><span class="line">&gt;&#125;</span><br></pre></td></tr></table></figure>
+
 <p><strong>所以，在Java中，所有需要保存在常量池中的数据，长度最大不能超过65535，这当然也包括字符串的定义</strong></p>
 <p>上面提到的这种String长度的限制是<em>编译期的限制</em>，也就是使用<code>String s= “”;</code>这种字面值方式定义的时候才会有的限制。</p>
-<p>String在<em>运行期</em>有没有限制呢，答案是有的，就是我们前文提到的那个<code>Integer.MAX_VALUE</code>，这个值约等于4G，在运行期，如果String的长度超过这个范围，就可能会抛出异常。(在jdk 1.9之前）</p>
+<p>String在<em>运行期</em>有没有限制呢，答案是有的，就是我们前文提到的那个<code>Integer.MAX_VALUE </code>，这个值约等于4G，在运行期，如果String的长度超过这个范围，就可能会抛出异常。(在jdk 1.9之前）</p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u013380694/article/details/102739636">https://blog.csdn.net/u013380694/article/details/102739636</a></p>
 </blockquote>
 <p><strong>一个String对象,占用大小（JDK1.8）为24 bytes</strong>（不计算持有的char数组占用的大小）：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** The value is used for character storage. */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">char</span> value[];  <span class="comment">//一个数组对象的引用，占用4 bytes</span></span><br><span class="line"><span class="comment">/** Cache the hash code for the string */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> hash; <span class="comment">// Default to 0   //一个int类型，占用4 bytes</span></span><br></pre></td></tr></table></figure>
+
 <p>再加上在64位JVM中，一个对象具有12 bytes的<code>对象头+引用</code>，要求对齐到8的倍数(来源<a target="_blank" rel="noopener" href="https://www.baeldung.com/java-size-of-object#1-objects-references-and-wrapper-classes">2.1. Objects, References and Wrapper Classes</a>)，所以一个String对象的大小是：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">size = ( 12 对象头 + 4 value + 4 hash ) + 4 8byte对齐 = 24 bytes</span><br></pre></td></tr></table></figure>
+
 <h2 id="枚举类enum"><a href="#枚举类enum" class="headerlink" title="枚举类enum"></a>枚举类enum</h2><h3 id="枚举类大小的计算"><a href="#枚举类大小的计算" class="headerlink" title="枚举类大小的计算"></a>枚举类大小的计算</h3><p>枚举类中的每个枚举都是该枚举类的一个对象。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">EnumClazz</span>&#123;</span><br><span class="line">    Day,Hour,Minute,Second</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>当我们用<code>javap</code>查看其编译后的字节码可以看到：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//javac EnumClazz.java</span></span><br><span class="line"><span class="comment">//javap EnumClazz.class</span></span><br><span class="line"><span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">EnumClazz</span> <span class="keyword">extends</span> <span class="title class_">java</span>.lang.Enum&lt;EnumClazz&gt; &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> EnumClazz Day;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> EnumClazz Hour;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> EnumClazz Minute;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> EnumClazz Second;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> EnumClazz[] values();</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> EnumClazz <span class="title function_">valueOf</span><span class="params">(java.lang.String)</span>;</span><br><span class="line">  <span class="keyword">static</span> &#123;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>简单计算一下这个<code>EnumClazz</code>的大小（不含引用对象的大小）：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">enumClassSize = <span class="number">8</span> + <span class="number">4</span> + <span class="number">4</span>*<span class="number">4</span> + <span class="number">4</span> = <span class="number">32</span> bytes</span><br><span class="line">       对象头 +  引用 + 枚举类值的引用类型 * <span class="number">4</span>个 + <span class="number">4</span> 数组引用类型</span><br></pre></td></tr></table></figure>
+
 <p>然后，我们再看一下每个枚举类的值（以<code>EnumClazz.Day</code>为例）的大小：</p>
 <p><code>enum</code>类的每个值实际上都继承自<code>java.lang.Enum</code>类：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Enum</span>&lt;E <span class="keyword">extends</span> <span class="title class_">Enum</span>&lt;E&gt;&gt;</span><br><span class="line">        <span class="keyword">implements</span> <span class="title class_">Comparable</span>&lt;E&gt;, Serializable &#123;</span><br><span class="line">        <span class="comment">//枚举值名称</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">final</span> String name;</span><br><span class="line">        <span class="comment">//枚举值次序，从0开始</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">int</span> ordinal;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
 <p>由此，我们可以计算<code>EnumClazz.Day</code>的大小：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">daySize = <span class="number">8</span> + <span class="number">4</span> + <span class="number">4</span> + <span class="number">4</span> + <span class="number">8</span>比特对齐(<span class="number">4</span>) = <span class="number">20</span> + <span class="number">4</span> = <span class="number">24</span> bytes</span><br><span class="line">     对象头 + Oop引用 + name + ordinal + <span class="number">8</span>比特对齐</span><br></pre></td></tr></table></figure>
+
 <p>也就是说，本例中<strong>每一个枚举类值占用24 bytes</strong>，由此可以计算出<code>EnumClazz</code>实际占用的大小应该是：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">realSize = enumClassSize + daySize * <span class="number">4</span>  = <span class="number">128</span> bytes</span><br></pre></td></tr></table></figure>
+
 <h3 id="Android中是否应该使用枚举"><a href="#Android中是否应该使用枚举" class="headerlink" title="Android中是否应该使用枚举"></a>Android中是否应该使用枚举</h3><p>关于Android中使用枚举和常量所占用的大小对比<em>RomainGuy</em>有<a target="_blank" rel="noopener" href="https://speakerdeck.com/romainguy/android-memories?slide=67">下图</a>的对比。</p>
 <p><img src="https://jixiaoyong.github.io/images/20191221172243.png" alt="https://speakerdeck.com/romainguy/android-memories?slide=67"></p>
 <p>关于是否应该在Android中使用枚举类，可以参考下文：</p>
@@ -419,8 +430,10 @@
 <h2 id="SparseArray-amp-ArrayMap-VS-HashMap"><a href="#SparseArray-amp-ArrayMap-VS-HashMap" class="headerlink" title="SparseArray&amp;ArrayMap VS HashMap"></a>SparseArray&amp;ArrayMap VS HashMap</h2><p><code>HashMap</code>的数据是经过包装后保存在<code>HashMap.Node&lt;K,V&gt;</code>数组中。</p>
 <p>下面是<code>HashMap</code>的结构：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HashMap</span>&lt;K,V&gt; <span class="keyword">extends</span> <span class="title class_">AbstractMap</span>&lt;K,V&gt;</span><br><span class="line">    <span class="keyword">implements</span> <span class="title class_">Map</span>&lt;K,V&gt;, Cloneable, Serializable &#123;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">transient</span> Node&lt;K,V&gt;[] table; <span class="comment">//4+ bytes，保存HashMap的键值对等信息</span></span><br><span class="line">  <span class="keyword">transient</span> Set&lt;Map.Entry&lt;K,V&gt;&gt; entrySet; <span class="comment">//4+ bytes</span></span><br><span class="line">  <span class="keyword">transient</span> <span class="type">int</span> size; <span class="comment">//4 bytes</span></span><br><span class="line">  <span class="keyword">transient</span> <span class="type">int</span> modCount; <span class="comment">//4 bytes</span></span><br><span class="line">  <span class="type">int</span> threshold; <span class="comment">//4 bytes</span></span><br><span class="line">  <span class="keyword">final</span> <span class="type">float</span> loadFactor; <span class="comment">//4 bytes</span></span><br><span class="line">  </span><br><span class="line">  <span class="comment">//继承自AbstractMap</span></span><br><span class="line">  <span class="keyword">transient</span> Set&lt;K&gt;        keySet; <span class="comment">//4+ bytes</span></span><br><span class="line">  <span class="keyword">transient</span> Collection&lt;V&gt; values; <span class="comment">//4+ bytes</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>再看看Android提供的<code>android.util.SparseArray</code>类(具体分析可参考：<a target="_blank" rel="noopener" href="https://juejin.im/entry/57c3e8c48ac24700634bd3cf">SparseArray 的使用及实现原理</a>)</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SparseArray</span>&lt;E&gt; <span class="keyword">implements</span> <span class="title class_">Cloneable</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">boolean</span> <span class="variable">mGarbage</span> <span class="operator">=</span> <span class="literal">false</span>; <span class="comment">//4 bytes</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span>[] mKeys; <span class="comment">//4+ bytes</span></span><br><span class="line">    <span class="keyword">private</span> Object[] mValues; <span class="comment">//4+ bytes</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> mSize; <span class="comment">//4 bytes</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>再结合<a target="_blank" rel="noopener" href="https://developer.android.google.cn/reference/android/util/SparseArray">官方的描述</a>，<code>SparseArray</code>类很明显要比<code>HashMap</code>占用更少的内存：</p>
 <ul>
 <li>将<code>KEY</code>和<code>VALUE</code>直接保存在数组中，避免了将其包装为一个<code>Node</code>对象的开销</li>
@@ -435,10 +448,10 @@
 <li><p>在每次<code>put/get/remove</code>的时候都需要使用二分法(<code>ContainerHelpers.binarySearch(mKeys, mSize, key)</code>)查找是否已经存在<code>KEY</code>对应的值（有的话查找其位置）</p>
 </li>
 <li><p>在添加和删除item的时候都需要在数组中增删条目（耗时，尽管为了优化性能，<code>SparseArray</code>在删除时只是将对于的值标记为<code>DELETED</code>，在下次更新该<code>KEY</code>对于的值时直接覆盖，或者在<code>GC</code>时删除）。</p>
-<p><code>private static final Object DELETED = new Object();</code></p>
+<p><code>  private static final Object DELETED = new Object();</code></p>
 <p>HashMap的删除涉及到数组、链表和红黑树（JDK1.8）</p>
 </li>
-<li><p><strong>在容纳数百个项目时性能会比HashMap小大约50%</strong>。</p>
+<li><p>**在容纳数百个项目时性能会比HashMap小大约50%**。</p>
 </li>
 </ul>
 <blockquote>
@@ -446,6 +459,7 @@
 </blockquote>
 <p>此外，还有以下可以替换HashMap的(数据来自<a target="_blank" rel="noopener" href="https://stackoverflow.com/a/31413003/8389461">这里</a>)：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">SparseArray          &lt;Integer, Object&gt;</span><br><span class="line">SparseBooleanArray   &lt;Integer, Boolean&gt;</span><br><span class="line">SparseIntArray       &lt;Integer, Integer&gt;</span><br><span class="line">SparseLongArray      &lt;Integer, Long&gt;</span><br><span class="line">LongSparseArray      &lt;Long, Object&gt;</span><br><span class="line">LongSparseLongArray  &lt;Long, Long&gt;   <span class="comment">//this is not a public class                                 </span></span><br><span class="line">                                    <span class="comment">//but can be copied from  Android source code </span></span><br></pre></td></tr></table></figure>
+
 <p>此外，还有<code>android.util.ArrayMap</code>其特性与<code>SparseArray</code>类似（<strong>两者占用内存小，但是慢并且最好不要用来存储大容量的数据</strong>），只不过它支持key值为其他类型，占用内存大小在<code>SparseArray</code>和<code>HashMap</code>之间(参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/u010687392/article/details/47809295">这里</a>)，此外<code>ArrayMap</code>的API和<code>HashMap</code>类似。</p>
 <blockquote>
 <p>根据<a target="_blank" rel="noopener" href="https://speakerdeck.com/romainguy">Romain Guy</a>的<a target="_blank" rel="noopener" href="https://speakerdeck.com/romainguy/android-memories?slide=94">计算</a>：</p>

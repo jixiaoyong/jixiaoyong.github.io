@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jixiaoyong.github.io/images/20190112144856.png">
 <meta property="article:published_time" content="2019-01-12T07:54:46.000Z">
-<meta property="article:modified_time" content="2022-05-30T10:06:27.627Z">
+<meta property="article:modified_time" content="2022-05-30T11:23:54.609Z">
 <meta property="article:author" content="JI, XIAOYONG">
 <meta property="article:tag" content="jvm">
 <meta name="twitter:card" content="summary">
@@ -248,7 +248,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-05-30 18:06:27" itemprop="dateModified" datetime="2022-05-30T18:06:27+08:00">2022-05-30</time>
+      <time title="修改时间：2022-05-30 19:23:54" itemprop="dateModified" datetime="2022-05-30T19:23:54+08:00">2022-05-30</time>
     </span>
 
   
@@ -331,7 +331,7 @@
 <li><code>synchronize</code> （原生语法层），优先使用</li>
 <li><code>ReentrantLock</code> 重入锁（API层），功能有：1.等待可中断（可以放弃等待）2.公平锁 多个线程申请锁时必须按照申请时间顺序获得锁 3.锁绑定多个条件</li>
 </ul>
-<h2 id="非阻塞同步"><a href="#非阻塞同步" class="headerlink" title="非阻塞同步"></a>非阻塞同步</h2><p>减少了阻塞/唤醒的耗时，在操作时进行CAS（比较并交换），在冲突发生的时候不断尝试执行所需操作，直到执行成功。</p>
+<h2 id="非阻塞同步"><a href="#非阻塞同步" class="headerlink" title="非阻塞同步"></a>非阻塞同步</h2><p>减少了阻塞&#x2F;唤醒的耗时，在操作时进行CAS（比较并交换），在冲突发生的时候不断尝试执行所需操作，直到执行成功。</p>
 <p>但是有一个逻辑漏洞：如果在第一次操作失败到第二次再次尝试操作之间，<em>其他线程对齐进行了操作但是该数据最终没有被变化</em>，当第二次再次尝试时，其实已经被其他线程访问过了。</p>
 <h2 id="无同步方案"><a href="#无同步方案" class="headerlink" title="无同步方案"></a>无同步方案</h2><p>保证线程安全，不一定需要同步，当线程操作的数据不是共享数据时，即使不同步也是线程安全的。</p>
 <ul>

@@ -20,15 +20,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"jixiaoyong.github.io","root":"/blog/","images":"/blog/images","scheme":"Muse","darkmode":true,"version":"8.11.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/blog/js/config.js"></script>
 
-    <meta name="description" content="复制，删除，移动cp拷贝，rm删除，mv移动。 -r表示递归 -f强制，无提示 123cp [-r] fromFilePath toFilePathrm [-r] fromFilePath toFilePathmv [-r] fromFilePath toFilePath 切换目录">
+    <meta name="description" content="复制，删除，移动cp拷贝，rm删除，mv移动。 -r表示递归 -f强制，无提示 123cp [-r] fromFilePath toFilePathrm [-r] fromFilePath toFilePathmv [-r] fromFilePath toFilePath  切换目录">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux常用命令">
 <meta property="og:url" content="https://jixiaoyong.github.io/blog/posts/d0edc1ed/index.html">
 <meta property="og:site_name" content="Ji Xiaoyong&#39;s Blog">
-<meta property="og:description" content="复制，删除，移动cp拷贝，rm删除，mv移动。 -r表示递归 -f强制，无提示 123cp [-r] fromFilePath toFilePathrm [-r] fromFilePath toFilePathmv [-r] fromFilePath toFilePath 切换目录">
+<meta property="og:description" content="复制，删除，移动cp拷贝，rm删除，mv移动。 -r表示递归 -f强制，无提示 123cp [-r] fromFilePath toFilePathrm [-r] fromFilePath toFilePathmv [-r] fromFilePath toFilePath  切换目录">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-01-14T12:16:53.000Z">
-<meta property="article:modified_time" content="2022-05-30T10:06:27.627Z">
+<meta property="article:modified_time" content="2022-05-30T11:23:54.609Z">
 <meta property="article:author" content="JI, XIAOYONG">
 <meta property="article:tag" content="linux">
 <meta name="twitter:card" content="summary">
@@ -246,7 +246,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-05-30 18:06:27" itemprop="dateModified" datetime="2022-05-30T18:06:27+08:00">2022-05-30</time>
+      <time title="修改时间：2022-05-30 19:23:54" itemprop="dateModified" datetime="2022-05-30T19:23:54+08:00">2022-05-30</time>
     </span>
 
   
@@ -284,42 +284,55 @@
         <h1 id="复制，删除，移动"><a href="#复制，删除，移动" class="headerlink" title="复制，删除，移动"></a>复制，删除，移动</h1><p><code>cp</code>拷贝，<code>rm</code>删除，<code>mv</code>移动。</p>
 <p><code>-r</code>表示递归 <code>-f</code>强制，无提示</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cp</span> [-r] fromFilePath toFilePath</span><br><span class="line"><span class="built_in">rm</span> [-r] fromFilePath toFilePath</span><br><span class="line"><span class="built_in">mv</span> [-r] fromFilePath toFilePath</span><br></pre></td></tr></table></figure>
+
 <h1 id="切换目录"><a href="#切换目录" class="headerlink" title="切换目录"></a>切换目录</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> - 返回上次所在目录</span><br><span class="line"><span class="built_in">cd</span> ~ 切换到当前用户home路径下</span><br><span class="line"><span class="built_in">cd</span> . 当前路径</span><br><span class="line"><span class="built_in">cd</span> .. 上层路径</span><br><span class="line"><span class="built_in">cd</span> ../linux 切换到同一级的linux目录</span><br></pre></td></tr></table></figure>
+
 <h1 id="新建文件、文件夹"><a href="#新建文件、文件夹" class="headerlink" title="新建文件、文件夹"></a>新建文件、文件夹</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> dirName 创建文件夹</span><br><span class="line"><span class="built_in">touch</span> fileName 创建文件</span><br></pre></td></tr></table></figure>
-<p>Linux文件和目录名字除了“/”都合法，但是尽量不要用正则表达式之类的符号，因为有可能会在进行正则匹配时造成误删等问题</p>
+
+<p>Linux文件和目录名字除了“&#x2F;”都合法，但是尽量不要用正则表达式之类的符号，因为有可能会在进行正则匹配时造成误删等问题</p>
 <p>假设当前目录有文件<code>f1,f2,f3</code>和<code>f[123]</code><br>执行：<code>rm f[123]</code>本来是希望删除<code>f[123]</code>,但是由于正则匹配，会先删除<code>f1,f2,f3</code>这三个文件。</p>
 <h1 id="查看文件信息"><a href="#查看文件信息" class="headerlink" title="查看文件信息"></a>查看文件信息</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">file fileName 查看文件格式信息</span><br><span class="line"><span class="built_in">cat</span> fileName 以文本格式查看文件全部内容</span><br><span class="line">less fileName 以分页形式查看文件内容，Q键退出</span><br></pre></td></tr></table></figure>
+
 <h1 id="常用目录"><a href="#常用目录" class="headerlink" title="常用目录"></a>常用目录</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/home 当前用户主目录，root用户为/root</span><br><span class="line">/bin、/usr/bin 常用的可执行文件，root用户为/sbin</span><br><span class="line">/media、/mnt 用户硬件挂载点</span><br><span class="line">/etc 系统的配置文件，所有用户可见，root用户可以更改</span><br><span class="line">/boot 系统内核，开机必备文件</span><br><span class="line">/dev 系统的所有设备文件，如硬盘、光驱等</span><br><span class="line">/var和/srv 系统运行时的用户数据</span><br><span class="line">/proc 内存中的状态信息</span><br><span class="line">/lib、/usr/lib、/usr/local/lib 库文件</span><br><span class="line">/temp 临时文件，所有用户可见</span><br><span class="line">/usr 程序相关文件unix system resource</span><br></pre></td></tr></table></figure>
+
 <h1 id="文件相关"><a href="#文件相关" class="headerlink" title="文件相关"></a>文件相关</h1><h2 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h2><p><strong><code>ls</code></strong>  展示当前目录下文件信息：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls [-alhd] l </span><br></pre></td></tr></table></figure>
-<p><code>l</code>展示目录下的文件列表，<code>a</code>展示所有文件（包括隐藏文件），<code>h</code> 展示带单位的文件大小， <code>d</code>展示当前目录本身信息</p>
+
+<p><code>l</code>展示目录下的文件列表，<code>a </code>展示所有文件（包括隐藏文件），<code> h</code> 展示带单位的文件大小， <code>d</code>展示当前目录本身信息</p>
 <h2 id="chmod"><a href="#chmod" class="headerlink" title="chmod"></a>chmod</h2><p><strong><code>chmod</code></strong>  更改权限</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod [-R] mode fileName</span><br></pre></td></tr></table></figure>
+
 <p><code>mode</code>组成如下：<code>[范围] [操作] [权限]</code></p>
 <p><code>范围</code>：<code>u</code>用户、<code>g</code>群组、<code>o</code>其他、<code>a</code>以上所有（ugo）</p>
 <p><code>操作</code>：<code>+</code> 增加、<code>-</code> 减去、<code>=</code> 等于</p>
-<p><code>权限</code>：<code>r</code> 读权限<code>4</code>、<code>w</code> 写权限<code>2</code>、 <code>x</code> 执行权限<code>1</code> 、无权限  <code>0</code></p>
+<p><code>权限</code>：<code>r</code> 读权限<code>4</code>、<code> w</code> 写权限<code>2</code>、 <code>x</code> 执行权限<code>1</code> 、无权限  <code>0</code></p>
 <p><strong>权限验证</strong> ： root用户可以访问任何用户文件，不受权限限制；普通用户需要验证权限</p>
 <p><em>要读取文件夹中的内容，也需要执行权限<code>x</code></em></p>
 <h2 id="文件权限与umask"><a href="#文件权限与umask" class="headerlink" title="文件权限与umask"></a>文件权限与umask</h2><p>Linux创建新项目时默认的权限分别是：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">文件夹 777</span><br><span class="line">文件 666</span><br></pre></td></tr></table></figure>
+
 <p>但是，经过umask（此处为0022）遮盖后，变成了755 ，644，这才是真正创建后的结果</p>
 <p>可以通过<code>umask查看</code>umask的值，一般只去其<strong>后3位</strong>，遮盖的原则是从原先的权限中<strong>减去</strong>umask中的权限：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">原始权限  ： r w x      7</span><br><span class="line">umask	： -  w x      3</span><br><span class="line">结   果  ： r - -      4</span><br></pre></td></tr></table></figure>
+
 <h2 id="查看、管理当前用户信息"><a href="#查看、管理当前用户信息" class="headerlink" title="查看、管理当前用户信息"></a>查看、管理当前用户信息</h2><p><code>users</code> 和<code>whoami</code>输出当前用户名</p>
 <p>增、删、改用户：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">useradd / userdel / usermod username</span><br><span class="line">group群组管理也类似</span><br><span class="line">groupadd / groupmod ...</span><br></pre></td></tr></table></figure>
+
 <p>其中<code>userdel -r username</code>在删除用户时，也会删除用户对应的主目录<code>home</code></p>
 <p><code>groups</code> 查看用户所在群组，其中第一个是主要群组，其余是次要群组。</p>
 <p><em>主要群组</em> 在用户创建新的文件时，文件群组权限一项默认为该群组</p>
 <p><code>who</code> 、<code>w</code>可以查看用户相关信息</p>
 <p><code>id</code> 查看某人或者自己相关的<code>UID、GID</code></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">finger [-s] username</span><br><span class="line">查看用户相关信息</span><br><span class="line">-s 仅显示用户账号、全名、登录时间</span><br></pre></td></tr></table></figure>
-<p><code>GID</code> 系统 <500 ，用户 >500</p>
+
+<p><code>GID</code> 系统 &lt;500 ，用户 &gt;500</p>
 <h2 id="改密码"><a href="#改密码" class="headerlink" title="改密码"></a>改密码</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">passwd username</span><br></pre></td></tr></table></figure>
-<h2 id="文件打包、压缩和解压缩"><a href="#文件打包、压缩和解压缩" class="headerlink" title="文件打包、压缩和解压缩"></a>文件打包、压缩和解压缩</h2><p><code>.gz</code> 压缩后格式，<code>.tar</code>打包后格式，<code>tar.gz</code>先打包后压缩的格式（常用）</p>
+
+<h2 id="文件打包、压缩和解压缩"><a href="#文件打包、压缩和解压缩" class="headerlink" title="文件打包、压缩和解压缩"></a>文件打包、压缩和解压缩</h2><p><code>.gz</code> 压缩后格式，<code>.tar </code>打包后格式，<code>tar.gz</code>先打包后压缩的格式（常用）</p>
 <h3 id="gzip"><a href="#gzip" class="headerlink" title="gzip"></a>gzip</h3><p>gzip压缩会删除源文件,</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gzip [-cdtv#] filename</span><br></pre></td></tr></table></figure>
+
 <p><code>#</code> 压缩等级</p>
 <p><code>v</code> 显示压缩前后压缩比</p>
 <p><code>t</code> 校验是否是gzip压缩的文件</p>
@@ -327,12 +340,14 @@
 <p><code>d</code> 解压文件</p>
 <p>使用:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gizp file 将file压缩成file.gz，会删除file</span><br><span class="line">gzip -c file &gt; file.gz 压缩文件file并输出到file.gz</span><br></pre></td></tr></table></figure>
+
 <h3 id="tar"><a href="#tar" class="headerlink" title="tar"></a>tar</h3><p>打包，在压缩文件夹时，一般为了效率都会先打包，在压缩，由此形成的格式一般是类似<code>*.tar.gz*</code>的后缀。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">打包</span><br><span class="line">tar [-jcv] -f outFileName.tar inDirPath</span><br><span class="line">解包</span><br><span class="line">tar [-jxv] -f inFileName.tar -C outputPath</span><br></pre></td></tr></table></figure>
+
 <p><code>c</code> 建立打包文档</p>
-<p><code>x</code> 解包<code>-C</code> 输出目录</p>
+<p><code>x</code> 解包<code> -C</code> 输出目录</p>
 <p><code>t</code> 查看打包文件的内容</p>
-<p><code>j</code> / <code>z</code> 使用<code>bz2</code> / <code>gzip</code> 压缩、解压</p>
+<p><code>j</code> &#x2F; <code>z</code> 使用<code>bz2</code> &#x2F; <code>gzip</code> 压缩、解压</p>
 <p><code>v</code> 输出信息</p>
 <p><code>f</code> 后面紧跟要操作的文件</p>
 <h1 id="bash-shell"><a href="#bash-shell" class="headerlink" title="bash shell"></a>bash shell</h1><p>bash是用户和内容交互的桥梁 <code>用户 ↔ bash ↔ Unix内核</code></p>
@@ -344,18 +359,21 @@
 <h2 id="自定义变量"><a href="#自定义变量" class="headerlink" title="自定义变量"></a>自定义变量</h2><p><code>key=value</code> 增加一个值为<code>value</code>的变量<code>key</code></p>
 <p>其中，如果value有空格的话需要用引号包住：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">双引号 可以用$KEY 引用其他KEY的值</span><br><span class="line">单引号 内容是纯文本</span><br></pre></td></tr></table></figure>
-<p><code>echo $KEY​</code>可以输出<code>KEY</code>的值</p>
+
+<p><code>echo $KEY​ </code>可以输出<code>KEY</code>的值</p>
 <p><code>set</code> 查看所有变量</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set | grep HIST 查看shell命令历史</span><br><span class="line">set | grep PSI 提示符前面的内容，username-MBP:dirpath username$ </span><br></pre></td></tr></table></figure>
+
 <h2 id="别名配置"><a href="#别名配置" class="headerlink" title="别名配置"></a>别名配置</h2><p><code>alias</code> 查看所有别名</p>
 <p><code>alias newCmd=oldCmd</code>使用<code>newCmd</code>表示<code>oldCmd</code></p>
 <p><code>unalias newCmd</code> 删除别名</p>
 <p>如:<code>alias cls=clear</code>,执行<code>cls</code>就等于执行<code>clear</code></p>
 <h2 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h2><p><code>export KEY=VALUE</code> 将值为<code>VALUE</code>的<code>KEY</code>添加到环境变量（本次shell有效）</p>
-<p>此外还可以写到一些文件中，在开机、登录、注销登录时调用执行——自动执行脚本<strong><code>shell startup scripts</code></strong></p>
+<p>此外还可以写到一些文件中，在开机、登录、注销登录时调用执行——自动执行脚本**<code>shell startup scripts</code>**</p>
 <h2 id="shell-startup-scripts"><a href="#shell-startup-scripts" class="headerlink" title="shell startup scripts"></a>shell startup scripts</h2><p>开机时执行：</p>
 <ul>
-<li><code>/etc/profile</code></li>
+<li><p><code>/etc/profile</code></p>
+</li>
 <li><p><code>/ect/profile.d/*.sh</code></p>
 </li>
 <li><p><code>~/.bash_profile , ~/.bash_login , ~/.profile</code>这三个只要其中一个成功执行了，后面的就不会执行，<code>~/.bash_profile</code>会执行<code>~/.bashrc</code></p>
@@ -380,8 +398,7 @@
 <th>作用对象</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>0</td>
 <td>标准输入</td>
 <td>stdin</td>
@@ -399,8 +416,7 @@
 <td>stderr</td>
 <td>屏幕等</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <p>定向</p>
 <ul>
 <li><code>&lt;</code>和<code>&lt;&lt;</code> 输入和 追加输入</li>
@@ -412,14 +428,16 @@
 <p><code>cmd0 || cmd1</code> 前者执行失败才会执行后者。</p>
 <h1 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h1><p>查询内容</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep [-cinv] &#x27;key&#x27; filename</span><br></pre></td></tr></table></figure>
+
 <p><code>c</code> 计算次数</p>
 <p><code>i</code> 忽略大小写</p>
 <p><code>n</code> 行号</p>
 <p><code>v</code> 显示没有该字符的行号</p>
-<p><code>&#39;key&#39;</code>可以是正则表达式</p>
+<p><code>&#39;key&#39; </code>可以是正则表达式</p>
 <p><code>--color=auto</code> 对查找到的文本显示颜色</p>
 <h1 id="sort"><a href="#sort" class="headerlink" title="sort"></a>sort</h1><p>排序，默认以第一列排序</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sort [-fbknrtu] filename</span><br></pre></td></tr></table></figure>
+
 <p><code>f</code> 忽略大小写</p>
 <p><code>b</code>忽略最前面的空格（要是排序不生效时可以试一下，推荐）</p>
 <p><code>k</code> 以第几列为标准排序，默认第一列</p>
@@ -429,6 +447,7 @@
 <p><code>M</code> 以英文月份排序</p>
 <h1 id="wc"><a href="#wc" class="headerlink" title="wc"></a>wc</h1><p>统计字符数</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wc [lwm] filename</span><br></pre></td></tr></table></figure>
+
 <p><code>l</code> 行</p>
 <p><code>w</code> 词</p>
 <p><code>m</code> 字符</p>

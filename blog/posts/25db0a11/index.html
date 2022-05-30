@@ -20,15 +20,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"jixiaoyong.github.io","root":"/blog/","images":"/blog/images","scheme":"Muse","darkmode":true,"version":"8.11.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/blog/js/config.js"></script>
 
-    <meta name="description" content="这篇文章介绍了如何在 linux 环境下安装和配置 git 与 github ，并且使用 Android Studio 将本地的项目同步到 github 上面。 安装 git1sudo apt-gat install git 配置 git 和 github 创建 Github 账号  生成 ssh key 1ssh-keygen -t rsa -C &quot;your_email@yourema">
+    <meta name="description" content="这篇文章介绍了如何在 linux 环境下安装和配置 git 与 github ，并且使用 Android Studio 将本地的项目同步到 github 上面。 安装 git1sudo apt-gat install git  配置 git 和 github 创建 Github 账号  生成 ssh key 1ssh-keygen -t rsa -C &quot;your_email@yourem">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux下配置Git，使用AndroidStudio同步工程到Github">
 <meta property="og:url" content="https://jixiaoyong.github.io/blog/posts/25db0a11/index.html">
 <meta property="og:site_name" content="Ji Xiaoyong&#39;s Blog">
-<meta property="og:description" content="这篇文章介绍了如何在 linux 环境下安装和配置 git 与 github ，并且使用 Android Studio 将本地的项目同步到 github 上面。 安装 git1sudo apt-gat install git 配置 git 和 github 创建 Github 账号  生成 ssh key 1ssh-keygen -t rsa -C &quot;your_email@yourema">
+<meta property="og:description" content="这篇文章介绍了如何在 linux 环境下安装和配置 git 与 github ，并且使用 Android Studio 将本地的项目同步到 github 上面。 安装 git1sudo apt-gat install git  配置 git 和 github 创建 Github 账号  生成 ssh key 1ssh-keygen -t rsa -C &quot;your_email@yourem">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2016-04-28T22:06:06.000Z">
-<meta property="article:modified_time" content="2022-05-30T10:06:27.627Z">
+<meta property="article:modified_time" content="2022-05-30T11:23:54.609Z">
 <meta property="article:author" content="JI, XIAOYONG">
 <meta property="article:tag" content="blog,jixiaoyong,android">
 <meta name="twitter:card" content="summary">
@@ -246,7 +246,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-05-30 18:06:27" itemprop="dateModified" datetime="2022-05-30T18:06:27+08:00">2022-05-30</time>
+      <time title="修改时间：2022-05-30 19:23:54" itemprop="dateModified" datetime="2022-05-30T19:23:54+08:00">2022-05-30</time>
     </span>
 
   
@@ -283,6 +283,7 @@
     <div class="post-body" itemprop="articleBody">
         <p>这篇文章介绍了如何在 linux 环境下安装和配置 git 与 github ，并且使用 Android Studio 将本地的项目同步到 github 上面。</p>
 <h1 id="安装-git"><a href="#安装-git" class="headerlink" title="安装 git"></a>安装 git</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-gat install git</span><br></pre></td></tr></table></figure>
+
 <h1 id="配置-git-和-github"><a href="#配置-git-和-github" class="headerlink" title="配置 git 和 github"></a>配置 git 和 github</h1><ul>
 <li><p>创建 Github 账号</p>
 </li>
@@ -295,14 +296,12 @@
 <p>进入 Account Settings –&gt; SSH Keys –&gt; Add SSH Key 添加 SSH Keys ：<br>名字起一个容易识别的名字，key 是生成的 <code>/home/username/.ssh/id_rsa.pub.</code> 中的内容，直接粘贴到指定位置就行</p>
 <ul>
 <li><p>测试 ssh key 是否成功</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
-</li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure></li>
 </ul>
 <p>提示如<code>You’ve successfully authenticated, but GitHub does not provide shell access</code>则说明成功连接 github</p>
 <ul>
 <li><p>配置 Github</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;your name&quot; //配置用户名</span><br><span class="line">git config --global user.email &quot;your email&quot; //配置email</span><br></pre></td></tr></table></figure>
-</li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;your name&quot; //配置用户名</span><br><span class="line">git config --global user.email &quot;your email&quot; //配置email</span><br></pre></td></tr></table></figure></li>
 </ul>
 <h1 id="用-Android-Studio-同步工程到-Github"><a href="#用-Android-Studio-同步工程到-Github" class="headerlink" title="用 Android Studio 同步工程到 Github"></a>用 Android Studio 同步工程到 Github</h1><ul>
 <li><p>启动android studio</p>
@@ -320,6 +319,7 @@
 <p>第二步： 创建一个本地仓库 origin</p>
 <p>使用命令</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin git@github.com:yourName/yourRepo.git</span><br></pre></td></tr></table></figure>
+
 <p><code>youname</code>是你的GitHub的用户名，<code>yourRepo</code>是你要上传到GitHub的仓库</p>
 <p>第三步： 比如你要添加一个文件xxx到本地仓库，使用命令 <code>git add xxx</code>，可以使用 <code>git add .</code> 自动判断添加哪些文件</p>
 <p>然后把这个添加提交到本地的仓库，使用命令 <code>git commit -m</code>说明这次的提交</p>
@@ -328,7 +328,7 @@
 <p>第二步： 回到要存放的目录下，使用命令 <code>git clone https://github.com/chenguolin/scrapy.git</code>，这里的url只是一个例子</p>
 <p>第三步： 如果本地的版本不是最新的，可以使用命令 <code>git fetch origin</code>，origin是本地仓库</p>
 <p>第四步： 把更新的内容合并到本地分支，可以使用命令 <code>git merge origin/master</code></p>
-<p>如果你不想手动去合并，那么你可以使用：<br><code>git pull &lt;本地仓库&gt; master</code> // 这个命令可以拉去最新版本并自动合并</p>
+<p>如果你不想手动去合并，那么你可以使用：<br><code>git pull &lt;本地仓库&gt; master</code> &#x2F;&#x2F; 这个命令可以拉去最新版本并自动合并</p>
 <h1 id="GitHub的分支管理"><a href="#GitHub的分支管理" class="headerlink" title="GitHub的分支管理"></a>GitHub的分支管理</h1><ul>
 <li>创建</li>
 </ul>
@@ -342,7 +342,7 @@
 </ul>
 <p>1 从本地删除一个分支： <code>git branch -d &lt;分支名称&gt;</code></p>
 <p>2 同步到GitHub上面删除这个分支： <code>git push &lt;本地仓库名&gt; :&lt;GitHub端分支&gt;</code></p>
-<h1 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h1><p>这篇文章是我今天在 linux 下安装 git ，上传工程到 github 上面时的步骤的总结，大部分内容都参考/摘录自下面这篇文章，感谢原作者的分享，原文信息及链接如下：</p>
+<h1 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h1><p>这篇文章是我今天在 linux 下安装 git ，上传工程到 github 上面时的步骤的总结，大部分内容都参考&#x2F;摘录自下面这篇文章，感谢原作者的分享，原文信息及链接如下：</p>
 <blockquote>
 <p>Linux下Git和GitHub使用方法总结<br>[日期：2014-03-07] 来源：Linux社区 作者：chenguolin<br><a target="_blank" rel="noopener" href="http://www.linuxidc.com/Linux/2014-03/97821.htm">http://www.linuxidc.com/Linux/2014-03/97821.htm</a></p>
 </blockquote>

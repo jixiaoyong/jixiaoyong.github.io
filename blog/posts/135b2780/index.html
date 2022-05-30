@@ -28,7 +28,7 @@
 <meta property="og:description" content="这是我在学习Bennyhuo（ github ）的kotlin入门视频时的一些笔记，比较偏基础，用于查缺补漏。  xx.map() &amp; xx.flatMap() xx.flatMap()用于返回可迭代的数组，而xx.map()则是任何可迭代数据都有的用来遍历的方法。   123456var arr &#x3D; arrayListOf&lt;String&gt;(&quot;a c v de  fb">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2018-02-09T08:18:01.000Z">
-<meta property="article:modified_time" content="2022-05-30T10:06:27.627Z">
+<meta property="article:modified_time" content="2022-05-30T11:23:54.609Z">
 <meta property="article:author" content="JI, XIAOYONG">
 <meta property="article:tag" content="kotlin">
 <meta name="twitter:card" content="summary">
@@ -245,7 +245,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-05-30 18:06:27" itemprop="dateModified" datetime="2022-05-30T18:06:27+08:00">2022-05-30</time>
+      <time title="修改时间：2022-05-30 19:23:54" itemprop="dateModified" datetime="2022-05-30T19:23:54+08:00">2022-05-30</time>
     </span>
 
   
@@ -287,16 +287,22 @@
 </li>
 </ul>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = arrayListOf&lt;String&gt;(<span class="string">&quot;a c v de  fb s e  gf d&quot;</span>)</span><br><span class="line">arr.flatMap &#123;</span><br><span class="line">    it.split(<span class="string">&quot; &quot;</span>)</span><br><span class="line">&#125;.map&#123; </span><br><span class="line">    print(<span class="string">&quot;<span class="subst">$&#123;it.toUpperCase()&#125;</span>&quot;</span>) </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li><p>enum class 枚举类型</p>
 <p>分为有参和无参，枚举变量以<code>,</code>分隔，如果enum还有方法或者伴生对象，则最后一个变量后为<code>;</code>，否则可为<code>,</code>、<code>;</code>或者没有。</p>
 </li>
 </ul>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="class"><span class="keyword">class</span> <span class="title">City</span></span>&#123;</span><br><span class="line">    UK,USA,EU;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//以下为非必须代码，仅表示可以有这些功能</span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">say</span><span class="params">()</span></span>&#123;...&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">companion</span> <span class="keyword">object</span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">fun</span> <span class="title">fun1</span><span class="params">(s:<span class="type">String</span>)</span></span>:City&#123;</span><br><span class="line">            <span class="keyword">return</span> valueOf(s.toUpperCase())</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>​        有参的情况如下</p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="class"><span class="keyword">class</span> <span class="title">Country</span></span>(<span class="keyword">val</span> aName:String)&#123;</span><br><span class="line">    CHINA(<span class="string">&quot;中国&quot;</span>),</span><br><span class="line">    JAPAN(<span class="string">&quot;日本&quot;</span>),</span><br><span class="line">    USA(<span class="string">&quot;美国&quot;</span>),</span><br><span class="line">    UK(<span class="string">&quot;英国&quot;</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
 <p>​        使用：通过enum的valueOf()方法获取枚举对象实例</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var s = &quot;uk&quot;</span><br><span class="line">var city = City.valueOf(s.toUpperCase())</span><br><span class="line">//或者通过伴生对象：</span><br><span class="line">var city = City.fun1(s)</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li><p>companion object伴生对象</p>
 <p>在类的定义，可以直接用<code>类名.方法名()</code>调用，相当于java中的静态方法</p>
@@ -304,26 +310,30 @@
 </li>
 </ul>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">xxx</span></span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">companion</span> <span class="keyword">object</span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">fun</span> <span class="title">parse</span><span class="params">(x: <span class="type">String</span>)</span></span>: Country &#123;</span><br><span class="line">            <span class="keyword">return</span> valueOf(x.toUpperCase())</span><br><span class="line">        &#125;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li><p>object修饰的类</p>
 <p>等同于只有一个实例的类，相当于java中的静态类，所有方法可以直接用类名调用</p>
 </li>
 </ul>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">object</span> ClassName&#123;</span><br><span class="line">    <span class="function"><span class="title">fun</span><span class="params">()</span></span>&#123;...&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li><p>fun ClassName.funName()为类添加新的方法</p>
 <p>对于不能直接修改的类，有需要对其增加一个方法，可以自定义一个<code>ClassName.funName()</code>的方法来达到这个目的。</p>
 </li>
 </ul>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> Country.<span class="title">sayNum</span><span class="params">()</span></span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//this引用的是country对象</span></span><br><span class="line">    <span class="keyword">var</span> num = <span class="keyword">when</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line"></span><br><span class="line">        CHINA -&gt; <span class="number">1</span></span><br><span class="line">        JAPAN -&gt; <span class="number">2</span></span><br><span class="line">        USA -&gt; <span class="number">3</span></span><br><span class="line">        UK -&gt; <span class="number">4</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>​        在使用时可以通过<code>Country</code>的对象调用<code>syaNum()</code>方法</p>
 <ul>
 <li><p>data class 数据类</p>
 <p>可以有方法，方便复制。</p>
-<p>必须至少有一个参数，并且参数都需要用var/val修饰</p>
+<p>必须至少有一个参数，并且参数都需要用var&#x2F;val修饰</p>
 </li>
 </ul>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">data</span> <span class="class"><span class="keyword">class</span> <span class="title">dataClass</span></span>(<span class="keyword">var</span> name: String, <span class="keyword">val</span> age :<span class="built_in">Int</span>)</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>文件读取<ul>
 <li>resource目录下的文件读取</li>
@@ -331,12 +341,14 @@
 </li>
 </ul>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> input = File(ClassLoader.getSystemResource(<span class="string">&quot;input&quot;</span>).path).readText()</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li><p>与RxJava结合</p>
 <p>统计文本中字母个数，基于RxJava 1.2.1</p>
 </li>
 </ul>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Observable.from(input.toCharArray().asIterable())</span><br><span class="line">        .filter &#123; !it.isWhitespace() &#125;</span><br><span class="line">        .groupBy &#123; it &#125;</span><br><span class="line">        .map&#123;</span><br><span class="line">            o -&gt;o.count().subscribe&#123;</span><br><span class="line">                print(<span class="string">&quot;<span class="subst">$&#123;o.key&#125;</span>-&gt; <span class="variable">$it</span>  ,&quot;</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        .subscribe()</span><br></pre></td></tr></table></figure>
+
 
     </div>
 

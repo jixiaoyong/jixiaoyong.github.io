@@ -240,7 +240,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-05-30 18:06:27" itemprop="dateModified" datetime="2022-05-30T18:06:27+08:00">2022-05-30</time>
+      <time title="修改时间：2022-05-30 19:23:54" itemprop="dateModified" datetime="2022-05-30T19:23:54+08:00">2022-05-30</time>
     </span>
 
   
@@ -275,7 +275,11 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>Android中绘制文字的方法如下：<br></p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Draw the text, with origin at (x,y), using the specified paint. The origin is interpreted</span></span><br><span class="line"><span class="comment"> * based on the Align setting in the paint.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> text The text to be drawn</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> x The x-coordinate of the origin of the text being drawn</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> y The y-coordinate of the baseline of the text being drawn</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> paint The paint used for the text (e.g. color, size, style)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">drawText</span><span class="params">(<span class="meta">@NonNull</span> String text, <span class="type">float</span> x, <span class="type">float</span> y, <span class="meta">@NonNull</span> Paint paint)</span> &#123;</span><br><span class="line">    <span class="built_in">super</span>.drawText(text, x, y, paint);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>其中<code>y</code>是<strong>文字baseline的y坐标</strong>
+          <p>Android中绘制文字的方法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Draw the text, with origin at (x,y), using the specified paint. The origin is interpreted</span></span><br><span class="line"><span class="comment"> * based on the Align setting in the paint.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> text The text to be drawn</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> x The x-coordinate of the origin of the text being drawn</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> y The y-coordinate of the baseline of the text being drawn</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> paint The paint used for the text (e.g. color, size, style)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">drawText</span><span class="params">(<span class="meta">@NonNull</span> String text, <span class="type">float</span> x, <span class="type">float</span> y, <span class="meta">@NonNull</span> Paint paint)</span> &#123;</span><br><span class="line">    <span class="built_in">super</span>.drawText(text, x, y, paint);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中<code>y</code>是<strong>文字baseline的y坐标</strong>。</p>
+<p>下图表示<code>Paint.FontMetrics</code>中存储的文字的各种信息（来源：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/c1575636741e">简书</a>）：<br><img src="https://jixiaoyong.github.io/images/20200407220410.png"></p>
+<p>我们没法直接获取到<code>baseline的坐标</code>，所以只能从另外一个角度考虑：<br>因为在绘制文字时，文字的上下中心（即上图中的<code>center</code>）是确定的，我们只要计算出<code>center</code>到<code>baseline</code>之间的偏移量，就可以计算出<code>baseline的y坐标</code>。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/blog/posts/e5860bb5/#more" rel="contents">
@@ -345,7 +349,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-05-30 18:06:27" itemprop="dateModified" datetime="2022-05-30T18:06:27+08:00">2022-05-30</time>
+      <time title="修改时间：2022-05-30 19:23:54" itemprop="dateModified" datetime="2022-05-30T19:23:54+08:00">2022-05-30</time>
     </span>
 
   
@@ -466,7 +470,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-05-30 18:06:27" itemprop="dateModified" datetime="2022-05-30T18:06:27+08:00">2022-05-30</time>
+      <time title="修改时间：2022-05-30 19:23:54" itemprop="dateModified" datetime="2022-05-30T19:23:54+08:00">2022-05-30</time>
     </span>
 
   
@@ -575,7 +579,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-05-30 18:06:27" itemprop="dateModified" datetime="2022-05-30T18:06:27+08:00">2022-05-30</time>
+      <time title="修改时间：2022-05-30 19:23:54" itemprop="dateModified" datetime="2022-05-30T19:23:54+08:00">2022-05-30</time>
     </span>
 
   
@@ -691,7 +695,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-05-30 18:06:27" itemprop="dateModified" datetime="2022-05-30T18:06:27+08:00">2022-05-30</time>
+      <time title="修改时间：2022-05-30 19:23:54" itemprop="dateModified" datetime="2022-05-30T19:23:54+08:00">2022-05-30</time>
     </span>
 
   
@@ -726,7 +730,11 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p><img src="https://images.pexels.com/photos/2881229/pexels-photo-2881229.jpeg?cs=srgb&dl=white-and-blue-cables-2881229.jpg&fm=jpg" class="full-image"><br>Photo by <strong><a target="_blank" rel="noopener" href="https://www.pexels.com/@pixabay?utm_content=attributionCopyText&amp;utm_medium=referral&amp;utm_source=pexels">Pixabay </a></strong>from <strong><a target="_blank" rel="noopener" href="https://www.pexels.com/photo/close-up-of-telephone-booth-257736/?utm_content=attributionCopyText&amp;utm_medium=referral&amp;utm_source=pexels">Pexels</a></strong></p>
+          <img src="https://images.pexels.com/photos/2881229/pexels-photo-2881229.jpeg?cs=srgb&dl=white-and-blue-cables-2881229.jpg&fm=jpg" class="full-image">
+Photo by **[Pixabay ](https://www.pexels.com/@pixabay?utm_content=attributionCopyText&utm_medium=referral&utm_source=pexels)**from **[Pexels](https://www.pexels.com/photo/close-up-of-telephone-booth-257736/?utm_content=attributionCopyText&utm_medium=referral&utm_source=pexels)**
+
+
+
 <p><strong>序列化</strong>：指将<code>Java对象</code>转化为<code>字节流</code>以便在网络、文件中保存、传输。</p>
 <p><strong>反序列化</strong>：指的是从字节流中恢复Java对象。</p>
 <p>本文主要讨论Android和Java中实现序列化的4种方式，并探讨一下其实现原理。</p>
@@ -800,7 +808,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-05-30 18:06:27" itemprop="dateModified" datetime="2022-05-30T18:06:27+08:00">2022-05-30</time>
+      <time title="修改时间：2022-05-30 19:23:54" itemprop="dateModified" datetime="2022-05-30T19:23:54+08:00">2022-05-30</time>
     </span>
 
   
@@ -837,7 +845,7 @@
     <div class="post-body" itemprop="articleBody">
           <p>日常开发中，常用的存储键值对的数据结构是<code>HashMap</code>，根据<a target="_blank" rel="noopener" href="https://xiaoyong.ml/blog/posts/ff927bd4/">Java笔记之HashMap保存数据</a>和<a target="_blank" rel="noopener" href="https://xiaoyong.ml/blog/posts/b0793c74/">Java笔记之计算Java对象的大小及其应用</a>可以知道，<code>HashMap</code>存储<strong>键值对</strong>会占用比较多的内存控件，而对于内存限制较大的Android平台来说，为了避免这种浪费，官方推荐我们使用<code>SpareArray</code>和<code>ArrayMap</code>，本文对这两个类的实现进行分析比较。</p>
 <p><strong><code>SpareArray</code>以及他的衍生类</strong>都是以<strong>基本类型</strong>为<code>key</code>，因为避免了<em>自动装箱</em>，并且<strong>用数组直接保存key、value</strong>（而非像<code>HashMap</code>那样将其封装为<code>Node</code>对象后再保存），因而节省了内存。</p>
-<p><strong><code>ArrayMap</code></strong>则支持<strong>所有类型的key</strong>，他是<strong>将<code>key</code>和<code>value</code>全部保存在一个数组中</strong>（<code>n</code>位为<code>key</code>，<code>n+1</code>位为<code>value</code>），避免了将其封装为<code>Node</code>对象带来的内存消耗。</p>
+<p><strong><code>ArrayMap</code><strong>则支持</strong>所有类型的key</strong>，他是<strong>将<code>key</code>和<code>value</code>全部保存在一个数组中</strong>（<code>n</code>位为<code>key</code>，<code>n+1</code>位为<code>value</code>），避免了将其封装为<code>Node</code>对象带来的内存消耗。</p>
 <p><strong>当要保存的数据量比较小（小于几千个）的时候，如果KEY是基本类型，推荐使用<code>SparseArray</code>及其衍生类以节省内存，如果KEY是其他类型则使用<code>ArrayMap</code>;否则使用<code>HashMap</code>更加高效</strong>。</p>
 <h1 id="SpareArray"><a href="#SpareArray" class="headerlink" title="SpareArray"></a>SpareArray</h1>
           <!--noindex-->
@@ -909,7 +917,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-05-30 18:06:27" itemprop="dateModified" datetime="2022-05-30T18:06:27+08:00">2022-05-30</time>
+      <time title="修改时间：2022-05-30 19:23:54" itemprop="dateModified" datetime="2022-05-30T19:23:54+08:00">2022-05-30</time>
     </span>
 
   
@@ -954,8 +962,7 @@
 <th>备注</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>对象头</td>
 <td>8</td>
 <td>保存对象的 class 信息、ID、在虚拟机中的状态</td>
@@ -980,8 +987,7 @@
 <td></td>
 <td>将对象总大小对齐到8字节所需的填充</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <blockquote>
 <p>此外，如果是（非静态）内部类的话，由于他默认持有外部类的引用，所以会比普通类的对象多4个byte。</p>
 <p><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/12193259/8389461">https://stackoverflow.com/a/12193259/8389461</a></p>
@@ -1055,7 +1061,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-05-30 18:06:27" itemprop="dateModified" datetime="2022-05-30T18:06:27+08:00">2022-05-30</time>
+      <time title="修改时间：2022-05-30 19:23:54" itemprop="dateModified" datetime="2022-05-30T19:23:54+08:00">2022-05-30</time>
     </span>
 
   
@@ -1162,7 +1168,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-05-30 18:06:27" itemprop="dateModified" datetime="2022-05-30T18:06:27+08:00">2022-05-30</time>
+      <time title="修改时间：2022-05-30 19:23:54" itemprop="dateModified" datetime="2022-05-30T19:23:54+08:00">2022-05-30</time>
     </span>
 
   
@@ -1277,7 +1283,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-05-30 18:06:27" itemprop="dateModified" datetime="2022-05-30T18:06:27+08:00">2022-05-30</time>
+      <time title="修改时间：2022-05-30 19:23:54" itemprop="dateModified" datetime="2022-05-30T19:23:54+08:00">2022-05-30</time>
     </span>
 
   
@@ -1312,8 +1318,9 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p><img src="https://images.pexels.com/photos/159644/art-supplies-brushes-rulers-scissors-159644.jpeg?cs=srgb&dl=art-supplies-arts-and-crafts-ballpens-159644.jpg&fm=jpg" class="full-image"></p>
-<p>Photo by <strong><a target="_blank" rel="noopener" href="https://www.pexels.com/@pixabay?utm_content=attributionCopyText&amp;utm_medium=referral&amp;utm_source=pexels">Pixabay </a></strong>from <strong><a target="_blank" rel="noopener" href="https://www.pexels.com/photo/pencils-in-stainless-steel-bucket-159644/?utm_content=attributionCopyText&amp;utm_medium=referral&amp;utm_source=pexels">Pexels</a></strong></p>
+          <img src="https://images.pexels.com/photos/159644/art-supplies-brushes-rulers-scissors-159644.jpeg?cs=srgb&dl=art-supplies-arts-and-crafts-ballpens-159644.jpg&fm=jpg" class="full-image">
+
+<p>Photo by **<a target="_blank" rel="noopener" href="https://www.pexels.com/@pixabay?utm_content=attributionCopyText&utm_medium=referral&utm_source=pexels">Pixabay </a>**from <strong><a target="_blank" rel="noopener" href="https://www.pexels.com/photo/pencils-in-stainless-steel-bucket-159644/?utm_content=attributionCopyText&utm_medium=referral&utm_source=pexels">Pexels</a></strong></p>
 <p><code>HashMap</code>使用由<code>Node&lt;K,V&gt;</code>（继承自<code>Map.Entry&lt;K,V&gt;</code>）组成的<strong>数组</strong><code>table</code>保存数据。</p>
 <p>在<code>table</code>中保存数据时根据<code>key</code>的<code>hashCode</code>计算到一个<strong>随机保存位置（但都在<code>table</code>数组的大小范围内）</strong>，当存储的<strong>数据总量</strong>超过加载系数<code>loadFactor</code>规定的<strong>阈值</strong>时则对<code>table</code>进行<strong>扩容</strong>。</p>
 <h1 id="HashMap有以下全局变量"><a href="#HashMap有以下全局变量" class="headerlink" title="HashMap有以下全局变量"></a>HashMap有以下全局变量</h1>

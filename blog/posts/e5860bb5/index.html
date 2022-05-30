@@ -20,16 +20,16 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"jixiaoyong.github.io","root":"/blog/","images":"/blog/images","scheme":"Muse","darkmode":true,"version":"8.11.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/blog/js/config.js"></script>
 
-    <meta name="description" content="Android中绘制文字的方法如下：123456789101112&#x2F;** * Draw the text, with origin at (x,y), using the specified paint. The origin is interpreted * based on the Align setting in the paint. * * @param text The text to">
+    <meta name="description" content="Android中绘制文字的方法如下： 123456789101112&#x2F;** * Draw the text, with origin at (x,y), using the specified paint. The origin is interpreted * based on the Align setting in the paint. * * @param text The text to">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android paint绘制text">
 <meta property="og:url" content="https://jixiaoyong.github.io/blog/posts/e5860bb5/index.html">
 <meta property="og:site_name" content="Ji Xiaoyong&#39;s Blog">
-<meta property="og:description" content="Android中绘制文字的方法如下：123456789101112&#x2F;** * Draw the text, with origin at (x,y), using the specified paint. The origin is interpreted * based on the Align setting in the paint. * * @param text The text to">
+<meta property="og:description" content="Android中绘制文字的方法如下： 123456789101112&#x2F;** * Draw the text, with origin at (x,y), using the specified paint. The origin is interpreted * based on the Align setting in the paint. * * @param text The text to">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jixiaoyong.github.io/images/20200407220410.png">
 <meta property="article:published_time" content="2020-04-07T14:05:20.000Z">
-<meta property="article:modified_time" content="2022-05-30T10:06:27.623Z">
+<meta property="article:modified_time" content="2022-05-30T11:23:54.605Z">
 <meta property="article:author" content="JI, XIAOYONG">
 <meta property="article:tag" content="blog,jixiaoyong,android">
 <meta name="twitter:card" content="summary">
@@ -247,7 +247,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-05-30 18:06:27" itemprop="dateModified" datetime="2022-05-30T18:06:27+08:00">2022-05-30</time>
+      <time title="修改时间：2022-05-30 19:23:54" itemprop="dateModified" datetime="2022-05-30T19:23:54+08:00">2022-05-30</time>
     </span>
 
   
@@ -282,14 +282,18 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>Android中绘制文字的方法如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Draw the text, with origin at (x,y), using the specified paint. The origin is interpreted</span></span><br><span class="line"><span class="comment"> * based on the Align setting in the paint.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> text The text to be drawn</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> x The x-coordinate of the origin of the text being drawn</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> y The y-coordinate of the baseline of the text being drawn</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> paint The paint used for the text (e.g. color, size, style)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">drawText</span><span class="params">(<span class="meta">@NonNull</span> String text, <span class="type">float</span> x, <span class="type">float</span> y, <span class="meta">@NonNull</span> Paint paint)</span> &#123;</span><br><span class="line">    <span class="built_in">super</span>.drawText(text, x, y, paint);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>其中<code>y</code>是<strong>文字baseline的y坐标</strong>。</p>
-<p>下图表示<code>Paint.FontMetrics</code>中存储的文字的各种信息（来源：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/c1575636741e">简书</a>）：<br><img src="https://jixiaoyong.github.io/images/20200407220410.png" alt=""></p>
+        <p>Android中绘制文字的方法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Draw the text, with origin at (x,y), using the specified paint. The origin is interpreted</span></span><br><span class="line"><span class="comment"> * based on the Align setting in the paint.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> text The text to be drawn</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> x The x-coordinate of the origin of the text being drawn</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> y The y-coordinate of the baseline of the text being drawn</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> paint The paint used for the text (e.g. color, size, style)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">drawText</span><span class="params">(<span class="meta">@NonNull</span> String text, <span class="type">float</span> x, <span class="type">float</span> y, <span class="meta">@NonNull</span> Paint paint)</span> &#123;</span><br><span class="line">    <span class="built_in">super</span>.drawText(text, x, y, paint);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中<code>y</code>是<strong>文字baseline的y坐标</strong>。</p>
+<p>下图表示<code>Paint.FontMetrics</code>中存储的文字的各种信息（来源：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/c1575636741e">简书</a>）：<br><img src="https://jixiaoyong.github.io/images/20200407220410.png"></p>
 <p>我们没法直接获取到<code>baseline的坐标</code>，所以只能从另外一个角度考虑：<br>因为在绘制文字时，文字的上下中心（即上图中的<code>center</code>）是确定的，我们只要计算出<code>center</code>到<code>baseline</code>之间的偏移量，就可以计算出<code>baseline的y坐标</code>。</p>
-<p>又根据这个<a target="_blank" rel="noopener" href="http://www.imooc.com/article/277490?block_id=tuijian_wz">文章</a>：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">基线到中线的距离 = (descent + ascent) / 2 - descent = (ascent - descent) / 2</span><br></pre></td></tr></table></figure></p>
+<p>又根据这个<a target="_blank" rel="noopener" href="http://www.imooc.com/article/277490?block_id=tuijian_wz">文章</a>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">基线到中线的距离 = (descent + ascent) / 2 - descent = (ascent - descent) / 2</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p><code>(descent + ascent) / 2</code>是中线center的值，而根据上图可知<code>(descent + ascent) / 2 - descent</code>的值就是baseline到center的距离。</p>
 </blockquote>
-<p>所以<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">baseline的y坐标 = 文字的上下高度中心 + baseline的竖坐标和文字上下实际中心的偏移量</span><br><span class="line">                = center.y + 基线到中线的距离</span><br><span class="line">                = center.y + (ascent - descent) / 2</span><br></pre></td></tr></table></figure></p>
+<p>所以</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">baseline的y坐标 = 文字的上下高度中心 + baseline的竖坐标和文字上下实际中心的偏移量</span><br><span class="line">                = center.y + 基线到中线的距离</span><br><span class="line">                = center.y + (ascent - descent) / 2</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>这个<code>center.y</code>根据场景不同可以是一行的行中心（文字在一行居中显示），或者控件的上下中心（文字在控件上下居中）</p>
 </blockquote>

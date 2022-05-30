@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://jixiaoyong.github.io/blog/images/default/2018-02-22/coordinatorlayout.gif">
 <meta property="article:published_time" content="2018-02-22T07:01:10.000Z">
-<meta property="article:modified_time" content="2022-05-30T10:06:27.623Z">
+<meta property="article:modified_time" content="2022-05-30T11:23:54.605Z">
 <meta property="article:author" content="JI, XIAOYONG">
 <meta property="article:tag" content="android">
 <meta name="twitter:card" content="summary">
@@ -248,7 +248,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-05-30 18:06:27" itemprop="dateModified" datetime="2022-05-30T18:06:27+08:00">2022-05-30</time>
+      <time title="修改时间：2022-05-30 19:23:54" itemprop="dateModified" datetime="2022-05-30T19:23:54+08:00">2022-05-30</time>
     </span>
 
   
@@ -291,13 +291,14 @@
 <li>android.support.v7.widget.Toolbar</li>
 </ul>
 <h1 id="效果预览"><a href="#效果预览" class="headerlink" title="效果预览"></a>效果预览</h1><p>如图：</p>
-<p><img src="http://jixiaoyong.github.io/blog/images/default/2018-02-22/coordinatorlayout.gif" alt=""></p>
+<p><img src="http://jixiaoyong.github.io/blog/images/default/2018-02-22/coordinatorlayout.gif"></p>
 <h1 id="简要说明"><a href="#简要说明" class="headerlink" title="简要说明"></a>简要说明</h1><p>CoordinatorLayout类，协调者布局，通过Behavior将一个子view（<code>child</code>）的行为和另一个子view（<code>dependency</code>）的活动联结起来，从而实现子view之间的联动。</p>
 <p>AppBarLayout类，是一个实现了材料设计的默认垂直布局的ViewGroup，当其是CoordinatorLayout类的直接子view时,另外一个CoordinatorLayout的子view指定了behavior为AppBarLayout.ScrollingViewBehavior的实例（<code>app:layout_behavior=&quot;@string/appbar_scrolling_view_behavior&quot;</code>）,且该子view需要是NestedScrollingChild的实现类。</p>
 <p>CollapsingToolbarLayout类，提供一个可以折叠的toolbar布局，可以在这个布局里面，设置toolbar以及和toolbar一起联动的子view，本案例中是一张图片。</p>
 <p>Toolbar类，实现toolbar的效果。</p>
 <h1 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h1><p>源码：<a target="_blank" rel="noopener" href="https://github.com/jixiaoyong/AndroidNote/tree/master/code/2018-02-22">github</a></p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">android.support.design.widget.CoordinatorLayout</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">android.support.design.widget.AppBarLayout</span>&gt;</span></span><br><span class="line"></span><br><span class="line">         <span class="tag">&lt;<span class="name">android.support.design.widget.CollapsingToolbarLayout</span></span></span><br><span class="line"><span class="tag">              <span class="attr">app:layout_scrollFlags</span>=<span class="string">&quot;scroll|exitUntilCollapsed&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="name">ImageView</span> </span></span><br><span class="line"><span class="tag">                  <span class="attr">app:layout_collapseMode</span>=<span class="string">&quot;parallax&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="name">android.support.v7.widget.Toolbar</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">app:layout_collapseMode</span>=<span class="string">&quot;pin&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;/<span class="name">android.support.design.widget.CollapsingToolbarLayout</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">android.support.design.widget.AppBarLayout</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">android.support.v4.view.ViewPager</span></span></span><br><span class="line"><span class="tag">            <span class="attr">app:layout_behavior</span>=<span class="string">&quot;@string/appbar_scrolling_view_behavior&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">android.support.design.widget.CoordinatorLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
 <ol>
 <li>CoordinatorLayout在最外层，注意其直接子view必须就是要实现联动的view，否则联动失效。</li>
 <li>CollapsingToolbarLayout必须设置layout_scrollFlags，其余属性可选。</li>
@@ -317,6 +318,7 @@
 <li>ViewPager就是本案例中触发子view联动效果的<code>dependency</code>，需要指定其behavior：</li>
 </ol>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app:layout_behavior=&quot;@string/appbar_scrolling_view_behavior&quot;</span><br></pre></td></tr></table></figure>
+
 <p>其实际对应于android.support.design.widget.AppBarLayout$ScrollingViewBehavior ，这个是系统实现的一个behavior，用于和嵌套滑动事件绑定，<strong>指定该behavior的子view需要是NestedScrollingChild的实现类</strong>（系统提供了4个实现类：NavigationMenuView、NestedScrollView、RecyclerView、SwipleRefreshLayout），所以viewPager中页面有上述4个类或其子类时，才能实现绑定效果。</p>
 <h1 id="延伸"><a href="#延伸" class="headerlink" title="延伸"></a>延伸</h1><p><strong>自定义Behavior</strong></p>
 <p>自定义Behavior有两个目的：</p>
@@ -327,8 +329,12 @@
 <p>两者的差异在于在实现<code>CoordinatorLayout.Behavior&lt;T&gt;</code> 类时候具体重写的方法不一样。</p>
 <p><strong>目的1</strong>：需要重写的方法有：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">layoutDependsOn</span><span class="params">(CoordinatorLayout parent, T child, View dependency)</span> &#123;</span><br><span class="line">    <span class="comment">//如果dependency是要依赖的子view（此处是TempView类）的实例，说明它就是我们所需要的Dependency</span></span><br><span class="line">    <span class="keyword">return</span> dependency <span class="keyword">instanceof</span> TempView;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//每次dependency位置发生变化，都会执行onDependentViewChanged方法</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">onDependentViewChanged</span><span class="params">(CoordinatorLayout parent, T child, View dependency)</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//根据dependency的位置，设置child的位置,对child进行想要实现的变化</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;<span class="comment">//返回true表示改变了child 的尺寸和位置参数，否则返回false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><strong>目的2</strong>：需要重写的方法有：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//判断是否要开始根据dependency子view的行为改变child的状态</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">onStartNestedScroll</span><span class="params">(<span class="meta">@NonNull</span> CoordinatorLayout coordinatorLayout, <span class="meta">@NonNull</span> ImageView child,<span class="meta">@NonNull</span> View directTargetChild, <span class="meta">@NonNull</span> View target, <span class="type">int</span> axes, <span class="type">int</span> type)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> child <span class="keyword">instanceof</span> ImageView &amp;&amp; axes == View.SCROLL_AXIS_VERTICAL;<span class="comment">//子view是ImageView，并且滑动的方向是垂直的</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//当dependency子view滑动时，对child进行相应处理</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onNestedPreScroll</span><span class="params">(<span class="meta">@NonNull</span> CoordinatorLayout coordinatorLayout, <span class="meta">@NonNull</span> ImageView child, <span class="meta">@NonNull</span> View target, <span class="type">int</span> dx, <span class="type">int</span> dy, <span class="meta">@NonNull</span> <span class="type">int</span>[] consumed, <span class="type">int</span> type)</span> &#123;</span><br><span class="line">    <span class="built_in">super</span>.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed, type);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
 <blockquote>
 <h1 id="自定义-Behavior-的总结"><a href="#自定义-Behavior-的总结" class="headerlink" title="自定义 Behavior 的总结"></a>自定义 Behavior 的总结</h1><ol>
 <li>确定 CoordinatorLayout 中 View 与 View 之间的依赖关系，通过 layoutDependsOn() 方法，返回值为 true 则依赖，否则不依赖。</li>

@@ -28,7 +28,7 @@
 <meta property="og:description" content="前言最近在项目里面遇到了屏幕适配的问题，UI要求APP在不同手机上展示效果和设计稿保持“像素级”同步，在对比了几种屏幕适配方案之后，选择了基于今日头条的AndroidAutoSize适配方案。 本文主要简单分析其适配原理，以及在实际使用中遇到的一个问题，需要更深入了解原理可以阅读文末参考文献。 正文UI给的设计稿一般都是以像素px为单位，而在Android开发中官方推荐的使用的单位是dp。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-10-13T03:13:18.000Z">
-<meta property="article:modified_time" content="2022-05-30T10:06:27.623Z">
+<meta property="article:modified_time" content="2022-05-30T11:23:54.605Z">
 <meta property="article:author" content="JI, XIAOYONG">
 <meta property="article:tag" content="android">
 <meta name="twitter:card" content="summary">
@@ -246,7 +246,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-05-30 18:06:27" itemprop="dateModified" datetime="2022-05-30T18:06:27+08:00">2022-05-30</time>
+      <time title="修改时间：2022-05-30 19:23:54" itemprop="dateModified" datetime="2022-05-30T19:23:54+08:00">2022-05-30</time>
     </span>
 
   
@@ -290,40 +290,49 @@
 </blockquote>
 <p>根据Android官方的定义，dp在屏幕上实际对应的像素px计算方式如下：</p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">px = dp * (dpi / <span class="number">160</span>)</span><br></pre></td></tr></table></figure>
-<p>其中 dpi表示：<strong>屏幕每平方英寸有多少像素</strong>，可以通过屏幕对角线的像素数px/屏幕尺寸inch计算。</p>
+
+<p>其中 dpi表示：<strong>屏幕每平方英寸有多少像素</strong>，可以通过屏幕对角线的像素数px&#x2F;屏幕尺寸inch计算。</p>
 <p>而<code>DisplayMetrics.density</code> 字段表示根据当前像素密度指定将 <code>dp</code> 单位转换为像素时所必须使用的缩放系数，即上述方程等价于：</p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">px = dp * (dpi / <span class="number">160</span>)</span><br><span class="line">   = dp * getResources().getDisplayMetrics().density</span><br></pre></td></tr></table></figure>
+
 <p>这样，在dpi为160的屏幕上1dp占1px，在dpi为320的屏幕上占2px，那么就能保证同一dp的在不同dpi上占得像素是等比例变化的。</p>
-<p>但是，在现实生活中面对千变万化的Android屏幕，根据Jessyan的文章可知由于每种屏幕宽/高对应的总dp数不一定都是相同的，所以即使使用了dp作为单位，还是会出现同一dp在有些屏幕上刚好占满全屏，在有的屏幕上会无法占满全屏或超出屏幕范围。</p>
+<p>但是，在现实生活中面对千变万化的Android屏幕，根据Jessyan的文章可知由于每种屏幕宽&#x2F;高对应的总dp数不一定都是相同的，所以即使使用了dp作为单位，还是会出现同一dp在有些屏幕上刚好占满全屏，在有的屏幕上会无法占满全屏或超出屏幕范围。</p>
 <blockquote>
-<p><strong>density</strong> 在每个设备上都是固定的，<strong>DPI / 160 = density</strong>，<strong>屏幕的总 px 宽度 / density = 屏幕的总 dp 宽度</strong></p>
+<p><strong>density</strong> 在每个设备上都是固定的，<strong>DPI &#x2F; 160 &#x3D; density</strong>，<strong>屏幕的总 px 宽度 &#x2F; density &#x3D; 屏幕的总 dp 宽度</strong></p>
 <ul>
-<li>设备 1，屏幕宽度为 <strong>1080px</strong>，<strong>480DPI</strong>，屏幕总 <strong>dp</strong> 宽度为 <strong>1080 / (480 / 160) = 360dp</strong></li>
-<li>设备 2，屏幕宽度为 <strong>1440px</strong>，<strong>560DPI</strong>，屏幕总 <strong>dp</strong> 宽度为 <strong>1440 / (560 / 160) = 411dp</strong></li>
+<li>设备 1，屏幕宽度为 <strong>1080px</strong>，<strong>480DPI</strong>，屏幕总 <strong>dp</strong> 宽度为 <strong>1080 &#x2F; (480 &#x2F; 160) &#x3D; 360dp</strong></li>
+<li>设备 2，屏幕宽度为 <strong>1440px</strong>，<strong>560DPI</strong>，屏幕总 <strong>dp</strong> 宽度为 <strong>1440 &#x2F; (560 &#x2F; 160) &#x3D; 411dp</strong></li>
 </ul>
 <p>——Jessyan</p>
 </blockquote>
 <p>那么该怎么适配呢，再看一眼上述的公式：</p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">屏幕的总 px 宽度 / density = 屏幕的总 dp 宽度</span><br></pre></td></tr></table></figure>
+
 <p>以适配<strong>屏幕宽度</strong>为例，要使得dp在不同屏幕上对应的像素等比例变化，就要<strong>保证屏幕的总dp宽度一致</strong>，而屏幕的总 px 宽度是物理条件无法更改，那么就只能<strong>更改density</strong>。</p>
 <p>以我们使用的设计稿宽度为375dp为例：</p>
 <p>在分辨率为2160*1080 、尺寸为5.99英寸的屏幕上：</p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">density = 1080px / 375dp = <span class="number">2.88</span></span><br></pre></td></tr></table></figure>
+
 <p> 而在分辨率为2400*1176、尺寸为6.53英寸的屏幕上：</p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">density = 1176px / 375dp = <span class="number">3.136</span></span><br></pre></td></tr></table></figure>
+
 <p>这样就保证了，不管在什么样的屏幕上，375dp始终都能够占满屏幕宽度，保证了布局在不同大小的屏幕上，在屏幕宽度上的比例一致性，也就解决屏幕适配的问题。</p>
 <h1 id="获取状态栏高度的问题"><a href="#获取状态栏高度的问题" class="headerlink" title="获取状态栏高度的问题"></a>获取状态栏高度的问题</h1><p>上述的屏幕适配方案使用简单，且侵入小，在使用到项目中之后，除了部分字体等显示需要微调外，其余内容基本上都完美还原了设计稿的内容。</p>
-<p>但是在后续使用到状态栏相关代码的时候发现<strong>获取到的状态栏高度和实际高度不一致</strong>，导致显示异常，而使用<a target="_blank" rel="noopener" href="http://blankj.com">Blankj</a>的工具类 <code>BarUtils.getStatusBarHeight()</code>却可以获取到正确的高度。</p>
+<p>但是在后续使用到状态栏相关代码的时候发现<strong>获取到的状态栏高度和实际高度不一致</strong>，导致显示异常，而使用<a target="_blank" rel="noopener" href="http://blankj.com/">Blankj</a>的工具类 <code>BarUtils.getStatusBarHeight()</code>却可以获取到正确的高度。</p>
 <p>对比两种代码发现获取状态栏高度的代码逻辑几乎一样：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">getStatusBarHeight</span><span class="params">(Resources resources)</span> &#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">resourceId</span> <span class="operator">=</span> resources.getIdentifier(<span class="string">&quot;status_bar_height&quot;</span>, <span class="string">&quot;dimen&quot;</span>, <span class="string">&quot;android&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> resources.getDimensionPixelSize(resourceId);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>不同的是，两种方法使用到的resources一个是APP的，一个是系统的</p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 我使用到的resources，从当前activity获取</span></span><br><span class="line">resources.displayMetrics.density</span><br><span class="line"><span class="comment">// 2. Blankj使用的resources，从系统获取</span></span><br><span class="line">Resources.getSystem().displayMetrics.density</span><br></pre></td></tr></table></figure>
+
 <p>通过分别打印这两种resources可以发现，二者的density值不一样（以2160*1080 、尺寸为5.99英寸的屏幕为例）：</p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">context.resources.DisplayMetrics: DisplayMetrics&#123;density=<span class="number">2.88</span>, width=<span class="number">1080</span>, height=<span class="number">2033</span>, scaledDensity=<span class="number">2.88</span>, xdpi=<span class="number">403.411</span>, ydpi=<span class="number">403.411</span>&#125;</span><br><span class="line"></span><br><span class="line">Resources.getSystem().DisplayMetrics: DisplayMetrics&#123;density=<span class="number">2.7</span>, width=<span class="number">1080</span>, height=<span class="number">2033</span>, scaledDensity=<span class="number">2.7</span>, xdpi=<span class="number">403.411</span>, ydpi=<span class="number">403.411</span>&#125;</span><br></pre></td></tr></table></figure>
+
 <p>这是由于使用了<a target="_blank" rel="noopener" href="https://github.com/JessYanCoding/AndroidAutoSize">AndroidAutoSize</a>适配方案后，APP内部的density已经被改成了2.88，而系统实际的density是2.7。</p>
 <p>又知道android中将像素和dp等单位转化的方法如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// android.util.TypedValue</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">float</span> <span class="title function_">applyDimension</span><span class="params">(<span class="type">int</span> unit, <span class="type">float</span> value,</span></span><br><span class="line"><span class="params">                                       DisplayMetrics metrics)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">switch</span> (unit) &#123;</span><br><span class="line">        <span class="keyword">case</span> COMPLEX_UNIT_PX:</span><br><span class="line">            <span class="keyword">return</span> value;</span><br><span class="line">        <span class="keyword">case</span> COMPLEX_UNIT_DIP:</span><br><span class="line">            <span class="keyword">return</span> value * metrics.density;</span><br><span class="line">        <span class="keyword">case</span> COMPLEX_UNIT_SP:</span><br><span class="line">            <span class="keyword">return</span> value * metrics.scaledDensity;</span><br><span class="line">        <span class="keyword">case</span> COMPLEX_UNIT_PT:</span><br><span class="line">            <span class="keyword">return</span> value * metrics.xdpi * (<span class="number">1.0f</span>/<span class="number">72</span>);</span><br><span class="line">        <span class="keyword">case</span> COMPLEX_UNIT_IN:</span><br><span class="line">            <span class="keyword">return</span> value * metrics.xdpi;</span><br><span class="line">        <span class="keyword">case</span> COMPLEX_UNIT_MM:</span><br><span class="line">            <span class="keyword">return</span> value * metrics.xdpi * (<span class="number">1.0f</span>/<span class="number">25.4f</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>分析可知，通过getStatusBarHeight()获取到的状态栏是系统的状态栏69px（即25dp），但当使用APP内部的density=2.88计算时就会只有24dp，和实际的状态栏高度不一致，所以使用状态栏高度来控制布局的时候就会展示异常。</p>
+
+<p>分析可知，通过getStatusBarHeight()获取到的状态栏是系统的状态栏69px（即25dp），但当使用APP内部的density&#x3D;2.88计算时就会只有24dp，和实际的状态栏高度不一致，所以使用状态栏高度来控制布局的时候就会展示异常。</p>
 <h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a target="_blank" rel="noopener" href="http://jessyan.me/autosize-introduce/">骚年你的屏幕适配方式该升级了!-今日头条适配方案——jessyan</a></p>
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/d9QCoBP6kV9VSWvVldVVwA">一种极低成本的Android屏幕适配方式——字节跳动</a></p>
 <p><a target="_blank" rel="noopener" href="https://developer.android.google.cn/training/multiscreen/screendensities#top_of_page">支持不同的像素密度——Android Developers</a></p>

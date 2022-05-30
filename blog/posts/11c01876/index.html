@@ -20,12 +20,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"jixiaoyong.github.io","root":"/blog/","images":"/blog/images","scheme":"Muse","darkmode":true,"version":"8.11.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/blog/js/config.js"></script>
 
-    <meta name="description" content="前言红黑树是一种特殊的二叉搜索树，查找，插入和删除的时间复杂度均为$O(log_2N)$。 红黑树必须满足以下条件：  必须有颜色（黑&#x2F;红）  根节点颜色为黑  若节点是红色，则子节点必须是黑色（反之则不然） 到叶节点或空子节点的每一条边上的黑色节点数量必须相同（空子节点指本应该有叶节点却没有的节点，默认为黑色）  如果不满足可以通过以下方式修正：">
+    <meta name="description" content="前言红黑树是一种特殊的二叉搜索树，查找，插入和删除的时间复杂度均为$O(log_2N)$。 红黑树必须满足以下条件：  必须有颜色（黑&#x2F;红）  根节点颜色为黑  若节点是红色，则子节点必须是黑色（反之则不然）  到叶节点或空子节点的每一条边上的黑色节点数量必须相同（空子节点指本应该有叶节点却没有的节点，默认为黑色）   如果不满足可以通过以下方式修正：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据结构_红黑树">
 <meta property="og:url" content="https://jixiaoyong.github.io/blog/posts/11c01876/index.html">
 <meta property="og:site_name" content="Ji Xiaoyong&#39;s Blog">
-<meta property="og:description" content="前言红黑树是一种特殊的二叉搜索树，查找，插入和删除的时间复杂度均为$O(log_2N)$。 红黑树必须满足以下条件：  必须有颜色（黑&#x2F;红）  根节点颜色为黑  若节点是红色，则子节点必须是黑色（反之则不然） 到叶节点或空子节点的每一条边上的黑色节点数量必须相同（空子节点指本应该有叶节点却没有的节点，默认为黑色）  如果不满足可以通过以下方式修正：">
+<meta property="og:description" content="前言红黑树是一种特殊的二叉搜索树，查找，插入和删除的时间复杂度均为$O(log_2N)$。 红黑树必须满足以下条件：  必须有颜色（黑&#x2F;红）  根节点颜色为黑  若节点是红色，则子节点必须是黑色（反之则不然）  到叶节点或空子节点的每一条边上的黑色节点数量必须相同（空子节点指本应该有叶节点却没有的节点，默认为黑色）   如果不满足可以通过以下方式修正：">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jixiaoyong.github.io/images/20181223175956.png">
 <meta property="og:image" content="https://jixiaoyong.github.io/images/20181223180637.png">
@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://jixiaoyong.github.io/images/20181223210800.png">
 <meta property="og:image" content="https://jixiaoyong.github.io/images/20181223211217.png">
 <meta property="article:published_time" content="2018-12-23T09:25:36.000Z">
-<meta property="article:modified_time" content="2022-05-30T10:06:27.627Z">
+<meta property="article:modified_time" content="2022-05-30T11:23:54.609Z">
 <meta property="article:author" content="JI, XIAOYONG">
 <meta property="article:tag" content="数据结构">
 <meta name="twitter:card" content="summary">
@@ -253,7 +253,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-05-30 18:06:27" itemprop="dateModified" datetime="2022-05-30T18:06:27+08:00">2022-05-30</time>
+      <time title="修改时间：2022-05-30 19:23:54" itemprop="dateModified" datetime="2022-05-30T19:23:54+08:00">2022-05-30</time>
     </span>
 
   
@@ -291,12 +291,14 @@
         <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>红黑树是一种特殊的二叉搜索树，查找，插入和删除的时间复杂度均为$O(log_2N)$。</p>
 <p>红黑树必须满足以下条件：</p>
 <ol>
-<li><p>必须有颜色（黑/红）</p>
+<li><p>必须有颜色（黑&#x2F;红）</p>
 </li>
 <li><p>根节点颜色为黑</p>
 </li>
-<li>若节点是红色，则子节点必须是黑色（反之则不然）</li>
-<li>到叶节点或空子节点的每一条边上的黑色节点数量必须相同（空子节点指本应该有叶节点却没有的节点，默认为黑色）</li>
+<li><p>若节点是红色，则子节点必须是黑色（反之则不然）</p>
+</li>
+<li><p>到叶节点或空子节点的每一条边上的黑色节点数量必须相同（空子节点指本应该有叶节点却没有的节点，默认为黑色）</p>
+</li>
 </ol>
 <p>如果不满足可以通过以下方式修正：</p>
 <ul>
@@ -307,13 +309,14 @@
 <p>本质是将该<code>节点a</code>向下进一位插入到其<code>右节点b</code>原先的位置，将其<code>左节点c</code>向上进一位插入到该<code>节点a</code>原先的位置，并将<code>左节点c的右节点</code>赋值给该<code>节点a</code>。</p>
 <p>步骤：</p>
 <ol>
-<li><p>将该<code>节点a</code>放到<code>右节点b</code>的位置，将该<code></code>左节点c<code>放到</code>节点a`原先的位置，依次类推</p>
+<li><p>将该<code>节点a</code>放到<code>右节点b</code>的位置，将该&#96;&#96;左节点c<code>放到</code>节点a&#96;原先的位置，依次类推</p>
 </li>
 <li><p>特殊的，将该<code>点a的内侧孙子</code>（<code>a的左子节点c</code>的<code>右子节点d</code>）断开与其<code>父节点c</code>的连接，转而连接到<code>a</code>上，成为<code>a的左子节点</code></p>
 </li>
 </ol>
 <p>如图，依次插入<code>6,34,23</code>，<strong>以<code>34</code>为支点右旋</strong>：</p>
-<p><img src="https://jixiaoyong.github.io/images/20181223175956.png" width='50%' height='50%'></p>
+<img src="https://jixiaoyong.github.io/images/20181223175956.png" width='50%' height='50%'>
+
 <p>对获得的结果，由于<font color="#ff0000">23</font>，<font color="#ff0000">34</font>都是红色违反了<code>规则3</code>，将<code>34的父节点23</code>设置黑，<code>祖父节点6</code>设为红，<strong>以<code>祖父节6</code>点为支点左旋</strong>：</p>
 <p><img src="https://jixiaoyong.github.io/images/20181223180637.png" alt="最终结果"></p>
 <h1 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h1><p>每次插入红色节点，能够避免规则4。</p>
@@ -330,12 +333,13 @@
 <p>需要对先对当前节点的父节点进行右旋，再以父节点作为<strong>新插入的点N</strong>，将N的父节点设置为黑色，祖父节点设置为红色，以祖父节点为支点左旋。</p>
 <p>如依次插入如下值：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">32,3,53,13,983,[137],237,83,483,43,183</span><br></pre></td></tr></table></figure>
+
 <p>当插入<code>137</code>后红黑树如图：</p>
 <p><img src="https://jixiaoyong.github.io/images/20181223210305.png" alt="插入137后的树"></p>
-<p>本来按照<code>Case 3 父红 叔黑 是左节点</code> 应该要以祖节点右旋，但是组节点53没有左子节点，无法右旋，所以先对父节点983进行右旋：</p>
-<p><img src="https://jixiaoyong.github.io/images/20181223210800.png" alt=""></p>
+<p>本来按照<code>Case 3 父红 叔黑 是左节点 </code> 应该要以祖节点右旋，但是组节点53没有左子节点，无法右旋，所以先对父节点983进行右旋：</p>
+<p><img src="https://jixiaoyong.github.io/images/20181223210800.png"></p>
 <p>再以<code>983</code>为新节点，<code>父红 叔黑 是右节点</code>，将<code>父节点137</code>设置为黑色，<code>祖节点53</code>设置为红色，以<code>组节点53</code>为支点左旋：</p>
-<p><img src="https://jixiaoyong.github.io/images/20181223211217.png" alt=""></p>
+<p><img src="https://jixiaoyong.github.io/images/20181223211217.png"></p>
 <h1 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h1><p>删除比较复杂，可以有两种操作：</p>
 <ol>
 <li>在节点中保存一个标志位，标记该节点是否被删除，并不针真的删除该点。</li>
