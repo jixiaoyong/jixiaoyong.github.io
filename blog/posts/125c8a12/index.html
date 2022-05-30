@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon.ico">
+  <link rel="mask-icon" href="/blog/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jixiaoyong.github.io","root":"/blog/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="简单排序所有排序顺序为 小 → 大。 时间负责度都是O(N^2^)。 排序速度：插入排序&gt;选择排序&gt;冒泡排序 冒泡排序">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构_简单排序">
+<meta property="og:url" content="https://jixiaoyong.github.io/blog/posts/125c8a12/index.html">
+<meta property="og:site_name" content="Ji Xiaoyong&#39;s Blog">
+<meta property="og:description" content="简单排序所有排序顺序为 小 → 大。 时间负责度都是O(N^2^)。 排序速度：插入排序&gt;选择排序&gt;冒泡排序 冒泡排序">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-12-31T06:45:45.000Z">
+<meta property="article:modified_time" content="2022-05-30T05:52:40.936Z">
+<meta property="article:author" content="JI, XIAOYONG">
+<meta property="article:tag" content="数据结构">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://jixiaoyong.github.io/blog/posts/125c8a12/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>数据结构_简单排序 | Ji Xiaoyong's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-138652239-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-138652239-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Ji Xiaoyong's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/blog/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jixiaoyong.github.io/blog/posts/125c8a12/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/default_avatar.jpg">
+      <meta itemprop="name" content="JI, XIAOYONG">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ji Xiaoyong's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数据结构_简单排序<a href="https://github.com/jixiaoyong/blog_source_code/edit/master/blog/source/_posts/数据结构_简单排序.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-12-31 14:45:45" itemprop="dateCreated datePublished" datetime="2018-12-31T14:45:45+08:00">2018-12-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-30 13:52:40" itemprop="dateModified" datetime="2022-05-30T13:52:40+08:00">2022-05-30</time>
+              </span>
+
+          
+            <span id="/blog/posts/125c8a12/" class="post-meta-item leancloud_visitors" data-flag-title="数据结构_简单排序" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/blog/posts/125c8a12/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/blog/posts/125c8a12/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="简单排序"><a href="#简单排序" class="headerlink" title="简单排序"></a>简单排序</h1><p>所有排序顺序为 <code>小 → 大</code>。</p>
+<p>时间负责度都是O(N^2^)。</p>
+<p>排序速度：<code>插入排序&gt;选择排序&gt;冒泡排序</code></p>
+<h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><p>时间复杂度：O(N^2^) </p>
+<p>最慢的排序，但是简单</p>
+<p>规则如下：</p>
+<ol>
+<li>从左到右，比较a和b，如果<code>a&gt;b</code>，就交换a和b的位置</li>
+<li>再将a，b中较大的那个与c按照2的规则比较，直到最后一位</li>
+<li>重复1，2直到没有待排序的项目</li>
+</ol>
+<p>其思想是：每次选出当前未排序的元素中最大的元素并放到队尾（每次比较最大元素都会“冒泡”到队尾），这样当连续遍历n次后，每个元素都会排好序。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 冒泡排序</span></span><br><span class="line"><span class="comment">     * 1. 每次比较前1~（n-i）个元素（i是排序次数），每次有大的就【移动】，</span></span><br><span class="line"><span class="comment">     * 这样子一轮比赛完毕最大的就在后面了</span></span><br><span class="line"><span class="comment">     * 2. 这样子比较n次就可以完成排序</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">bubbleSort</span><span class="params">(intArray: <span class="type">IntArray</span>)</span></span>: IntArray &#123;</span><br><span class="line">        <span class="keyword">var</span> result = intArray</span><br><span class="line">        <span class="keyword">var</span> size = result.size</span><br><span class="line">        <span class="keyword">for</span> (index <span class="keyword">in</span> <span class="number">0</span> until size) &#123;</span><br><span class="line">            <span class="keyword">for</span> (x <span class="keyword">in</span> <span class="number">0</span> until size - index - <span class="number">1</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (result[x] &gt; result[x + <span class="number">1</span>]) &#123;<span class="comment">//【注意】冒泡排序，每次比较满足条件就会交换</span></span><br><span class="line">                    <span class="keyword">var</span> temp = result[x]</span><br><span class="line">                    result[x] = result[x + <span class="number">1</span>]</span><br><span class="line">                    result[x + <span class="number">1</span>] = temp</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><p>时间复杂度：O(N^2^) </p>
+<p>因为交换次数少，所以比冒泡快</p>
+<p>规则如下：</p>
+<ol>
+<li>假设第一项值最大，设其坐标为<code>max</code>，从左到右依次比较<code>max</code>和其他元素，如果遇到比<code>max</code>大的，将max坐标指向该值</li>
+<li>每轮结束后<code>max</code>就表示这轮比较最大的值坐标，将其与当前未排序的最后一项交换</li>
+<li>这样重复步骤1，2， <code>n次</code>就可以排序完成</li>
+</ol>
+<p>其思想是：每次比较当前最大的值，记录下其坐标，等当前比较完成就和<code>未比较的最后一位</code>交换，（这样子避免每次比较都要交换）。同样这样子比较n次就可以完成排序。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 选择排序</span></span><br><span class="line"><span class="comment"> * 1. 每次比较前1~（n-i）个元素（i是排序次数），如果有大的就记录下位置，一轮比较完毕后交换他和最后一位的位置</span></span><br><span class="line"><span class="comment"> * 2. 这样子比较n次就可以完成排序</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">selectSort</span><span class="params">(intArray: <span class="type">IntArray</span>)</span></span>: IntArray &#123;</span><br><span class="line">    <span class="keyword">var</span> result = intArray</span><br><span class="line">    <span class="keyword">var</span> size = result.size</span><br><span class="line">    <span class="keyword">for</span> (index <span class="keyword">in</span> <span class="number">0</span> until size) &#123;</span><br><span class="line">        <span class="keyword">var</span> max = <span class="number">0</span><span class="comment">//假设arr[0]最大</span></span><br><span class="line">        <span class="keyword">for</span> (x <span class="keyword">in</span> <span class="number">0</span> until size - index - <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (result[max] &lt; result[x + <span class="number">1</span>]) &#123;<span class="comment">//将max与每一项比较，注意这里参与比较的是max</span></span><br><span class="line">                max = x + <span class="number">1</span><span class="comment">//遇到比max大的则记录下其位置 【注意】这里并没有交换</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//在每轮比较完毕后max就是这轮比较出来的最大值位置，将其放到对应位置</span></span><br><span class="line">        <span class="keyword">var</span> temp = result[size - index - <span class="number">1</span>]</span><br><span class="line">        result[size - index - <span class="number">1</span>] = result[max]</span><br><span class="line">        result[max] = temp</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h2><p>时间复杂度：O(N^2^) </p>
+<p>比冒泡快一倍，比选择排序快一些</p>
+<p>思想：假设一个标记元素的左边全部是有序数组，右边全是无序数组，那么只需要将右边的元素依次拿出来插入到左边的有序数组中即可。刚开始这个标记元素可以为0或者1（假设一个元素就是有序的）。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 插入排序</span></span><br><span class="line"><span class="comment"> * 假设右端数组是有序的，依次从左端数组取出元素比较，插入到右边的有序数组</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">insertSort</span><span class="params">(intArray: <span class="type">IntArray</span>)</span></span>: IntArray &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> result = intArray</span><br><span class="line">    <span class="keyword">var</span> size = result.size</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (insertIndex <span class="keyword">in</span> <span class="number">1</span> until size ) &#123;<span class="comment">//假设arr[0]已经是有序的，所以从1开始</span></span><br><span class="line">        <span class="keyword">var</span> insertPoint = result[insertIndex]</span><br><span class="line">        <span class="keyword">for</span> (index <span class="keyword">in</span> insertIndex - <span class="number">1</span> downTo  <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (insertPoint &lt; result[index]) &#123;</span><br><span class="line">                <span class="comment">//默认要插入的点是有序的，如果有比插入点大的，则将该点和插入点交换</span></span><br><span class="line">                result[index + <span class="number">1</span>] = result[index]</span><br><span class="line">                result[index] = insertPoint</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">//因为左边的数组是有序的，只要有比插入点小的元素，则剩下的肯定都小于该元素，不用再比较了</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h1><p><a target="_blank" rel="noopener" href="https://github.com/jixiaoyong/Notes-Files/blob/master/AndroidLearningResource/java_note/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AD%A6%E4%B9%A0/sort/BasicSort.kt">👉点这里</a>查看源码</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>JI, XIAOYONG
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://jixiaoyong.github.io/blog/posts/125c8a12/" title="数据结构_简单排序">https://jixiaoyong.github.io/blog/posts/125c8a12/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag"># 数据结构</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/posts/a71f2ecc/" rel="prev" title="数据结构_图">
+      <i class="fa fa-chevron-left"></i> 数据结构_图
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/posts/9a784fe0/" rel="next" title="数据结构_数组，链表">
+      数据结构_数组，链表 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E6%8E%92%E5%BA%8F"><span class="nav-number">1.</span> <span class="nav-text">简单排序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F"><span class="nav-number">1.1.</span> <span class="nav-text">冒泡排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F"><span class="nav-number">1.2.</span> <span class="nav-text">选择排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F"><span class="nav-number">1.3.</span> <span class="nav-text">插入排序</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%BA%90%E7%A0%81"><span class="nav-number">2.</span> <span class="nav-text">源码</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JI, XIAOYONG"
+      src="/blog/images/default_avatar.jpg">
+  <p class="site-author-name" itemprop="name">JI, XIAOYONG</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">88</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jixiaoyong" title="GitHub → https://github.com/jixiaoyong" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jixiaoyong1995@gmail.com" title="E-Mail → mailto:jixiaoyong1995@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JI, XIAOYONG</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+
+<script src="/blog/js/schemes/muse.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'eiCorogUwe1OdpPG65oSWEsP-MdYXbMMI',
+      appKey     : 'glorq3CiX4j8RNIWf7kq5LBW',
+      placeholder: "ヾ(=^▽^=)ノ",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : 'https://api.xiaoyong.ml'
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

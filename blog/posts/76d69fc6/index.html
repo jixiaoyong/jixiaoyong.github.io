@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon.ico">
+  <link rel="mask-icon" href="/blog/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jixiaoyong.github.io","root":"/blog/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="前言最近在项目里面遇到了屏幕适配的问题，UI要求APP在不同手机上展示效果和设计稿保持“像素级”同步，在对比了几种屏幕适配方案之后，选择了基于今日头条的AndroidAutoSize适配方案。 本文主要简单分析其适配原理，以及在实际使用中遇到的一个问题，需要更深入了解原理可以阅读文末参考文献。 正文UI给的设计稿一般都是以像素px为单位，而在Android开发中官方推荐的使用的单位是dp。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android今日头条屏幕适配方案的原理梳理">
+<meta property="og:url" content="https://jixiaoyong.github.io/blog/posts/76d69fc6/index.html">
+<meta property="og:site_name" content="Ji Xiaoyong&#39;s Blog">
+<meta property="og:description" content="前言最近在项目里面遇到了屏幕适配的问题，UI要求APP在不同手机上展示效果和设计稿保持“像素级”同步，在对比了几种屏幕适配方案之后，选择了基于今日头条的AndroidAutoSize适配方案。 本文主要简单分析其适配原理，以及在实际使用中遇到的一个问题，需要更深入了解原理可以阅读文末参考文献。 正文UI给的设计稿一般都是以像素px为单位，而在Android开发中官方推荐的使用的单位是dp。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-10-13T03:13:18.000Z">
+<meta property="article:modified_time" content="2022-05-30T05:52:40.928Z">
+<meta property="article:author" content="JI, XIAOYONG">
+<meta property="article:tag" content="android">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://jixiaoyong.github.io/blog/posts/76d69fc6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Android今日头条屏幕适配方案的原理梳理 | Ji Xiaoyong's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-138652239-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-138652239-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Ji Xiaoyong's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/blog/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jixiaoyong.github.io/blog/posts/76d69fc6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/default_avatar.jpg">
+      <meta itemprop="name" content="JI, XIAOYONG">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ji Xiaoyong's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Android今日头条屏幕适配方案的原理梳理<a href="https://github.com/jixiaoyong/blog_source_code/edit/master/blog/source/_posts/Android今日头条屏幕适配方案的原理梳理.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-10-13 11:13:18" itemprop="dateCreated datePublished" datetime="2020-10-13T11:13:18+08:00">2020-10-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-30 13:52:40" itemprop="dateModified" datetime="2022-05-30T13:52:40+08:00">2022-05-30</time>
+              </span>
+
+          
+            <span id="/blog/posts/76d69fc6/" class="post-meta-item leancloud_visitors" data-flag-title="Android今日头条屏幕适配方案的原理梳理" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/blog/posts/76d69fc6/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/blog/posts/76d69fc6/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近在项目里面遇到了屏幕适配的问题，UI要求APP在不同手机上展示效果和设计稿保持“像素级”同步，在对比了几种屏幕适配方案之后，选择了基于今日头条的<a target="_blank" rel="noopener" href="https://github.com/JessYanCoding/AndroidAutoSize">AndroidAutoSize</a>适配方案。</p>
+<p>本文主要简单分析其适配原理，以及在实际使用中遇到的一个问题，需要更深入了解原理可以阅读文末参考文献。</p>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><p>UI给的设计稿一般都是以像素px为单位，而在Android开发中官方推荐的使用的单位是dp。</p>
+<blockquote>
+<p>dp 是一个虚拟像素单位，1 dp 约等于中密度屏幕（160dpi；“基准”密度）上的 1 像素。对于其他每个密度，Android 会将此值转换为相应的实际像素数。</p>
+<p>—— Android Developer</p>
+</blockquote>
+<p>根据Android官方的定义，dp在屏幕上实际对应的像素px计算方式如下：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">px = dp * (dpi / <span class="number">160</span>)</span><br></pre></td></tr></table></figure>
+<p>其中 dpi表示：<strong>屏幕每平方英寸有多少像素</strong>，可以通过屏幕对角线的像素数px/屏幕尺寸inch计算。</p>
+<p>而<code>DisplayMetrics.density</code> 字段表示根据当前像素密度指定将 <code>dp</code> 单位转换为像素时所必须使用的缩放系数，即上述方程等价于：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">px = dp * (dpi / <span class="number">160</span>)</span><br><span class="line">   = dp * getResources().getDisplayMetrics().density</span><br></pre></td></tr></table></figure>
+<p>这样，在dpi为160的屏幕上1dp占1px，在dpi为320的屏幕上占2px，那么就能保证同一dp的在不同dpi上占得像素是等比例变化的。</p>
+<p>但是，在现实生活中面对千变万化的Android屏幕，根据Jessyan的文章可知由于每种屏幕宽/高对应的总dp数不一定都是相同的，所以即使使用了dp作为单位，还是会出现同一dp在有些屏幕上刚好占满全屏，在有的屏幕上会无法占满全屏或超出屏幕范围。</p>
+<blockquote>
+<p><strong>density</strong> 在每个设备上都是固定的，<strong>DPI / 160 = density</strong>，<strong>屏幕的总 px 宽度 / density = 屏幕的总 dp 宽度</strong></p>
+<ul>
+<li>设备 1，屏幕宽度为 <strong>1080px</strong>，<strong>480DPI</strong>，屏幕总 <strong>dp</strong> 宽度为 <strong>1080 / (480 / 160) = 360dp</strong></li>
+<li>设备 2，屏幕宽度为 <strong>1440px</strong>，<strong>560DPI</strong>，屏幕总 <strong>dp</strong> 宽度为 <strong>1440 / (560 / 160) = 411dp</strong></li>
+</ul>
+<p>——Jessyan</p>
+</blockquote>
+<p>那么该怎么适配呢，再看一眼上述的公式：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">屏幕的总 px 宽度 / density = 屏幕的总 dp 宽度</span><br></pre></td></tr></table></figure>
+<p>以适配<strong>屏幕宽度</strong>为例，要使得dp在不同屏幕上对应的像素等比例变化，就要<strong>保证屏幕的总dp宽度一致</strong>，而屏幕的总 px 宽度是物理条件无法更改，那么就只能<strong>更改density</strong>。</p>
+<p>以我们使用的设计稿宽度为375dp为例：</p>
+<p>在分辨率为2160*1080 、尺寸为5.99英寸的屏幕上：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">density = 1080px / 375dp = <span class="number">2.88</span></span><br></pre></td></tr></table></figure>
+<p> 而在分辨率为2400*1176、尺寸为6.53英寸的屏幕上：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">density = 1176px / 375dp = <span class="number">3.136</span></span><br></pre></td></tr></table></figure>
+<p>这样就保证了，不管在什么样的屏幕上，375dp始终都能够占满屏幕宽度，保证了布局在不同大小的屏幕上，在屏幕宽度上的比例一致性，也就解决屏幕适配的问题。</p>
+<h1 id="获取状态栏高度的问题"><a href="#获取状态栏高度的问题" class="headerlink" title="获取状态栏高度的问题"></a>获取状态栏高度的问题</h1><p>上述的屏幕适配方案使用简单，且侵入小，在使用到项目中之后，除了部分字体等显示需要微调外，其余内容基本上都完美还原了设计稿的内容。</p>
+<p>但是在后续使用到状态栏相关代码的时候发现<strong>获取到的状态栏高度和实际高度不一致</strong>，导致显示异常，而使用<a target="_blank" rel="noopener" href="http://blankj.com">Blankj</a>的工具类 <code>BarUtils.getStatusBarHeight()</code>却可以获取到正确的高度。</p>
+<p>对比两种代码发现获取状态栏高度的代码逻辑几乎一样：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">getStatusBarHeight</span><span class="params">(Resources resources)</span> &#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">resourceId</span> <span class="operator">=</span> resources.getIdentifier(<span class="string">&quot;status_bar_height&quot;</span>, <span class="string">&quot;dimen&quot;</span>, <span class="string">&quot;android&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> resources.getDimensionPixelSize(resourceId);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不同的是，两种方法使用到的resources一个是APP的，一个是系统的</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 我使用到的resources，从当前activity获取</span></span><br><span class="line">resources.displayMetrics.density</span><br><span class="line"><span class="comment">// 2. Blankj使用的resources，从系统获取</span></span><br><span class="line">Resources.getSystem().displayMetrics.density</span><br></pre></td></tr></table></figure>
+<p>通过分别打印这两种resources可以发现，二者的density值不一样（以2160*1080 、尺寸为5.99英寸的屏幕为例）：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">context.resources.DisplayMetrics: DisplayMetrics&#123;density=<span class="number">2.88</span>, width=<span class="number">1080</span>, height=<span class="number">2033</span>, scaledDensity=<span class="number">2.88</span>, xdpi=<span class="number">403.411</span>, ydpi=<span class="number">403.411</span>&#125;</span><br><span class="line"></span><br><span class="line">Resources.getSystem().DisplayMetrics: DisplayMetrics&#123;density=<span class="number">2.7</span>, width=<span class="number">1080</span>, height=<span class="number">2033</span>, scaledDensity=<span class="number">2.7</span>, xdpi=<span class="number">403.411</span>, ydpi=<span class="number">403.411</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>这是由于使用了<a target="_blank" rel="noopener" href="https://github.com/JessYanCoding/AndroidAutoSize">AndroidAutoSize</a>适配方案后，APP内部的density已经被改成了2.88，而系统实际的density是2.7。</p>
+<p>又知道android中将像素和dp等单位转化的方法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// android.util.TypedValue</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">float</span> <span class="title function_">applyDimension</span><span class="params">(<span class="type">int</span> unit, <span class="type">float</span> value,</span></span><br><span class="line"><span class="params">                                       DisplayMetrics metrics)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">switch</span> (unit) &#123;</span><br><span class="line">        <span class="keyword">case</span> COMPLEX_UNIT_PX:</span><br><span class="line">            <span class="keyword">return</span> value;</span><br><span class="line">        <span class="keyword">case</span> COMPLEX_UNIT_DIP:</span><br><span class="line">            <span class="keyword">return</span> value * metrics.density;</span><br><span class="line">        <span class="keyword">case</span> COMPLEX_UNIT_SP:</span><br><span class="line">            <span class="keyword">return</span> value * metrics.scaledDensity;</span><br><span class="line">        <span class="keyword">case</span> COMPLEX_UNIT_PT:</span><br><span class="line">            <span class="keyword">return</span> value * metrics.xdpi * (<span class="number">1.0f</span>/<span class="number">72</span>);</span><br><span class="line">        <span class="keyword">case</span> COMPLEX_UNIT_IN:</span><br><span class="line">            <span class="keyword">return</span> value * metrics.xdpi;</span><br><span class="line">        <span class="keyword">case</span> COMPLEX_UNIT_MM:</span><br><span class="line">            <span class="keyword">return</span> value * metrics.xdpi * (<span class="number">1.0f</span>/<span class="number">25.4f</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>分析可知，通过getStatusBarHeight()获取到的状态栏是系统的状态栏69px（即25dp），但当使用APP内部的density=2.88计算时就会只有24dp，和实际的状态栏高度不一致，所以使用状态栏高度来控制布局的时候就会展示异常。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a target="_blank" rel="noopener" href="http://jessyan.me/autosize-introduce/">骚年你的屏幕适配方式该升级了!-今日头条适配方案——jessyan</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/d9QCoBP6kV9VSWvVldVVwA">一种极低成本的Android屏幕适配方式——字节跳动</a></p>
+<p><a target="_blank" rel="noopener" href="https://developer.android.google.cn/training/multiscreen/screendensities#top_of_page">支持不同的像素密度——Android Developers</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/X-aL2vb4uEhqnLzU5wjc4Q">Android 目前稳定高效的UI适配方案——拉丁吴</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/JessYanCoding/AndroidAutoSize">AndroidAutoSize</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/gyf-dev/ImmersionBar/issues/298">请问两种获取屏幕密度的方式有什么区别，望解答多谢</a></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>JI, XIAOYONG
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://jixiaoyong.github.io/blog/posts/76d69fc6/" title="Android今日头条屏幕适配方案的原理梳理">https://jixiaoyong.github.io/blog/posts/76d69fc6/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/android/" rel="tag"># android</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/posts/104c9058/" rel="prev" title="Android笔记之Xfermode">
+      <i class="fa fa-chevron-left"></i> Android笔记之Xfermode
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/posts/10414aef/" rel="next" title="Kotlin笔记之Flow">
+      Kotlin笔记之Flow <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">2.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E7%8A%B6%E6%80%81%E6%A0%8F%E9%AB%98%E5%BA%A6%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">获取状态栏高度的问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JI, XIAOYONG"
+      src="/blog/images/default_avatar.jpg">
+  <p class="site-author-name" itemprop="name">JI, XIAOYONG</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">88</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jixiaoyong" title="GitHub → https://github.com/jixiaoyong" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jixiaoyong1995@gmail.com" title="E-Mail → mailto:jixiaoyong1995@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JI, XIAOYONG</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+
+<script src="/blog/js/schemes/muse.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'eiCorogUwe1OdpPG65oSWEsP-MdYXbMMI',
+      appKey     : 'glorq3CiX4j8RNIWf7kq5LBW',
+      placeholder: "ヾ(=^▽^=)ノ",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : 'https://api.xiaoyong.ml'
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

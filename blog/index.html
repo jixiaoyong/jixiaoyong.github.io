@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon.ico">
+  <link rel="mask-icon" href="/blog/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jixiaoyong.github.io","root":"/blog/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Ji Xiaoyong&#39;s Blog">
+<meta property="og:url" content="https://jixiaoyong.github.io/blog/index.html">
+<meta property="og:site_name" content="Ji Xiaoyong&#39;s Blog">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="JI, XIAOYONG">
+<meta property="article:tag" content="blog,jixiaoyong,android">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://jixiaoyong.github.io/blog/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Ji Xiaoyong's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-138652239-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-138652239-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Ji Xiaoyong's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/blog/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jixiaoyong.github.io/blog/posts/a951661c/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/default_avatar.jpg">
+      <meta itemprop="name" content="JI, XIAOYONG">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ji Xiaoyong's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/posts/a951661c/" class="post-title-link" itemprop="url">Dart Isolate源码分析</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-05-28 15:20:01" itemprop="dateCreated datePublished" datetime="2022-05-28T15:20:01+08:00">2022-05-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-30 13:52:40" itemprop="dateModified" datetime="2022-05-30T13:52:40+08:00">2022-05-30</time>
+              </span>
+
+          
+            <span id="/blog/posts/a951661c/" class="post-meta-item leancloud_visitors" data-flag-title="Dart Isolate源码分析" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/blog/posts/a951661c/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/blog/posts/a951661c/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Isolate"><a href="#Isolate" class="headerlink" title="Isolate"></a>Isolate</h1><p>💡 本文基于Dart 2.17.1</p>
+<p><a target="_blank" rel="noopener" href="https://api.dart.cn/stable/2.17.1/dart-isolate/Isolate-class.html">Isolate</a>, an isolated Dart execution context.</p>
+<p>All Dart code runs in an isolate, and <strong>code can access classes and values only from the same isolate</strong>. Different isolates can communicate by <strong>sending values through ports</strong> (see <a target="_blank" rel="noopener" href="https://api.dart.cn/stable/2.17.1/dart-isolate/ReceivePort-class.html">ReceivePort</a>, <a target="_blank" rel="noopener" href="https://api.dart.cn/stable/2.17.1/dart-isolate/SendPort-class.html">SendPort</a>).</p>
+<blockquote>
+<p>In Dart an isolate has its own event loop, its own global fields, can run in parallel with other isolates and have their own live-cycle.<br>— <a target="_blank" rel="noopener" href="https://github.com/dart-lang/sdk/issues/36097#issuecomment-746510375">https://github.com/dart-lang/sdk/issues/36097#issuecomment-746510375</a></p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/posts/a951661c/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jixiaoyong.github.io/blog/posts/4c220635/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/default_avatar.jpg">
+      <meta itemprop="name" content="JI, XIAOYONG">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ji Xiaoyong's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/posts/4c220635/" class="post-title-link" itemprop="url">Flutter UI 绘制与InheritedWidget解析</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-05-15 19:02:13" itemprop="dateCreated datePublished" datetime="2022-05-15T19:02:13+08:00">2022-05-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-30 13:52:40" itemprop="dateModified" datetime="2022-05-30T13:52:40+08:00">2022-05-30</time>
+              </span>
+
+          
+            <span id="/blog/posts/4c220635/" class="post-meta-item leancloud_visitors" data-flag-title="Flutter UI 绘制与InheritedWidget解析" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/blog/posts/4c220635/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/blog/posts/4c220635/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Flutter-UI-绘制与InheritedWidget解析"><a href="#Flutter-UI-绘制与InheritedWidget解析" class="headerlink" title="Flutter UI 绘制与InheritedWidget解析"></a>Flutter UI 绘制与InheritedWidget解析</h1><p>Flutter的<code>Widget</code>分为<code>StatefulWidget</code>和<code>StatelessWidget</code> ，二者都继承自<code>Widget</code>。</p>
+<p>此外还有一种用来传输数据的<code>Widget</code>——<code>InheritedWidget</code>，与上述两者不太一样的是，他的继承关系是：<code>InheritedWidget</code>→<code>ProxyWidget</code> →<code>Widget</code> 。</p>
+<p>Flutter的渲染流程如图：</p>
+<p><img src="https://jixiaoyong.github.io/images/flutter_widget_element_renderobject_relationship.png" alt="flutter_widget_element_renderobject_relationship"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/posts/4c220635/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jixiaoyong.github.io/blog/posts/767a594/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/default_avatar.jpg">
+      <meta itemprop="name" content="JI, XIAOYONG">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ji Xiaoyong's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/posts/767a594/" class="post-title-link" itemprop="url">Flutter Expanded VS Flexible</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-05-11 11:49:12" itemprop="dateCreated datePublished" datetime="2022-05-11T11:49:12+08:00">2022-05-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-30 13:52:40" itemprop="dateModified" datetime="2022-05-30T13:52:40+08:00">2022-05-30</time>
+              </span>
+
+          
+            <span id="/blog/posts/767a594/" class="post-meta-item leancloud_visitors" data-flag-title="Flutter Expanded VS Flexible" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/blog/posts/767a594/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/blog/posts/767a594/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在Flutter中，当需要填充容器（<code>Row</code>, <code>Column</code>, or <code>Flex</code>）剩余空间的时候，可以使用<code>Expanded</code>或<code>Flexible</code>，本文对这二者的差异做一分析。</p>
+<h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><p><code>Expanded</code> 比较容易理解，他会强制child改变大小，占据容器的剩余空间，如果有多个<code>Expanded</code>的话，会按照他们的flex占比来分配每个child可以占据的空间大小。  </p>
+<p><code>Flexible</code> 稍微特殊一些，有时候看起来似乎他的child占据的大小既不全是父布局的剩余空间，也不全是刚刚包裹child内容的大小。</p>
+<p>让我们看一下<code>Flexible</code>的源码：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/posts/767a594/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jixiaoyong.github.io/blog/posts/e15dda2e/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/default_avatar.jpg">
+      <meta itemprop="name" content="JI, XIAOYONG">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ji Xiaoyong's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/posts/e15dda2e/" class="post-title-link" itemprop="url">Compose屏幕适配</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-08-03 11:51:32" itemprop="dateCreated datePublished" datetime="2021-08-03T11:51:32+08:00">2021-08-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-30 13:52:40" itemprop="dateModified" datetime="2022-05-30T13:52:40+08:00">2022-05-30</time>
+              </span>
+
+          
+            <span id="/blog/posts/e15dda2e/" class="post-meta-item leancloud_visitors" data-flag-title="Compose屏幕适配" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/blog/posts/e15dda2e/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/blog/posts/e15dda2e/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Compose屏幕适配"><a href="#Compose屏幕适配" class="headerlink" title="Compose屏幕适配"></a>Compose屏幕适配</h1><p>一种<strong>Compose</strong>中屏幕适配的解决方案，灵感参考<em>头条屏幕适配</em>、<em>AndroidAutoSize</em>等，以设计稿宽度和屏幕水平方法大小为准，等比拉伸控件大小。</p>
+<p>后文附有本方案的Kotlin语言实现，使用只需要两个步骤即可：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1 初始化</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MainApp</span> : <span class="type">Application</span></span>() &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate()</span><br><span class="line">        SizeEtx.<span class="keyword">init</span>(<span class="keyword">this</span>, <span class="number">375</span>) <span class="comment">// 375为设计稿宽度</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2 使用</span></span><br><span class="line">size(width = <span class="number">9.</span>composeDp, height = <span class="number">16.</span>composeDp)</span><br></pre></td></tr></table></figure>
+<h1 id="主要的设计思想"><a href="#主要的设计思想" class="headerlink" title="主要的设计思想"></a>主要的设计思想</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/posts/e15dda2e/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jixiaoyong.github.io/blog/posts/9e235953/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/default_avatar.jpg">
+      <meta itemprop="name" content="JI, XIAOYONG">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ji Xiaoyong's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/posts/9e235953/" class="post-title-link" itemprop="url">Flutter中的异常处理</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-07-29 15:41:47" itemprop="dateCreated datePublished" datetime="2021-07-29T15:41:47+08:00">2021-07-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-30 13:52:40" itemprop="dateModified" datetime="2022-05-30T13:52:40+08:00">2022-05-30</time>
+              </span>
+
+          
+            <span id="/blog/posts/9e235953/" class="post-meta-item leancloud_visitors" data-flag-title="Flutter中的异常处理" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/blog/posts/9e235953/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/blog/posts/9e235953/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Flutter中的异常处理"><a href="#Flutter中的异常处理" class="headerlink" title="Flutter中的异常处理"></a>Flutter中的异常处理</h1><h1 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h1><p><code>FLutter</code>中的错误不会导致应用程序奔溃，只会终止执行出错代码之后的逻辑，在导致<code>Widget.build()</code>返回为<code>null</code>的错误会导致<code>Widget</code>构建失败，并返回红底黄字的错误原因<code>Widget</code>（在Release模式则会显示为灰底区域），对于异步方法产生异常等<code>Flutter框架</code>没有捕获的情况，会交由当前代码所在的<code>Zone</code>处理。</p>
+<blockquote>
+<p><strong>为什么 flutter 触发异常的时候不会崩溃？</strong><br>这个和 <code>flutter</code> 的消息循环机制有关，任务分两种，一个是微任务 <code>microtask</code>，一个是事件 <code>event</code>，他们有自己的队列，每个任务是相互独立的，一旦某个任务触发异常，也就是导致这个任务后续代码无法执行，并不会影响其他任务执行</p>
+</blockquote>
+<p><em>本文基于Flutter (Channel stable, 2.2.3)</em></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/posts/9e235953/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jixiaoyong.github.io/blog/posts/12cb887a/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/default_avatar.jpg">
+      <meta itemprop="name" content="JI, XIAOYONG">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ji Xiaoyong's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/posts/12cb887a/" class="post-title-link" itemprop="url">Android11文件分区存储在图片读写的适配</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-06-01 14:34:25" itemprop="dateCreated datePublished" datetime="2021-06-01T14:34:25+08:00">2021-06-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-30 13:52:40" itemprop="dateModified" datetime="2022-05-30T13:52:40+08:00">2022-05-30</time>
+              </span>
+
+          
+            <span id="/blog/posts/12cb887a/" class="post-meta-item leancloud_visitors" data-flag-title="Android11文件分区存储在图片读写的适配" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/blog/posts/12cb887a/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/blog/posts/12cb887a/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h1><p>当APP目标版本是Android 10（API 29）及以后时，由于Android引入了分区存储，APP不能直接通过路径访问文件，访问外部存储空间中的媒体文件除了需要<code>READ_EXTERNAL_STORAGE</code> 或 <code>WRITE_EXTERNAL_STORAGE</code> 权限之外，需要通过其他APP分享的<code>Uri</code>读写文件，同理要给其余APP分享文件也许要通过<code>FileProvider</code>生成<code>Uri</code>并赋予对应的权限。</p>
+<p>本文以从相册中获取图片、请求系统裁剪并返回图片为例展示对应的适配方法。</p>
+<h1 id="实际操作"><a href="#实际操作" class="headerlink" title="实际操作"></a>实际操作</h1><p>1.<strong>从相册中获取图片</strong></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/posts/12cb887a/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jixiaoyong.github.io/blog/posts/10414aef/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/default_avatar.jpg">
+      <meta itemprop="name" content="JI, XIAOYONG">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ji Xiaoyong's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/posts/10414aef/" class="post-title-link" itemprop="url">Kotlin笔记之Flow</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-02-25 12:20:12" itemprop="dateCreated datePublished" datetime="2021-02-25T12:20:12+08:00">2021-02-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-30 13:52:40" itemprop="dateModified" datetime="2022-05-30T13:52:40+08:00">2022-05-30</time>
+              </span>
+
+          
+            <span id="/blog/posts/10414aef/" class="post-meta-item leancloud_visitors" data-flag-title="Kotlin笔记之Flow" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/blog/posts/10414aef/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/blog/posts/10414aef/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><code>Flow</code>是Kotlin协程库中的库，用于<strong>异步返回多个值</strong>，官方介绍是参考<code>RxJava</code>等响应式流实现的，但是“<em>拥有尽可能简单的设计， 对 Kotlin 以及挂起友好且遵从结构化并发</em>”。本文主要参考<a target="_blank" rel="noopener" href="https://www.kotlincn.net/docs/reference/coroutines/flow.html">Flow中文文档</a>，梳理了学习过程中的要点和理解，以便日后查验。</p>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><p>对于异步返回多个值的需求，集合（如<code>List</code>等）只能一次性返回多个值，而序列（ <a target="_blank" rel="noopener" href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.sequences/index.html"><code>Sequence</code></a> ）只支持阻塞代码，<code>Flow</code>则支持挂起函数异步返回多个值。</p>
+<h2 id="创建Flow"><a href="#创建Flow" class="headerlink" title="创建Flow"></a>创建Flow</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/posts/10414aef/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jixiaoyong.github.io/blog/posts/76d69fc6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/default_avatar.jpg">
+      <meta itemprop="name" content="JI, XIAOYONG">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ji Xiaoyong's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/posts/76d69fc6/" class="post-title-link" itemprop="url">Android今日头条屏幕适配方案的原理梳理</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-10-13 11:13:18" itemprop="dateCreated datePublished" datetime="2020-10-13T11:13:18+08:00">2020-10-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-30 13:52:40" itemprop="dateModified" datetime="2022-05-30T13:52:40+08:00">2022-05-30</time>
+              </span>
+
+          
+            <span id="/blog/posts/76d69fc6/" class="post-meta-item leancloud_visitors" data-flag-title="Android今日头条屏幕适配方案的原理梳理" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/blog/posts/76d69fc6/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/blog/posts/76d69fc6/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近在项目里面遇到了屏幕适配的问题，UI要求APP在不同手机上展示效果和设计稿保持“像素级”同步，在对比了几种屏幕适配方案之后，选择了基于今日头条的<a target="_blank" rel="noopener" href="https://github.com/JessYanCoding/AndroidAutoSize">AndroidAutoSize</a>适配方案。</p>
+<p>本文主要简单分析其适配原理，以及在实际使用中遇到的一个问题，需要更深入了解原理可以阅读文末参考文献。</p>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><p>UI给的设计稿一般都是以像素px为单位，而在Android开发中官方推荐的使用的单位是dp。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/posts/76d69fc6/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jixiaoyong.github.io/blog/posts/104c9058/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/default_avatar.jpg">
+      <meta itemprop="name" content="JI, XIAOYONG">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ji Xiaoyong's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/posts/104c9058/" class="post-title-link" itemprop="url">Android笔记之Xfermode</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-15 14:05:03" itemprop="dateCreated datePublished" datetime="2020-04-15T14:05:03+08:00">2020-04-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-30 13:52:40" itemprop="dateModified" datetime="2022-05-30T13:52:40+08:00">2022-05-30</time>
+              </span>
+
+          
+            <span id="/blog/posts/104c9058/" class="post-meta-item leancloud_visitors" data-flag-title="Android笔记之Xfermode" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/blog/posts/104c9058/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/blog/posts/104c9058/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><code>Xfermode</code>是Android中用来指示<code>Paint</code>绘制的内容与View中已有内容的混合计算方式,也就是用来确定图形绘制到目标图形的时候，如何处理两个图形重合部分的颜色变化。共18个，分为Alpha合成和混合两种。</p>
+<p>设要绘制的图形为<code>src</code>，已经绘制好的图形为<code>dst</code>。</p>
+<blockquote>
+<p>需要注意的是，这些图片除了要绘制的图形有着色之外，其他部分要为透明，并且<strong>包括透明区域在内的图片大小（宽高）要能完全覆盖另外一张图片的图形区域</strong>，否则绘制出的图形可能与预设的效果不一致</p>
+</blockquote>
+<p>按照官方的定义，不同<code>Xfermode</code>绘制结果如下：</p>
+<p><img src="https://jixiaoyong.github.io/images/20200415211144.png" alt></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/posts/104c9058/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jixiaoyong.github.io/blog/posts/5c023044/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/default_avatar.jpg">
+      <meta itemprop="name" content="JI, XIAOYONG">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ji Xiaoyong's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/posts/5c023044/" class="post-title-link" itemprop="url">Android笔记之贝塞尔曲线的应用</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-10 09:49:03" itemprop="dateCreated datePublished" datetime="2020-04-10T09:49:03+08:00">2020-04-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-30 13:52:40" itemprop="dateModified" datetime="2022-05-30T13:52:40+08:00">2022-05-30</time>
+              </span>
+
+          
+            <span id="/blog/posts/5c023044/" class="post-meta-item leancloud_visitors" data-flag-title="Android笔记之贝塞尔曲线的应用" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/blog/posts/5c023044/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/blog/posts/5c023044/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/贝塞尔曲线">贝塞尔曲线</a>是用节点和控制点绘制的高精度曲线，Android中常用的有二阶、三阶贝塞尔曲线。本文介绍使用贝塞尔曲线绘制折线图，并实现动画效果。</p>
+<p><img src="https://jixiaoyong.github.io/images/20200413215502.jpg" alt></p>
+<p>本文代码链接：<a target="_blank" rel="noopener" href="https://github.com/jixiaoyong/library/blob/master/library/src/main/java/cf/android666/applibrary/view/BezierViewAnim.kt">https://github.com/jixiaoyong/library/blob/master/library/src/main/java/cf/android666/applibrary/view/BezierViewAnim.kt</a></p>
+<h1 id="贝塞尔曲线介绍"><a href="#贝塞尔曲线介绍" class="headerlink" title="贝塞尔曲线介绍"></a>贝塞尔曲线介绍</h1><p>下图是二阶贝塞尔曲线绘制方法介绍，只要各个点满足条件：AD/AB = BE/BC = DF/DE，那么当沿着当前线段移动D、E点时，F点的运动轨迹就是一个贝塞尔曲线：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/posts/5c023044/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/blog/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/9/">9</a><a class="extend next" rel="next" href="/blog/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JI, XIAOYONG"
+      src="/blog/images/default_avatar.jpg">
+  <p class="site-author-name" itemprop="name">JI, XIAOYONG</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">88</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jixiaoyong" title="GitHub → https://github.com/jixiaoyong" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jixiaoyong1995@gmail.com" title="E-Mail → mailto:jixiaoyong1995@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JI, XIAOYONG</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+
+<script src="/blog/js/schemes/muse.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'eiCorogUwe1OdpPG65oSWEsP-MdYXbMMI',
+      appKey     : 'glorq3CiX4j8RNIWf7kq5LBW',
+      placeholder: "ヾ(=^▽^=)ノ",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : 'https://api.xiaoyong.ml'
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

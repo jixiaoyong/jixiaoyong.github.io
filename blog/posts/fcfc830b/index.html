@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon.ico">
+  <link rel="mask-icon" href="/blog/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jixiaoyong.github.io","root":"/blog/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="这几天学习 AppWidget ，很简单的组件却花费了不少功夫，今天对 PendingIntent 的用法做了一些简单的整理。 PendingIntent  PandingIntent 就像是一个设计好的处理预案，当达到某个特定条件时，便会调用该 Intent 所指定动作（打开服务，Activity或者发送广播）。 这里使用该方法在 AppWidget 里面为按钮添加监听事件，当按钮被点击的时候触">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AppWidget的使用之PendingIntent">
+<meta property="og:url" content="https://jixiaoyong.github.io/blog/posts/fcfc830b/index.html">
+<meta property="og:site_name" content="Ji Xiaoyong&#39;s Blog">
+<meta property="og:description" content="这几天学习 AppWidget ，很简单的组件却花费了不少功夫，今天对 PendingIntent 的用法做了一些简单的整理。 PendingIntent  PandingIntent 就像是一个设计好的处理预案，当达到某个特定条件时，便会调用该 Intent 所指定动作（打开服务，Activity或者发送广播）。 这里使用该方法在 AppWidget 里面为按钮添加监听事件，当按钮被点击的时候触">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2016-04-24T22:06:06.000Z">
+<meta property="article:modified_time" content="2022-05-30T05:52:40.932Z">
+<meta property="article:author" content="JI, XIAOYONG">
+<meta property="article:tag" content="blog,jixiaoyong,android">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://jixiaoyong.github.io/blog/posts/fcfc830b/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>AppWidget的使用之PendingIntent | Ji Xiaoyong's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-138652239-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-138652239-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Ji Xiaoyong's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/blog/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jixiaoyong.github.io/blog/posts/fcfc830b/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/default_avatar.jpg">
+      <meta itemprop="name" content="JI, XIAOYONG">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ji Xiaoyong's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          AppWidget的使用之PendingIntent<a href="https://github.com/jixiaoyong/blog_source_code/edit/master/blog/source/_posts/AppWidget的使用之PendingIntent.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-04-25 06:06:06" itemprop="dateCreated datePublished" datetime="2016-04-25T06:06:06+08:00">2016-04-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-30 13:52:40" itemprop="dateModified" datetime="2022-05-30T13:52:40+08:00">2022-05-30</time>
+              </span>
+
+          
+            <span id="/blog/posts/fcfc830b/" class="post-meta-item leancloud_visitors" data-flag-title="AppWidget的使用之PendingIntent" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/blog/posts/fcfc830b/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/blog/posts/fcfc830b/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>这几天学习 AppWidget ，很简单的组件却花费了不少功夫，今天对 PendingIntent 的用法做了一些简单的整理。</p>
+<p><strong>PendingIntent</strong></p>
+<blockquote>
+<p>PandingIntent 就像是一个设计好的处理预案，当达到某个特定条件时，便会调用该 Intent 所指定动作（打开服务，Activity或者发送广播）。</p>
+<p>这里使用该方法在 AppWidget 里面为按钮添加监听事件，当按钮被点击的时候触发相应的动作</p>
+</blockquote>
+<p>AppWidget 和应用程序不再同一个进程当中，而是在 HomeScreen 上面执行,所以不能直接为 AppWidget 中的 Button 添加监听事件，需要用 <code>remoteViews.setPendingIntent(R.id.widget_button,pendingIntent);</code>意思是当按下按钮的时候 pendingIntent 中的 Intent 就会执行</p>
+<p>PendingIntent 当某个事件出现之后才会执行</p>
+<p>RemoteViews对象 代表了一系列的 View 对象，和主程序不在同一个进程为 AppWidget 控件绑定处理器</p>
+<p><strong>流程概述：</strong></p>
+<ul>
+<li><p>添加 appwidget_provider_info.xml 在 res/xml 下新建 appwidget_provider_info.xml</p>
+<ul>
+<li>描述 AppWidget 的基本信息如最小高度、宽度等，还有就是该挂件的布局文件</li>
+</ul>
+</li>
+<li><p>在 res/layout 下面为该挂件设置具体的布局样式</p>
+<ul>
+<li>向 AppWidget 的布局文件中添加一个 Button</li>
+<li>向 AppWidget 的布局文件中添加一个 TextView</li>
+</ul>
+</li>
+<li><p>新建 MyAppWidget.java 继承自 AppWidgetProvider</p>
+<p>在该类的 onUpdate() 方法中为 Button 设置、添加监听事件</p>
+<ul>
+<li>建立一个 Intent 对象</li>
+<li>用该 Intent 对象创建一个 PendingIntent 对象</li>
+<li>创建一个 RemoteViews 对象</li>
+<li>用该 RemoveViews 对象为 按钮绑定事件处理器</li>
+<li>更新按钮</li>
+</ul>
+</li>
+<li><p>注册事件</p>
+</li>
+<li><p>备注：要是为 AppWidget 中的 Button 设置的事件是打开一个 TargetActivity ，还需要添加一个 TargetActivity 类和对应的布局文件</p>
+</li>
+</ul>
+<p><strong>以下是代码</strong></p>
+<ul>
+<li>appwidget_provider_info.xml</li>
+</ul>
+<p>这个布局文件是 AppWidget 的信息</p>
+<p>描述了 AppWidget 的最小高，最小宽以及它的布局文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;appwidget-provider</span><br><span class="line">    android:minHeight=&quot;200dp&quot;</span><br><span class="line">    android:minWidth=&quot;300dp&quot;</span><br><span class="line">    android:initialLayout=&quot;@layout/app_widget&quot;</span><br><span class="line">    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot; &gt;</span><br><span class="line">&lt;/appwidget-provider&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>app_widget.xml</li>
+</ul>
+<p>这个布局文件是 Widget 在桌面上显示的样式</p>
+<p>定义了 AppWidget 中各个组件及其样式</p>
+<p>其中 Button 用来响应点击事件，加入 TargetActivity</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    android:layout_width=&quot;200dp&quot;</span><br><span class="line">    android:layout_height=&quot;200dp&quot;</span><br><span class="line">    android:orientation=&quot;vertical&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;TextView</span><br><span class="line">        android:layout_width=&quot;match_parent&quot;</span><br><span class="line">        android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">        android:text=&quot;hello,world!&quot;/&gt;</span><br><span class="line"></span><br><span class="line">&lt;Button</span><br><span class="line">        android:id=&quot;@+id/app_widget_btn&quot;</span><br><span class="line">        android:layout_width=&quot;200dp&quot;</span><br><span class="line">        android:layout_height=&quot;150dp&quot;</span><br><span class="line">        android:background=&quot;#ff00ff&quot;</span><br><span class="line">        android:text=&quot;this is my app widget button&quot;/&gt;</span><br><span class="line">&lt;/LinearLayout&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>target_activity.xml</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    android:layout_width=&quot;match_parent&quot;</span><br><span class="line">    android:layout_height=&quot;match_parent&quot;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;TextView</span><br><span class="line">        android:layout_width=&quot;match_parent&quot;</span><br><span class="line">        android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">        android:textSize=&quot;50sp&quot;</span><br><span class="line">        android:background=&quot;#00ff00&quot;</span><br><span class="line">        android:text=&quot;\n hello,welcome to target activity!&quot;/&gt;</span><br><span class="line"></span><br><span class="line">&lt;/LinearLayout&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>MyAppWidget.java</li>
+</ul>
+<p>主要是修改了 update() 方法：</p>
+<p>定义了一个预先设定的动作—- Intent 对象；</p>
+<p>利用该 Intent 读写，创建一个 PendingIntent 对象；</p>
+<p>创建一个 RemoteView 对象，并为按钮绑定监听事件</p>
+<p>刷新 AppWidget。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">public class MyAppWidget extends AppWidgetProvider &#123;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onReceive(Context context, Intent intent) &#123;</span><br><span class="line">        // TODO Auto-generated method stub</span><br><span class="line">        super.onReceive(context, intent);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onUpdate(Context context, AppWidgetManager appWidgetManager,</span><br><span class="line">                         int[] appWidgetIds) &#123;</span><br><span class="line">        // TODO Auto-generated method stub</span><br><span class="line">        super.onUpdate(context, appWidgetManager, appWidgetIds);</span><br><span class="line"></span><br><span class="line">        //appWidgetIds 每一次向屏幕添加 AppWidget 的时候都会增加一个唯一的 appWidget 的 Id</span><br><span class="line">        for(int i = 0; i &lt; appWidgetIds.length;i++)&#123;</span><br><span class="line">          //创建一个 Intent 对象</span><br><span class="line">            Intent intent = new Intent(context,TargetActivity.class);</span><br><span class="line">            //创建一个 PendingIntent 对象</span><br><span class="line">            PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent,0);</span><br><span class="line">            // remoteViews 代表 AppWidget 上所有的控件</span><br><span class="line">            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.app_widget);</span><br><span class="line">            //为按钮绑定事件处理器</span><br><span class="line">            /*</span><br><span class="line">            * 参1，指定被绑定处理器的控件id</span><br><span class="line">            * 参2，指定事件发生时会被执行的 PendingIntent</span><br><span class="line">             */</span><br><span class="line">            remoteViews.setOnClickPendingIntent(R.id.app_widget_btn,pendingIntent);</span><br><span class="line">            //更新 AppWidget ，参1是用于指定被更新 appWidget 的ID</span><br><span class="line">            appWidgetManager.updateAppWidget(appWidgetIds[i],remoteViews);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onDeleted(Context context, int[] appWidgetIds) &#123;</span><br><span class="line">        // TODO Auto-generated method stub</span><br><span class="line">        super.onDeleted(context, appWidgetIds);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onEnabled(Context context) &#123;</span><br><span class="line">        // TODO Auto-generated method stub</span><br><span class="line">        super.onEnabled(context);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onDisabled(Context context) &#123;</span><br><span class="line">        // TODO Auto-generated method stub</span><br><span class="line">        super.onDisabled(context);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>TargetActivity.java</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class TargetActivity extends Activity &#123;</span><br><span class="line">    @Override</span><br><span class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.target_activity);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>AndroidManifest.xml</li>
+</ul>
+<p>在 AndroidManifest.xml 中注册 TargetActivity 和 MyAppWidget</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">application</span>&gt;</span></span><br><span class="line">...</span><br><span class="line">    <span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">&quot;.TargetActivity&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">activity</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 注意这里注册了一个 MyAppWidget 接收数据--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">receiver</span> <span class="attr">android:name</span>=<span class="string">&quot;.MyAppWidget&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">&quot;android.appwidget.action.APPWIDGET_UPDATE&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta-data</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:name</span>=<span class="string">&quot;android.appwidget.provider&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:resource</span>=<span class="string">&quot;@xml/appwidget_provider_info&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">receiver</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">application</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>JI, XIAOYONG
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://jixiaoyong.github.io/blog/posts/fcfc830b/" title="AppWidget的使用之PendingIntent">https://jixiaoyong.github.io/blog/posts/fcfc830b/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/posts/f7965978/" rel="prev" title="Hexo+Github=Blog">
+      <i class="fa fa-chevron-left"></i> Hexo+Github=Blog
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/posts/ca532ade/" rel="next" title="Linux下配置JDK和AndroidStudio开发环境">
+      Linux下配置JDK和AndroidStudio开发环境 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JI, XIAOYONG"
+      src="/blog/images/default_avatar.jpg">
+  <p class="site-author-name" itemprop="name">JI, XIAOYONG</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">88</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jixiaoyong" title="GitHub → https://github.com/jixiaoyong" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jixiaoyong1995@gmail.com" title="E-Mail → mailto:jixiaoyong1995@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JI, XIAOYONG</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+
+<script src="/blog/js/schemes/muse.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'eiCorogUwe1OdpPG65oSWEsP-MdYXbMMI',
+      appKey     : 'glorq3CiX4j8RNIWf7kq5LBW',
+      placeholder: "ヾ(=^▽^=)ノ",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : 'https://api.xiaoyong.ml'
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon.ico">
+  <link rel="mask-icon" href="/blog/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jixiaoyong.github.io","root":"/blog/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Flutter中的异常处理说明FLutter中的错误不会导致应用程序奔溃，只会终止执行出错代码之后的逻辑，在导致Widget.build()返回为null的错误会导致Widget构建失败，并返回红底黄字的错误原因Widget（在Release模式则会显示为灰底区域），对于异步方法产生异常等Flutter框架没有捕获的情况，会交由当前代码所在的Zone处理。  为什么 flutter 触发异常的时候">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flutter中的异常处理">
+<meta property="og:url" content="https://jixiaoyong.github.io/blog/posts/9e235953/index.html">
+<meta property="og:site_name" content="Ji Xiaoyong&#39;s Blog">
+<meta property="og:description" content="Flutter中的异常处理说明FLutter中的错误不会导致应用程序奔溃，只会终止执行出错代码之后的逻辑，在导致Widget.build()返回为null的错误会导致Widget构建失败，并返回红底黄字的错误原因Widget（在Release模式则会显示为灰底区域），对于异步方法产生异常等Flutter框架没有捕获的情况，会交由当前代码所在的Zone处理。  为什么 flutter 触发异常的时候">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-07-29T07:41:47.000Z">
+<meta property="article:modified_time" content="2022-05-30T05:52:40.932Z">
+<meta property="article:author" content="JI, XIAOYONG">
+<meta property="article:tag" content="blog,jixiaoyong,android">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://jixiaoyong.github.io/blog/posts/9e235953/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Flutter中的异常处理 | Ji Xiaoyong's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-138652239-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-138652239-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Ji Xiaoyong's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/blog/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jixiaoyong.github.io/blog/posts/9e235953/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/default_avatar.jpg">
+      <meta itemprop="name" content="JI, XIAOYONG">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ji Xiaoyong's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Flutter中的异常处理<a href="https://github.com/jixiaoyong/blog_source_code/edit/master/blog/source/_posts/Flutter_Handle_Error.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-07-29 15:41:47" itemprop="dateCreated datePublished" datetime="2021-07-29T15:41:47+08:00">2021-07-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-30 13:52:40" itemprop="dateModified" datetime="2022-05-30T13:52:40+08:00">2022-05-30</time>
+              </span>
+
+          
+            <span id="/blog/posts/9e235953/" class="post-meta-item leancloud_visitors" data-flag-title="Flutter中的异常处理" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/blog/posts/9e235953/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/blog/posts/9e235953/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Flutter中的异常处理"><a href="#Flutter中的异常处理" class="headerlink" title="Flutter中的异常处理"></a>Flutter中的异常处理</h1><h1 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h1><p><code>FLutter</code>中的错误不会导致应用程序奔溃，只会终止执行出错代码之后的逻辑，在导致<code>Widget.build()</code>返回为<code>null</code>的错误会导致<code>Widget</code>构建失败，并返回红底黄字的错误原因<code>Widget</code>（在Release模式则会显示为灰底区域），对于异步方法产生异常等<code>Flutter框架</code>没有捕获的情况，会交由当前代码所在的<code>Zone</code>处理。</p>
+<blockquote>
+<p><strong>为什么 flutter 触发异常的时候不会崩溃？</strong><br>这个和 <code>flutter</code> 的消息循环机制有关，任务分两种，一个是微任务 <code>microtask</code>，一个是事件 <code>event</code>，他们有自己的队列，每个任务是相互独立的，一旦某个任务触发异常，也就是导致这个任务后续代码无法执行，并不会影响其他任务执行</p>
+</blockquote>
+<p><em>本文基于Flutter (Channel stable, 2.2.3)</em></p>
+<h1 id="详细说明"><a href="#详细说明" class="headerlink" title="详细说明"></a>详细说明</h1><p>Flutter中的错误处理分为以下几种：</p>
+<h2 id="try-catch"><a href="#try-catch" class="headerlink" title="try...catch"></a><code>try...catch</code></h2><p>对于普通的错误，可以通过<code>try...catch</code>来捕获：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">   <span class="keyword">var</span> list = [<span class="number">1</span>, <span class="number">2</span>];</span><br><span class="line">   <span class="keyword">var</span> three = list[<span class="number">3</span>];</span><br><span class="line"> &#125; <span class="keyword">on</span> RangeError <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">   <span class="built_in">print</span>(<span class="string">&quot;这里是捕获RangeError类型的异常 <span class="subst">$e</span>&quot;</span>);</span><br><span class="line"> &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">   <span class="built_in">print</span>(<span class="string">&quot;这里是兜底的捕获异常 <span class="subst">$e</span>&quot;</span>);</span><br><span class="line"> &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">   <span class="built_in">print</span>(<span class="string">&quot;这里是无论如何都会执行的代码&quot;</span>);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>对于，异步异常，可以使用<code>await</code>等待其执行完毕，将其变为同步任务，否则无法则捕获。</p>
+<h2 id="ErrorWidget-builder"><a href="#ErrorWidget-builder" class="headerlink" title="ErrorWidget.builder"></a><code>ErrorWidget.builder</code></h2><p>当在<code>Widget</code>构建过程中出现错误，导致<code>build()</code>方法返回<code>null</code>，<code>Flutter框架</code>会调用<code>ErrorWidget.builder</code>返回一个<code>Widget</code>替代<code>出错的Widget</code>。</p>
+<p>默认情况下，<code>debug</code>模式返回的是红底黄字的错误提示，而<code>release</code>模式返回的是<code>灰色Widget</code>。</p>
+<p>可以在<code>RunApp</code>方法中替换这个默认的错误界面：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">runApp(MaterialApp(</span><br><span class="line">      home: Scaffold(</span><br><span class="line">        appBar: AppBar(),</span><br><span class="line">        body: BodyWidget(),</span><br><span class="line">      ),</span><br><span class="line">      builder: (context, widget) &#123;</span><br><span class="line">        <span class="comment">// Widget在Build时出错的话，展示此Widget，</span></span><br><span class="line">        <span class="comment">// 如果不定义的话，debug下为红底黄字错误信息，release会显示为灰色布局</span></span><br><span class="line">        <span class="comment">// errorDetails在release模式下为空</span></span><br><span class="line">        ErrorWidget.builder = (FlutterErrorDetails errorDetails) &#123;</span><br><span class="line">          <span class="keyword">return</span> MainErrorWidget(widget, errorDetails);</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">return</span> widget ?? Container();</span><br><span class="line">      &#125;,</span><br><span class="line">    ));</span><br></pre></td></tr></table></figure>
+<p>上述代码中的<code>MainErrorWidget</code>是一个自定义的展示错误信息的页面。</p>
+<ul>
+<li><p><code>MainErrorWidget</code>的一种实现方式</p>
+  <figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MainErrorWidget</span> <span class="keyword">extends</span> <span class="title">StatelessWidget</span> </span>&#123;</span><br><span class="line">  Widget? parentWidget;</span><br><span class="line"></span><br><span class="line">  FlutterErrorDetails errorDetails;</span><br><span class="line"></span><br><span class="line">  MainErrorWidget(<span class="keyword">this</span>.parentWidget, <span class="keyword">this</span>.errorDetails);</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;3. 布局出现错误，展示错误页面,此处错误在release中也会调用FlutterError.onError&quot;</span>);</span><br><span class="line"></span><br><span class="line">    Widget error = Card(</span><br><span class="line">      child: SingleChildScrollView(</span><br><span class="line">        child: Container(</span><br><span class="line">          padding: <span class="keyword">const</span> EdgeInsets.all(<span class="number">20</span>),</span><br><span class="line">          color: Colors.green,</span><br><span class="line">          child: Text(</span><br><span class="line">            <span class="string">&#x27;布局出现错误，以下是错误信息:\n<span class="subst">$errorDetails</span>&#x27;</span>,</span><br><span class="line">            style: TextStyle(fontSize: <span class="number">10</span>, color: Colors.white),</span><br><span class="line">          ),</span><br><span class="line">        ),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">    <span class="keyword">if</span> (parentWidget <span class="keyword">is</span> Scaffold || parentWidget <span class="keyword">is</span> Navigator) &#123;</span><br><span class="line">      debugPrint(</span><br><span class="line">          <span class="string">&quot;widget<span class="subst">$&#123;parentWidget?.key?.toString()&#125;</span> (<span class="subst">$parentWidget</span>)  is Scaffold <span class="subst">$&#123;parentWidget <span class="keyword">is</span> Scaffold&#125;</span> or Navigator <span class="subst">$&#123;parentWidget <span class="keyword">is</span> Navigator&#125;</span>&quot;</span>);</span><br><span class="line">      <span class="comment">// error = Container(child: error);</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> error;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>需要注意的是，错误<code>Widget</code>在<code>Debug</code>和<code>Release</code>模式下有一些区别：</p>
+<ul>
+<li><code>Debug</code>模式下<code>ErrorWidget.builder</code>会返回错误详细信息<code>FlutterErrorDetails</code> ，<code>Release</code>下则不会；</li>
+<li><code>Debug</code>模式下，<code>Widget</code>等出错会打印<code>Exception caught by widgets library ...</code> 等提示并输出错误堆栈信息，但是<code>Release</code>模式下不会；</li>
+<li><code>Debug</code>模式下，出错不会调用<code>FlutterError.onError</code>，<code>Release</code>模式下会。</li>
+</ul>
+<h2 id="FlutterError-onError"><a href="#FlutterError-onError" class="headerlink" title="FlutterError.onError"></a><code>FlutterError.onError</code></h2><p>上述几种情况都没有处理的，被Flutter框架引起的异常，会在这里被处理。</p>
+<p>在<code>Flutter 2.2.3</code>中，<code>Debug</code>模式下如<code>onPressed</code>中的未捕获错误等都会被Widget等捕获，而不会走到这里来，在<code>Release</code>模式下则会调用<code>FlutterError.onError</code>。</p>
+<p>在这里可以对错误进行处理，比如输出到控制台、交给Zone统一处理、直接结束掉APP等：</p>
+<ul>
+<li><code>FlutterError.dumpErrorToConsole(details);</code> 输出到控制台</li>
+<li><code>exit(1);</code> 退出APP</li>
+<li><code>Zone.current.handleUncaughtError(details.exception, details.stack);</code> 交给Zone统一处理</li>
+<li><code>defaultOnError?.call(details);</code>   自己处理完异常后，也要把异常向上抛 【推荐】，其中<code>defaultOnError</code> 可以预先缓存<code>final defaultOnError = FlutterError.onError;</code></li>
+</ul>
+<h2 id="runZonedGuarded-onError"><a href="#runZonedGuarded-onError" class="headerlink" title="runZonedGuarded(onError)"></a><code>runZonedGuarded(onError)</code></h2><p>上述几种情况都没有处理的异常，会被发送到这里处理，可以类比为<code>Android</code>中的<code>Thread.UncaughtExceptionHandler</code>。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">runZonedGuarded(() <span class="keyword">async</span> &#123;</span><br><span class="line">    runApp(...);</span><br><span class="line">  &#125;,</span><br><span class="line">  (<span class="built_in">Object</span> error, StackTrace stack) &#123;</span><br><span class="line">    <span class="comment">// 没有被Flutter捕获的错误,全局未捕获异常处理,类似于Android的Thread.UncaughtExceptionHandler</span></span><br><span class="line">    <span class="comment">/// <span class="language-markdown">比如异步的方法</span></span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;2. runZonedGuarded.onError <span class="subst">$error</span>&quot;</span>);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<p>Zone可以理解为一个沙盒，其中的代码出错，包括异步的都可以捕获到。但是如果是另外一个沙盒中的错误则无法处理。</p>
+<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><p><a target="_blank" rel="noopener" href="https://flutter.cn/docs/testing/errors#define-a-custom-error-widget-for-build-phase-errors">Flutter 官网异常处理</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.fnzblog.site/Flutter%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86.html">Flutter异常处理</a></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>JI, XIAOYONG
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://jixiaoyong.github.io/blog/posts/9e235953/" title="Flutter中的异常处理">https://jixiaoyong.github.io/blog/posts/9e235953/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/posts/12cb887a/" rel="prev" title="Android11文件分区存储在图片读写的适配">
+      <i class="fa fa-chevron-left"></i> Android11文件分区存储在图片读写的适配
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/posts/e15dda2e/" rel="next" title="Compose屏幕适配">
+      Compose屏幕适配 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Flutter%E4%B8%AD%E7%9A%84%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">Flutter中的异常处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AF%B4%E6%98%8E"><span class="nav-number">2.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AF%A6%E7%BB%86%E8%AF%B4%E6%98%8E"><span class="nav-number">3.</span> <span class="nav-text">详细说明</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#try-catch"><span class="nav-number">3.1.</span> <span class="nav-text">try...catch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ErrorWidget-builder"><span class="nav-number">3.2.</span> <span class="nav-text">ErrorWidget.builder</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FlutterError-onError"><span class="nav-number">3.3.</span> <span class="nav-text">FlutterError.onError</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#runZonedGuarded-onError"><span class="nav-number">3.4.</span> <span class="nav-text">runZonedGuarded(onError)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">4.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JI, XIAOYONG"
+      src="/blog/images/default_avatar.jpg">
+  <p class="site-author-name" itemprop="name">JI, XIAOYONG</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">88</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jixiaoyong" title="GitHub → https://github.com/jixiaoyong" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jixiaoyong1995@gmail.com" title="E-Mail → mailto:jixiaoyong1995@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JI, XIAOYONG</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+
+<script src="/blog/js/schemes/muse.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'eiCorogUwe1OdpPG65oSWEsP-MdYXbMMI',
+      appKey     : 'glorq3CiX4j8RNIWf7kq5LBW',
+      placeholder: "ヾ(=^▽^=)ノ",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : 'https://api.xiaoyong.ml'
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
