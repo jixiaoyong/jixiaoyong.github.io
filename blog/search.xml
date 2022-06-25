@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Android开发常用设置</title>
+    <url>/blog/posts/1c56d6b9/</url>
+    <content><![CDATA[<h1 id="Android-Studio"><a href="#Android-Studio" class="headerlink" title="Android Studio"></a>Android Studio</h1><ul>
+<li><p>国内较快的仓库：</p>
+<p>  maven {url’<a href="http://maven.aliyun.com/nexus/content/groups/public/&#39;}">http://maven.aliyun.com/nexus/content/groups/public/&#39;}</a></p>
+</li>
+<li><p>RecyclerView添加依赖<br>注意RecyclerView的版本号要和当前工程中其他android.support包版本保持一致，否则虽然导入了对应的包，但是仍然无法正常使用。</p>
+<p>  compile ‘com.android.support:recyclerview-v7:26+’</p>
+</li>
+<li><p>设置：<br>自动添加依赖：insert imports on paste: None<br>自动删除无用依赖：Optimize imports on the fly</p>
+</li>
+</ul>
+<h1 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h1><ul>
+<li><p>设置ndk环境变量 &#x2F;etc&#x2F;profile</p>
+<p>  #set ndk env<br>  NDKROOT&#x3D;&#x2F;home&#x2F;jixiaoyong&#x2F;AndroidDev&#x2F;Sdk&#x2F;ndk-bundle<br>  export PATH&#x3D;$NDKROOT:$PATH</p>
+</li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
     <title>Android11文件分区存储在图片读写的适配</title>
     <url>/blog/posts/12cb887a/</url>
     <content><![CDATA[<h1 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h1><p>当APP目标版本是Android 10（API 29）及以后时，由于Android引入了分区存储，APP不能直接通过路径访问文件，访问外部存储空间中的媒体文件除了需要<code>READ_EXTERNAL_STORAGE</code> 或 <code>WRITE_EXTERNAL_STORAGE</code> 权限之外，需要通过其他APP分享的<code>Uri</code>读写文件，同理要给其余APP分享文件也许要通过<code>FileProvider</code>生成<code>Uri</code>并赋予对应的权限。</p>
@@ -36,26 +56,6 @@
 <p>这样不管是分享出去的原图，还是裁剪之后保存的图片都给第三方APP赋予了权限，保证其可以正常访问。</p>
 <h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><p><a href="https://developer.android.google.cn/reference/androidx/core/content/FileProvider">https://developer.android.google.cn/reference/androidx/core/content/FileProvider</a></p>
 <p><a href="https://www.jianshu.com/p/6192f04eca11">Android N 7.0 FileProvider 兼容适配 原理解析</a></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>Android开发常用设置</title>
-    <url>/blog/posts/1c56d6b9/</url>
-    <content><![CDATA[<h1 id="Android-Studio"><a href="#Android-Studio" class="headerlink" title="Android Studio"></a>Android Studio</h1><ul>
-<li><p>国内较快的仓库：</p>
-<p>  maven {url’<a href="http://maven.aliyun.com/nexus/content/groups/public/&#39;}">http://maven.aliyun.com/nexus/content/groups/public/&#39;}</a></p>
-</li>
-<li><p>RecyclerView添加依赖<br>注意RecyclerView的版本号要和当前工程中其他android.support包版本保持一致，否则虽然导入了对应的包，但是仍然无法正常使用。</p>
-<p>  compile ‘com.android.support:recyclerview-v7:26+’</p>
-</li>
-<li><p>设置：<br>自动添加依赖：insert imports on paste: None<br>自动删除无用依赖：Optimize imports on the fly</p>
-</li>
-</ul>
-<h1 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h1><ul>
-<li><p>设置ndk环境变量 &#x2F;etc&#x2F;profile</p>
-<p>  #set ndk env<br>  NDKROOT&#x3D;&#x2F;home&#x2F;jixiaoyong&#x2F;AndroidDev&#x2F;Sdk&#x2F;ndk-bundle<br>  export PATH&#x3D;$NDKROOT:$PATH</p>
-</li>
-</ul>
 ]]></content>
   </entry>
   <entry>
@@ -2417,9 +2417,9 @@
 ]]></content>
   </entry>
   <entry>
-    <title></title>
-    <url>/blog/posts/0/</url>
-    <content><![CDATA[<h1 id="Flutter-APP绘制过程简析"><a href="#Flutter-APP绘制过程简析" class="headerlink" title="Flutter APP绘制过程简析"></a>Flutter APP绘制过程简析</h1><p>Flutter App基于Dart语言编写，提供了一套简单易用的API，可以让开发者在Flutter中快速开发出一个精美的APP。那么在Flutter中是如何绘制一个APP呢，runApp是怎么将我们编写的Widget等添加到手机上的呢？本文简单从Widget,Element,RenderObjet三者的关系来梳理一下Flutter的绘制过程。</p>
+    <title>Flutter APP绘制过程简析</title>
+    <url>/blog/posts/4cbcfe72/</url>
+    <content><![CDATA[<p>Flutter App基于Dart语言编写，提供了一套简单易用的API，可以让开发者在Flutter中快速开发出一个精美的APP。那么在Flutter中是如何绘制一个APP呢，runApp是怎么将我们编写的Widget等添加到手机上的呢？本文简单从Widget,Element,RenderObjet三者的关系来梳理一下Flutter的绘制过程。</p>
 <p>让我们运行一个“最”简单的Flutter App，分析一下在这个过程中涉及到的Widget、Element、RenderObject这三个tree的关系。</p>
 <figure class="highlight dart"><table><tr><td class="code"><pre><span class="line">main() &#123;</span><br><span class="line">  runApp(<span class="keyword">const</span> Center(</span><br><span class="line">    <span class="comment">// Center非必须，为了让文本居中显得更清晰</span></span><br><span class="line">    child: Text(</span><br><span class="line">      <span class="string">&quot;Hello center text!&quot;</span>,</span><br><span class="line">      textDirection: TextDirection.ltr, <span class="comment">// 文本方向</span></span><br><span class="line">    ),</span><br><span class="line">  ));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -2618,6 +2618,9 @@
 <p><a href="http://zxfcumtcs.github.io/2020/12/05/deepinto-flutter-pipelineowner/">深入浅出 Flutter Framework 之 PipelineOwner</a></p>
 <p><a href="https://api.flutter.dev/">Flutter - Dart API docs</a></p>
 ]]></content>
+      <tags>
+        <tag>flutter</tag>
+      </tags>
   </entry>
   <entry>
     <title>Flutter UI 绘制与InheritedWidget解析</title>
