@@ -240,7 +240,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-07-21 20:43:09" itemprop="dateModified" datetime="2022-07-21T20:43:09+08:00">2022-07-21</time>
+      <time title="修改时间：2022-07-22 17:56:34" itemprop="dateModified" datetime="2022-07-22T17:56:34+08:00">2022-07-22</time>
     </span>
 
   
@@ -275,14 +275,14 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>| 本文正在梳理中，尚未成文</p>
-<p>Flutter 中的 scrollable widget 根据实现方式的不同，可以分为两大类：</p>
+          <p>Flutter 中的 scrollable widget 根据实现方式的不同，可以分为两大类：</p>
 <ul>
 <li>基于 RenderBox 的 box protocol 实现的，主要基于 Size 实现布局。常见的有<a target="_blank" rel="noopener" href="https://xiaoyong.ml/blog/posts/d3bdcb53/">SingleChildScrollView</a>。</li>
 <li>基于 RenderSliver 的 sliver protocol 实现的，主要基于 SliverGeometry 实现布局。比如 CustomScrollView 及其子类 ListView、GridView 等继承自<a target="_blank" rel="noopener" href="https://xiaoyong.ml/blog/posts/60f8d92f/">ScrollView</a>的 Widget，以及基于 CustomScrollView 的 NestedScrollView、基于 Viewport 等的 PageView、TabBarView 等直接对 SliverFillViewport 等进行封装的 Widget。</li>
 </ul>
 <p>上述所有的 scrollable widget 其底层逻辑依然是对 Scrollable 的封装，其内部处理了 ScrollController、ScrollPosition（viewport 的 offset）、ViewportBuilder（容纳滚动内容的容器）、ScrollPhysics（管理 scrollable view 的物理属性，比如是否可以滚动或弹性滚动等）、ScrollActivity（对外发出 ScrollNotification）、RawGestureDetector（手势识别）等等一系列与 scroll 有关的逻辑，从而使得其他 scrollable view 能够比较方便的实现 scroll 效果。</p>
 <p>本文只对 NestedScrollView 的源码实现做一简单分析：它是如何实现联动滚动效果，有什么优势和限制。</p>
+<p>官方对其定义是：“A scrolling view inside of which can be nested other scrolling views, with their scroll positions being intrinsically linked.”。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/blog/posts/ae8e53be/#more" rel="contents">
@@ -352,7 +352,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-07-21 20:43:09" itemprop="dateModified" datetime="2022-07-21T20:43:09+08:00">2022-07-21</time>
+      <time title="修改时间：2022-07-22 17:56:34" itemprop="dateModified" datetime="2022-07-22T17:56:34+08:00">2022-07-22</time>
     </span>
 
   
@@ -465,7 +465,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-07-21 20:43:09" itemprop="dateModified" datetime="2022-07-21T20:43:09+08:00">2022-07-21</time>
+      <time title="修改时间：2022-07-22 17:56:34" itemprop="dateModified" datetime="2022-07-22T17:56:34+08:00">2022-07-22</time>
     </span>
 
   
@@ -577,7 +577,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-07-21 20:43:09" itemprop="dateModified" datetime="2022-07-21T20:43:09+08:00">2022-07-21</time>
+      <time title="修改时间：2022-07-22 17:56:34" itemprop="dateModified" datetime="2022-07-22T17:56:34+08:00">2022-07-22</time>
     </span>
 
   
@@ -689,7 +689,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-07-21 20:43:09" itemprop="dateModified" datetime="2022-07-21T20:43:09+08:00">2022-07-21</time>
+      <time title="修改时间：2022-07-22 17:56:34" itemprop="dateModified" datetime="2022-07-22T17:56:34+08:00">2022-07-22</time>
     </span>
 
   
@@ -804,7 +804,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-07-21 20:43:09" itemprop="dateModified" datetime="2022-07-21T20:43:09+08:00">2022-07-21</time>
+      <time title="修改时间：2022-07-22 17:56:34" itemprop="dateModified" datetime="2022-07-22T17:56:34+08:00">2022-07-22</time>
     </span>
 
   
@@ -914,7 +914,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-07-21 20:43:09" itemprop="dateModified" datetime="2022-07-21T20:43:09+08:00">2022-07-21</time>
+      <time title="修改时间：2022-07-22 17:56:34" itemprop="dateModified" datetime="2022-07-22T17:56:34+08:00">2022-07-22</time>
     </span>
 
   
@@ -1037,7 +1037,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-07-21 20:43:09" itemprop="dateModified" datetime="2022-07-21T20:43:09+08:00">2022-07-21</time>
+      <time title="修改时间：2022-07-22 17:56:34" itemprop="dateModified" datetime="2022-07-22T17:56:34+08:00">2022-07-22</time>
     </span>
 
   
@@ -1147,7 +1147,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-07-21 20:43:09" itemprop="dateModified" datetime="2022-07-21T20:43:09+08:00">2022-07-21</time>
+      <time title="修改时间：2022-07-22 17:56:34" itemprop="dateModified" datetime="2022-07-22T17:56:34+08:00">2022-07-22</time>
     </span>
 
   
@@ -1255,7 +1255,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-07-21 20:43:09" itemprop="dateModified" datetime="2022-07-21T20:43:09+08:00">2022-07-21</time>
+      <time title="修改时间：2022-07-22 17:56:34" itemprop="dateModified" datetime="2022-07-22T17:56:34+08:00">2022-07-22</time>
     </span>
 
   
