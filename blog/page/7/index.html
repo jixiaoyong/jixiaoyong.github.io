@@ -153,7 +153,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/blog/archives/">
-          <span class="site-state-item-count">95</span>
+          <span class="site-state-item-count">96</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -204,6 +204,120 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://jixiaoyong.github.io/blog/posts/b3994218/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="//jixiaoyong.github.io/images/default_avatar.jpg">
+      <meta itemprop="name" content="JI, XIAOYONG">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ji Xiaoyong's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Ji Xiaoyong's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/posts/b3994218/" class="post-title-link" itemprop="url">JVM类加载机制之ClassLoader</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-04-15 16:40:32" itemprop="dateCreated datePublished" datetime="2018-04-15T16:40:32+08:00">2018-04-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-07-31 16:37:03" itemprop="dateModified" datetime="2022-07-31T16:37:03+08:00">2022-07-31</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/blog/posts/b3994218/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/blog/posts/b3994218/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-item" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="waline-pageview-count" data-path="/blog/posts/b3994218/"></span>
+    </span>
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<p>本文为<a target="_blank" rel="noopener" href="https://blog.csdn.net/briblue/article/details/54973413">《一看你就懂，超详细java中的ClassLoader详解 - CSDN博客》</a>阅读笔记</p>
+</blockquote>
+<h1 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h1><p>JVM有三种类加载器：</p>
+<ol>
+<li><strong>BootStrap ClassLoader</strong> 启动类加载器，加载核心类库，主要加载核心类库，%JRE_HOME%\lib下的rt.jar、resources.jar、charsets.jar和class等。</li>
+<li><strong>Extention ClassLoader</strong> 扩展类加载器，加载目录%JRE_HOME%\lib\ext目录下的jar包和class文件。</li>
+<li><strong>App ClassLoader</strong> 应用程序加载器，加载当前应用的classpath的所有类。</li>
+</ol>
+<p>除以上三种外，还有用户自定义的类加载器。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/posts/b3994218/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://jixiaoyong.github.io/blog/posts/5962504e/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -240,7 +354,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-07-24 11:32:00" itemprop="dateModified" datetime="2022-07-24T11:32:00+08:00">2022-07-24</time>
+      <time title="修改时间：2022-07-31 16:37:03" itemprop="dateModified" datetime="2022-07-31T16:37:03+08:00">2022-07-31</time>
     </span>
 
   
@@ -350,7 +464,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-07-24 11:32:00" itemprop="dateModified" datetime="2022-07-24T11:32:00+08:00">2022-07-24</time>
+      <time title="修改时间：2022-07-31 16:37:03" itemprop="dateModified" datetime="2022-07-31T16:37:03+08:00">2022-07-31</time>
     </span>
 
   
@@ -463,7 +577,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-07-24 11:32:00" itemprop="dateModified" datetime="2022-07-24T11:32:00+08:00">2022-07-24</time>
+      <time title="修改时间：2022-07-31 16:37:03" itemprop="dateModified" datetime="2022-07-31T16:37:03+08:00">2022-07-31</time>
     </span>
 
   
@@ -574,7 +688,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-07-24 11:32:00" itemprop="dateModified" datetime="2022-07-24T11:32:00+08:00">2022-07-24</time>
+      <time title="修改时间：2022-07-31 16:37:03" itemprop="dateModified" datetime="2022-07-31T16:37:03+08:00">2022-07-31</time>
     </span>
 
   
@@ -681,7 +795,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-07-24 11:32:00" itemprop="dateModified" datetime="2022-07-24T11:32:00+08:00">2022-07-24</time>
+      <time title="修改时间：2022-07-31 16:37:03" itemprop="dateModified" datetime="2022-07-31T16:37:03+08:00">2022-07-31</time>
     </span>
 
   
@@ -791,7 +905,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-07-24 11:32:00" itemprop="dateModified" datetime="2022-07-24T11:32:00+08:00">2022-07-24</time>
+      <time title="修改时间：2022-07-31 16:37:03" itemprop="dateModified" datetime="2022-07-31T16:37:03+08:00">2022-07-31</time>
     </span>
 
   
@@ -902,7 +1016,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-07-24 11:32:00" itemprop="dateModified" datetime="2022-07-24T11:32:00+08:00">2022-07-24</time>
+      <time title="修改时间：2022-07-31 16:37:03" itemprop="dateModified" datetime="2022-07-31T16:37:03+08:00">2022-07-31</time>
     </span>
 
   
@@ -1009,7 +1123,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-07-24 11:32:00" itemprop="dateModified" datetime="2022-07-24T11:32:00+08:00">2022-07-24</time>
+      <time title="修改时间：2022-07-31 16:37:03" itemprop="dateModified" datetime="2022-07-31T16:37:03+08:00">2022-07-31</time>
     </span>
 
   
@@ -1122,7 +1236,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-07-24 11:32:00" itemprop="dateModified" datetime="2022-07-24T11:32:00+08:00">2022-07-24</time>
+      <time title="修改时间：2022-07-31 16:37:03" itemprop="dateModified" datetime="2022-07-31T16:37:03+08:00">2022-07-31</time>
     </span>
 
   
@@ -1174,113 +1288,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/blog/posts/e41787ec/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://jixiaoyong.github.io/blog/posts/36721083/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="//jixiaoyong.github.io/images/default_avatar.jpg">
-      <meta itemprop="name" content="JI, XIAOYONG">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ji Xiaoyong's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Ji Xiaoyong's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/posts/36721083/" class="post-title-link" itemprop="url">Java创建线程安全的单例Singleton</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2018-02-14 18:34:16" itemprop="dateCreated datePublished" datetime="2018-02-14T18:34:16+08:00">2018-02-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-07-24 11:32:00" itemprop="dateModified" datetime="2022-07-24T11:32:00+08:00">2022-07-24</time>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-    <span class="post-meta-item-icon">
-      <i class="far fa-comment"></i>
-    </span>
-    <span class="post-meta-item-text">Waline：</span>
-  
-    <a title="waline" href="/blog/posts/36721083/#waline" itemprop="discussionUrl">
-      <span class="post-comments-count waline-comment-count" data-path="/blog/posts/36721083/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <span class="post-meta-item" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="waline-pageview-count" data-path="/blog/posts/36721083/"></span>
-    </span>
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>在编码中常常会用到单例，来确保类有一个唯一的对象，一般情况下将构造方法私有化既可以实现，但当考虑到多线程时事情会变得有些复杂，本文讨论的正是几种多线程的情况下实现单例的方法。</p>
-<h1 id="1-普通单例"><a href="#1-普通单例" class="headerlink" title="1.普通单例"></a>1.普通单例</h1><p>私有化构造方法，对外提供一个公有、静态的方法，在其内部判断类对象是否已经存在，否的话生成类对象再返回。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ASingleton</span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> ASingleton as;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">ASinleton</span><span class="params">()</span> &#123;</span><br><span class="line">		System.out.print(<span class="string">&quot;ASingleton init!\n&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> ASingleton <span class="title function_">getInstance</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">if</span>(as == <span class="literal">null</span>) &#123;              <span class="comment">//tag1</span></span><br><span class="line">			as = <span class="keyword">new</span> <span class="title class_">ASingleton</span>();    <span class="comment">//tag2</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> as;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/posts/36721083/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
