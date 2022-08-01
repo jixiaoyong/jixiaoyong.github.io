@@ -153,7 +153,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/blog/archives/">
-          <span class="site-state-item-count">96</span>
+          <span class="site-state-item-count">97</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -204,6 +204,124 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://jixiaoyong.github.io/blog/posts/e41787ec/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="//jixiaoyong.github.io/images/default_avatar.jpg">
+      <meta itemprop="name" content="JI, XIAOYONG">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ji Xiaoyong's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Ji Xiaoyong's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/posts/e41787ec/" class="post-title-link" itemprop="url">Android自定义view的一些知识点</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-02-19 21:59:28" itemprop="dateCreated datePublished" datetime="2018-02-19T21:59:28+08:00">2018-02-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-01 17:43:57" itemprop="dateModified" datetime="2022-08-01T17:43:57+08:00">2022-08-01</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/blog/posts/e41787ec/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/blog/posts/e41787ec/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-item" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="waline-pageview-count" data-path="/blog/posts/e41787ec/"></span>
+    </span>
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="View的绘制"><a href="#View的绘制" class="headerlink" title="View的绘制"></a>View的绘制</h1><p>View的绘制分为3部分：</p>
+<ol>
+<li><p>measure</p>
+<p>测量，决定了View的测量宽、高。几乎所有情况下都等同于View的最终宽、高（如果View需要多次measure才能确定大小，或者重写了<code>layout()</code>方法，并修改了传入的值的话则不会相等）。</p>
+</li>
+<li><p>layout</p>
+<p>布局，决定View的四个顶点坐标和实际的宽、高。</p>
+</li>
+<li><p>draw</p>
+<p>绘制，决定了View的具体显示内容。</p>
+</li>
+</ol>
+<p>其中通过ViewRootImpl类的<code>performTraversals()</code>依次调用<code>performXXX()</code>方法。</p>
+<h1 id="MeasureSpec"><a href="#MeasureSpec" class="headerlink" title="MeasureSpec"></a>MeasureSpec</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/posts/e41787ec/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://jixiaoyong.github.io/blog/posts/36721083/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -240,7 +358,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-01 15:21:15" itemprop="dateModified" datetime="2022-08-01T15:21:15+08:00">2022-08-01</time>
+      <time title="修改时间：2022-08-01 17:43:57" itemprop="dateModified" datetime="2022-08-01T17:43:57+08:00">2022-08-01</time>
     </span>
 
   
@@ -347,7 +465,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-01 15:21:15" itemprop="dateModified" datetime="2022-08-01T15:21:15+08:00">2022-08-01</time>
+      <time title="修改时间：2022-08-01 17:43:57" itemprop="dateModified" datetime="2022-08-01T17:43:57+08:00">2022-08-01</time>
     </span>
 
   
@@ -455,7 +573,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-01 15:21:15" itemprop="dateModified" datetime="2022-08-01T15:21:15+08:00">2022-08-01</time>
+      <time title="修改时间：2022-08-01 17:43:57" itemprop="dateModified" datetime="2022-08-01T17:43:57+08:00">2022-08-01</time>
     </span>
 
   
@@ -573,7 +691,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-01 15:21:15" itemprop="dateModified" datetime="2022-08-01T15:21:15+08:00">2022-08-01</time>
+      <time title="修改时间：2022-08-01 17:43:57" itemprop="dateModified" datetime="2022-08-01T17:43:57+08:00">2022-08-01</time>
     </span>
 
   
@@ -686,7 +804,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-01 15:21:15" itemprop="dateModified" datetime="2022-08-01T15:21:15+08:00">2022-08-01</time>
+      <time title="修改时间：2022-08-01 17:43:57" itemprop="dateModified" datetime="2022-08-01T17:43:57+08:00">2022-08-01</time>
     </span>
 
   
@@ -787,7 +905,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-01 15:21:15" itemprop="dateModified" datetime="2022-08-01T15:21:15+08:00">2022-08-01</time>
+      <time title="修改时间：2022-08-01 17:43:57" itemprop="dateModified" datetime="2022-08-01T17:43:57+08:00">2022-08-01</time>
     </span>
 
   
@@ -897,7 +1015,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-01 15:21:15" itemprop="dateModified" datetime="2022-08-01T15:21:15+08:00">2022-08-01</time>
+      <time title="修改时间：2022-08-01 17:43:57" itemprop="dateModified" datetime="2022-08-01T17:43:57+08:00">2022-08-01</time>
     </span>
 
   
@@ -997,7 +1115,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-01 15:21:15" itemprop="dateModified" datetime="2022-08-01T15:21:15+08:00">2022-08-01</time>
+      <time title="修改时间：2022-08-01 17:43:57" itemprop="dateModified" datetime="2022-08-01T17:43:57+08:00">2022-08-01</time>
     </span>
 
   
@@ -1113,7 +1231,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-01 15:21:15" itemprop="dateModified" datetime="2022-08-01T15:21:15+08:00">2022-08-01</time>
+      <time title="修改时间：2022-08-01 17:43:57" itemprop="dateModified" datetime="2022-08-01T17:43:57+08:00">2022-08-01</time>
     </span>
 
   
@@ -1157,115 +1275,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/blog/posts/9c0ccf0d/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://jixiaoyong.github.io/blog/posts/f20627c9/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="//jixiaoyong.github.io/images/default_avatar.jpg">
-      <meta itemprop="name" content="JI, XIAOYONG">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ji Xiaoyong's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Ji Xiaoyong's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/posts/f20627c9/" class="post-title-link" itemprop="url">Android自定义透明背景的Dialog</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2018-01-26 15:09:40" itemprop="dateCreated datePublished" datetime="2018-01-26T15:09:40+08:00">2018-01-26</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-01 15:21:15" itemprop="dateModified" datetime="2022-08-01T15:21:15+08:00">2022-08-01</time>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-    <span class="post-meta-item-icon">
-      <i class="far fa-comment"></i>
-    </span>
-    <span class="post-meta-item-text">Waline：</span>
-  
-    <a title="waline" href="/blog/posts/f20627c9/#waline" itemprop="discussionUrl">
-      <span class="post-comments-count waline-comment-count" data-path="/blog/posts/f20627c9/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <span class="post-meta-item" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="waline-pageview-count" data-path="/blog/posts/f20627c9/"></span>
-    </span>
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>通过自定义Dialog类，使用Style、AnimationDrawable等实现一个透明背景的、带进度更新的弹窗。</p>
-<p>主要涉及Style自定义以及AnimationDrawable的使用。</p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><ul>
-<li><strong>布局文件</strong></li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/posts/f20627c9/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
