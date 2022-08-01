@@ -2962,7 +2962,10 @@
 <p>RawImage 继承自 _LeafRenderWidget_，可以直接展示<code>ui.Image</code>的内容，后者是解码的图片数据的不透明句柄（_Opaque handle to raw decoded image data (pixels)_）、是对<code>_Image</code>类的封装、对外提供宽高以及<code>Image.toByteData</code>（将<code>ui.Image</code>对象转化为<code>ByteData</code>，ByteData 可以直接传入<code>Canvas.drawImageRect</code>方法第一个参数）。</p>
 <p>RawImage 主要逻辑就是创建&#x2F;更新 RenderImage 的时候将从<code>_ImageState.build</code>方法获得的<code>ui.Image? image</code> 的 clone 传入（其实就是使用<code>ui.Image? image</code>对应的<code>_Image _image</code> 新建了一个 ui.Image，每一个 ui.Image 都是_image 的一个句柄，只有当没有 ui.Image 指向_image 时后者才会真正的 dispose）。</p>
 <h2 id="RenderImage"><a href="#RenderImage" class="headerlink" title="RenderImage"></a>RenderImage</h2><p><em>An image in the render tree.</em></p>
-<p>RenderImage 作为一个 RenderBox，在从 RawImage 那里拿到<code>ui.Image? image</code>之后，使用<code>set image(ui.Image? value)</code>从中取出 ui.Image 句柄指向的<code>_Image _image</code>，然后在其<code>RenderImage.paint</code>方法中，会调用<code>paintImage</code>方法绘制<code>_image</code>代表的图片。</p>
+<p>RenderImage 作为一个 RenderBox，在从 RawImage 那里拿到<code>ui.Image? _image</code>之后，然后在其<code>RenderImage.paint</code>方法中，会调用<code>paintImage</code>方法绘制<code>_image</code>代表的图片。</p>
+<blockquote>
+<p>ui.Image实际是ui._Image的包装类，它的width、height、toByteData等方法最终都是调用ui._Image对应的实现。</p>
+</blockquote>
 <p><code>paintImage</code> 方法是位于 <em>lib\src\painting\decoration_image.dart</em> 的全局方法，在其内部调用 canvas 绘制_image 对应的图片。</p>
 <br/>
 
@@ -3016,6 +3019,16 @@
 <li><a href="https://github.com/fluttercandies/extended_image">extended_image</a> 对官方 Image 的二次开发，增加了磁盘缓存。</li>
 <li><a href="https://github.com/Baseflow/flutter_cached_network_image">flutter_cached_network_image</a> 使用<em>sqflite 数据库</em>管理缓存的<strong>网络图片加载</strong>库，增加了磁盘缓存。</li>
 <li><a href="https://github.com/alibaba/power_image">power_image</a> 使用于<strong>混合项目</strong>的图片加载库，提供<em>ffi</em>和<em>texture</em>两种图片展示方式，依赖于原生图片加载库（比如<em>Glide</em>）加载图片、管理缓存。</li>
+</ul>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>简单总结一下 Flutter 原生 Image 组件加载图片的流程：</p>
+<p><img src="https://jixiaoyong.github.io/images/flutter_image_class_structure.png" alt="flutter_image_class_structure.png"></p>
+<p>简单来说如下：</p>
+<ul>
+<li>用户通过 Image Widget 的各个构造方法创建指定的 ImageProvider；</li>
+<li>在_ImageState 中使用<code>ImageProvider.resolve(ImageConfiguration)</code>获取并监听 ImageStream（listener 为 ImageStreamListener）；</li>
+<li>ImageProvider 会按照传入的 ImageConfiguration 生成的 key 在 ImageCache 中查找对应的缓存，没有的话则先加载再缓存；</li>
+<li>当 ImageProvider 成功加载图片时，ImageStreamListener 获得 ImageInfo 时，并触发<code>_ImageState.build()</code>方法将<code>ui.Image _imageInfo?.image</code>传入 RawImage 中；</li>
+<li>作为一个 LeafRenderObjectWidget，RawImage 创建 RenderImage 并传入<code>ui.Image? image?.clone()</code>作为<code>RenderImage.image</code>，此后再在<code>RenderImage.paint</code>方法中调用系统的<code>paintImage()</code>方法通过<code>canvas.drawImageRect</code>绘制图片内容。</li>
 </ul>
 <h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="https://api.flutter.dev/flutter/widgets/Image-class.html">Image_api.flutter.dev</a></p>
 ]]></content>
