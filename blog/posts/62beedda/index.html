@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/https/jixiaoyong.github.io/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/favicon.ico">
+  <link rel="mask-icon" href="/blog/https/jixiaoyong.github.io/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"jixiaoyong.github.io","root":"/blog/","images":"/blog/images","scheme":"Muse","darkmode":true,"version":"8.12.3","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/blog/js/config.js"></script>
+
+    <meta name="description" content="Flutter 中的 Hero 动画是指可以在切换页面时自动跨页面实现 Widget 放大缩小、位移的动画，在用户看起来好像是当前页面的 Widget“飞”入到另外一个页面，底层基于 Overlay 实现。 本文对其原理和应用做一简单分析，主要是对官方介绍的理解与分析，感兴趣的可以直接阅读官方文档。 使用简单使用 Standard hero animations 详细的代码可以从simple_he">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flutter动画分析之Hero">
+<meta property="og:url" content="https://jixiaoyong.github.io/blog/posts/62beedda/index.html">
+<meta property="og:site_name" content="Ji Xiaoyong&#39;s Blog">
+<meta property="og:description" content="Flutter 中的 Hero 动画是指可以在切换页面时自动跨页面实现 Widget 放大缩小、位移的动画，在用户看起来好像是当前页面的 Widget“飞”入到另外一个页面，底层基于 Overlay 实现。 本文对其原理和应用做一简单分析，主要是对官方介绍的理解与分析，感兴趣的可以直接阅读官方文档。 使用简单使用 Standard hero animations 详细的代码可以从simple_he">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jixiaoyong.github.io/images/flutter/hero/simple_hero.gif">
+<meta property="og:image" content="https://jixiaoyong.github.io/images/flutter/hero/hero-transition-2.webp">
+<meta property="og:image" content="https://jixiaoyong.github.io/images/flutter/hero/advanced_hero.gif">
+<meta property="og:image" content="https://jixiaoyong.github.io/images/flutter/hero/radial-hero-animation.webp">
+<meta property="article:published_time" content="2022-07-16T02:14:01.000Z">
+<meta property="article:modified_time" content="2022-08-14T11:18:04.800Z">
+<meta property="article:author" content="JI, XIAOYONG">
+<meta property="article:tag" content="flutter">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jixiaoyong.github.io/images/flutter/hero/simple_hero.gif">
+
+
+<link rel="canonical" href="https://jixiaoyong.github.io/blog/posts/62beedda/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://jixiaoyong.github.io/blog/posts/62beedda/","path":"posts/62beedda/","title":"Flutter动画分析之Hero"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Flutter动画分析之Hero | Ji Xiaoyong's Blog</title>
+  
+
+
+
+
+<link rel="dns-prefetch" href="https://vercel.xiaoyong.ml">
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Ji Xiaoyong's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8-Standard-hero-animations"><span class="nav-text">简单使用 Standard hero animations</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90"><span class="nav-text">原理分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8-Radial-hero-animations"><span class="nav-text">进阶使用 Radial hero animations</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90-1"><span class="nav-text">原理分析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0"><span class="nav-text">底层实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JI, XIAOYONG"
+      src="//jixiaoyong.github.io/images/default_avatar.jpg">
+  <p class="site-author-name" itemprop="name">JI, XIAOYONG</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jixiaoyong" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jixiaoyong" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jixiaoyong1995@gmail.com" title="E-Mail → mailto:jixiaoyong1995@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jixiaoyong.github.io/blog/posts/62beedda/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="//jixiaoyong.github.io/images/default_avatar.jpg">
+      <meta itemprop="name" content="JI, XIAOYONG">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ji Xiaoyong's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Flutter动画分析之Hero | Ji Xiaoyong's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Flutter动画分析之Hero<a href="https://github.com/jixiaoyong/blog_source_code/edit/master/blog/source/_posts/Flutter%E5%8A%A8%E7%94%BB%E5%88%86%E6%9E%90%E4%B9%8BHero.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-07-16 10:14:01" itemprop="dateCreated datePublished" datetime="2022-07-16T10:14:01+08:00">2022-07-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-14 19:18:04" itemprop="dateModified" datetime="2022-08-14T19:18:04+08:00">2022-08-14</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/blog/posts/62beedda/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/blog/posts/62beedda/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-item" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="waline-pageview-count" data-path="/blog/posts/62beedda/"></span>
+    </span>
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Flutter 中的 Hero 动画是指可以在切换页面时自动跨页面实现 Widget 放大缩小、位移的动画，在用户看起来好像是当前页面的 Widget“飞”入到另外一个页面，底层基于 Overlay 实现。</p>
+<p>本文对其原理和应用做一简单分析，主要是对<a target="_blank" rel="noopener" href="https://flutter.cn/docs/development/ui/animations/hero-animations">官方介绍</a>的理解与分析，感兴趣的可以直接阅读官方文档。</p>
+<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><h2 id="简单使用-Standard-hero-animations"><a href="#简单使用-Standard-hero-animations" class="headerlink" title="简单使用 Standard hero animations"></a>简单使用 Standard hero animations</h2><blockquote>
+<p>详细的代码可以从<a target="_blank" rel="noopener" href="https://gist.github.com/jixiaoyong/8b6584e73abe430d3c1ae926b80a86bd#file-simple_hero_animation-dart">simple_hero_animation.dart</a>获取。</p>
+</blockquote>
+<p>Hero 动画的使用比较简单：</p>
+<ul>
+<li>分别在两个 Flutter 页面将需要实现 Hero 动画的 Widget（一般是图片）作为 Hero 控件的 child</li>
+<li>为这两个 Hero 指定同一个 tag</li>
+</ul>
+<p>这里要注意：</p>
+<ul>
+<li>这两个 Page 要是<strong>相邻</strong>的页面，否则 Hero 动画不会生效</li>
+<li>同一个页面，<strong>不能有多个</strong> Hero.tag 相同的 Hero 控件</li>
+<li>Hero 动画<strong>默认只支持大小（size）和位置（location）变化</strong>，所以 Hero.child 不建议有其他变化（Don’t rotate your heroes）。</li>
+</ul>
+<p>按照上述的要求，我们再 FirstHeroPage 中添加第一个 Hero Widget：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Align(</span><br><span class="line">            alignment: Alignment.bottomLeft,</span><br><span class="line">            child: Hero(</span><br><span class="line">                <span class="comment">// 注意这里的tag要和下一个页面的Hero.tag一致</span></span><br><span class="line">                tag: <span class="string">&quot;HeroTag&quot;</span>,</span><br><span class="line">                <span class="comment">// child是Hero动画会作用的地方</span></span><br><span class="line">                child: HeroChildWidget(</span><br><span class="line">                  size: <span class="keyword">const</span> Size.square(<span class="number">100</span>),</span><br><span class="line">                  name: <span class="string">&quot;First&quot;</span>,</span><br><span class="line">                  onTap: () &#123;</span><br><span class="line">                    Navigator.push(context,</span><br><span class="line">                        MaterialPageRoute(builder: (context) &#123;</span><br><span class="line">                      <span class="keyword">return</span> <span class="keyword">const</span> SecondHeroPage();</span><br><span class="line">                    &#125;));</span><br><span class="line">                  &#125;,</span><br><span class="line">                )),</span><br><span class="line">          )</span><br></pre></td></tr></table></figure>
+
+<p>然后在要跳转到的第二个页面 SecondHeroPage 添加目标 Hero：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Align(</span><br><span class="line">  alignment: Alignment.topCenter,</span><br><span class="line">  child: Hero(</span><br><span class="line">      <span class="comment">// 这里的tag与上一个页面的Hero.tag一致</span></span><br><span class="line">      tag: <span class="string">&quot;HeroTag&quot;</span>,</span><br><span class="line">      child: HeroChildWidget(</span><br><span class="line">        size: <span class="keyword">const</span> Size.square(<span class="number">200</span>),</span><br><span class="line">        name: <span class="string">&quot;Second&quot;</span>,</span><br><span class="line">        onTap: () &#123;</span><br><span class="line">          Navigator.pop(context);</span><br><span class="line">        &#125;,</span><br><span class="line">      )),</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>这样，当从 FirstHeroPage 跳转到 SecondHeroPage 的时候，Hero 动画作用于 Hero.child，看起来好像是前一个页面的 HeroChildWidget 逐渐从 Alignment.bottomLeft 移动到 Alignment.topCenter，并且大小也从 100 逐渐变为 200。</p>
+<p><img src="https://jixiaoyong.github.io/images/flutter/hero/simple_hero.gif" alt="Simple Hero Animation"></p>
+<h3 id="原理分析"><a href="#原理分析" class="headerlink" title="原理分析"></a>原理分析</h3><p>那么 Hero 动画是如何实现这个效果的呢？</p>
+<p>Flutter 中 Page 之间的跳转由 Navigator 管理，在 Navigator 管理的所有 Flutter Page 的上层有一个叠加层 Overlay，在 Z 轴方向上处于所有 Page 上层，其内部的 widget 可以被独立管理。</p>
+<p>以当前 Page 为 A，要跳转的 Page 为 B：</p>
+<ul>
+<li><p>那么当从 A 跳转到 B 时，Hero 动画框架会先隐藏 A 中的 Hero.child 并用相同大小的（不可见）组件占位；</p>
+</li>
+<li><p>与此同时，Hero 动画框架读取要跳转去的 B 中的 Hero.child 并据此创建 Widget，将其大小和位置与为 A 中 Hero.child 对齐，放入到 Overlay 中。同时计算器过渡到 B 中的 Hero.child 位置和大小的路径动画，并执行；</p>
+<p>这也是为什么在上一步我们简单的 Hero 动画中，A 向 B 页面切换时过渡的 Widget 中文字虽然是<em>Second</em>，但是样式看起来和页面中的文字样式不一样，这是因为<a target="_blank" rel="noopener" href="https://api.flutter-io.cn/flutter/widgets/Overlay-class.html">Overlay（可视为一个特殊的 Stack）</a>上的组件是单独管理的，没有使用我们的 Material 样式。<br>要解决这个问题也很简单，在 Hero.child 中添加<code>Material</code>组件使其应用样式即可。</p>
+</li>
+<li><p>当 B 创建好之后，Hero 动画正在运行中，所以 B 中的 Hero.child 也会被相同大小的（不可见）组件占位；</p>
+</li>
+<li><p>当 Hero 动画播放完毕之后，位于 Overlay 中的 Widget 被移除，A 和 B 中的 Hero.child 也正常显示。</p>
+</li>
+<li><p>如果又从 B 返回 A 则上述步骤又会反向（A、B 中 Hero.child 换位）执行一次。</p>
+</li>
+</ul>
+<p>下图是 Flutter 官方对 Hero 动画执行的解释，刚好处于由 A 到 B 过渡的过程，可以看到 A、B 页面中的 Widget 都被移除，只有根据目标 Page——B 中的 Hero.child 创建的位于 Overlay 的 Destination hero 控件在从 A 中对应的位置和大小过渡到 B 中对应的位置和大小：</p>
+<p><img src="https://jixiaoyong.github.io/images/flutter/hero/hero-transition-2.webp" alt="Hero动画进行中的图解"></p>
+<h2 id="进阶使用-Radial-hero-animations"><a href="#进阶使用-Radial-hero-animations" class="headerlink" title="进阶使用 Radial hero animations"></a>进阶使用 Radial hero animations</h2><p>默认实现的 Hero 动画只支持大小和位移变化，通过使用 Radial Transformation（径向转化）可以实现由圆变为正方形的过渡动画。</p>
+<blockquote>
+<p>径向过渡 是由圆形变成正方形的过渡动画。<br>—— <a target="_blank" rel="noopener" href="https://flutter.cn/docs/development/ui/animations/hero-animations#:~:text=%E5%BE%84%E5%90%91%E8%BF%87%E6%B8%A1%20%E6%98%AF%E7%94%B1%E5%9C%86%E5%BD%A2%E5%8F%98%E6%88%90%E6%AD%A3%E6%96%B9%E5%BD%A2%E7%9A%84%E8%BF%87%E6%B8%A1%E5%8A%A8%E7%94%BB%E3%80%82">flutter.cn 官网</a></p>
+</blockquote>
+<p>径向动画的<em>本质还是 Hero 动画</em>，只不过在 Hero 动画之上做了一层由 ClipOval 和 ClipRect 组成的裁剪遮罩，通过二者的配合，导致其重叠部分的内容看起来好像在 Hero 动画播放的时候在<em>圆</em>和<em>正方形</em>之间切换。</p>
+<p>官方的实现为<a target="_blank" rel="noopener" href="https://github.com/cfug/flutter.cn/blob/master/examples/_animation/radial_hero_animation_animate_rectclip/main.dart">radial_hero_animation_animate_rectclip</a>，但是为了便于理解径向动画的原理，我们在之前的 Hero 动画的简单使用<a target="_blank" rel="noopener" href="https://gist.github.com/jixiaoyong/8b6584e73abe430d3c1ae926b80a86bd">代码</a>基础上进行修改。</p>
+<blockquote>
+<p>详细的代码可以从<a target="_blank" rel="noopener" href="https://gist.github.com/jixiaoyong/8b6584e73abe430d3c1ae926b80a86bd#file-advanced_hero_animation-dart">advanced_hero_animation.dart</a>获取。</p>
+</blockquote>
+<p>相对于之前的，我们主要将 HeroChildWidget 类修改为 HeroClippedChildWidget 类：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Size maxClipOvalDiameter = Size.square(<span class="number">200</span>);</span><br><span class="line"><span class="keyword">const</span> Size minClipOvalDiameter = Size.square(<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HeroClippedChildWidget</span> <span class="keyword">extends</span> <span class="title">StatelessWidget</span> </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> HeroClippedChildWidget(</span><br><span class="line">      &#123;Key? key, <span class="keyword">required</span> <span class="keyword">this</span>.size, <span class="keyword">required</span> <span class="keyword">this</span>.name, <span class="keyword">required</span> <span class="keyword">this</span>.onTap&#125;)</span><br><span class="line">      : <span class="keyword">super</span>(key: key);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">final</span> Size size;</span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">String</span> name;</span><br><span class="line">  <span class="keyword">final</span> VoidCallback onTap;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="comment">// 与圆内切的正方形边长s = 圆半径 * 根号2 = 直径 * 根号2 / 2</span></span><br><span class="line">    <span class="keyword">var</span> clipRectSize = maxClipOvalDiameter.width * math.sqrt2 / <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">return</span> SizedBox(</span><br><span class="line">      height: size.height,</span><br><span class="line">      width: size.width,</span><br><span class="line">      child: GestureDetector(</span><br><span class="line">        onTap: onTap,</span><br><span class="line">        <span class="comment">// 当Hero动画变到最小时，ClipOval与ClipRect相交部分是ClipOval形状</span></span><br><span class="line">        child: ClipOval(</span><br><span class="line">          child: Center(</span><br><span class="line">            <span class="comment">// 当Hero动画变到最大时，ClipOval与ClipRect相交部分是ClipRect形状</span></span><br><span class="line">            child: ClipRect(</span><br><span class="line">              child: SizedBox(</span><br><span class="line">                height: clipRectSize,</span><br><span class="line">                width: clipRectSize,</span><br><span class="line">                child: Container(</span><br><span class="line">                  color: Colors.blueAccent,</span><br><span class="line">                  child: Center(</span><br><span class="line">                    child: Text(name),</span><br><span class="line">                  ),</span><br><span class="line">                ),</span><br><span class="line">              ),</span><br><span class="line">            ),</span><br><span class="line">          ),</span><br><span class="line">        ),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中，FirstHeroPage 的 HeroClippedChildWidget.minClipOvalDiameter，SecondHeroPage 中则为 maxClipOvalDiameter。</p>
+<p>其效果如图：</p>
+<p><img src="https://jixiaoyong.github.io/images/flutter/hero/advanced_hero.gif" alt="advanced_hero"></p>
+<h3 id="原理分析-1"><a href="#原理分析-1" class="headerlink" title="原理分析"></a>原理分析</h3><p>此类能够实现切换的同时修改 Hero.child 的样式，主要在于 ClipOval 和 ClipRect 的组合效果：</p>
+<p><img src="https://jixiaoyong.github.io/images/flutter/hero/radial-hero-animation.webp" alt="Radial hero animations的示意图"></p>
+<p>ClipRect 的大小固定为<code>var clipRectSize = maxClipOvalDiameter.width * math.sqrt2 / 2</code>，而 ClipOval 的大小则随着 Hero 动画的变化而变化，始终与 HeroClippedChildWidget 保持一致。</p>
+<p>假设从页面 A 到 B 切换时 Hero.child 会从小变大，那么：</p>
+<ul>
+<li>刚刚从页面 A 切换时，位于 Overlay 的 HeroClippedChildWidget&#x2F;ClipOval 大小为 minClipOvalDiameter（也就是 100*100），此时 ClipRect 的大小 clipRectSize（也就是 200&#x2F;2*根号 2 约等于 141）大于 ClipOval 的大小，所以他们的相交处为 ClipOval，故而 HeroClippedChildWidget 显示为直径为 100 的圆。</li>
+<li>当刚刚完整切换到页面 B，Hero 动画将要结束时，位于 Overlay 的 HeroClippedChildWidget&#x2F;ClipOval 大小为 maxClipOvalDiameter（也就是 200*200），此时 ClipRect 的大小 clipRectSize（依旧是 141）小于 ClipOval 的大小，所以他们的相交处为 ClipRect，故而 HeroClippedChildWidget 显示为边长约为 141 的正方形。</li>
+<li>在二者的过渡阶段，就是 ClipOval 注解从小于 ClipRect 变化为大于 ClipRect 的过程，他们相交的区域也从圆变为圆角，再变为正方形。</li>
+</ul>
+<h1 id="底层实现"><a href="#底层实现" class="headerlink" title="底层实现"></a>底层实现</h1><p>&#x2F;&#x2F; todo 分析 Hero 动画底层代码</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a target="_blank" rel="noopener" href="https://flutter.cn/docs/development/ui/animations/hero-animations">主动画 (Hero animations)</a></p>
+<p><a target="_blank" rel="noopener" href="https://api.flutter-io.cn/flutter/widgets/Hero-class.html">Hero class</a></p>
+<p><a target="_blank" rel="noopener" href="https://api.flutter-io.cn/flutter/widgets/Overlay-class.html">Overlay class</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/cfug/flutter.cn/blob/master/examples/_animation/radial_hero_animation_animate_rectclip/main.dart">radial_hero_animation_animate_rectclip</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>JI, XIAOYONG
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://jixiaoyong.github.io/blog/posts/62beedda/" title="Flutter动画分析之Hero">https://jixiaoyong.github.io/blog/posts/62beedda/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/blog/tags/flutter/" rel="tag"># flutter</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/posts/60f8d92f/" rel="prev" title="Flutter滑动分析之Scrollview">
+                  <i class="fa fa-chevron-left"></i> Flutter滑动分析之Scrollview
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/posts/ae8e53be/" rel="next" title="Flutter滑动分析之NestedScrollView">
+                  Flutter滑动分析之NestedScrollView <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JI, XIAOYONG</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+<script src="/blog/js/comments.js"></script><script src="/blog/js/utils.js"></script><script src="/blog/js/schemes/muse.js"></script><script src="/blog/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-CN","enable":true,"serverURL":"https://vercel.xiaoyong.ml","cssUrl":"https://cdnjs.cloudflare.com/ajax/libs/waline/2.5.1/waline.min.css","commentCount":true,"pageview":true,"libUrl":"https://cdnjs.cloudflare.com/ajax/libs/waline/2.5.1/waline.min.js","locale":{"placeholder":"ヾ(=^▽^=)ノ"},"meta":["nick","mail","link"],"login":"enable","pageSize":10,"el":"#waline","comment":true,"path":"/blog/posts/62beedda/"}</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/waline/2.5.1/waline.min.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>
