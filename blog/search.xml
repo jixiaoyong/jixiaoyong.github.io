@@ -2974,6 +2974,10 @@
 <p>其中，FirstHeroPage 的 HeroClippedChildWidget.minClipOvalDiameter，SecondHeroPage 中则为 maxClipOvalDiameter。</p>
 <p>其效果如图：</p>
 <p><img src="https://jixiaoyong.github.io/images/flutter/hero/advanced_hero.gif" alt="advanced_hero"></p>
+<blockquote>
+<p>实际上根据此方式，我们也可以监听 Hero.child 的大小、位置变化从而推测出 Hero 动画的进度和方向（是从 from 到 to，还是相反），从而实现更丰富的动画效果。</p>
+<p>比如监听进度从而实现旋转：<a href="https://github.com/jixiaoyong/flutter_custom_widget/blob/master/lib/widgets/animation_hero_child.dart">https://github.com/jixiaoyong/flutter_custom_widget/blob/master/lib/widgets/animation_hero_child.dart</a></p>
+</blockquote>
 <h3 id="原理分析-1"><a href="#原理分析-1" class="headerlink" title="原理分析"></a>原理分析</h3><p>此类能够实现切换的同时修改 Hero.child 的样式，主要在于 ClipOval 和 ClipRect 的组合效果：</p>
 <p><img src="https://jixiaoyong.github.io/images/flutter/hero/radial-hero-animation.webp" alt="Radial hero animations的示意图"></p>
 <p>ClipRect 的大小固定为<code>var clipRectSize = maxClipOvalDiameter.width * math.sqrt2 / 2</code>，而 ClipOval 的大小则随着 Hero 动画的变化而变化，始终与 HeroClippedChildWidget 保持一致。</p>
