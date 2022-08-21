@@ -2914,6 +2914,169 @@
       </tags>
   </entry>
   <entry>
+    <title>Flutter动画分析之AnimationController</title>
+    <url>/blog/posts/6ec43bd8/</url>
+    <content><![CDATA[<blockquote>
+<p>本文讨论的 Flutter 动画主要限定在: <em>随着每一帧的变化，修改 Flutter Widget 的大小、颜色、位置等属性，使之看起来从一种状态渐变为另外一种状态</em> 这一范围。</p>
+</blockquote>
+<p>Flutter 中关于动画的类有很多，为了便于分析，将其分为两大类：</p>
+<ul>
+<li>Flutter 框架底层实现动画的各个类，比如 AnimationController、Ticker、Tween、Curve 等</li>
+<li>基于底层实现，提供进一步封装的 Flutter 动画相关的 Widget 类，比如 AnimatedWidget、ImplicitlyAnimatedWidget 和他们的子类。</li>
+</ul>
+<p>他们的关系如下：</p>
+<p>AnimationController 通过 Ticker 监听 Flutter 屏幕帧刷新：</p>
+<p><img src="https://jixiaoyong.github.io/images/flutter/animate/flutter_animate_struct2.png" alt="Flutter各种动画底层类关系"></p>
+<p>每一帧刷新后，AnimationController 监听并根据 Duration 等计算出当前的 Animation.value；<br>此外也可以通过 Tween 将 double 类型转化为其他的类型比如 Offset 等；<br>上述两种方式中 value 都是随着时间线性变化，而 Curve 可以与 CurveTween、AnimationController 等结合使 value 实现非线性的变化。</p>
+<p><img src="https://jixiaoyong.github.io/images/flutter/animate/flutter_animate_struct1.png" alt="Flutter中AnimationController与Ticker关系"></p>
+<p>当随着时间变化，计算出当前的 Animation.value 时，便可以根据此值修改 Flutter Widget 的各个属性，从而实现动画的视觉效果。</p>
+<p><img src="https://jixiaoyong.github.io/images/flutter/animate/flutter_animate_widget.png" alt="Flutter中与动画有关的Widget"></p>
+<p>从上图可以看到，Flutter 提供的动画 Widget 主要分为两大类：</p>
+<ul>
+<li><p>ImplicitlyAnimatedWidget 隐式动画，关于动画的开始、停止等都封装在 Widget 内部，只要 Widget 前后传入的值不同便可以自动从 old 渐变到 new，内置的这些类主要以 AnimatedFoo 命名。</p>
+</li>
+<li><p>AnimatedWidget，显式动画，需要使用者自己创建 Animation（一般是 AnimationController）并通过其管理动画，此类 Widget 主要是监听 AnimationController 的值并刷新 Widget 的内容。</p>
+<p>此类 Widget 主要有三种使用方式：</p>
+<ul>
+<li>继承 AnimatedWidget</li>
+<li>使用 AnimatedBuilder</li>
+<li>使用各种内置的 AnimatedWidget 子类，一般以 FooTransition 命名。</li>
+</ul>
+</li>
+</ul>
+<p>对于 Flutter 中这些与动画有关的类如何选择，Flutter 官方给了一张图：</p>
+<p><img src="https://jixiaoyong.github.io/images/flutter/animate/flutter_animate_select.png" alt="如何实现Flutter中的动画"></p>
+<p>简单来说，Flutter 有一些内置的动画，在要写动画的时候，可以依次考虑（实现程度由易到难）：</p>
+<ul>
+<li>AnimatedFoo 参考<a href="https://medium.com/flutter/flutter-animation-basics-with-implicit-animations-95db481c5916">文章</a>，设置新的状态，这些控件会自动从之前的状态切换到新状态</li>
+<li>TweenAnimationBuilder 参考<a href="https://medium.com/flutter/custom-implicit-animations-in-flutter-with-tweenanimationbuilder-c76540b47185">文章</a>，将任意属性在 Tween 指定的范围变化，和上面的 AnimatedFoo 都是属于<a href="https://api.flutter.dev/flutter/widgets/ImplicitlyAnimatedWidget-class.html">Implicitly animated widgets</a>（隐式动画，由系统控件控制动画）。</li>
+<li>FooTranslation</li>
+<li>AnimatedBuilder &#x2F; AnimatedWidget</li>
+<li>CustomPainter</li>
+</ul>
+<br/>
+
+<p>本文主要分析 AnimationController 及其相关类。</p>
+<h1 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h1><p>AnimationController 是 Flutter 中动画的基石，它继承自 Animation，根据不同的方法调用创建对应的 Simulation 并开始监听传入的 Ticker；</p>
+<p>每当 Flutter 中帧刷新时，从_simulation 中获取当前 Animation._value 并对 listener 发出通知；</p>
+<p>这样需要使用 Animation.value 的各个 Widget 便可以根据其值修改自身属性，实现动画视觉效果。</p>
+<h2 id="Animation"><a href="#Animation" class="headerlink" title="Animation"></a>Animation</h2><p>根据上述分析，我们首先来看一下 Animation 类：</p>
+<blockquote>
+<p>An animation with a value of type T</p>
+</blockquote>
+<p>Animation 主要的作用是持有 value 和 status，并允许其他对象监听二者的变化。</p>
+<figure class="highlight dart"><table><tr><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Animation</span>&lt;<span class="title">T</span>&gt; <span class="keyword">extends</span> <span class="title">Listenable</span> <span class="keyword">implements</span> <span class="title">ValueListenable</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="comment">/// <span class="language-markdown">The current value of the animation.</span></span></span><br><span class="line">    T <span class="keyword">get</span> value;</span><br><span class="line">    <span class="comment">/// <span class="language-markdown">The current status of this animation.</span></span></span><br><span class="line">    AnimationStatus <span class="keyword">get</span> status;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Animation 继承自 Listenable，实现 ValueListenable 接口，其他类可以通过 addListener&#x2F;removeListener 或者 addStatusListener&#x2F;removeStatusListener 监听 Animation 的 value 或者 status 变化。</p>
+<p>Animation 共有 4 种状态：dismissed、forward、reverse、completed。</p>
+<p>除此之外，Animation.drive 方法可以创建一个新的将传入的 Animatable 应用到自身的 Animation。</p>
+<figure class="highlight dart"><table><tr><td class="code"><pre><span class="line"><span class="meta">@optionalTypeArgs</span></span><br><span class="line">Animation&lt;U&gt; drive&lt;U&gt;(Animatable&lt;U&gt; child) &#123;</span><br><span class="line">  <span class="keyword">assert</span>(<span class="keyword">this</span> <span class="keyword">is</span> Animation&lt;<span class="built_in">double</span>&gt;);</span><br><span class="line">  <span class="comment">// 通过Animatable.transform将此Animation.value的值从double转化为U</span></span><br><span class="line">  <span class="keyword">return</span> child.animate(<span class="keyword">this</span> <span class="keyword">as</span> Animation&lt;<span class="built_in">double</span>&gt;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>也就是说，提供了将 <code>Animation&lt;double&gt;</code> 转化为 <code>Animation&lt;U&gt;</code> 类型的方法。</p>
+<h2 id="AnimationController"><a href="#AnimationController" class="headerlink" title="AnimationController"></a>AnimationController</h2><blockquote>
+<p>A controller for an animation.</p>
+</blockquote>
+<p>尽管有各种子类，但 Animation 最常用的子类是 AnimationController，使用者可以用它来控制、监听动画、创建其他动画。</p>
+<figure class="highlight dart"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AnimationController</span> <span class="keyword">extends</span> <span class="title">Animation</span>&lt;<span class="title">double</span>&gt; <span class="title">with</span> <span class="title">AnimationEagerListenerMixin</span>, <span class="title">AnimationLocalListenersMixin</span>, <span class="title">AnimationLocalStatusListenersMixin</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h3><p>AnimationController 有两种构造方法，这两种构造方法主要会初始化以下变量：</p>
+<ul>
+<li>double value 当前值</li>
+<li>Duration? duration,reverseDuration 动画正向、反向运行的时长，初始化时可以为 null，但在实际开始动画之前，至少保证 duration 不为 null</li>
+<li>double lowerBound,double upperBound 当 value 触达此值时，animation 分别被认为是 dismissed、completed</li>
+<li>Ticker? _ticker 由构造方法中必传的 TickerProvider vsync 创建</li>
+</ul>
+<p>他的两个构造方法分别是：</p>
+<ul>
+<li><p>AnimationController()</p>
+<p>默认构造方法，double lowerBound,double upperBound 默认分别为 0.0，1.0</p>
+</li>
+<li><p>AnimationController.unbounded()</p>
+<p>不限制 value 值的构造方法，double lowerBound,double upperBound 默认分别为 double.negativeInfinity，double.infinity。适用于没有预设编辑的物理模拟动画。</p>
+</li>
+</ul>
+<p>在这两个构造方法内部，都会通过<code>_ticker = vsync.createTicker(_tick)</code>创建_ticker，并保证当_ticker 回调时执行<code>AnimationController._tick()</code>方法。</p>
+<blockquote>
+<p>这里的 TickerProvider 主要有 2 种：</p>
+<ul>
+<li>SingleTickerProviderStateMixin 适用于 State 中只有一个 AnimationController 的情况，性能更好</li>
+<li>TickerProviderStateMixin 适用于 State 生命周期内有多个 AnimationController 的情况</li>
+</ul>
+</blockquote>
+<br/>
+
+<p>除了从 Animation 继承的方法外，AnimationController 还提供了如下方法，用于操纵动画：</p>
+<p><strong>操纵从<code>double? from</code>正向&#x2F;反向开始动画</strong>：</p>
+<ul>
+<li>TickerFuture forward({ double? from })</li>
+<li>TickerFuture reverse({ double? from })</li>
+</ul>
+<p><strong>操纵正向&#x2F;反向开始朝向<code>double target</code>开始动画</strong>，此类动画还可以改变<em>Duration</em>和<em>Curve</em>：</p>
+<ul>
+<li>TickerFuture animateTo(double target, { Duration? duration, Curve curve &#x3D; Curves.linear })</li>
+<li>TickerFuture animateBack(double target, { Duration? duration, Curve curve &#x3D; Curves.linear })</li>
+</ul>
+<p>上述四种方法，内部都是通过 <code>AnimationController._animateToInternal()</code>方法实现，而此方法内部又是执行 <code>AnimationController._startSimulation()</code>，除此之外，还有以下几类方法内部也是基于_startSimulation()方法实现，主要区别在于不同方法方法创建了不同的 Simulation：</p>
+<ul>
+<li>TickerFuture repeat({ double? min, double? max, bool reverse &#x3D; false, Duration? period })</li>
+<li>TickerFuture fling({ double velocity &#x3D; 1.0, SpringDescription? springDescription, AnimationBehavior? animationBehavior })</li>
+<li>TickerFuture animateWith(Simulation simulation)</li>
+</ul>
+<h3 id="startSimulation"><a href="#startSimulation" class="headerlink" title="_startSimulation"></a>_startSimulation</h3><p><code>AnimationController._startSimulation()</code>方法是其实现动画的基石，其内部主要是开启了_ticker 并发出通知：</p>
+<figure class="highlight dart"><table><tr><td class="code"><pre><span class="line">TickerFuture _startSimulation(Simulation simulation) &#123;</span><br><span class="line">    <span class="keyword">assert</span>(simulation != <span class="keyword">null</span>);</span><br><span class="line">    <span class="keyword">assert</span>(!isAnimating);</span><br><span class="line">    _simulation = simulation;</span><br><span class="line">    _lastElapsedDuration = <span class="built_in">Duration</span>.zero;</span><br><span class="line">    _value = simulation.x(<span class="number">0.0</span>).clamp(lowerBound, upperBound);</span><br><span class="line">    <span class="comment">// 开始ticker</span></span><br><span class="line">    <span class="keyword">final</span> TickerFuture result = _ticker!.start();</span><br><span class="line">    _status = (_direction == _AnimationDirection.forward) ?</span><br><span class="line">      AnimationStatus.forward :</span><br><span class="line">      AnimationStatus.reverse;</span><br><span class="line">    _checkStatusChanged();</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>_ticker.start()</code>方法最终通过<code>SchedulerBinding.instance.scheduleFrameCallback()</code>方法监听 Flutter Framework 的帧刷新，并回调 <code>AnimationController._tick</code> 方法</p>
+<h3 id="tick"><a href="#tick" class="headerlink" title="_tick"></a>_tick</h3><p>在此方法内部根据当前时间和_simulation 获取_value 并发出通知。</p>
+<figure class="highlight dart"><table><tr><td class="code"><pre><span class="line"><span class="keyword">void</span> _tick(<span class="built_in">Duration</span> elapsed) &#123;</span><br><span class="line">  _lastElapsedDuration = elapsed;</span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">double</span> elapsedInSeconds = elapsed.inMicroseconds.toDouble() / <span class="built_in">Duration</span>.microsecondsPerSecond;</span><br><span class="line">  <span class="keyword">assert</span>(elapsedInSeconds &gt;= <span class="number">0.0</span>);</span><br><span class="line">  <span class="comment">// 通过_simulation获取当前动画的_value</span></span><br><span class="line">  _value = _simulation!.x(elapsedInSeconds).clamp(lowerBound, upperBound);</span><br><span class="line">  <span class="comment">// 如果动画已经结束了，就停止监听</span></span><br><span class="line">  <span class="keyword">if</span> (_simulation!.isDone(elapsedInSeconds)) &#123;</span><br><span class="line">    _status = (_direction == _AnimationDirection.forward) ?</span><br><span class="line">      AnimationStatus.completed :</span><br><span class="line">      AnimationStatus.dismissed;</span><br><span class="line">    stop(canceled: <span class="keyword">false</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  notifyListeners();</span><br><span class="line">  _checkStatusChanged();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="其他方法"><a href="#其他方法" class="headerlink" title="其他方法"></a>其他方法</h3><ul>
+<li>void resync(TickerProvider vsync) 使用 vsync 重新创建新的_ticker</li>
+<li>void stop({ bool canceled &#x3D; true }) 停止动画，不会触发通知，默认标记动画为 canceled</li>
+<li>void dispose() 释放资源，动画被标记为 canceled</li>
+</ul>
+<h2 id="Simulation"><a href="#Simulation" class="headerlink" title="Simulation"></a>Simulation</h2><p>从上面的分析中，我们看到 Simulation 在 AnimationController 动画中也起到很重要的作用：Simulation 主要是在一维空间对物理进行位置、速度等建模。</p>
+<figure class="highlight dart"><table><tr><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Simulation</span> </span>&#123;</span><br><span class="line">  <span class="comment">/// <span class="language-markdown">Initializes the [tolerance] field for subclasses.</span></span></span><br><span class="line">  Simulation(&#123; <span class="keyword">this</span>.tolerance = Tolerance.defaultTolerance &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 指定时间的位置</span></span><br><span class="line">  <span class="built_in">double</span> x(<span class="built_in">double</span> time);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 指定时间的速度</span></span><br><span class="line">  <span class="built_in">double</span> dx(<span class="built_in">double</span> time);</span><br><span class="line"></span><br><span class="line">  <span class="comment">/// <span class="language-markdown">Whether the simulation is &quot;done&quot; at the given time.</span></span></span><br><span class="line">  <span class="built_in">bool</span> isDone(<span class="built_in">double</span> time);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 公差，如果两个数值相差小于等于此值则认为二者相等，用于isDone中</span></span><br><span class="line">  Tolerance tolerance;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  <span class="built_in">String</span> toString() =&gt; objectRuntimeType(<span class="keyword">this</span>, <span class="string">&#x27;Simulation&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 AnimationController 中常用的子类有以下两种：</p>
+<h3 id="InterpolationSimulation"><a href="#InterpolationSimulation" class="headerlink" title="_InterpolationSimulation"></a>_InterpolationSimulation</h3><figure class="highlight dart"><table><tr><td class="code"><pre><span class="line">_InterpolationSimulation(<span class="keyword">this</span>._begin, <span class="keyword">this</span>._end, <span class="built_in">Duration</span> duration, <span class="keyword">this</span>._curve, <span class="built_in">double</span> scale)&#123;...&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其 x()方法中除了 t 为 0.0 或 1.0 的情况外，其余时候依靠 Curve（默认为 Curves.linear）计算值。</p>
+<figure class="highlight dart"><table><tr><td class="code"><pre><span class="line"><span class="built_in">double</span> x(<span class="built_in">double</span> timeInSeconds) &#123;</span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">double</span> t = (timeInSeconds / _durationInSeconds).clamp(<span class="number">0.0</span>, <span class="number">1.0</span>);</span><br><span class="line">  <span class="keyword">if</span> (t == <span class="number">0.0</span>)</span><br><span class="line">    <span class="keyword">return</span> _begin;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (t == <span class="number">1.0</span>)</span><br><span class="line">    <span class="keyword">return</span> _end;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="keyword">return</span> _begin + (_end - _begin) * _curve.transform(t);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="RepeatingSimulation"><a href="#RepeatingSimulation" class="headerlink" title="_RepeatingSimulation"></a>_RepeatingSimulation</h3><figure class="highlight dart"><table><tr><td class="code"><pre><span class="line">_RepeatingSimulation(<span class="built_in">double</span> initialValue, <span class="keyword">this</span>.min, <span class="keyword">this</span>.max, <span class="keyword">this</span>.reverse, <span class="built_in">Duration</span> period, <span class="keyword">this</span>.directionSetter)&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>没有 Curve，其 double x(double timeInSeconds)方法可以自动判断是否需要反向并修改方向（会触发 status 改变通知）：</p>
+<figure class="highlight dart"><table><tr><td class="code"><pre><span class="line"><span class="built_in">double</span> x(<span class="built_in">double</span> timeInSeconds) &#123;</span><br><span class="line">  <span class="keyword">assert</span>(timeInSeconds &gt;= <span class="number">0.0</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">double</span> totalTimeInSeconds = timeInSeconds + _initialT;</span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">double</span> t = (totalTimeInSeconds / _periodInSeconds) % <span class="number">1.0</span>;</span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">bool</span> isPlayingReverse = (totalTimeInSeconds ~/ _periodInSeconds).isOdd;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (reverse &amp;&amp; isPlayingReverse) &#123;</span><br><span class="line">    directionSetter(_AnimationDirection.reverse);</span><br><span class="line">    <span class="keyword">return</span> ui.lerpDouble(max, min, t)!;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    directionSetter(_AnimationDirection.forward);</span><br><span class="line">    <span class="keyword">return</span> ui.lerpDouble(min, max, t)!;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此外比较特殊的是他的 isDone 方法一致返回 false，表示不会主动结束动画。</p>
+<h3 id="SpringSimulation"><a href="#SpringSimulation" class="headerlink" title="SpringSimulation"></a>SpringSimulation</h3><p>用于 fling 方法，创建弹性的模拟</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>经过上述分析，应该能了解 Flutter 动画中 AnimationController 的作用：</p>
+<ul>
+<li><p><strong>AnimationController</strong> 通过传入的 <strong>TickerProvider</strong> 创建并监听 <strong>Ticker</strong>，确保 Ticker 收到系统帧回调时触发 AnimationController._tick 方法；</p>
+</li>
+<li><p>提供 forward，reverse，animateTo，animateBack，repeat，fling，animateWith 等方法创建不同的 <strong>Simulation</strong> 并开启 Ticker，从而可以通过 <strong>SchedulerBinding</strong>.instance.scheduleFrameCallback 监听 Flutter 每一帧刷新。</p>
+<p>并且在 animateTo，animateBack 方法中可以使用 <strong>Curve</strong> 实现非线性变化。</p>
+</li>
+<li><p>当 Flutter 帧刷新时，_tick 方法中通过_simulation 结合时间，lowerBound 和 upperBound 等获取当前值_value 和状态_status 并发出通知。</p>
+</li>
+<li><p>使用者可以通过 AnimationController 继承自父类 <strong>Animation</strong> 的 addListener&#x2F;removeListener、addStatusListener&#x2F;removeStatusListener 监听动画的值和状态</p>
+</li>
+<li><p>使用者可以从父类 <code>Animation&lt;double&gt;</code>继承的<code>Animation&lt;U&gt; drive&lt;U&gt;(Animatable&lt;U&gt; child)</code>方法使用 <code>Animatable&lt;U&gt;</code>从 <code>Animation&lt;double&gt;</code>的 animation 创建一个新的<code>Animation&lt;U&gt;</code>，从而可以得到可以随时间变化过渡的 Offset、Size 等动画。</p>
+</li>
+<li><p>stop 方法可以停止动画</p>
+</li>
+</ul>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="https://flutter.cn/docs/development/ui/animations">动画效果介绍 flutter.cn</a></p>
+<p><a href="https://api.flutter.dev/flutter/animation/Animation-class.html">Animation api.flutter.dev</a></p>
+<p><a href="https://api.flutter.dev/flutter/animation/AnimationController-class.html">AnimationController api.flutter.dev</a></p>
+<p><a href="https://api.flutter.dev/flutter/scheduler/TickerProvider-class.html">TickerProvider api.flutter.dev</a></p>
+<p><a href="https://api.flutter.dev/flutter/scheduler/SingleTickerProviderStateMixin-class.html">SingleTickerProviderStateMixin api.flutter.dev</a></p>
+]]></content>
+      <tags>
+        <tag>flutter</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Flutter动画分析之Hero</title>
     <url>/blog/posts/62beedda/</url>
     <content><![CDATA[<p>Flutter 中的 Hero 动画是指可以在切换页面时自动跨页面实现 Widget 放大缩小、位移的动画，在用户看起来好像是当前页面的 Widget“飞”入到另外一个页面，底层基于 Overlay 实现。</p>
