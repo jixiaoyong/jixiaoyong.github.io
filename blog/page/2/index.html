@@ -153,7 +153,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/blog/archives/">
-          <span class="site-state-item-count">100</span>
+          <span class="site-state-item-count">101</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -204,6 +204,121 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://jixiaoyong.github.io/blog/posts/db62c118/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="//jixiaoyong.github.io/images/default_avatar.jpg">
+      <meta itemprop="name" content="JI, XIAOYONG">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ji Xiaoyong's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Ji Xiaoyong's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/posts/db62c118/" class="post-title-link" itemprop="url">Dart event loop</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-11 18:25:29" itemprop="dateCreated datePublished" datetime="2022-06-11T18:25:29+08:00">2022-06-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-21 19:05:36" itemprop="dateModified" datetime="2022-08-21T19:05:36+08:00">2022-08-21</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/blog/posts/db62c118/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/blog/posts/db62c118/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-item" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="waline-pageview-count" data-path="/blog/posts/db62c118/"></span>
+    </span>
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<p>本文基于Dart 2.17</p>
+</blockquote>
+<br>
+
+<p>Dart App中所有的代码都在一个isolate中运行（各个isolate之间的代码运行时是隔离的），一个isolate有自己的heap，维持有一个消息队列event_loop，处理两种消息：</p>
+<ol>
+<li><code>event queue</code> 执行用户点击、屏幕刷新、绘制，一般的Future、IO、Stream流等，每次执行完毕都会先检查执行micro task queue中的任务，直到其为空再执行下一个event queue</li>
+<li><code>microTask queue</code> 优先执行，一般执行跑完即弃的小任务，如Dart内部的微任务</li>
+</ol>
+<p>上述两种event会在普通的Dart同步方法执行完毕后执行，无论是microTask还是普通的event，他们都是<strong>concurrency并行</strong>执行（也就是说实际上还是<strong>上一个执行完毕，再执行另外一个</strong>），所以如果这些event中存在耗时长的方法，<strong>依旧会阻塞其他方法的执行</strong>，可能导致UI卡顿等情况。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/posts/db62c118/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://jixiaoyong.github.io/blog/posts/3db5282/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -240,7 +355,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-21 16:09:40" itemprop="dateModified" datetime="2022-08-21T16:09:40+08:00">2022-08-21</time>
+      <time title="修改时间：2022-08-21 19:05:36" itemprop="dateModified" datetime="2022-08-21T19:05:36+08:00">2022-08-21</time>
     </span>
 
   
@@ -350,7 +465,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-21 16:09:40" itemprop="dateModified" datetime="2022-08-21T16:09:40+08:00">2022-08-21</time>
+      <time title="修改时间：2022-08-21 19:05:36" itemprop="dateModified" datetime="2022-08-21T19:05:36+08:00">2022-08-21</time>
     </span>
 
   
@@ -473,7 +588,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-21 16:09:40" itemprop="dateModified" datetime="2022-08-21T16:09:40+08:00">2022-08-21</time>
+      <time title="修改时间：2022-08-21 19:05:36" itemprop="dateModified" datetime="2022-08-21T19:05:36+08:00">2022-08-21</time>
     </span>
 
   
@@ -583,7 +698,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-21 16:09:40" itemprop="dateModified" datetime="2022-08-21T16:09:40+08:00">2022-08-21</time>
+      <time title="修改时间：2022-08-21 19:05:36" itemprop="dateModified" datetime="2022-08-21T19:05:36+08:00">2022-08-21</time>
     </span>
 
   
@@ -691,7 +806,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-21 16:09:40" itemprop="dateModified" datetime="2022-08-21T16:09:40+08:00">2022-08-21</time>
+      <time title="修改时间：2022-08-21 19:05:36" itemprop="dateModified" datetime="2022-08-21T19:05:36+08:00">2022-08-21</time>
     </span>
 
   
@@ -799,7 +914,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-21 16:09:40" itemprop="dateModified" datetime="2022-08-21T16:09:40+08:00">2022-08-21</time>
+      <time title="修改时间：2022-08-21 19:05:36" itemprop="dateModified" datetime="2022-08-21T19:05:36+08:00">2022-08-21</time>
     </span>
 
   
@@ -908,7 +1023,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-21 16:09:40" itemprop="dateModified" datetime="2022-08-21T16:09:40+08:00">2022-08-21</time>
+      <time title="修改时间：2022-08-21 19:05:36" itemprop="dateModified" datetime="2022-08-21T19:05:36+08:00">2022-08-21</time>
     </span>
 
   
@@ -1018,7 +1133,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-21 16:09:40" itemprop="dateModified" datetime="2022-08-21T16:09:40+08:00">2022-08-21</time>
+      <time title="修改时间：2022-08-21 19:05:36" itemprop="dateModified" datetime="2022-08-21T19:05:36+08:00">2022-08-21</time>
     </span>
 
   
@@ -1125,7 +1240,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-21 16:09:40" itemprop="dateModified" datetime="2022-08-21T16:09:40+08:00">2022-08-21</time>
+      <time title="修改时间：2022-08-21 19:05:36" itemprop="dateModified" datetime="2022-08-21T19:05:36+08:00">2022-08-21</time>
     </span>
 
   
@@ -1188,115 +1303,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://jixiaoyong.github.io/blog/posts/76d69fc6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="//jixiaoyong.github.io/images/default_avatar.jpg">
-      <meta itemprop="name" content="JI, XIAOYONG">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ji Xiaoyong's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Ji Xiaoyong's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/posts/76d69fc6/" class="post-title-link" itemprop="url">Android今日头条屏幕适配方案的原理梳理</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2020-10-13 11:13:18" itemprop="dateCreated datePublished" datetime="2020-10-13T11:13:18+08:00">2020-10-13</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-21 16:09:40" itemprop="dateModified" datetime="2022-08-21T16:09:40+08:00">2022-08-21</time>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-    <span class="post-meta-item-icon">
-      <i class="far fa-comment"></i>
-    </span>
-    <span class="post-meta-item-text">Waline：</span>
-  
-    <a title="waline" href="/blog/posts/76d69fc6/#waline" itemprop="discussionUrl">
-      <span class="post-comments-count waline-comment-count" data-path="/blog/posts/76d69fc6/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <span class="post-meta-item" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="waline-pageview-count" data-path="/blog/posts/76d69fc6/"></span>
-    </span>
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近在项目里面遇到了屏幕适配的问题，UI要求APP在不同手机上展示效果和设计稿保持“像素级”同步，在对比了几种屏幕适配方案之后，选择了基于今日头条的<a target="_blank" rel="noopener" href="https://github.com/JessYanCoding/AndroidAutoSize">AndroidAutoSize</a>适配方案。</p>
-<p>本文主要简单分析其适配原理，以及在实际使用中遇到的一个问题，需要更深入了解原理可以阅读文末参考文献。</p>
-<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><p>UI给的设计稿一般都是以像素px为单位，而在Android开发中官方推荐的使用的单位是dp。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/posts/76d69fc6/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/blog/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/blog/">1</a><span class="page-number current">2</span><a class="page-number" href="/blog/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/10/">10</a><a class="extend next" rel="next" href="/blog/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/blog/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/blog/">1</a><span class="page-number current">2</span><a class="page-number" href="/blog/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/11/">11</a><a class="extend next" rel="next" href="/blog/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 </div>
