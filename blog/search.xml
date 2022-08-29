@@ -2914,8 +2914,8 @@
       </tags>
   </entry>
   <entry>
-    <title>Flutter动画分析之AnimatedWidget&amp;ImplicitlyAnimatedWidget</title>
-    <url>/blog/posts/47c43abe/</url>
+    <title>Flutter动画分析之AnimatedWidget &amp; ImplicitlyAnimatedWidget</title>
+    <url>/blog/posts/65caa519/</url>
     <content><![CDATA[<blockquote>
 <p>本文讨论的 Flutter 动画主要限定在: <em>随着每一帧的变化，修改 Flutter Widget 的大小、颜色、位置等属性，使之看起来从一种状态渐变为另外一种状态</em> 这一范围。</p>
 </blockquote>
