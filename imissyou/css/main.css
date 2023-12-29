@@ -221,8 +221,8 @@ body {
   background: var(--body-bg-color);
   box-sizing: border-box;
   color: var(--text-color);
-  font-family: Lato, 'PingFang SC', 'Microsoft YaHei', sans-serif;
-  font-size: 1em;
+  font-family: Times New Roman,Baskerville,FZBoYaFangKanSongS, Liberation Serif, STFangsong, FangSong, FangSong_GB2312, serif,STSong,serif,SimSun,Songti SC,Noto Serif SC, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 1.15em;
   line-height: 2;
   min-height: 100%;
   position: relative;
@@ -234,7 +234,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: SimSun,'Noto Serif SC',STSong, 'Songti SC', serif, Lato, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family: Times New Roman,Baskerville,FZBoYaFangKanSongS, Liberation Serif, STFangsong, FangSong, FangSong_GB2312, serif,STSong,serif,SimSun,Songti SC,Noto Serif SC, 'PingFang SC', 'Microsoft YaHei', sans-serif;
   font-weight: bold;
   line-height: 1.5;
   margin: 30px 0 15px;
@@ -1184,7 +1184,7 @@ pre code {
   color: var(--brand-hover-color);
 }
 .site-title {
-  font-family: Lato, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family: Times New Roman,Baskerville,FZBoYaFangKanSongS, Liberation Serif, STFangsong, FangSong, FangSong_GB2312, serif,STSong,serif,SimSun,Songti SC,Noto Serif SC, 'PingFang SC', 'Microsoft YaHei', sans-serif;
   font-size: 1.375em;
   font-weight: normal;
   line-height: 1.5;
@@ -1858,7 +1858,7 @@ pre code {
   width: 4px;
 }
 .post-body {
-  font-family: SimSun, 'Noto Serif SC', STSong, 'Songti SC', serif, Lato, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family: Times New Roman,Baskerville,FZBoYaFangKanSongS, Liberation Serif, STFangsong, FangSong, FangSong_GB2312, serif,STSong,serif,SimSun,Songti SC,Noto Serif SC, 'PingFang SC', 'Microsoft YaHei', sans-serif;
   overflow-wrap: break-word;
 }
 @media (min-width: 1200px) {
@@ -1873,7 +1873,7 @@ pre code {
 }
 @media (max-width: 991px) {
   .post-body {
-    text-align: justify;
+    text-align: start;
   }
 }
 .post-body h1 .header-anchor,
@@ -2061,7 +2061,7 @@ pre code {
 }
 .posts-expand .post-meta-container {
   color: #999;
-  font-family: SimSun, 'Noto Serif SC', STSong, 'Songti SC', serif, Lato, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family: Times New Roman,Baskerville,FZBoYaFangKanSongS, Liberation Serif, STFangsong, FangSong, FangSong_GB2312, serif,STSong,serif,SimSun,Songti SC,Noto Serif SC, 'PingFang SC', 'Microsoft YaHei', sans-serif;
   font-size: 0.75em;
   margin-top: 3px;
 }
@@ -2784,7 +2784,7 @@ mark.search-keyword {
   vertical-align: middle;
 }
 .links-of-author a::before {
-  background: #aff;
+  background: #fff0ff;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);
