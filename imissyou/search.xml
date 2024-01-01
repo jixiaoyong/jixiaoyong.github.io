@@ -542,12 +542,12 @@
 <p>It’s not until we lose something that we understand its importance. If <em>it</em> didn’t happen, I would never know how deeply I love the fresh air and the view outside the house. Especially after I go through those horrible days when a person can be randomly forced into isolation for some * reason. How many misfortunes <em>come with goodness first</em> until they lose control and get mad? It’s unhelpful to discuss the wish good or bad, once the actions have been done, the only rule to judge is the effect they made. Anyway, I have explored as many places as I can during the year 2023, mother nature seems to have the power to cure one’s soul.</p>
 <p>To figure out the difference between these days and the previous days, I did some statistical analysis of my sporting data from Xiaomi Fitness and Amap(Unfortunately, all these applications only count the walking and biking information, other types such as car&#x2F;train&#x2F;bus… doesn’t included). What surprised me was the total size of the origin data is nearly 100Mb (What a crazy company!). This dataset is enormous. Neither <em>WPS</em>, <em>Apple Numbers</em>, nor even <em>Microsoft Excel</em> can handle such a large volume of data: it either crashes upon opening the file, or becomes too sluggish to respond to any operation. Eventually, after some programming, I managed to create a structured version of all this data and have completed some analytical tasks.</p>
 <p><del>It’s interesting to note that, despite my perception of spending most weekends out and about, the data indicates that the changes weren’t as significant as I thought.</del> From June 2020 to October 2021, I lived quite a distance from my office, which resulted in an unusually high total distance. Disregarding this period, it can be observed that the distance is increasing year by year. A notable change this year is my shift from walking to cycling, as evidenced by the rapid increase in the percentage of the total distance covered by cycling.</p>
-<div id="echarts2107" style="width: 85%;height: 400px;margin: 0 auto"></div>
+<div id="echarts1254" style="width: 85%;height: 400px;margin: 0 auto"></div>
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
         var isDarkTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        var id = 'echarts2107'
+        var id = 'echarts1254'
         var myChart = echarts.init(document.getElementById(id),isDarkTheme ? "dark" : "light");
         // 指定图表的配置项和数据
         var option = {
@@ -641,12 +641,12 @@
 
 
 <p>For the chart titled ‘Cycling and Walking Information in 2023 (Monthly)’, it can be observed that after I began cycling in March, the distance covered by cycling increased while the distance covered by walking started to decrease. There was a specific increase during the National Day in October.</p>
-<div id="echarts6547" style="width: 85%;height: 400px;margin: 0 auto"></div>
+<div id="echarts8215" style="width: 85%;height: 400px;margin: 0 auto"></div>
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
         var isDarkTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        var id = 'echarts6547'
+        var id = 'echarts8215'
         var myChart = echarts.init(document.getElementById(id),isDarkTheme ? "dark" : "light");
         // 指定图表的配置项和数据
         var option = {
@@ -770,12 +770,12 @@
 
 
 <p>The sleep interval was gradually decreasing day by day. This chart reveals a disheartening reality. In 2021, there was a moment when, although I had relocated to a place closer to my office, my sleep duration still experienced a significant decrease. Aside from a variety of other factors, it appears that this shift roughly coincided with the time I transitioned to my current department.</p>
-<div id="echarts8556" style="width: 85%;height: 400px;margin: 0 auto"></div>
+<div id="echarts5008" style="width: 85%;height: 400px;margin: 0 auto"></div>
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
         var isDarkTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        var id = 'echarts8556'
+        var id = 'echarts5008'
         var myChart = echarts.init(document.getElementById(id),isDarkTheme ? "dark" : "light");
         // 指定图表的配置项和数据
         var option = {
