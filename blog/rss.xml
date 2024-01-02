@@ -6,8 +6,8 @@
     <link>https://jixiaoyong.github.io/blog/</link>
     <description>Let&amp;apos;s make something different!</description>
     <language>zh-CN</language>
-    <pubDate>Tue, 02 Jan 2024 03:10:43 GMT</pubDate>
-    <lastBuildDate>Tue, 02 Jan 2024 03:10:43 GMT</lastBuildDate>
+    <pubDate>Tue, 02 Jan 2024 03:24:14 GMT</pubDate>
+    <lastBuildDate>Tue, 02 Jan 2024 03:24:14 GMT</lastBuildDate>
     <generator>vuepress-plugin-feed2</generator>
     <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
     <copyright>© CC BY-NC-SA 许可协议授权，署名 - 非商业性使用 - 相同方式共享</copyright>
@@ -7577,13 +7577,9 @@ Channel 提供了在协程之间传递多个值的方法</p>
       <link>https://jixiaoyong.github.io/blog/posts/f7965978.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/f7965978.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Hexo+Github=Blog</source>
-      <description>注意 这篇文章写于 2016 年，其所涉及内容可能已经发生较大变化，请酌情参考。 Hello World！</description>
+      <description>Hello World！ 一直以来，为了有一个合适的在线写字的地方，我尝试过许多种工具，从最初的 QQ 空间开始，到各种门户网站的博客，再到自己开始尝试搭建博客，一路奔忙，门户网站的限制太多，自己搭建的博客又时常由于空间提供商的各种问题而无法访问。许多时候一个平台只能使用一段时间，这样子颠颠撞撞大概也有五六年的时间了。</description>
       <pubDate>Thu, 24 Mar 2016 22:06:06 GMT</pubDate>
-      <content:encoded><![CDATA[<div class="hint-container warning">
-<p class="hint-container-title">注意</p>
-<p>这篇文章写于 2016 年，其所涉及内容可能已经发生较大变化，请酌情参考。</p>
-</div>
-<div class="language-text line-numbers-mode" data-ext="text"><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>一直以来，为了有一个合适的在线写字的地方，我尝试过许多种工具，从最初的 QQ 空间开始，到各种门户网站的博客，再到自己开始尝试搭建博客，一路奔忙，门户网站的限制太多，自己搭建的博客又时常由于空间提供商的各种问题而无法访问。许多时候一个平台只能使用一段时间，这样子颠颠撞撞大概也有五六年的时间了。</p>
+      <content:encoded><![CDATA[<div class="language-text line-numbers-mode" data-ext="text"><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>一直以来，为了有一个合适的在线写字的地方，我尝试过许多种工具，从最初的 QQ 空间开始，到各种门户网站的博客，再到自己开始尝试搭建博客，一路奔忙，门户网站的限制太多，自己搭建的博客又时常由于空间提供商的各种问题而无法访问。许多时候一个平台只能使用一段时间，这样子颠颠撞撞大概也有五六年的时间了。</p>
 <p>一直听说 github 这个平台的各种优点，尤其是可以作为稳定而免费的空间托管博客最令我心动，但是之前多次尝试不得其道，终以失败告终。最近在学习 Android 语言的时候，又再次用起了 github，不过这次是用它来存储代码。不得不承认，使用 github 来控制程序版本真是一件令人愉悦的事件。</p>
 <p>机缘巧合，因为需要将学习过程中的一些笔记，心得总结找个地方整理，显然单纯的使用 github 并不是一个好办法，而其他的平台的博客限制又太多，于是又尝试用 github 搭建一个博客，虽然对这些知识并不是很熟悉，但误打误撞竟然也成功的搭建好了博客。下面就把整个建站的过程大概梳理一下，以便以后查看。</p>
 <h2> 准备 git 和 node 环境</h2>
