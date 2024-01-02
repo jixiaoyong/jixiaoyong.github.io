@@ -6,8 +6,8 @@
     <link>https://jixiaoyong.github.io/blog/</link>
     <description>Let&amp;apos;s make something different!</description>
     <language>zh-CN</language>
-    <pubDate>Tue, 02 Jan 2024 03:29:27 GMT</pubDate>
-    <lastBuildDate>Tue, 02 Jan 2024 03:29:27 GMT</lastBuildDate>
+    <pubDate>Tue, 02 Jan 2024 04:10:50 GMT</pubDate>
+    <lastBuildDate>Tue, 02 Jan 2024 04:10:50 GMT</lastBuildDate>
     <generator>vuepress-plugin-feed2</generator>
     <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
     <copyright>© CC BY-NC-SA 许可协议授权，署名 - 非商业性使用 - 相同方式共享</copyright>
@@ -16,7 +16,7 @@
       <link>https://jixiaoyong.github.io/blog/posts/6f46f598.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/6f46f598.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Android 架构模式一览</source>
-      <description>Android 的架构依次有： MVC MVP MVVM MVI Clean Architecture 上述架构循序渐进，当前主流设计模式是 MVVM，MVI 和 Clean Architecture，这三者的着重点各有不同，可以根据项目规模大小递进选择。 https://github.com/skydoves/android-developer-roadmap/blob/main/README_CN.md</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Fri, 15 Dec 2023 09:10:00 GMT</pubDate>
       <content:encoded><![CDATA[<p>Android 的架构依次有：</p>
 <ul>
@@ -133,7 +133,7 @@
       <link>https://jixiaoyong.github.io/blog/posts/adf541c0.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/adf541c0.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Flutter 动画分析之 CustomPaint</source>
-      <description>本文讨论的 Flutter 动画主要限定在：随着每一帧的变化，修改 Flutter Widget 的大小、颜色、位置等属性，使之看起来从一种状态渐变为另外一种状态 这一范围。 根据之前的分析，关于 Flutter 中的 Widget 动画，大体可以分为三大类： 隐式动画，以 ImplicitlyAnimatedWidget 及其子类为代表。特点是当涉及到的属性变化后，这些 Widget 会 自动渐变到新的属性，使用者只能设置动画的 Duration、Tween、Curve 等，而无法主动终止、反向执行动画。 涉及到的类主要有 TweenAnimationBuilder 以及一系列以 AnimatedFoo 命名的类。 显式动画，以 AnimatedWidget 及其子类为代表，需要配合 AnimationController 使用。特点是 当 AnimationController 的值变化时，Widget 中对应的属性也会随之变化。 涉及到的类主要有 AnimationBuilder/AnimatedWidget 以及一系列 FooTransition 命名的类。 自定义动画，如果上述两种方式还无法满足需求，则可以使用 CustomPaint + CustomPainter + Listenable（比如 AnimationController）实现动画，特点是实现方式灵活，但同时也比上述两者难度高一些。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Mon, 29 Aug 2022 12:57:16 GMT</pubDate>
       <content:encoded><![CDATA[<blockquote>
 <p>本文讨论的 Flutter 动画主要限定在：<em>随着每一帧的变化，修改 Flutter Widget 的大小、颜色、位置等属性，使之看起来从一种状态渐变为另外一种状态</em> 这一范围。</p>
@@ -285,7 +285,7 @@
       <link>https://jixiaoyong.github.io/blog/about.html</link>
       <guid>https://jixiaoyong.github.io/blog/about.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">关于</source>
-      <description>Hi 👋, I&amp;apos;m JI,XIAOYONG A developer. A man who love the world. Keep touch with me:</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Mon, 06 Jun 2016 06:06:06 GMT</pubDate>
       <content:encoded><![CDATA[<img src="https://jixiaoyong.github.io/images/20191026161934.png" class="full-image">
 <h1 align="center">Hi 👋, I'm JI,XIAOYONG <img src="https://img.shields.io/github/followers/jixiaoyong?style=social"></h1>
@@ -329,7 +329,7 @@
       <link>https://jixiaoyong.github.io/blog/posts/1c56d6b9.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/1c56d6b9.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Android 开发常用设置</source>
-      <description>Android Studio 国内较快的仓库： maven {url&amp;apos;http://maven.aliyun.com/nexus/content/groups/public/&amp;apos;} RecyclerView 添加依赖 注意 RecyclerView 的版本号要和当前工程中其他 android.support 包版本保持一致，否则虽然导入了对应的包，但是仍然无法正常使用。 compile &amp;apos;com.android.support:recyclerview-v7:26+&amp;apos; 设置： 自动添加依赖：insert imports on paste: None 自动删除无用依赖：Optimize imports on the fly</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Sun, 27 Aug 2017 15:25:05 GMT</pubDate>
       <content:encoded><![CDATA[<h2> Android Studio</h2>
 <ul>
@@ -364,7 +364,7 @@ export PATH=<span class="katex"><span class="katex-mathml"><math xmlns="http://w
       <link>https://jixiaoyong.github.io/blog/posts/12cb887a.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/12cb887a.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Android11 文件分区存储在图片读写的适配</source>
-      <description>说明 当 APP 目标版本是 Android 10（API 29）及以后时，由于 Android 引入了分区存储，APP 不能直接通过路径访问文件，访问外部存储空间中的媒体文件除了需要READ_EXTERNAL_STORAGE 或 WRITE_EXTERNAL_STORAGE 权限之外，需要通过其他 APP 分享的Uri读写文件，同理要给其余 APP 分享文件也许要通过FileProvider生成Uri并赋予对应的权限。 本文以从相册中获取图片、请求系统裁剪并返回图片为例展示对应的适配方法。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Tue, 01 Jun 2021 06:34:25 GMT</pubDate>
       <content:encoded><![CDATA[<h2> 说明</h2>
 <p>当 APP 目标版本是 Android 10（API 29）及以后时，由于 Android 引入了分区存储，APP 不能直接通过路径访问文件，访问外部存储空间中的媒体文件除了需要<code>READ_EXTERNAL_STORAGE</code> 或 <code>WRITE_EXTERNAL_STORAGE</code> 权限之外，需要通过其他 APP 分享的<code>Uri</code>读写文件，同理要给其余 APP 分享文件也许要通过<code>FileProvider</code>生成<code>Uri</code>并赋予对应的权限。</p>
@@ -397,7 +397,7 @@ export PATH=<span class="katex"><span class="katex-mathml"><math xmlns="http://w
       <link>https://jixiaoyong.github.io/blog/posts/5754fcd2.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/5754fcd2.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Android AlarmManager 设置重复任务</source>
-      <description>近期有一个实现定时启动 APP 提醒用户的需求，一番比较之后觉得用闹钟AlarmManager实现比较合适，本文是对此过程的梳理，属于比较基础性的内容。 需求 需求需要实现 &amp;quot;每天在指定时间范围内，循环提示用户直到满足指定的条件&amp;quot; 拆分需求： 每天都要提醒 在时间范围内一直循环 满足条件后结束当天循环 方案选择 Android 中可以用到的循环任务实现有Handler、Timer、ScheduledExecutorService（这三个可以看这里），还有最近的WorkManager和我们要用到的AlarmManager。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Fri, 06 Dec 2019 10:18:18 GMT</pubDate>
       <content:encoded><![CDATA[<p>近期有一个实现定时启动 APP 提醒用户的需求，一番比较之后觉得用闹钟<code>AlarmManager</code>实现比较合适，本文是对此过程的梳理，属于比较基础性的内容。</p>
 <h2> 需求</h2>
@@ -497,7 +497,7 @@ export PATH=<span class="katex"><span class="katex-mathml"><math xmlns="http://w
       <link>https://jixiaoyong.github.io/blog/posts/c0fefed0.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/c0fefed0.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Android 事件分发</source>
-      <description>Android 事件分发，指手指点击屏幕后，从 Activity、ViewGroup 到 View 的一系列过程。 简介 Android 系统的窗口机制如下图： Activity 内有一个 Window 对象，其实现类是 PhoneWindow； DecorView 为顶层 View，DecorView 是一个 FrameLayout，其中有 TitleView 和 ContentView； Android 系统窗口管理机制</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Tue, 24 Apr 2018 12:25:33 GMT</pubDate>
       <content:encoded><![CDATA[<p>Android 事件分发，指手指点击屏幕后，从 Activity、ViewGroup 到 View 的一系列过程。</p>
 <h2> 简介</h2>
@@ -562,7 +562,7 @@ export PATH=<span class="katex"><span class="katex-mathml"><math xmlns="http://w
       <link>https://jixiaoyong.github.io/blog/posts/caa169b7.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/caa169b7.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Android 5.x 以下加载 MultiDex 白屏的处理优化</source>
-      <description>当 APP 的 minSdkVersion 低于 Android 5 时，在方法数大于 65536 时，需要将 APP 打包为多个 DEX 文件，此时需要添加 MultiDex 依赖。 官方方法如下： 1.build.gradle android { defaultConfig { ... minSdkVersion 15 targetSdkVersion 28 multiDexEnabled true } ... } dependencies { compile &amp;apos;com.android.support:multidex:1.0.3&amp;apos; }</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Sat, 10 Aug 2019 03:39:00 GMT</pubDate>
       <content:encoded><![CDATA[<p>当 APP 的 minSdkVersion 低于 Android 5 时，在方法数大于 65536 时，需要将 APP 打包为多个 DEX 文件，此时需要添加 MultiDex 依赖。</p>
 <p>官方方法如下：</p>
@@ -607,7 +607,7 @@ export PATH=<span class="katex"><span class="katex-mathml"><math xmlns="http://w
       <link>https://jixiaoyong.github.io/blog/posts/e5860bb5.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/e5860bb5.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Android paint 绘制 text</source>
-      <description>Android 中绘制文字的方法如下： /** * Draw the text, with origin at (x,y), using the specified paint. The origin is interpreted * based on the Align setting in the paint. * * @param text The text to be drawn * @param x The x-coordinate of the origin of the text being drawn * @param y The y-coordinate of the baseline of the text being drawn * @param paint The paint used for the text (e.g. color, size, style) */ public void drawText(@NonNull String text, float x, float y, @NonNull Paint paint) { super.drawText(text, x, y, paint); }</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Tue, 07 Apr 2020 14:05:20 GMT</pubDate>
       <content:encoded><![CDATA[<p>Android 中绘制文字的方法如下：</p>
 <div class="language-java line-numbers-mode" data-ext="java"><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>其中<code>y</code>是<strong>文字 baseline 的 y 坐标</strong>。</p>
@@ -646,7 +646,7 @@ export PATH=<span class="katex"><span class="katex-mathml"><math xmlns="http://w
       <link>https://jixiaoyong.github.io/blog/posts/ad4c562c.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/ad4c562c.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">AndroidService 相关知识</source>
-      <description>启动一个 Service MyServices.java 必须继承自 Service，或者如 IntentService 本身就是等其子类 public class MyServices extends Service { @Nullable @Override public IBinder onBind(Intent intent) { Log.d(&amp;quot;TAG&amp;quot;,&amp;quot;onBind&amp;quot;); return null; } @Override public void onCreate() { super.onCreate(); Log.d(&amp;quot;TAG&amp;quot;,&amp;quot;onCreate&amp;quot;); } @Override public void onDestroy() { super.onDestroy(); Log.d(&amp;quot;TAG&amp;quot;, &amp;quot;onDestroy: &amp;quot;); } } AndroidManifest.xml 注册 MyServices &amp;lt;application&amp;gt; 		&amp;lt;service android:name=&amp;quot;.MyServices&amp;quot; android:exported=&amp;quot;true&amp;quot;&amp;gt; &amp;lt;intent-filter&amp;gt; &amp;lt;action android:name=&amp;quot;cf.android666.myservices&amp;quot; /&amp;gt; &amp;lt;/intent-filter&amp;gt; &amp;lt;/service&amp;gt; &amp;lt;/application&amp;gt; MainActivity.java 在 java 中调用 Service，需要ServiceConnection类 ServiceConnection mConnection = new ServiceConnection() { @Override public void onServiceConnected(ComponentName name, IBinder service) { Log.d(TAG, &amp;quot;onServiceConnected: 服务绑定&amp;quot;); } @Override public void onServiceDisconnected(ComponentName name) { Log.d(TAG, &amp;quot;onServiceDisconnected: 服务解绑&amp;quot;); } }; Intent intent = new Intent(context, MyServices.class); bindService(intent, mConnection, Service.BIND_AUTO_CREATE);//绑定 Service //startService(intent); 启动 service unbindService(mConnection);//解绑 Service bindService()和startService()的区别在于： ** bindService()将 service 和当前的 activity 绑定在一起，activity 销毁时，service 也会被销毁； ** startService()则只是“启动”service，在此后 service 的活动和 activity 无关，并一直存活。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Sat, 13 Jan 2018 17:10:01 GMT</pubDate>
       <content:encoded><![CDATA[<h3> 启动一个 Service</h3>
 <ul>
@@ -743,7 +743,7 @@ export PATH=<span class="katex"><span class="katex-mathml"><math xmlns="http://w
       <link>https://jixiaoyong.github.io/blog/posts/5962504e.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/5962504e.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Android 异步消息机制 Handler、Message、Looper</source>
-      <description>此文为鸿洋博客阅读笔记，配合原文食用口味更佳。 Android 异步消息处理机制 让你深入理解 Looper、Handler、Message 三者关系 - CSDN 博客 导图 20200429160005</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Sun, 01 Apr 2018 12:08:08 GMT</pubDate>
       <content:encoded><![CDATA[<blockquote>
 <p>此文为鸿洋博客阅读笔记，配合原文食用口味更佳。</p>
@@ -792,7 +792,7 @@ export PATH=<span class="katex"><span class="katex-mathml"><math xmlns="http://w
       <link>https://jixiaoyong.github.io/blog/posts/f931e8ae.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/f931e8ae.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Android 中 AIDL 的使用</source>
-      <description>AIDL（Android Interface Definition Language，Android 接口定义语言）用于 Android IPC，适用于大量并发请求。 主要分为两部分： 服务端 创建 Service 监听 Client 的请求，通过创建 AIDL 将接口暴露给客户端 客户端 绑定到服务端获取 BInder 对象，将其转化为对应 AIDL，并调用接口对应方法。 两者的连线就是 AIDL，因此两个 APP 的 AIDL 必须一致，可以将 AIDL 文件放到一个 Android Library 中，或者打成 aar 文件供二者依赖。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Tue, 07 Aug 2018 13:15:39 GMT</pubDate>
       <content:encoded><![CDATA[<p>AIDL（Android Interface Definition Language，Android 接口定义语言）用于 Android IPC，适用于<strong>大量并发</strong>请求。</p>
 <p>主要分为两部分：</p>
@@ -855,7 +855,7 @@ export PATH=<span class="katex"><span class="katex-mathml"><math xmlns="http://w
       <link>https://jixiaoyong.github.io/blog/posts/2270057c.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/2270057c.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Android 中 AIDL 相关知识</source>
-      <description>前言 AIDL是 Android 中用于 IPC 的语言，具体使用可以参见这篇文章，这篇文章主要想总结一下AIDL具体为我们做了什么工作，主要参考书目《Android 开发艺术探索》。 在 Android 中，除了Socket、Intent中使用Bundle、本地文件共享，ContentProvider等等之外，还有一个独有的 IPC 方式即Binder。在日常编程中使用Binder的主要有AIDL和Messenger两种方式，而Messenger也是用AIDL来实现的。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Wed, 20 Mar 2019 11:37:40 GMT</pubDate>
       <content:encoded><![CDATA[<h2> 前言</h2>
 <p><code>AIDL</code>是 Android 中用于 IPC 的语言，具体使用可以参见<a href="https://jixiaoyong.github.io/blog/posts/f931e8ae/" target="_blank" rel="noopener noreferrer">这篇文章</a>，这篇文章主要想总结一下<code>AIDL</code>具体为我们做了什么工作，主要参考书目《Android 开发艺术探索》。</p>
@@ -883,7 +883,7 @@ export PATH=<span class="katex"><span class="katex-mathml"><math xmlns="http://w
       <link>https://jixiaoyong.github.io/blog/posts/1b0362b.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/1b0362b.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Android 中 View 相关知识</source>
-      <description>本文为笔记性质，尚未成文。 View 的坐标 Android 中的坐标，以屏幕左上角顶点为原点 (0,0)，以横轴为 x 轴，竖轴为 y 轴，数值依次递增。 View 的坐标信息有以下几种，其坐标都是以父 View 的左上角顶点为原点： x，y 是 View 的左上角坐标。 translationX，translationY 是 View 左上角顶点与父容器左上角顶点的偏移量，默认为 0。 left，top 是分别是 View 左上角顶点的 x 轴，y 轴坐标。 right，bottom 分别是 View 右下角顶点的 x 轴，y 轴坐标。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Sun, 24 Mar 2019 04:43:21 GMT</pubDate>
       <content:encoded><![CDATA[<p>本文为笔记性质，尚未成文。</p>
 <h2> View 的坐标</h2>
@@ -951,7 +951,7 @@ ItemTouchHelper 源码分析 <a href="https://www.jianshu.com/p/130fdd755471" ta
       <link>https://jixiaoyong.github.io/blog/posts/b35fe0f7.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/b35fe0f7.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Android 中 WebView 使用的一些问题</source>
-      <description>问题描述：WebView 在 fragment 中不显示 解决代码如下： //kotlin 代码 webView.webViewClient = object : WebViewClient() { override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean { view!!.loadUrl(url) return true } }</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Wed, 07 Feb 2018 16:11:13 GMT</pubDate>
       <content:encoded><![CDATA[<h2> 问题描述：WebView 在 fragment 中不显示</h2>
 <p>解决代码如下：</p>
@@ -963,7 +963,7 @@ ItemTouchHelper 源码分析 <a href="https://www.jianshu.com/p/130fdd755471" ta
       <link>https://jixiaoyong.github.io/blog/posts/b0dc2559.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/b0dc2559.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Android 中的 Messenger 源码详解</source>
-      <description>前言 Messenger 是 Android 中用于 IPC 的方式之一，使用 Handler 发送有序消息队列，底层是通过 AIDL 调用 Binder 实现。 Messenger 只用于服务端和客户端串行的传递消息，如果大量并发或者跨进程调用服务端的方法，就需要考虑 AIDL 而非 Messenger。 Messenger 的使用可以参考这篇文章,本文主要探索一下 Messenger 源码实现。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Thu, 21 Mar 2019 02:26:32 GMT</pubDate>
       <content:encoded><![CDATA[<h2> 前言</h2>
 <p>Messenger 是 Android 中用于 IPC 的方式之一，使用 Handler 发送有序消息队列，底层是通过 AIDL 调用 Binder 实现。</p>
@@ -999,7 +999,7 @@ ItemTouchHelper 源码分析 <a href="https://www.jianshu.com/p/130fdd755471" ta
       <link>https://jixiaoyong.github.io/blog/posts/c2f123c.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/c2f123c.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Android 中的 SpareArray 和 ArrayMap 实现分析</source>
-      <description>日常开发中，常用的存储键值对的数据结构是HashMap，根据Java 笔记之 HashMap 保存数据和Java 笔记之计算 Java 对象的大小及其应用可以知道，HashMap存储键值对会占用比较多的内存控件，而对于内存限制较大的 Android 平台来说，为了避免这种浪费，官方推荐我们使用SpareArray和ArrayMap，本文对这两个类的实现进行分析比较。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Sun, 22 Dec 2019 01:35:37 GMT</pubDate>
       <content:encoded><![CDATA[<p>日常开发中，常用的存储键值对的数据结构是<code>HashMap</code>，根据<a href="https://jixiaoyong.github.io/blog/posts/ff927bd4.html" target="_blank" rel="noopener noreferrer">Java 笔记之 HashMap 保存数据</a>和<a href="https://jixiaoyong.github.io/blog/posts/b0793c74.html" target="_blank" rel="noopener noreferrer">Java 笔记之计算 Java 对象的大小及其应用</a>可以知道，<code>HashMap</code>存储<strong>键值对</strong>会占用比较多的内存控件，而对于内存限制较大的 Android 平台来说，为了避免这种浪费，官方推荐我们使用<code>SpareArray</code>和<code>ArrayMap</code>，本文对这两个类的实现进行分析比较。</p>
 <p><strong><code>SpareArray</code>以及他的衍生类</strong>都是以<strong>基本类型</strong>为<code>key</code>，因为避免了<em>自动装箱</em>，并且<strong>用数组直接保存 key、value</strong>（而非像<code>HashMap</code>那样将其封装为<code>Node</code>对象后再保存），因而节省了内存。</p>
@@ -1082,7 +1082,7 @@ ItemTouchHelper 源码分析 <a href="https://www.jianshu.com/p/130fdd755471" ta
       <link>https://jixiaoyong.github.io/blog/posts/76d69fc6.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/76d69fc6.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Android 今日头条屏幕适配方案的原理梳理</source>
-      <description>前言 最近在项目里面遇到了屏幕适配的问题，UI 要求 APP 在不同手机上展示效果和设计稿保持“像素级”同步，在对比了几种屏幕适配方案之后，选择了基于今日头条的AndroidAutoSize适配方案。 本文主要简单分析其适配原理，以及在实际使用中遇到的一个问题，需要更深入了解原理可以阅读文末参考文献。 正文 UI 给的设计稿一般都是以像素 px 为单位，而在 Android 开发中官方推荐的使用的单位是 dp。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Tue, 13 Oct 2020 03:13:18 GMT</pubDate>
       <content:encoded><![CDATA[<h2> 前言</h2>
 <p>最近在项目里面遇到了屏幕适配的问题，UI 要求 APP 在不同手机上展示效果和设计稿保持“像素级”同步，在对比了几种屏幕适配方案之后，选择了基于今日头条的<a href="https://github.com/JessYanCoding/AndroidAutoSize" target="_blank" rel="noopener noreferrer">AndroidAutoSize</a>适配方案。</p>
@@ -1135,7 +1135,7 @@ ItemTouchHelper 源码分析 <a href="https://www.jianshu.com/p/130fdd755471" ta
       <link>https://jixiaoyong.github.io/blog/posts/a3a3dc4c.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/a3a3dc4c.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Android 多渠道打包知识</source>
-      <description>国内 Android 应用常常要分发到多个应用商店，使用 Android Studio 正确配置 build.gradle 与 AndroidManifest.xml 文件可以一步打包多个渠道。 本文实现的多渠道打包可实现不同渠道： 有不同的项目 id（applicationId） 不同 App 名称（android:label） 不同 App 图标（android:icon） 等等 1.友盟配置 *具体配置请参考 UMeng 官方文档。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Sun, 25 Mar 2018 14:17:57 GMT</pubDate>
       <content:encoded><![CDATA[<p>国内 Android 应用常常要分发到多个应用商店，使用 Android Studio 正确配置 build.gradle 与 AndroidManifest.xml 文件可以<strong>一步打包多个渠道</strong>。</p>
 <p>本文实现的多渠道打包可实现不同渠道：</p>
@@ -1196,7 +1196,7 @@ ItemTouchHelper 源码分析 <a href="https://www.jianshu.com/p/130fdd755471" ta
       <link>https://jixiaoyong.github.io/blog/posts/b4832cd1.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/b4832cd1.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Android 实现可折叠 toolbar</source>
-      <description>使用到的类有： android.support.design.widget.CoordinatorLayout android.support.design.widget.AppBarLayout android.support.design.widget.CollapsingToolbarLayout android.support.v7.widget.Toolbar 效果预览 如图：</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Thu, 22 Feb 2018 07:01:10 GMT</pubDate>
       <content:encoded><![CDATA[<p>使用到的类有：</p>
 <ul>
@@ -1270,7 +1270,7 @@ ItemTouchHelper 源码分析 <a href="https://www.jianshu.com/p/130fdd755471" ta
       <link>https://jixiaoyong.github.io/blog/posts/3b69424a.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/3b69424a.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Android 控件组</source>
-      <description>这几天的工作中用到了控件组来实现复杂布局，效果不错，记录下来备用。 1. 定义控件组布局 xxx_layout.xml 在这里定义要使用的控件组布局，这里的布局决定了布局显示的样子。 &amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt; &amp;lt;LinearLayout xmlns:android=&amp;quot;http://schemas.android.com/apk/res/android&amp;quot; xmlns:app=&amp;quot;http://schemas.android.com/apk/res-auto&amp;quot; android:layout_width=&amp;quot;match_parent&amp;quot; android:layout_height=&amp;quot;wrap_content&amp;quot; android:padding=&amp;quot;10dp&amp;quot;&amp;gt; &amp;lt;ImageView ... /&amp;gt; &amp;lt;EditText .../&amp;gt; &amp;lt;ImageView ... /&amp;gt; &amp;lt;/LinearLayout&amp;gt;</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Wed, 20 Sep 2017 15:25:05 GMT</pubDate>
       <content:encoded><![CDATA[<p>这几天的工作中用到了控件组来实现复杂布局，效果不错，记录下来备用。</p>
 <h2> 1. 定义控件组布局 xxx_layout.xml</h2>
@@ -1342,7 +1342,7 @@ ItemTouchHelper 源码分析 <a href="https://www.jianshu.com/p/130fdd755471" ta
       <link>https://jixiaoyong.github.io/blog/posts/104c9058.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/104c9058.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Android 笔记之 Xfermode</source>
-      <description>Xfermode是 Android 中用来指示Paint绘制的内容与 View 中已有内容的混合计算方式，也就是用来确定图形绘制到目标图形的时候，如何处理两个图形重合部分的颜色变化。共 18 个，分为 Alpha 合成和混合两种。 设要绘制的图形为src，已经绘制好的图形为dst。 需要注意的是，这些图片除了要绘制的图形有着色之外，其他部分要为透明，并且包括透明区域在内的图片大小（宽高）要能完全覆盖另外一张图片的图形区域，否则绘制出的图形可能与预设的效果不一致</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Wed, 15 Apr 2020 06:05:03 GMT</pubDate>
       <content:encoded><![CDATA[<p><code>Xfermode</code>是 Android 中用来指示<code>Paint</code>绘制的内容与 View 中已有内容的混合计算方式，也就是用来确定图形绘制到目标图形的时候，如何处理两个图形重合部分的颜色变化。共 18 个，分为 Alpha 合成和混合两种。</p>
 <p>设要绘制的图形为<code>src</code>，已经绘制好的图形为<code>dst</code>。</p>
@@ -1476,7 +1476,7 @@ ItemTouchHelper 源码分析 <a href="https://www.jianshu.com/p/130fdd755471" ta
       <link>https://jixiaoyong.github.io/blog/posts/7e97a976.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/7e97a976.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Android 笔记之跨进程通信</source>
-      <description>Android 中的跨进程通信 IPC 主要有以下几种方式： BroadcastReceiver ContentProvider AIDL Messenger Socket 文件 Linux 已经提供了管道、消息队列、共享内存和 Socket 等 IPC 机制 进程是资源分配的基本单位，线程是调度的基本单位。 一些基础知识 以下内容来自： 作者：SylvanasSun 链接：https://juejin.im/post/59f8691b51882534af254317 来源：掘金 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Thu, 26 Dec 2019 10:52:54 GMT</pubDate>
       <content:encoded><![CDATA[<p>Android 中的跨进程通信 IPC 主要有以下几种方式：</p>
 <ul>
@@ -1625,7 +1625,7 @@ Client 将需要的 Binder 的名字发给 ServerManager，ServerManager 查询�
       <link>https://jixiaoyong.github.io/blog/posts/e3bb9a54.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/e3bb9a54.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Android 系统架构简介</source>
-      <description>说明：本文基于Android 系统开篇 - Gityuan 博客 | 袁辉辉博客 的学习笔记整理 Android 系统大体分为 4 个模块，从底层开始依次是 1.linux 内核、2.系统库+Android 运行时、3.框架层、4.应用层。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Fri, 23 Feb 2018 14:35:14 GMT</pubDate>
       <content:encoded><![CDATA[<blockquote>
 <p>说明：本文基于<a href="http://gityuan.com/android/" target="_blank" rel="noopener noreferrer">Android 系统开篇 - Gityuan 博客 | 袁辉辉博客</a> 的学习笔记整理</p>
@@ -1690,7 +1690,7 @@ Client 将需要的 Binder 的名字发给 ServerManager，ServerManager 查询�
       <link>https://jixiaoyong.github.io/blog/posts/5c023044.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/5c023044.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Android 笔记之贝塞尔曲线的应用</source>
-      <description>贝塞尔曲线是用节点和控制点绘制的高精度曲线，Android 中常用的有二阶、三阶贝塞尔曲线。本文介绍使用贝塞尔曲线绘制折线图，并实现动画效果。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Fri, 10 Apr 2020 01:49:03 GMT</pubDate>
       <content:encoded><![CDATA[<p><a href="https://baike.baidu.com/item/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF" target="_blank" rel="noopener noreferrer">贝塞尔曲线</a>是用节点和控制点绘制的高精度曲线，Android 中常用的有二阶、三阶贝塞尔曲线。本文介绍使用贝塞尔曲线绘制折线图，并实现动画效果。</p>
 <figure><img src="https://jixiaoyong.github.io/images/20200413215502.jpg" alt="" tabindex="0" loading="lazy"><figcaption></figcaption></figure>
@@ -1748,7 +1748,7 @@ Client 将需要的 Binder 的名字发给 ServerManager，ServerManager 查询�
       <link>https://jixiaoyong.github.io/blog/posts/a2c96aac.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/a2c96aac.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Android 自定义 View 实现联系人列表</source>
-      <description>自定义的 view LetterIndex.java extends View ContactsListView.java extends RecyclerView #分析 联系人列表有两个要点 字母导航栏 通过自定义 View 画出 26 个字母，设置滑动监听事件，根据上下滑动的距离判断当前选中的字母，并相应更新界面。 列表中的字母标题 针对 item 中的联系人姓名首字母对应的 tag 作比较，若与前一个相同则不显示 title，否则显示。 事件联动 当滑动字母导航栏时，除了处理本身的变化外，还要留出接口，以便其他控件获取当前选中的字母。 联系人列表滑动时，除了处理本身变化外，同样要留出接口以便获取当前置顶的 item 对应的字母 字母导航栏要留出方法，以便其他控件指定选中的字母，并更新界面</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Sun, 03 Sep 2017 15:25:05 GMT</pubDate>
       <content:encoded><![CDATA[<h2> 自定义的 view</h2>
 <ul>
@@ -1791,7 +1791,7 @@ Client 将需要的 Binder 的名字发给 ServerManager，ServerManager 查询�
       <link>https://jixiaoyong.github.io/blog/posts/e41787ec.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/e41787ec.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Android 自定义 view 的一些知识点</source>
-      <description>View 的绘制 View 的绘制分为 3 部分： measure 测量，决定了 View 的测量宽、高。几乎所有情况下都等同于 View 的最终宽、高（如果 View 需要多次 measure 才能确定大小，或者重写了layout()方法，并修改了传入的值的话则不会相等）。 layout 布局，决定 View 的四个顶点坐标和实际的宽、高。 draw 绘制，决定了 View 的具体显示内容。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Mon, 19 Feb 2018 13:59:28 GMT</pubDate>
       <content:encoded><![CDATA[<h2> View 的绘制</h2>
 <p>View 的绘制分为 3 部分：</p>
@@ -1878,7 +1878,7 @@ Client 将需要的 Binder 的名字发给 ServerManager，ServerManager 查询�
       <link>https://jixiaoyong.github.io/blog/posts/f20627c9.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/f20627c9.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Android 自定义透明背景的 Dialog</source>
-      <description>简介 通过自定义 Dialog 类，使用 Style、AnimationDrawable 等实现一个透明背景的、带进度更新的弹窗。 主要涉及 Style 自定义以及 AnimationDrawable 的使用。 代码 布局文件 &amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt; &amp;lt;LinearLayout xmlns:android=&amp;quot;http://schemas.android.com/apk/res/android&amp;quot; android:layout_width=&amp;quot;wrap_content&amp;quot; android:layout_height=&amp;quot;wrap_content&amp;quot; android:gravity=&amp;quot;center&amp;quot; android:background=&amp;quot;@drawable/dialog_bg&amp;quot;&amp;gt; &amp;lt;ImageView android:id=&amp;quot;@+id/image&amp;quot; android:layout_width=&amp;quot;250dp&amp;quot; android:layout_height=&amp;quot;250dp&amp;quot; /&amp;gt; &amp;lt;/LinearLayout&amp;gt;</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Fri, 26 Jan 2018 07:09:40 GMT</pubDate>
       <content:encoded><![CDATA[<h2> 简介</h2>
 <p>通过自定义 Dialog 类，使用 Style、AnimationDrawable 等实现一个透明背景的、带进度更新的弹窗。</p>
@@ -1909,7 +1909,7 @@ Client 将需要的 Binder 的名字发给 ServerManager，ServerManager 查询�
       <link>https://jixiaoyong.github.io/blog/posts/a2863875.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/a2863875.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Android 运行时权限</source>
-      <description>简介 本文介绍了 Android 运行时权限的一些处理流程。 Android 运行时权限是 Android6 之后出现的处理权限的新方式，此前开发者只需要应用需要的权限在 AndroidManifest.xml 文件中声明即可，现在则需要在使用到对应权限时检测是否有该权限并作出相应处理。 正文 一般流程 在AndroidManifest.xml中声明所需权限 在使用之前检查是否有该权限checkSelfPermission(),如果有则继续相应操作 如果没有权限则检测是否需要向用户解释为什么需要该权限ActivityCompat.shouldShowRequestPermissionRationale()，再决定如何申请权限requestPermissions()</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Sun, 25 Nov 2018 05:10:08 GMT</pubDate>
       <content:encoded><![CDATA[<h2> 简介</h2>
 <p>本文介绍了 Android 运行时权限的一些处理流程。</p>
@@ -1948,7 +1948,7 @@ Client 将需要的 Binder 的名字发给 ServerManager，ServerManager 查询�
       <link>https://jixiaoyong.github.io/blog/posts/26eab50a.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/26eab50a.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Android 通过 Hook 启动未注册 Activity</source>
-      <description>简介 hook 是钩子的意思，hook 的过程是通过反射、代理等改变系统原有的行为以达到自己的目的。 本文主要是通过 hook android 中的 ActivityManagerService 和 Handler.CallBack，欺骗系统调起 activity 的过程，在调用 startActivity 时将 targetIntent 通过 proxy 伪装为 proxyIntent，等到通过系统验证，正式启动 activity 时，再讲 proxyIntent 恢复为 targetIntent，从而实现调用未在 AndroidManifest.xml 中注册的 activity。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Mon, 15 Jan 2018 16:10:41 GMT</pubDate>
       <content:encoded><![CDATA[<h2> 简介</h2>
 <p>hook 是钩子的意思，hook 的过程是通过反射、代理等改变系统原有的行为以达到自己的目的。</p>
@@ -1982,7 +1982,7 @@ Client 将需要的 Binder 的名字发给 ServerManager，ServerManager 查询�
       <link>https://jixiaoyong.github.io/blog/posts/aacd75ab.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/aacd75ab.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Android 阅读笔记</source>
-      <description>layout_weight layout_weight 重要性，默认的是 0,0 等级最高，要显示，数字越大重要性越低。 例：a，b 的宽度为 0，layout_weight 分别为 1、2，则 a，b 宽度分别为父容器的 2/3、1/3。 PendingIntent PendingIntent 是封装后的 intent，有 intent 执行所需的 context，所以即使要执行 intent 的 activity 已经消失或者还没生成，其他 activity 依然可以通过 PendingIntent 执行 intent。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Thu, 22 Feb 2018 11:29:48 GMT</pubDate>
       <content:encoded><![CDATA[<h3> layout_weight</h3>
 <p>layout_weight 重要性，默认的是 0,0 等级最高，要显示，数字越大重要性越低。</p>
@@ -2015,7 +2015,7 @@ Client 将需要的 Binder 的名字发给 ServerManager，ServerManager 查询�
       <link>https://jixiaoyong.github.io/blog/posts/fcfc830b.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/fcfc830b.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">AppWidget 的使用之 PendingIntent</source>
-      <description>这几天学习 AppWidget，很简单的组件却花费了不少功夫，今天对 PendingIntent 的用法做了一些简单的整理。 PendingIntent PandingIntent 就像是一个设计好的处理预案，当达到某个特定条件时，便会调用该 Intent 所指定动作（打开服务，Activity 或者发送广播）。 这里使用该方法在 AppWidget 里面为按钮添加监听事件，当按钮被点击的时候触发相应的动作 AppWidget 和应用程序不再同一个进程当中，而是在 HomeScreen 上面执行，所以不能直接为 AppWidget 中的 Button 添加监听事件，需要用 remoteViews.setPendingIntent(R.id.widget_button,pendingIntent);意思是当按下按钮的时候 pendingIntent 中的 Intent 就会执行</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Sun, 24 Apr 2016 22:06:06 GMT</pubDate>
       <content:encoded><![CDATA[<p>这几天学习 AppWidget，很简单的组件却花费了不少功夫，今天对 PendingIntent 的用法做了一些简单的整理。</p>
 <p><strong>PendingIntent</strong></p>
@@ -2096,7 +2096,7 @@ Client 将需要的 Binder 的名字发给 ServerManager，ServerManager 查询�
       <link>https://jixiaoyong.github.io/blog/posts/7ee9086b.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/7ee9086b.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">AsyncTask 源码解析</source>
-      <description>这是 AsyncTask 源码的简单分析，主要基于《Android 开发艺术探索》一书的内容。 AsyncTask 是 Android 中多线程处理方式之一（其余为 1.HandlerThread、2.IntentService 以及普通的线程 Thread）。 AsyncTask 本质是线程池和 Handler 的包装类，适合实时更新后台任务进度的工作，特别耗时的工作应当交给线程池处理。 AsyncTask 常用方法： onPreExecute() doInBackground() onProgressUpdate() onPostExecute()</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Thu, 19 Apr 2018 14:04:28 GMT</pubDate>
       <content:encoded><![CDATA[<blockquote>
 <p>这是 AsyncTask 源码的简单分析，主要基于《Android 开发艺术探索》一书的内容。</p>
@@ -2148,7 +2148,7 @@ Client 将需要的 Binder 的名字发给 ServerManager，ServerManager 查询�
       <link>https://jixiaoyong.github.io/blog/posts/e15dda2e.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/e15dda2e.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Compose 屏幕适配</source>
-      <description>Compose 屏幕适配 一种Compose中屏幕适配的解决方案，灵感参考头条屏幕适配、AndroidAutoSize等，以设计稿宽度和屏幕水平方法大小为准，等比拉伸控件大小。 后文附有本方案的 Kotlin 语言实现，使用只需要两个步骤即可： // 1 初始化 class MainApp : Application() { override fun onCreate() { super.onCreate() SizeEtx.init(this, 375) // 375 为设计稿宽度 } } // 2 使用 size(width = 9.composeDp, height = 16.composeDp)</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Tue, 03 Aug 2021 03:51:32 GMT</pubDate>
       <content:encoded><![CDATA[<h2> Compose 屏幕适配</h2>
 <p>一种<strong>Compose</strong>中屏幕适配的解决方案，灵感参考<em>头条屏幕适配</em>、<em>AndroidAutoSize</em>等，以设计稿宽度和屏幕水平方法大小为准，等比拉伸控件大小。</p>
@@ -2171,7 +2171,7 @@ Client 将需要的 Binder 的名字发给 ServerManager，ServerManager 查询�
       <link>https://jixiaoyong.github.io/blog/posts/2822c354.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/2822c354.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Dagger 2 从 0 到 1 之旅</source>
-      <description>前言 Dagger 2是 Google 维护的一款可用于Java和Android的依赖注入框架。 本文主要是简单梳理Dagger 2中各个注解的作用，以及其简单用法，不涉及具体项目应用。 先解释几个概念： 依赖注入：是一个对象（或静态方法）给另一个对象提供依赖的技术。 **依赖**是可以使用的对象（Service），而把依赖提供给使用该依赖的对象（Client）的过程叫做注入。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Sat, 26 Jan 2019 07:16:17 GMT</pubDate>
       <content:encoded><![CDATA[<h2> 前言</h2>
 <p><code>Dagger 2</code>是 Google 维护的一款可用于<code>Java</code>和<code>Android</code>的依赖注入框架。</p>
@@ -2256,7 +2256,7 @@ Client 将需要的 Binder 的名字发给 ServerManager，ServerManager 查询�
       <link>https://jixiaoyong.github.io/blog/posts/c04fdc6c.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/c04fdc6c.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Dagger 2 ❤️ Android</source>
-      <description>前言 上篇文章介绍了Dagger 2 的基本使用，本文跟随官方文档实践一下Dagger 2 在Android中的使用，可以看做是官方文档的不完全翻译。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Sun, 27 Jan 2019 13:23:50 GMT</pubDate>
       <content:encoded><![CDATA[<h2> 前言</h2>
 <p><a href="http://jixiaoyong.github.io/blog/posts/2822c354/" target="_blank" rel="noopener noreferrer">上篇文章</a>介绍了<code>Dagger 2</code> 的基本使用，本文跟随<a href="https://google.github.io/dagger/android" target="_blank" rel="noopener noreferrer">官方文档</a>实践一下<code>Dagger 2 </code>在<code>Android</code>中的使用，可以看做是官方文档的不完全翻译。</p>
@@ -2327,7 +2327,7 @@ Client 将需要的 Binder 的名字发给 ServerManager，ServerManager 查询�
       <link>https://jixiaoyong.github.io/blog/posts/db62c118.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/db62c118.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Dart event loop</source>
-      <description>本文基于 Dart 2.17 Dart App 中所有的代码都在一个 isolate 中运行（各个 isolate 之间的代码运行时是隔离的），一个 isolate 有自己的 heap，维持有一个消息队列 event_loop，处理两种消息： event queue 执行用户点击、屏幕刷新、绘制，一般的 Future、IO、Stream 流等，每次执行完毕都会先检查执行 micro task queue 中的任务，直到其为空再执行下一个 event queue microTask queue 优先执行，一般执行跑完即弃的小任务，如 Dart 内部的微任务</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Sat, 11 Jun 2022 10:25:29 GMT</pubDate>
       <content:encoded><![CDATA[<blockquote>
 <p>本文基于 Dart 2.17</p>
@@ -2479,7 +2479,7 @@ Client 将需要的 Binder 的名字发给 ServerManager，ServerManager 查询�
       <link>https://jixiaoyong.github.io/blog/posts/3db5282.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/3db5282.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Dart 读取文件过程分析</source>
-      <description>Dart 读取文件时，先在 Dart 代码创建 File 引用，通过与IOService跨Isolate通信（先通过 IO Service 而发送请求到 native 端，等到 native 执行完操作之后再回调结果）从而实现对文件的读写。 实现一个简单的读取文件的代码如下： import &amp;apos;dart:io&amp;apos;; main() { var filePath = r&amp;quot;G:/21996.1.210529-1541.co_release_CLIENT_CONSUMER_x64FRE_en-us.iso&amp;quot;; var file = File(filePath); var startTime = printCurrentTimeMs(&amp;quot;start run file.readAsBytes&amp;quot;); file.readAsBytes().then((value) { printCurrentTimeMs(&amp;quot;file.readAsBytes() finish&amp;quot;, lastTimeMs: startTime, suffix: &amp;quot;\nfile.readAsBytes() result:${value.length}&amp;quot;); }); printCurrentTimeMs(&amp;quot;finish run file.readAsBytes&amp;quot;); } int printCurrentTimeMs(String prefix, {String? suffix, int? lastTimeMs}) { var currentTimeMs = DateTime.now().millisecondsSinceEpoch; var timeElapseString = lastTimeMs == null ? &amp;quot;&amp;quot; : &amp;quot;, time elapse:${currentTimeMs - lastTimeMs}ms &amp;quot;; print( &amp;quot;$prefix current time($currentTimeMs)$timeElapseString${suffix ?? &amp;quot;&amp;quot;}&amp;quot;); return currentTimeMs; }</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Thu, 02 Jun 2022 08:25:23 GMT</pubDate>
       <content:encoded><![CDATA[<p>Dart 读取文件时，先在 Dart 代码创建 File 引用，通过与<code>IOService</code>跨<code>Isolate</code>通信（先通过 IO Service 而发送请求到 native 端，等到 native 执行完操作之后再回调结果）从而实现对文件的读写。</p>
 <p>实现一个简单的读取文件的代码如下：</p>
@@ -2590,7 +2590,7 @@ Character Device Driver 又被称为字符设备或裸设备 raw devices; Block 
       <link>https://jixiaoyong.github.io/blog/posts/4cbcfe72.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/4cbcfe72.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Flutter APP 绘制过程简析</source>
-      <description>本文基于 Flutter 3.0 Flutter App 基于 Dart 语言编写，提供了一套简单易用的 API，可以让开发者在 Flutter 中快速开发出一个精美的 APP。那么在 Flutter 中是如何绘制一个 APP 呢，runApp 是怎么将我们编写的 Widget 等添加到手机上的呢？本文简单从 Widget,Element,RenderObjet 三者的关系来梳理一下 Flutter 的绘制过程。 让我们运行一个“最”简单的 Flutter App，分析一下在这个过程中涉及到的 Widget、Element、RenderObject 这三个 tree 的关系。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Sat, 25 Jun 2022 01:03:30 GMT</pubDate>
       <content:encoded><![CDATA[<blockquote>
 <p>本文基于 Flutter 3.0</p>
@@ -2764,7 +2764,7 @@ Character Device Driver 又被称为字符设备或裸设备 raw devices; Block 
       <link>https://jixiaoyong.github.io/blog/posts/4c220635.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/4c220635.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Flutter UI 绘制与 InheritedWidget 解析</source>
-      <description>Flutter UI 绘制与 InheritedWidget 解析 Flutter 的Widget分为StatefulWidget和StatelessWidget ，二者都继承自Widget。 此外还有一种用来传输数据的Widget——InheritedWidget，与上述两者不太一样的是，他的继承关系是：InheritedWidget→ProxyWidget →Widget 。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Sun, 15 May 2022 11:02:13 GMT</pubDate>
       <content:encoded><![CDATA[<h2> Flutter UI 绘制与 InheritedWidget 解析</h2>
 <p>Flutter 的<code>Widget</code>分为<code>StatefulWidget</code>和<code>StatelessWidget</code> ，二者都继承自<code>Widget</code>。</p>
@@ -2868,7 +2868,7 @@ Character Device Driver 又被称为字符设备或裸设备 raw devices; Block 
       <link>https://jixiaoyong.github.io/blog/posts/767a594.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/767a594.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Flutter Expanded VS Flexible</source>
-      <description>在 Flutter 中，当需要填充容器（Row, Column, or Flex）剩余空间的时候，可以使用Expanded或Flexible，本文对这二者的差异做一分析。 分析 Expanded 比较容易理解，他会强制 child 改变大小，占据容器的剩余空间，如果有多个Expanded的话，会按照他们的 flex 占比来分配每个 child 可以占据的空间大小。 Flexible 稍微特殊一些，有时候看起来似乎他的 child 占据的大小既不全是父布局的剩余空间，也不全是刚刚包裹 child 内容的大小。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Wed, 11 May 2022 03:49:12 GMT</pubDate>
       <content:encoded><![CDATA[<p>在 Flutter 中，当需要填充容器（<code>Row</code>, <code>Column</code>, or <code>Flex</code>）剩余空间的时候，可以使用<code>Expanded</code>或<code>Flexible</code>，本文对这二者的差异做一分析。</p>
 <h2> 分析</h2>
@@ -2892,7 +2892,7 @@ Character Device Driver 又被称为字符设备或裸设备 raw devices; Block 
       <link>https://jixiaoyong.github.io/blog/posts/e35c106d.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/e35c106d.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Flutter Widget 简单入门</source>
-      <description>Flutter 是 Google 提出的跨平台开发框架，使用 Dart 语言，支持 Android，IOS 系统。Flutter 一个重要的概念即是——“万物皆控件（Widget）”，像Padding,Center等都是 Widget。 Widget 和 Android 中的 View 很相似但又有不同，Widget 一旦生成便“一成不变”，直到下一次因为 Widget 更改或者 state 更新而被重新创建（Flutter’s framework creates a new tree of widget instances.），而 View 则只会被drawn一次，直到invalidate方法被调用。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Sun, 21 Oct 2018 14:26:41 GMT</pubDate>
       <content:encoded><![CDATA[<p>Flutter 是 Google 提出的跨平台开发框架，使用 Dart 语言，支持 Android，IOS 系统。Flutter 一个重要的概念即是——<em>“万物皆控件（Widget）”</em>，像<code>Padding</code>,<code>Center</code>等都是 Widget。</p>
 <p>Widget 和 Android 中的 View 很相似但又有不同，Widget 一旦生成便“一成不变”，直到下一次因为 Widget 更改或者 state 更新而被重新创建（Flutter’s framework creates a new tree of widget instances.），而 View 则只会被<code>drawn</code>一次，直到<code>invalidate</code>方法被调用。</p>
@@ -2988,7 +2988,7 @@ Character Device Driver 又被称为字符设备或裸设备 raw devices; Block 
       <link>https://jixiaoyong.github.io/blog/posts/9e235953.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/9e235953.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Flutter 中的异常处理</source>
-      <description>说明 FLutter中的错误不会导致应用程序奔溃，只会终止执行出错代码之后的逻辑，在导致Widget.build()返回为null的错误会导致Widget构建失败，并返回红底黄字的错误原因Widget（在 Release 模式则会显示为灰底区域）；一般来说，Flutter 中的错误都会被FlutterError.onError捕获并处理；对于异步方法产生异常等Flutter框架没有捕获的情况，会交由当前代码所在的Zone处理（这些异常可以使用runZonedGuarded捕获并处理）。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Thu, 29 Jul 2021 07:41:47 GMT</pubDate>
       <content:encoded><![CDATA[<h2> 说明</h2>
 <p><code>FLutter</code>中的错误不会导致应用程序奔溃，只会终止执行出错代码之后的逻辑，在导致<code>Widget.build()</code>返回为<code>null</code>的错误会导致<code>Widget</code>构建失败，并返回<em>红底黄字</em>的错误原因<code>Widget</code>（在 Release 模式则会显示为<em>灰底区域</em>）；一般来说，Flutter 中的错误都会被<code>FlutterError.onError</code>捕获并处理；对于异步方法产生异常等<code>Flutter框架</code>没有捕获的情况，会交由当前代码所在的<code>Zone</code>处理（这些异常可以使用<code>runZonedGuarded</code>捕获并处理）。</p>
@@ -3041,7 +3041,7 @@ Character Device Driver 又被称为字符设备或裸设备 raw devices; Block 
       <link>https://jixiaoyong.github.io/blog/posts/47c43abe.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/47c43abe.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Flutter 动画分析之 AnimatedWidget&amp;ImplicitlyAnimatedWidget</source>
-      <description>本文讨论的 Flutter 动画主要限定在：随着每一帧的变化，修改 Flutter Widget 的大小、颜色、位置等属性，使之看起来从一种状态渐变为另外一种状态 这一范围。 在之前的文章中，我们将 Flutter 中动画的实现分为 底层实现 和 封装好的 Widget 两大部分，目前已经分析了底层实现的部分： AnimationController Tween&amp;amp;Curve</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Mon, 22 Aug 2022 00:58:45 GMT</pubDate>
       <content:encoded><![CDATA[<blockquote>
 <p>本文讨论的 Flutter 动画主要限定在：<em>随着每一帧的变化，修改 Flutter Widget 的大小、颜色、位置等属性，使之看起来从一种状态渐变为另外一种状态</em> 这一范围。</p>
@@ -3206,7 +3206,7 @@ Flutter 内置的隐式动画为 TweenAnimationBuilder 和 AnimatedFoo。</p>
       <link>https://jixiaoyong.github.io/blog/posts/6ec43bd8.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/6ec43bd8.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Flutter 动画分析之 AnimationController</source>
-      <description>本文讨论的 Flutter 动画主要限定在：随着每一帧的变化，修改 Flutter Widget 的大小、颜色、位置等属性，使之看起来从一种状态渐变为另外一种状态 这一范围。 Flutter 中关于动画的类有很多，为了便于分析，将其分为两大类： Flutter 框架底层实现动画的各个类，比如 AnimationController、Ticker、Tween、Curve 等 基于底层实现，提供进一步封装的 Flutter 动画相关的 Widget 类，比如 AnimatedWidget、ImplicitlyAnimatedWidget 和他们的子类。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Sun, 21 Aug 2022 02:43:24 GMT</pubDate>
       <content:encoded><![CDATA[<blockquote>
 <p>本文讨论的 Flutter 动画主要限定在：<em>随着每一帧的变化，修改 Flutter Widget 的大小、颜色、位置等属性，使之看起来从一种状态渐变为另外一种状态</em> 这一范围。</p>
@@ -3416,7 +3416,7 @@ Flutter 内置的隐式动画为 TweenAnimationBuilder 和 AnimatedFoo。</p>
       <link>https://jixiaoyong.github.io/blog/posts/62beedda.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/62beedda.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Flutter 动画分析之 Hero</source>
-      <description>Flutter 中的 Hero 动画是指可以在切换页面时自动跨页面实现 Widget 放大缩小、位移的动画，在用户看起来好像是当前页面的 Widget“飞”入到另外一个页面，底层基于 Overlay 实现。 本文对其原理和应用做一简单分析，主要是对官方介绍的理解与分析，感兴趣的可以直接阅读官方文档。 使用</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Sun, 14 Aug 2022 11:14:01 GMT</pubDate>
       <content:encoded><![CDATA[<p>Flutter 中的 Hero 动画是指可以在切换页面时自动跨页面实现 Widget 放大缩小、位移的动画，在用户看起来好像是当前页面的 Widget“飞”入到另外一个页面，底层基于 Overlay 实现。</p>
 <p>本文对其原理和应用做一简单分析，主要是对<a href="https://flutter.cn/docs/development/ui/animations/hero-animations" target="_blank" rel="noopener noreferrer">官方介绍</a>的理解与分析，感兴趣的可以直接阅读官方文档。</p>
@@ -3550,7 +3550,7 @@ Flutter 内置的隐式动画为 TweenAnimationBuilder 和 AnimatedFoo。</p>
       <link>https://jixiaoyong.github.io/blog/posts/820d6240.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/820d6240.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Flutter 动画分析之 Tween&amp;Curve</source>
-      <description>在上篇文章中，我们分析了 Flutter 中主要由AnimationController控制动画的开始、结束，但是默认情况下其只能产生线性变化的 double 类型的 value，如果想随时间变化，让 Widget 产生 Size、Offset 等属性的变化，亦或者控制这些值变化的速度快慢，这时候就需要用到 Tween 和 Curve 了。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Sun, 21 Aug 2022 08:28:43 GMT</pubDate>
       <content:encoded><![CDATA[<p>在上篇文章中，我们分析了 Flutter 中主要由<a href="https://jixiaoyong.github.io/blog/posts/6ec43bd8/" target="_blank" rel="noopener noreferrer">AnimationController</a>控制动画的开始、结束，但是默认情况下其只能产生<strong>线性变化的 double 类型的 value</strong>，如果想随时间变化，让 Widget 产生 Size、Offset 等属性的变化，亦或者控制这些值变化的速度快慢，这时候就需要用到 Tween 和 Curve 了。</p>
 <p>下图是 Tween/Curve/AnimationController 等类的关系简单示意：</p>
@@ -3632,7 +3632,7 @@ Flutter 内置的隐式动画为 TweenAnimationBuilder 和 AnimatedFoo。</p>
       <link>https://jixiaoyong.github.io/blog/posts/1912667a.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/1912667a.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Flutter 图片加载方案分析之 Image</source>
-      <description>Flutter 默认提供了Image用于从网络、文件等加载图片，并且使用ImageCache统一管理图片缓存，但有时候并不能满足使用需求（比如网络图片没有磁盘缓存，导致每次 ImageCache 清除缓存之后又要从网络下载），所以又出现了flutter_cached_network_image、extended_image等基于 Flutter 原生的解决方案，以及power_image等基于混合开发的解决方案。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Wed, 27 Jul 2022 07:31:03 GMT</pubDate>
       <content:encoded><![CDATA[<p>Flutter 默认提供了<strong>Image</strong>用于从网络、文件等加载图片，并且使用<strong>ImageCache</strong>统一管理图片缓存，但有时候并不能满足使用需求（比如网络图片没有磁盘缓存，导致每次 ImageCache 清除缓存之后又要从网络下载），所以又出现了<a href="https://github.com/Baseflow/flutter_cached_network_image" target="_blank" rel="noopener noreferrer">flutter_cached_network_image</a>、<a href="https://github.com/fluttercandies/extended_image" target="_blank" rel="noopener noreferrer">extended_image</a>等基于 Flutter 原生的解决方案，以及<a href="https://github.com/alibaba/power_image" target="_blank" rel="noopener noreferrer">power_image</a>等基于混合开发的解决方案。</p>
 <p>本文对 Flutter 中的 Image 加载过程、原理做一简单分析。</p>
@@ -3757,7 +3757,7 @@ Flutter 内置的隐式动画为 TweenAnimationBuilder 和 AnimatedFoo。</p>
       <link>https://jixiaoyong.github.io/blog/posts/23ac516a.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/23ac516a.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Flutter 图片加载方案分析之 extended_image</source>
-      <description>Flutter 默认提供了Image用于从网络、文件等加载图片，并且使用ImageCache统一管理图片缓存，但有时候并不能满足使用需求（比如网络图片没有磁盘缓存，导致每次 ImageCache 清除缓存之后又要从网络下载），所以又出现了flutter_cached_network_image、extended_image等基于 Flutter 原生的解决方案，以及power_image等基于混合开发的解决方案。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Mon, 01 Aug 2022 09:42:35 GMT</pubDate>
       <content:encoded><![CDATA[<p>Flutter 默认提供了<strong>Image</strong>用于从网络、文件等加载图片，并且使用<strong>ImageCache</strong>统一管理图片缓存，但有时候并不能满足使用需求（比如网络图片没有磁盘缓存，导致每次 ImageCache 清除缓存之后又要从网络下载），所以又出现了<a href="https://github.com/Baseflow/flutter_cached_network_image" target="_blank" rel="noopener noreferrer">flutter_cached_network_image</a>、<a href="https://github.com/fluttercandies/extended_image" target="_blank" rel="noopener noreferrer">extended_image</a>等基于 Flutter 原生的解决方案，以及<a href="https://github.com/alibaba/power_image" target="_blank" rel="noopener noreferrer">power_image</a>等基于混合开发的解决方案。</p>
 <p>本文对 extended_image 加载过程、原理做一简单分析。</p>
@@ -3809,7 +3809,7 @@ Flutter 内置的隐式动画为 TweenAnimationBuilder 和 AnimatedFoo。</p>
       <link>https://jixiaoyong.github.io/blog/posts/727d7800.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/727d7800.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Flutter 图片加载方案分析之 power_image</source>
-      <description>Flutter 默认提供了Image用于从网络、文件等加载图片，并且使用ImageCache统一管理图片缓存，但有时候并不能满足使用需求（比如网络图片没有磁盘缓存，导致每次 ImageCache 清除缓存之后又要从网络下载），所以又出现了flutter_cached_network_image、extended_image等基于 Flutter 原生的解决方案，以及power_image等基于混合开发的解决方案。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Tue, 02 Aug 2022 07:54:39 GMT</pubDate>
       <content:encoded><![CDATA[<p>Flutter 默认提供了<strong>Image</strong>用于从网络、文件等加载图片，并且使用<strong>ImageCache</strong>统一管理图片缓存，但有时候并不能满足使用需求（比如网络图片没有磁盘缓存，导致每次 ImageCache 清除缓存之后又要从网络下载），所以又出现了<a href="https://github.com/Baseflow/flutter_cached_network_image" target="_blank" rel="noopener noreferrer">flutter_cached_network_image</a>、<a href="https://github.com/fluttercandies/extended_image" target="_blank" rel="noopener noreferrer">extended_image</a>等基于 Flutter 原生的解决方案，以及<a href="https://github.com/alibaba/power_image" target="_blank" rel="noopener noreferrer">power_image</a>等基于混合开发的解决方案。</p>
 <p>本文对 Alibaba 中的 power_image 加载过程、原理做一简单分析。</p>
@@ -3943,7 +3943,7 @@ Flutter 内置的隐式动画为 TweenAnimationBuilder 和 AnimatedFoo。</p>
       <link>https://jixiaoyong.github.io/blog/posts/ae8e53be.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/ae8e53be.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Flutter 滑动分析之 NestedScrollView</source>
-      <description>Flutter 中的 scrollable widget 根据实现方式的不同，可以分为两大类： 基于 RenderBox 的 box protocol 实现的，主要基于 Size 实现布局。常见的有SingleChildScrollView。 基于 RenderSliver 的 sliver protocol 实现的，主要基于 SliverGeometry 实现布局。比如 CustomScrollView 及其子类 ListView、GridView 等继承自ScrollView的 Widget，以及基于 CustomScrollView 的 NestedScrollView、基于 Viewport 等的 PageView、TabBarView 等直接对 SliverFillViewport 等进行封装的 Widget。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Tue, 19 Jul 2022 09:48:12 GMT</pubDate>
       <content:encoded><![CDATA[<p>Flutter 中的 scrollable widget 根据实现方式的不同，可以分为两大类：</p>
 <ul>
@@ -4090,7 +4090,7 @@ Flutter 内置的隐式动画为 TweenAnimationBuilder 和 AnimatedFoo。</p>
       <link>https://jixiaoyong.github.io/blog/posts/60f8d92f.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/60f8d92f.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Flutter 滑动分析之 Scrollview</source>
-      <description>Flutter 中的 scrollable widget 根据实现方式的不同，可以分为两大类： 基于 RenderBox 的 box protocol 实现的，主要基于 Size 实现布局。常见的有 SingleChildScrollView。 基于 RenderSliver 的 sliver protocol 实现的，主要基于 SliverGeometry 实现布局。比如 CustomScrollView 及其子类 ListView、GridView 等继承自 ScrollView 的 Widget，以及基于 CustomScrollView 的 NestedScrollView、基于 Viewport 等的 PageView、TabBarView 等直接对 SliverFillViewport 等进行封装的 Widget。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Sat, 16 Jul 2022 02:14:01 GMT</pubDate>
       <content:encoded><![CDATA[<p>Flutter 中的 scrollable widget 根据实现方式的不同，可以分为两大类：</p>
 <ul>
@@ -4179,7 +4179,7 @@ Flutter 内置的隐式动画为 TweenAnimationBuilder 和 AnimatedFoo。</p>
       <link>https://jixiaoyong.github.io/blog/posts/d3bdcb53.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/d3bdcb53.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Flutter 滑动分析之 SingleChildScrollView</source>
-      <description>Flutter 中的 scrollable widget 根据实现方式的不同，可以分为两大类： 基于 RenderBox 的 box protocol 实现的，主要基于 Size 实现布局。常见的有 SingleChildScrollView。 基于 RenderSliver 的 sliver protocol 实现的，主要基于 SliverGeometry 实现布局。比如 CustomScrollView 及其子类 ListView、GridView 等继承自 ScrollView 的 Widget，以及基于 CustomScrollView 的 NestedScrollView、基于 Viewport 等的 PageView、TabBarView 等直接对 SliverFillViewport 等进行封装的 Widget。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Fri, 15 Jul 2022 10:36:54 GMT</pubDate>
       <content:encoded><![CDATA[<p>Flutter 中的 scrollable widget 根据实现方式的不同，可以分为两大类：</p>
 <ul>
@@ -4272,7 +4272,7 @@ SingleChildScrollView 使用起来也比较方便。</p>
       <link>https://jixiaoyong.github.io/blog/posts/4a17b156.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/4a17b156.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Hello World</source>
-      <description>Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Sun, 20 Mar 2016 22:06:06 GMT</pubDate>
       <content:encoded><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener noreferrer">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener noreferrer">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener noreferrer">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener noreferrer">GitHub</a>.</p>
 <h3> Quick Start</h3>
@@ -4291,7 +4291,7 @@ SingleChildScrollView 使用起来也比较方便。</p>
       <link>https://jixiaoyong.github.io/blog/posts/f31c11c5.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/f31c11c5.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">JVM 内存分配</source>
-      <description>本笔记基于《深入理解 Java 虚拟机：JVM 高级特性与最佳实践》及部分在线博客整理。 JVM：java virtual machine，一个 java 程序（进程）拥有一个 jvm 实例 内存 JVM 区域总体分两类，heap 区和非 heap 区： heap 区：Eden Space（伊甸园）、Survivor Space(幸存者区)、Tenured Gen（老年代 - 养老区）。 非 heap 区：Code Cache(代码缓存区)、Perm Gen（永久代）、Jvm Stack(Java 虚拟机栈)、Local Method Statck(本地方 法栈)。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Sat, 24 Feb 2018 15:39:19 GMT</pubDate>
       <content:encoded><![CDATA[<blockquote>
 <p>本笔记基于《深入理解 Java 虚拟机：JVM 高级特性与最佳实践》及部分在线博客整理。</p>
@@ -4463,7 +4463,7 @@ b = a<br>
       <link>https://jixiaoyong.github.io/blog/posts/b3994218.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/b3994218.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">JVM 类加载机制之 ClassLoader</source>
-      <description>本文为《一看你就懂，超详细 java 中的 ClassLoader 详解 - CSDN 博客》阅读笔记 简述 JVM 有三种类加载器： BootStrap ClassLoader 启动类加载器，加载核心类库，主要加载核心类库，%JRE_HOME%\lib 下的 rt.jar、resources.jar、charsets.jar 和 class 等。 Extention ClassLoader 扩展类加载器，加载目录%JRE_HOME%\lib\ext 目录下的 jar 包和 class 文件。 App ClassLoader 应用程序加载器，加载当前应用的 classpath 的所有类。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Sun, 15 Apr 2018 08:40:32 GMT</pubDate>
       <content:encoded><![CDATA[<blockquote>
 <p>本文为<a href="https://blog.csdn.net/briblue/article/details/54973413" target="_blank" rel="noopener noreferrer">《一看你就懂，超详细 java 中的 ClassLoader 详解 - CSDN 博客》</a>阅读笔记</p>
@@ -4506,7 +4506,7 @@ b = a<br>
       <link>https://jixiaoyong.github.io/blog/posts/cf83ef31.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/cf83ef31.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">JVM 类加载机制解析</source>
-      <description>简述 本文介绍了 java 虚拟机类加载机制。 类加载机制 JVM 类加载一共 7 步，前五步是类加载机制，各个步骤按照顺序进行，但是并非固定的 1,2,3 步，在实际中有可能从其中间某一步开始。 类加载机制一般分为三部分：加载 Loading -&amp;gt; 连接 Linking -&amp;gt; 初始化 Initializing JVM Class Loader</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Mon, 26 Feb 2018 11:28:56 GMT</pubDate>
       <content:encoded><![CDATA[<h2> 简述</h2>
 <p>本文介绍了 java 虚拟机类加载机制。</p>
@@ -4649,7 +4649,7 @@ b = a<br>
       <link>https://jixiaoyong.github.io/blog/posts/ff927bd4.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/ff927bd4.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Java 笔记之 HashMap 保存数据</source>
-      <description>Photo by **Pixabay **from Pexels</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Sun, 15 Dec 2019 08:41:35 GMT</pubDate>
       <content:encoded><![CDATA[<img src="https://images.pexels.com/photos/159644/art-supplies-brushes-rulers-scissors-159644.jpeg?cs=srgb&amp;dl=art-supplies-arts-and-crafts-ballpens-159644.jpg&amp;fm=jpg" class="full-image">
 <p>Photo by **<a href="https://www.pexels.com/@pixabay?utm_content=attributionCopyText&amp;utm_medium=referral&amp;utm_source=pexels" target="_blank" rel="noopener noreferrer">Pixabay </a>**from <strong><a href="https://www.pexels.com/photo/pencils-in-stainless-steel-bucket-159644/?utm_content=attributionCopyText&amp;utm_medium=referral&amp;utm_source=pexels" target="_blank" rel="noopener noreferrer">Pexels</a></strong></p>
@@ -4808,7 +4808,7 @@ b = a<br>
       <link>https://jixiaoyong.github.io/blog/posts/875283bd.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/875283bd.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Java 笔记之匿名内部类和 final</source>
-      <description>为什么匿名内部类使用局部引用要用final？ 先说结论： 由于 JAVA 匿名内部类的实现并不是真正的闭包，而是在生成内部类的时候将局部变量的引用拷贝了一份到内部类中。如果不将这个外部类设置为final的话，外部类或者内部类修改这个局部变量后，另外一处使用的仍然是修改前的值，这样就会产生问题，而如果将其修改为final则保证了局部变量与内部类使用的值是一致的。 JDK1.8 后局部变量不要求用final了？</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Fri, 20 Dec 2019 14:02:16 GMT</pubDate>
       <content:encoded><![CDATA[<h2> 为什么<code>匿名内部类</code>使用<code>局部引用</code>要用<code>final</code>？</h2>
 <p>先说结论：</p>
@@ -4837,7 +4837,7 @@ b = a<br>
       <link>https://jixiaoyong.github.io/blog/posts/b0793c74.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/b0793c74.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Java 笔记之计算 Java 对象的大小及其应用</source>
-      <description>原理 注意 除非特殊说明，以下所说的计算 Java 对象大小，不涉及该对象所持有的对象本身的大小，只计算该 Java 对象本身的大小（其中引用类型对象大小只计算为 4 bytes），如果要遍历计算 Java 对象大小（包含其持有对象的大小）可以参考这篇文章 Sizeof for Java 一个 Java 对象在内存中的大小包括以下 (以 64 位 JVM 启用压缩为例，综合这里和这里的信息整理)：</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Sat, 21 Dec 2019 01:44:32 GMT</pubDate>
       <content:encoded><![CDATA[<h2> 原理</h2>
 <p><strong>注意 除非特殊说明，以下所说的计算 Java 对象大小，不涉及该对象所持有的对象本身的大小，只计算该 Java 对象本身的大小（其中引用类型对象大小只计算为 4 bytes），如果要遍历计算 Java 对象大小（包含其持有对象的大小）可以参考<a href="https://www.javaworld.com/article/2077408/sizeof-for-java.html" target="_blank" rel="noopener noreferrer">这篇文章 Sizeof for Java</a></strong></p>
@@ -5017,7 +5017,7 @@ b = a<br>
       <link>https://jixiaoyong.github.io/blog/posts/9a8e41a8.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/9a8e41a8.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Java 笔记之 ThreadLocal</source>
-      <description>ThreadLocal是Thread中用来保存线程私有变量的数据结构。 一个ThreadLocal只能保存一个值，有set/get/remove方法。 在Thread有一个threadLocals（ThreadLocal.ThreadLocalMap）变量，该变量是一个定制的 Hash Map，用来保存线程私有的数据（类型为ThreadLocal&amp;lt;?&amp;gt; Key, Object Value）。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Fri, 20 Dec 2019 04:54:48 GMT</pubDate>
       <content:encoded><![CDATA[<p><code>ThreadLocal</code>是<code>Thread</code>中用来保存<strong>线程私有变量</strong>的数据结构。</p>
 <p>一个<code>ThreadLocal</code>只能保存一个值，有<code>set/get/remove</code>方法。</p>
@@ -5065,7 +5065,7 @@ b = a<br>
       <link>https://jixiaoyong.github.io/blog/posts/1fd30f6e.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/1fd30f6e.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Java 中三种常用的排序方法</source>
-      <description>今天重新学习类三种排序方法，按照排序速度依次是冒泡排序，选择排序和插入排序。 以下示例皆为从小到大的排序 1.冒泡排序 每一次比较都可能要交换元素。 冒泡排序的思想是： 每一轮开始的时候，将第一个元素（a）开始与其后的元素（b）依次进行比较，将较大的元素（设为 m）放到后面，并将 m 与其后的另外一个元素继续进行比较，直到最后一个没有排好序的元素。 在接下来一轮的排序中，刚才以及之前选出来的、已经排好顺序的最大值不用参与排序。 依次类推，总共遍历 n-1 轮，即可完成排序。 具体代码如下： void bubble(int[] arr){ 	int temp; 	for (int i = 0; i &amp;lt; arr.length - 1; i++) { 		for (int j = 0; j &amp;lt; arr.length - i - 1; j++) { 			if (arr[j] &amp;gt; arr[j + 1]) { 				temp = arr[j]; 				arr[j] = arr[j + 1]; 				arr[j + 1] = temp; 			} 		} 	} 	System.out.println(&amp;quot;\n--bubble :&amp;quot;); 	for (int i = 0; i &amp;lt; arr.length; i++) { 		System.out.print(arr[i] + &amp;quot; &amp;quot;); 	} }</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Tue, 20 Dec 2016 15:25:05 GMT</pubDate>
       <content:encoded><![CDATA[<p>今天重新学习类三种排序方法，按照排序速度依次是冒泡排序，选择排序和插入排序。<br>
 以下示例皆为从小到大的排序</p>
@@ -5098,7 +5098,7 @@ b = a<br>
       <link>https://jixiaoyong.github.io/blog/posts/b2cdb69e.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/b2cdb69e.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Java 中的泛型</source>
-      <description>Java 中的泛型实现了参数类型化的概念。 主要有以下形式： class OneClazz&amp;lt;T&amp;gt;{ T t; &amp;lt;Y&amp;gt; void fun(){} }</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Sat, 03 Nov 2018 03:01:34 GMT</pubDate>
       <content:encoded><![CDATA[<p>Java 中的泛型实现了<strong>参数类型化</strong>的概念。</p>
 <p>主要有以下形式：</p>
@@ -5141,7 +5141,7 @@ b = a<br>
       <link>https://jixiaoyong.github.io/blog/posts/36721083.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/36721083.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Java 创建线程安全的单例 Singleton</source>
-      <description>简介 在编码中常常会用到单例，来确保类有一个唯一的对象，一般情况下将构造方法私有化既可以实现，但当考虑到多线程时事情会变得有些复杂，本文讨论的正是几种多线程的情况下实现单例的方法。 1.普通单例 私有化构造方法，对外提供一个公有、静态的方法，在其内部判断类对象是否已经存在，否的话生成类对象再返回。 class ASingleton{ 	private static ASingleton as; 	private void ASinleton() { 		System.out.print(&amp;quot;ASingleton init!\n&amp;quot;); 	} 	public static ASingleton getInstance() { 		if(as == null) { //tag1 			as = new ASingleton(); //tag2 		} 		return as; 	} }</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Wed, 14 Feb 2018 10:34:16 GMT</pubDate>
       <content:encoded><![CDATA[<h2> 简介</h2>
 <p>在编码中常常会用到单例，来确保类有一个唯一的对象，一般情况下将构造方法私有化既可以实现，但当考虑到多线程时事情会变得有些复杂，本文讨论的正是几种多线程的情况下实现单例的方法。</p>
@@ -5176,7 +5176,7 @@ b = a<br>
       <link>https://jixiaoyong.github.io/blog/posts/3e9e8cb1.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/3e9e8cb1.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Java 反射简单应用</source>
-      <description>简介 反射，用来在运行时获取给定类的构造函数，变量，方法，并对其作以修改，而不必在编译时获取该类。 Reflection allows programmatic access to information about the fields, methods and constructors of loaded classes, and the use of reflected fields, methods, and constructors to operate on their underlying counterparts, within security restrictions. --https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/package-summary.html</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Tue, 16 Jan 2018 13:28:57 GMT</pubDate>
       <content:encoded><![CDATA[<h2> 简介</h2>
 <p>反射，用来在运行时获取给定类的构造函数，变量，方法，并对其作以修改，而不必在编译时获取该类。</p>
@@ -5206,7 +5206,7 @@ b = a<br>
       <link>https://jixiaoyong.github.io/blog/posts/375fcf66.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/375fcf66.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Java 实现 AES 加密解密应用</source>
-      <description>简介 最近手机中涉及到用户账户密码保存的问题，选用 AES 加密算法进行加密后，再通过 SharedPreferences 保存在手机端。 本文主要介绍 AES 的加密、解密用法。 代码 初始化秘钥 private static final String AES = &amp;quot;AES&amp;quot;; private static final String PASSWPRD = &amp;quot;123456&amp;quot;; public static SecretKeySpec initKey(){ SecretKeySpec key = null; try { KeyGenerator kg = KeyGenerator.getInstance(AES); kg.init(128,new SecureRandom(PASSWPRD.getBytes()));//通过这种算法，每次生成的 key 都是一样的 //也可以 kg.init(128),这样每次生成的 key 都不一样 SecretKey securityKey = kg.generateKey(); byte[] encodedKey = securityKey.getEncoded(); key = new SecretKeySpec(encodedKey, AES);//AES 也可以替换为&amp;quot;AES/CBC/PKCS5PADDING&amp;quot; } catch (NoSuchAlgorithmException e) { e.printStackTrace(); } return key; }</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Mon, 22 Jan 2018 15:51:19 GMT</pubDate>
       <content:encoded><![CDATA[<h2> 简介</h2>
 <p>最近手机中涉及到用户账户密码保存的问题，选用 AES 加密算法进行加密后，再通过 SharedPreferences 保存在手机端。</p>
@@ -5227,7 +5227,7 @@ b = a<br>
       <link>https://jixiaoyong.github.io/blog/posts/b4abf652.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/b4abf652.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Java 并发编程笔记</source>
-      <description>Thread.join() cThread.join()方法使当前线程阻塞，直到子线程cThread执行完毕后，当前线程才会恢复运行。 实现原理： join()方法调用了join(0) public final void join() throws InterruptedException { join(0); } join(long millis)是一个同步方法，最后会通过调用wait()方法挂起当前线程（即调用线程），直到其他线程调用子线程cThread的notify()或者notifyAll()方法 public final synchronized void join(long millis) throws InterruptedException { long base = System.currentTimeMillis(); long now = 0; if (millis &amp;lt; 0) { throw new IllegalArgumentException(&amp;quot;timeout value is negative&amp;quot;); } if (millis == 0) { while (isAlive()) { wait(0); } } else { while (isAlive()) { long delay = millis - now; if (delay &amp;lt;= 0) { break; } wait(delay); now = System.currentTimeMillis() - base; } } } 子线程run()执行完毕后，系统在关闭该子线程前，会调用其exit()方法，继而在ThreadGroup.threadTerminated(Thread t)中唤醒被阻塞的调用线程。 /** * This method is called by the system to give a Thread * a chance to clean up before it actually exits. */ private void exit() { if (group != null) { group.threadTerminated(this);//提心 ThreadGroup 当前线程已经被终止 group = null; } //其他代码 …… } // ThreadGroup void threadTerminated(Thread t) { synchronized (this) { remove(t); if (nthreads == 0) {//线程组线程数为0时 notifyAll();//唤醒所有等待中的线程 } if (daemon &amp;amp;&amp;amp; (nthreads == 0) &amp;amp;&amp;amp; (nUnstartedThreads == 0) &amp;amp;&amp;amp; (ngroups == 0)) { destroy(); } } }</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Mon, 28 Oct 2019 10:26:46 GMT</pubDate>
       <content:encoded><![CDATA[<h2> Thread.join()</h2>
 <p><code>cThread.join()</code>方法使当前线程阻塞，直到子线程<code>cThread</code>执行完毕后，当前线程才会恢复运行。</p>
@@ -5259,7 +5259,7 @@ b = a<br>
       <link>https://jixiaoyong.github.io/blog/posts/3f6454bb.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/3f6454bb.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Java 注解</source>
-      <description>注解，是描述 Java 代码的代码，它能够被编译器解析，向编译器、虚拟机说明一些事情，就像 java 中给程序员看的注释一样。 Android 应用开发这方面比较火的是Butter Knife ,本文讲述如何自定义注解替换 findViewById()。 实现注解（annotation）的思路：通过反射获取到类中使用注解的变量，方法，再调用不同的方法对这些变量，方法进行处理以达到目的。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Sun, 21 Jan 2018 12:53:07 GMT</pubDate>
       <content:encoded><![CDATA[<p>注解，<em>是描述 Java 代码的代码，它能够被编译器解析，向编译器、虚拟机说明一些事情，就像 java 中给程序员看的注释一样</em>。</p>
 <p>Android 应用开发这方面比较火的是<a href="http://jakewharton.github.io/butterknife/" target="_blank" rel="noopener noreferrer">Butter Knife</a> ,本文讲述如何自定义注解替换 findViewById()。</p>
@@ -5380,7 +5380,7 @@ b = a<br>
       <link>https://jixiaoyong.github.io/blog/posts/87a89a43.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/87a89a43.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Java 笔记之 YYYY 格式化日期</source>
-      <description>最近看到一个帖子，表示有人以&amp;quot;YYYY-MM-dd&amp;quot;格式化日期时，在2019-12-30时出现2020-12-30的 BUG。 本文来简单分析一下为什么会出现这个情况。 根据JDK 文档关于日期的定义，y表示的是我们日常使用的年份，而Y表示的是Week year。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Tue, 07 Jan 2020 03:38:54 GMT</pubDate>
       <content:encoded><![CDATA[<p>最近看到一个<a href="https://v2ex.com/t/633650?p=1" target="_blank" rel="noopener noreferrer">帖子</a>，表示有人以<code>"YYYY-MM-dd"</code>格式化日期时，在<code>2019-12-30</code>时出现<code>2020-12-30</code>的 BUG。</p>
 <p>本文来简单分析一下为什么会出现这个情况。</p>
@@ -5661,7 +5661,7 @@ b = a<br>
       <link>https://jixiaoyong.github.io/blog/posts/9d9183ec.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/9d9183ec.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Java 笔记之序列化与反序列化：Serializable、Externalizable 和 Parcelable</source>
-      <description>Photo by Pixabay from Pexels</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Tue, 24 Dec 2019 01:38:59 GMT</pubDate>
       <content:encoded><![CDATA[<img src="https://images.pexels.com/photos/2881229/pexels-photo-2881229.jpeg?cs=srgb&amp;dl=white-and-blue-cables-2881229.jpg&amp;fm=jpg" class="full-image">
 <p>Photo by <a href="https://www.pexels.com/@pixabay?utm_content=attributionCopyText&amp;utm_medium=referral&amp;utm_source=pexels" target="_blank" rel="noopener noreferrer">Pixabay </a> from <a href="https://www.pexels.com/photo/close-up-of-telephone-booth-257736/?utm_content=attributionCopyText&amp;utm_medium=referral&amp;utm_source=pexels" target="_blank" rel="noopener noreferrer">Pexels</a></p>
@@ -5781,7 +5781,7 @@ b = a<br>
       <link>https://jixiaoyong.github.io/blog/posts/24967ad4.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/24967ad4.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Java 线程安全与 volatile 和 synchronize</source>
-      <description>前言 Java 多线程编码中，保证线程安全的实质是保证对数据操作的原子性，即一个线程对数据的操作能够及时的更新到其他使用该数据的线程中，这样就可以避免多个线程因为操作的数据值不一致而产生错误。 线程、主内存、工作内存三者交互关系——深入理解 JAVA 虚拟机</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Sat, 12 Jan 2019 07:54:46 GMT</pubDate>
       <content:encoded><![CDATA[<h2> 前言</h2>
 <p>Java 多线程编码中，保证线程安全的实质是保证对数据操作的原子性，即一个线程对数据的操作能够及时的更新到其他使用该数据的线程中，这样就可以避免多个线程因为操作的数据值不一致而产生错误。</p>
@@ -5892,7 +5892,7 @@ b = a<br>
       <link>https://jixiaoyong.github.io/blog/posts/135b2780.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/135b2780.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Kotlin 学习笔记 1</source>
-      <description>这是我在学习 Bennyhuo（ github ）的 kotlin 入门视频时的一些笔记，比较偏基础，用于查缺补漏。 xx.map() &amp;amp; xx.flatMap() xx.flatMap() 用于返回可迭代的数组，而 xx.map() 则是任何可迭代数据都有的用来遍历的方法。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Fri, 09 Feb 2018 08:18:01 GMT</pubDate>
       <content:encoded><![CDATA[<p>这是我在学习 Bennyhuo（ <a href="https://github.com/enbandari/Kotlin-Tutorials" target="_blank" rel="noopener noreferrer">github</a> ）的 kotlin 入门视频时的一些笔记，比较偏基础，用于查缺补漏。</p>
 <ul>
@@ -5956,7 +5956,7 @@ b = a<br>
       <link>https://jixiaoyong.github.io/blog/posts/8a52763a.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/8a52763a.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Kotlin 学习笔记 2</source>
-      <description>尾递归优化 把递归通过编译器转化为迭代，从而避免 Stack Overflow “以时间换取空间” 普通递归： 调用函数之后，还需要使用其返回值供自己使用，即自身返回值依赖于下一级函数，一般是调用自身的代码后面，还有其他的代码要执行。 fun fun1(n: Int): BigInteger { if (n == 0) return BigInteger.valueOf(1L) return n.toBigInteger().times(fun1(n - 1)) }</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Sun, 11 Feb 2018 03:38:43 GMT</pubDate>
       <content:encoded><![CDATA[<h2> 尾递归优化</h2>
 <p>把递归通过编译器转化为迭代，从而避免 Stack Overflow</p>
@@ -6065,7 +6065,7 @@ b = a<br>
       <link>https://jixiaoyong.github.io/blog/posts/fd5546ac.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/fd5546ac.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Kotlin 学习笔记 3</source>
-      <description>本文为笔记性质，尚未成文，待整理 异步流 lazy 方式创建一个序列，只有在访问的时候才生产对应的项目 fun foo(): Sequence&amp;lt;Int&amp;gt; = sequence{ for (i in 1..3) { Thread.sleep(1000)//会阻塞调用线程 yield(i)//生产一个项目 } }</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Tue, 24 Dec 2019 01:38:59 GMT</pubDate>
       <content:encoded><![CDATA[<blockquote>
 <p>本文为笔记性质，尚未成文，待整理</p>
@@ -6210,7 +6210,7 @@ Channel 提供了在协程之间传递多个值的方法</p>
       <link>https://jixiaoyong.github.io/blog/posts/10414aef.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/10414aef.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Kotlin 笔记之 Flow</source>
-      <description>前言 Flow是 Kotlin 协程库中的库，用于异步返回多个值，官方介绍是参考RxJava等响应式流实现的，但是“拥有尽可能简单的设计，对 Kotlin 以及挂起友好且遵从结构化并发”。本文主要参考Flow 中文文档，梳理了学习过程中的要点和理解，以便日后查验。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Thu, 25 Feb 2021 04:20:12 GMT</pubDate>
       <content:encoded><![CDATA[<h2> 前言</h2>
 <p><code>Flow</code>是 Kotlin 协程库中的库，用于<strong>异步返回多个值</strong>，官方介绍是参考<code>RxJava</code>等响应式流实现的，但是“<em>拥有尽可能简单的设计，对 Kotlin 以及挂起友好且遵从结构化并发</em>”。本文主要参考<a href="https://www.kotlincn.net/docs/reference/coroutines/flow.html" target="_blank" rel="noopener noreferrer">Flow 中文文档</a>，梳理了学习过程中的要点和理解，以便日后查验。</p>
@@ -6337,7 +6337,7 @@ Channel 提供了在协程之间传递多个值的方法</p>
       <link>https://jixiaoyong.github.io/blog/posts/53875104.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/53875104.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Lambda 表达式在 kotlin 中的应用</source>
-      <description>一个例子 普通写法： 定义一个接口 OnClickListener interface ClickListener{ fun onClick(view: View) }</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Fri, 09 Feb 2018 03:09:06 GMT</pubDate>
       <content:encoded><![CDATA[<h2> 一个例子</h2>
 <p><strong>普通写法</strong>：</p>
@@ -6382,7 +6382,7 @@ Channel 提供了在协程之间传递多个值的方法</p>
       <link>https://jixiaoyong.github.io/blog/posts/a64dc0bc.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/a64dc0bc.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">LeetCode 笔记--重建二叉树</source>
-      <description>二叉树的遍历根据根节点与左右子节点的遍历顺序的不同分为三种： 前序遍历 根左右：先遍历根节点，再左子树，再右子树（先从根节点开始，记录左节点直到没有） 第一个为根节点 中序遍历 左根右：先左子树，再根子树，再右子树（从树的最左边的节点开始遍历） 后序遍历 左右根：先左子树，后右子树，再根节点 最后一个为根节点 在遍历的时候，当父节点只有一个子节点时，依然要遵循以上三种遍历的先后顺序（没有该子节点则不写内容），以保证某一侧的子树（“左边的子树”或“右边的子树”）所有节点都被完全遍历，之后才可以根据遍历的规则切换到下一子树。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Thu, 20 Feb 2020 03:14:24 GMT</pubDate>
       <content:encoded><![CDATA[<p>二叉树的遍历根据根节点与左右子节点的遍历顺序的不同分为三种：</p>
 <ul>
@@ -6424,7 +6424,7 @@ Channel 提供了在协程之间传递多个值的方法</p>
       <link>https://jixiaoyong.github.io/blog/posts/25db0a11.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/25db0a11.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Linux下配置Git，使用AndroidStudio同步工程到Github</source>
-      <description>这篇文章介绍了如何在 linux 环境下安装和配置 git 与 github ，并且使用 Android Studio 将本地的项目同步到 github 上面。 安装 git sudo apt-gat install git</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Thu, 28 Apr 2016 22:06:06 GMT</pubDate>
       <content:encoded><![CDATA[<p>这篇文章介绍了如何在 linux 环境下安装和配置 git 与 github ，并且使用 Android Studio 将本地的项目同步到 github 上面。</p>
 <h2> 安装 git</h2>
@@ -6513,7 +6513,7 @@ Channel 提供了在协程之间传递多个值的方法</p>
       <link>https://jixiaoyong.github.io/blog/posts/ca532ade.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/ca532ade.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Linux 下配置 JDK 和 AndroidStudio 开发环境</source>
-      <description>下载 JDK 并解压 到官网下载 jdk 下载到的 JDK 文件解压 设置环境变量 管理员权限进入 etc/environment 写入以下代码 JAVA_HOME=&amp;quot;JDK主目录的绝对路径&amp;quot;</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Wed, 27 Apr 2016 22:06:06 GMT</pubDate>
       <content:encoded><![CDATA[<h2> 下载 JDK 并解压</h2>
 <ul>
@@ -6536,7 +6536,7 @@ Channel 提供了在协程之间传递多个值的方法</p>
       <link>https://jixiaoyong.github.io/blog/posts/d0edc1ed.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/d0edc1ed.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Linux常用命令</source>
-      <description>复制，删除，移动 cp拷贝，rm删除，mv移动。 -r表示递归 -f强制，无提示 cp [-r] fromFilePath toFilePath rm [-r] fromFilePath toFilePath mv [-r] fromFilePath toFilePath</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Mon, 14 Jan 2019 12:16:53 GMT</pubDate>
       <content:encoded><![CDATA[<h2> 复制，删除，移动</h2>
 <p><code>cp</code>拷贝，<code>rm</code>删除，<code>mv</code>移动。</p>
@@ -6705,7 +6705,7 @@ Channel 提供了在协程之间传递多个值的方法</p>
       <link>https://jixiaoyong.github.io/blog/posts/6ff87ae7.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/6ff87ae7.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">OKHttpUtils 分析</source>
-      <description>前言 本文是对张鸿洋的 OKHttp 辅助类okhttputils简要分析，以便学习如何封装常见工具的思想，建议配合源码食用。 主要涉及类： OkHttpUtils OkHttpRequestBuilder OkHttpRequest RequestCall Callback</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Sun, 17 Mar 2019 05:32:21 GMT</pubDate>
       <content:encoded><![CDATA[<h2> 前言</h2>
 <p>本文是对张鸿洋的 OKHttp 辅助类<a href="https://github.com/hongyangAndroid/okhttputils" target="_blank" rel="noopener noreferrer"><strong>okhttputils</strong></a>简要分析，以便学习如何封装常见工具的思想，建议配合源码食用。</p>
@@ -6766,7 +6766,7 @@ Channel 提供了在协程之间传递多个值的方法</p>
       <link>https://jixiaoyong.github.io/blog/posts/d9a2e1ba.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/d9a2e1ba.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Python 自动创建发布 hexo 文章并同步 github</source>
-      <description>简介 环境 linux(deepin) python 2.7 这是一个 Python 脚本，用于实现 hexo 文章创建、生成网页并预览、发布到对应 xxx.github.io 博客的全过程。 使用方法 使用时需要根据自己的项目更新 main.py 的一下变量：</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Wed, 31 Jan 2018 16:09:12 GMT</pubDate>
       <content:encoded><![CDATA[<h2> 简介</h2>
 <blockquote>
@@ -6842,7 +6842,7 @@ Channel 提供了在协程之间传递多个值的方法</p>
       <link>https://jixiaoyong.github.io/blog/posts/a8f97c56.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/a8f97c56.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Python 入门知识</source>
-      <description>基于 Python3.x Python 文件默认格式.py 首行默认以下命令： #!/usr/bin/python # -*- coding: UTF-8 -*-</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Sat, 20 Jan 2018 15:49:17 GMT</pubDate>
       <content:encoded><![CDATA[<p>基于 Python3.x</p>
 <p>Python 文件默认格式<code>.py</code></p>
@@ -6957,7 +6957,7 @@ Channel 提供了在协程之间传递多个值的方法</p>
       <link>https://jixiaoyong.github.io/blog/posts/6e070881.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/6e070881.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Python 爬取 gityuan 所有文章列表</source>
-      <description>简介 更新内容： 爬取 gityuan.com 网站所有文章列表并输出 json 汇总信息输出 config.json 为后面的客户端做准备 更新文件： spider_main.py html_output.py gityuan_urls.py html_downloader.py</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Sun, 28 Jan 2018 14:03:50 GMT</pubDate>
       <content:encoded><![CDATA[<h2> 简介</h2>
 <p>更新内容：</p>
@@ -7016,7 +7016,7 @@ Channel 提供了在协程之间传递多个值的方法</p>
       <link>https://jixiaoyong.github.io/blog/posts/9c0ccf0d.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/9c0ccf0d.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Python 爬虫爬取 gityuan.com 数据并输出 json</source>
-      <description>简介 本文基于 Python2.7 这篇文章基于我在慕课网上面学习 Python 简单爬虫写的内容，教程内容是爬取 1000 条百度百科的数据，但是教程中爬虫截止 2018-01-27 已经失效，刚好看到大神 gityuan.com 的内容，于是用 Python 实现爬取其网页内容并生成 json 数据。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Sat, 27 Jan 2018 14:25:34 GMT</pubDate>
       <content:encoded><![CDATA[<h2> 简介</h2>
 <blockquote>
@@ -7063,7 +7063,7 @@ Channel 提供了在协程之间传递多个值的方法</p>
       <link>https://jixiaoyong.github.io/blog/posts/a951661c.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/a951661c.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Dart Isolate 源码分析</source>
-      <description>Isolate 💡 本文基于 Dart 2.17.1 Isolate, an isolated Dart execution context. All Dart code runs in an isolate, and code can access classes and values only from the same isolate. Different isolates can communicate by sending values through ports (see ReceivePort, SendPort).</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Sat, 28 May 2022 07:20:01 GMT</pubDate>
       <content:encoded><![CDATA[<h2> Isolate</h2>
 <p>💡 本文基于 Dart 2.17.1</p>
@@ -7271,7 +7271,7 @@ Channel 提供了在协程之间传递多个值的方法</p>
       <link>https://jixiaoyong.github.io/blog/posts/550e5790.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/550e5790.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Dart VM</source>
-      <description>本文是对 Dart 官方 VM 的介绍的总结摘要，推荐直接阅读官方原文。 Dart VM is a collection of components for executing Dart code natively. Notably, it includes the following:</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Thu, 02 Jun 2022 07:18:57 GMT</pubDate>
       <content:encoded><![CDATA[<blockquote>
 <p>本文是对 Dart 官方 VM 的介绍的总结摘要，推荐直接阅读<a href="https://github.com/dart-lang/sdk/blob/main/runtime/docs/index.md" target="_blank" rel="noopener noreferrer">官方原文</a>。</p>
@@ -7426,7 +7426,7 @@ Channel 提供了在协程之间传递多个值的方法</p>
       <link>https://jixiaoyong.github.io/blog/posts/1a589649.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/1a589649.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">之前发布的几个 App</source>
-      <description>在之前学习 android 的过程中，跟着教程做了几个 app，虽然随着使用的 api 的失效，大多数应用如今已经不能正常使用了，但是作为初入编程的一点点小纪念，还是为他们写一个索引文章，至少能够晚一些消寂于这广阔的数据海洋中。 NiceNews Posted on 2016-05-30</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Mon, 08 Jan 2018 14:35:34 GMT</pubDate>
       <content:encoded><![CDATA[<p>在之前学习 android 的过程中，跟着教程做了几个 app，虽然随着使用的 api 的失效，大多数应用如今已经不能正常使用了，但是作为初入编程的一点点小纪念，还是为他们写一个索引文章，至少能够晚一些消寂于这广阔的数据海洋中。</p>
 <h2> <a href="http://jixiaoyong.github.io/jixiaoyong.github.io/blog/backup/blog_2016To2017/2016/05/NiceNews/" target="_blank" rel="noopener noreferrer">NiceNews</a></h2>
@@ -7454,7 +7454,7 @@ Channel 提供了在协程之间传递多个值的方法</p>
       <link>https://jixiaoyong.github.io/blog/posts/27065732.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/27065732.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">从 Sunflower 开始学习优雅的 Jetpack 架构</source>
-      <description>Google 大法 NB！！！(破音) 前言 Jetpack是 Google 推出的一系列 Android 软件集合，&amp;quot;使您可以更轻松地开发出色的 Android 应用。这些组件可帮助您遵循最佳做法、让您摆脱编写样板代码的工作并简化复杂任务，以便您将精力集中放在所需的代码上&amp;quot;。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Thu, 24 Jan 2019 11:48:31 GMT</pubDate>
       <content:encoded><![CDATA[<blockquote>
 <p>Google 大法 NB！！！(破音)</p>
@@ -7545,7 +7545,7 @@ Channel 提供了在协程之间传递多个值的方法</p>
       <link>https://jixiaoyong.github.io/blog/posts/b00ac86a.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/b00ac86a.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">利用 travis 通过 Hexo 在 Github 上自动部署 Markdown 文档</source>
-      <description>前言 本文介绍了一个只需要更新 Markdown 文档到 Github，即可实时更新博客内容的方法。 本文参考这篇文章 实现，并根据我的需求更改了部分内容，以实现部署多个 hexo 工程到同一 Github 项目不同目录下。 Github 为我们提供了Github Pages 方便我们建立简单的网页来介绍项目，很多时候我们用他来搭建静态博客。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Thu, 20 Dec 2018 14:35:34 GMT</pubDate>
       <content:encoded><![CDATA[<h2> 前言</h2>
 <blockquote>
@@ -7577,7 +7577,7 @@ Channel 提供了在协程之间传递多个值的方法</p>
       <link>https://jixiaoyong.github.io/blog/posts/f7965978.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/f7965978.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">Hexo+Github=Blog</source>
-      <description>Hello World！ 一直以来，为了有一个合适的在线写字的地方，我尝试过许多种工具，从最初的 QQ 空间开始，到各种门户网站的博客，再到自己开始尝试搭建博客，一路奔忙，门户网站的限制太多，自己搭建的博客又时常由于空间提供商的各种问题而无法访问。许多时候一个平台只能使用一段时间，这样子颠颠撞撞大概也有五六年的时间了。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Thu, 24 Mar 2016 22:06:06 GMT</pubDate>
       <content:encoded><![CDATA[<div class="language-text line-numbers-mode" data-ext="text"><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>一直以来，为了有一个合适的在线写字的地方，我尝试过许多种工具，从最初的 QQ 空间开始，到各种门户网站的博客，再到自己开始尝试搭建博客，一路奔忙，门户网站的限制太多，自己搭建的博客又时常由于空间提供商的各种问题而无法访问。许多时候一个平台只能使用一段时间，这样子颠颠撞撞大概也有五六年的时间了。</p>
 <p>一直听说 github 这个平台的各种优点，尤其是可以作为稳定而免费的空间托管博客最令我心动，但是之前多次尝试不得其道，终以失败告终。最近在学习 Android 语言的时候，又再次用起了 github，不过这次是用它来存储代码。不得不承认，使用 github 来控制程序版本真是一件令人愉悦的事件。</p>
@@ -7702,7 +7702,7 @@ version 查看 hexo 的版本<br>
       <link>https://jixiaoyong.github.io/blog/posts/8d60b485.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/8d60b485.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">加载已安装应用、未安装 apk 中的资源</source>
-      <description>加载已安装应用、未安装 apk 中的资源，其思路主要是获取到对应的 ClassLoader/Context，通过 ClassLoader 加载 R.java 等类，再通过反射获取对应的资源 id 及资源。 加载已安装应用资源 sharedUserId 在当前应用中加载已安装的其他应用资源，需要二者有相同的sharedUserId，这样 Android 系统为二者分配同一个 Linux 用户 ID，两个 App 可以相互访问代码、资源等。 通过 Shared User id，拥有同一个 User id 的多个 APK 可以配置成运行在同一个进程中。所以默认就是可以互相访问任意数据。也可以配置成运行成不同的进程，同时可以访问其他 APK 的数据目录下的数据库和文件。就像访问本程序的数据一样。 Android 逆向之旅---Android 中的 sharedUserId 属性详解 - CSDN 博客</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Sun, 15 Apr 2018 13:40:32 GMT</pubDate>
       <content:encoded><![CDATA[<p>加载已安装应用、未安装 apk 中的资源，其思路主要是获取到对应的 ClassLoader/Context，通过 ClassLoader 加载 R.java 等类，再通过反射获取对应的资源 id 及资源。</p>
 <h2> 加载已安装应用资源</h2>
@@ -7735,7 +7735,7 @@ version 查看 hexo 的版本<br>
       <link>https://jixiaoyong.github.io/blog/posts/1f6681a0.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/1f6681a0.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">数据结构_Hash 表</source>
-      <description>前言 Hash 表是一种可以快速插入和查找的数据结构，将数据保存在通过 hash 函数计算得到的下标中。 插入和删除 所需时间为 O(1)。在确定容量、无需遍历时效果最好。 当其大小接近容量时，效率会变得很差。 存储方式 Hash 表有两种存储方式 开放地址法 开放地址法，直接将数据存储在数组中。 当 hash 算出的地址已经被占用时，则走过一定的步长找到另外一个空位（在填充质数很大时就会很耗时）并保存数据。 链地址法 链地址法，创建保存数据的数组，该数组中不直接保存数据，而是保存一个用来存储这些数据的链表，将数据项直接存储的链表中。 当 hash 算法计算出的地址时，遍历数组中对应的链表找到空位并保存。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Sun, 23 Dec 2018 09:35:36 GMT</pubDate>
       <content:encoded><![CDATA[<h2> 前言</h2>
 <p>Hash 表是一种可以快速插入和查找的数据结构，将数据保存在通过 hash 函数计算得到的下标中。</p>
@@ -7790,7 +7790,7 @@ version 查看 hexo 的版本<br>
       <link>https://jixiaoyong.github.io/blog/posts/101c73f.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/101c73f.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">数据结构_二叉树</source>
-      <description>前言 本文介绍了二叉树，及其应用。 树，既能像链表那样快速插入和删除，又可以像数组那样快速查找。 树 每棵树有且只有一个根，从根到任何一个节点有且只有一条路径；每个节点都可以有 0 个或者多个子节点，没有子节点的节点叫做叶子节点。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Thu, 03 Jan 2019 14:09:40 GMT</pubDate>
       <content:encoded><![CDATA[<h2> 前言</h2>
 <p>本文介绍了二叉树，及其应用。</p>
@@ -7868,7 +7868,7 @@ version 查看 hexo 的版本<br>
       <link>https://jixiaoyong.github.io/blog/posts/a71f2ecc.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/a71f2ecc.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">数据结构_图</source>
-      <description>前言 图，是由可以有多个边的顶点组成的结构。 两个顶点之间有边连接，则称这两个顶点是邻接的。 几个相互邻接的顶点组成的线叫做路径,至少有一条路径可以到达所有顶点的图叫做连通图。 如果图的顶点只能从 A→B，不能从 B→A，就称图是有向图。 如果边被赋予一定的权值（数字），就称图为带权图</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Thu, 27 Dec 2018 15:59:36 GMT</pubDate>
       <content:encoded><![CDATA[<h2> 前言</h2>
 <p><strong>图</strong>，是由可以有多个边的顶点组成的结构。</p>
@@ -7976,7 +7976,7 @@ version 查看 hexo 的版本<br>
       <link>https://jixiaoyong.github.io/blog/posts/b3af796a.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/b3af796a.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">数据结构_堆</source>
-      <description>前言 堆是一种特殊的二叉树，用他实现的优先级队列插入和删除时间复杂度都是O(LogN)O(LogN)O(LogN) 。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Tue, 25 Dec 2018 12:51:36 GMT</pubDate>
       <content:encoded><![CDATA[<h2> 前言</h2>
 <p>堆是一种特殊的二叉树，用他实现的优先级队列插入和删除时间复杂度都是<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>L</mi><mi>o</mi><mi>g</mi><mi>N</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(LogN)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal">L</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mclose">)</span></span></span></span> 。</p>
@@ -8039,7 +8039,7 @@ version 查看 hexo 的版本<br>
       <link>https://jixiaoyong.github.io/blog/posts/851be5ef.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/851be5ef.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">数据结构_总结</source>
-      <description>前言 本文汇总了数据结构的优缺点及应用场景。 通用数据结构：数组、链表、树、哈希表 专用数据结构：栈、队列、优先级队列 排序：冒泡排序、选择排序、插入排序，希尔排序、快速排序、归并排序、堆排序 图：邻接矩阵、邻接表 通用数据结构 这些数据结构使用关键字的值存储、查找数据 其速度如下： 哈希表 &amp;gt; 树 &amp;gt; 链表 &amp;gt; 数组 数组：数据量小，大小可以预测时使用 链表：数据大小不可预知，或需要频繁插入删除元素时使用</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Sat, 05 Jan 2019 05:55:50 GMT</pubDate>
       <content:encoded><![CDATA[<h2> 前言</h2>
 <p>本文汇总了数据结构的优缺点及应用场景。</p>
@@ -8086,7 +8086,7 @@ version 查看 hexo 的版本<br>
       <link>https://jixiaoyong.github.io/blog/posts/9a784fe0.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/9a784fe0.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">数据结构_数组，链表</source>
-      <description>前言 本文介绍了数组、链表等数据结构。 设定所有排序：小 → 大。 数组 数组（array）是一组具有相同类型元素的集合，用一段连续的内存来保存。使用下标来访问保存的元素，如a[0]。 数组是一种数据存储结构。 int a[] = new int[10];</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Tue, 01 Jan 2019 03:19:52 GMT</pubDate>
       <content:encoded><![CDATA[<h2> 前言</h2>
 <p>本文介绍了数组、链表等数据结构。</p>
@@ -8135,7 +8135,7 @@ version 查看 hexo 的版本<br>
       <link>https://jixiaoyong.github.io/blog/posts/8d059318.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/8d059318.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">数据结构_栈和队列</source>
-      <description>前言 本文介绍栈、队列两种抽象数据类型。 栈 栈stack，又称堆栈，是一种抽象数据类型，每次只能访问栈顶元素top，可以进行压入push和推出pop操作。其元素先进后出 (FILO)。 队列 队列queue,是和栈相对的一种抽象数据类型，每次从后端rear插入，从前端front删除。其元素先进先出 (FIFO)。</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Wed, 02 Jan 2019 11:54:53 GMT</pubDate>
       <content:encoded><![CDATA[<h2> 前言</h2>
 <p>本文介绍栈、队列两种抽象数据类型。</p>
@@ -8181,7 +8181,7 @@ version 查看 hexo 的版本<br>
       <link>https://jixiaoyong.github.io/blog/posts/125c8a12.html</link>
       <guid>https://jixiaoyong.github.io/blog/posts/125c8a12.html</guid>
       <source url="https://jixiaoyong.github.io/blog/rss.xml">数据结构_简单排序</source>
-      <description>简单排序 所有排序顺序为 小 → 大。 时间负责度都是 O(N2)。 排序速度：插入排序&amp;gt;选择排序&amp;gt;冒泡排序 冒泡排序 时间复杂度：O(N2) 最慢的排序，但是简单 规则如下： 从左到右，比较 a 和 b，如果a&amp;gt;b，就交换 a 和 b 的位置 再将 a，b 中较大的那个与 c 按照 2 的规则比较，直到最后一位 重复 1，2 直到没有待排序的项目</description>
+      <description>Let&amp;apos;s make something different!</description>
       <pubDate>Mon, 31 Dec 2018 06:45:45 GMT</pubDate>
       <content:encoded><![CDATA[<h2> 简单排序</h2>
 <p>所有排序顺序为 <code>小 → 大</code>。</p>
