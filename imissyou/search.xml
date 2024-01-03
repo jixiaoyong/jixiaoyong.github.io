@@ -176,6 +176,9 @@
 <p>该去的撒手去了，该来的总会到来，只是当下还总是未知，一如昨日的迷茫。</p>
 <p>人生多艰，只有且行且珍惜。</p>
 ]]></content>
+      <tags>
+        <tag>岁岁今朝</tag>
+      </tags>
   </entry>
   <entry>
     <title>少年，干了这碗鸡汤</title>
@@ -331,6 +334,9 @@
 <p>左右繁华真一梦。</p>
 <p>残杯冷炙不足惜，华章初展，更待迤逦万千。</p>
 ]]></content>
+      <tags>
+        <tag>岁岁今朝</tag>
+      </tags>
   </entry>
   <entry>
     <title>从来梦一场</title>
@@ -366,6 +372,9 @@
 <img src="https://jixiaoyong.github.io/images/20191229182827.png" class="full-image" />
 
 <img src="https://jixiaoyong.github.io/images/20191230000050.gif" class="full-image" />]]></content>
+      <tags>
+        <tag>岁岁今朝</tag>
+      </tags>
   </entry>
   <entry>
     <title>2020</title>
@@ -392,6 +401,9 @@
 <p>2020 年结束了，谢谢你，拜拜。</p>
 <p><img src="https://jixiaoyong.github.io/images/20201231220911.png" alt="GoodBye 2020"></p>
 ]]></content>
+      <tags>
+        <tag>岁岁今朝</tag>
+      </tags>
   </entry>
   <entry>
     <title>2022，为了忘却的记忆</title>
@@ -457,6 +469,9 @@
 <p>诸君，尽情地，用力呼吸一次吧，和这个世界一起。</p>
 <p><img src="https://jixiaoyong.github.io/images/202212312101458.JPG" alt="Never Stop Exploring"></p>
 ]]></content>
+      <tags>
+        <tag>岁岁今朝</tag>
+      </tags>
   </entry>
   <entry>
     <title>2023, not good, not bad, not that bad</title>
@@ -466,7 +481,7 @@
 <p>The endless pandemic has passed, for now, yet the uncertainty is still there and permeates all aspects of life and our surroundings. Is deep pessimism spreading everywhere, or is it just another <em>great year of victory</em> once again?</p>
 <p>Shall we let history tell us? After all, we all know what <em>the book</em> will say, don’t we?</p>
 <p>Behind the shadow of those protagonists, <strong>these nobodies also have lived</strong> and should be recorded by someone in some way.</p>
-<p>I, and perhaps many others, <a href="https://jixiaoyong.github.io/imissyou/posts/2990f05c/#%E6%98%9F%E5%85%89">believed that <strong>the light would eventually shine</strong></a> after enduring all the terrible hardships, especially after those brave, lovely individuals made their stand last year. It’s true. At the point of the end of this year, we can say that things are not as horrible as <em><strong>they</strong></em> affirmed. Yeah, it’s bad at the beginning, but as time changes, <em><strong>it</strong></em>’s getting weaker and weaker. Was it too late to go back to normal life? Was it too late to appease people’s fear and tired? Was it too late to get their trust and confidence back?</p>
+<p>I, and perhaps many others, <a href="https://jixiaoyong.github.io/imissyou/posts/2990f05c/#%E6%98%9F%E5%85%89">believed that <strong>the light would eventually shine</strong></a> after enduring all the terrible hardships, especially after those brave, lovely individuals made their stand last year. It’s true. At the point of the end of this year, we can say that things are not as horrible as <em><strong>they</strong></em> affirmed. Yeah, it’s bad at the beginning, but as time changes, <strong><em>it</em></strong> is getting weaker and weaker. Was it too late to go back to normal life? Was it too late to appease people’s fear and tired? Was it too late to get their trust and confidence back?</p>
 <p>The elephant in the room is becoming bigger and bigger every day, is there still some room available for the little ant to stay? What if the hand suddenly hovers over your domain one day? It’s easy to make one unwelcome to discuss these things. It’s not cool, not enjoyable, and sometimes it can even be unsafe. However, as long as we inhabit the same space, it’s hard to ignore the existence of <strong><em>it</em></strong>. Just like the water in which fishes swim, it’s everywhere at any time, and there is no exit.</p>
 <h2 id="Life-still-goes-on"><a href="#Life-still-goes-on" class="headerlink" title="Life still goes on"></a>Life still goes on</h2><blockquote>
 <p><strong>Things can change suddenly; the only certainty is change.</strong></p>
@@ -542,20 +557,29 @@
 <p>It’s not until we lose something that we understand its importance. If <em>it</em> didn’t happen, I would never know how deeply I love the fresh air and the view outside the house. Especially after I go through those horrible days when a person can be randomly forced into isolation for some * reason. How many misfortunes <em>come with goodness first</em> until they lose control and get mad? It’s unhelpful to discuss the wish good or bad, once the actions have been done, the only rule to judge is the effect they made. Anyway, I have explored as many places as I can during the year 2023, mother nature seems to have the power to cure one’s soul.</p>
 <p>To figure out the difference between these days and the previous days, I did some statistical analysis of my sporting data from Xiaomi Fitness and Amap(Unfortunately, all these applications only count the walking and biking information, other types such as car&#x2F;train&#x2F;bus… doesn’t included). What surprised me was the total size of the origin data is nearly 100Mb (What a crazy company!). This dataset is enormous. Neither <em>WPS</em>, <em>Apple Numbers</em>, nor even <em>Microsoft Excel</em> can handle such a large volume of data: it either crashes upon opening the file, or becomes too sluggish to respond to any operation. Eventually, after some programming, I managed to create a structured version of all this data and have completed some analytical tasks.</p>
 <p><del>It’s interesting to note that, despite my perception of spending most weekends out and about, the data indicates that the changes weren’t as significant as I thought.</del> From June 2020 to October 2021, I lived quite a distance from my office, which resulted in an unusually high total distance. Disregarding this period, it can be observed that the distance is increasing year by year. A notable change this year is my shift from walking to cycling, as evidenced by the rapid increase in the percentage of the total distance covered by cycling.</p>
-<div id="echarts3518" style="width: 85%;height: 400px;margin: 0 auto"></div>
+<div id="echarts9918" style="width: 85%;height: 400px;margin: 0 auto"></div>
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
         var isDarkTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        var id = 'echarts3518'
+        var id = 'echarts9918'
         var myChart = echarts.init(document.getElementById(id),isDarkTheme ? "dark" : "light");
         // 指定图表的配置项和数据
         var option = {
+  title: {
+    left: 'center',
+    text: 'My yearly cycling and walking statistics'
+  },
   tooltip: {
     trigger: 'axis',
     axisPointer: { type: 'cross' }
   },
-  legend: {},
+  legend: {
+    orient: 'vertical',
+    align: 'left',
+    left: '15%',
+    top: '10%'
+  },
   xAxis: [
     {
       type: 'category',
@@ -568,7 +592,7 @@
   yAxis: [
     {
       type: 'value',
-      name: 'Step Count',
+      name: 'Step Count /steps',
       min: 900000,
       max: 8000000,
       position: 'right',
@@ -579,12 +603,12 @@
     },
     {
       type: 'value',
-      name: 'Distance',
+      name: 'Distance /km',
       min: 500,
       max: 2200,
       position: 'left',
       axisLabel: {
-        formatter: '{value} Km'
+        formatter: '{value}'
       }
     }
   ],
@@ -598,6 +622,9 @@
       emphasis: {
         disabled: false,
         focus: 'self'
+      },
+      itemStyle: {
+        color: '#626C91'
       }
     },
     {
@@ -608,7 +635,10 @@
       smooth: 0.2,
       lineStyle: {
         type: 'dotted'
-      }
+      },
+      itemStyle: {
+        color: '#45C2F9'
+      },
     },
     {
       name: 'Step Count',
@@ -618,6 +648,9 @@
       smooth: 0.2,
       lineStyle: {
         type: 'dotted'
+      },
+      itemStyle: {
+        color: '#6BE6C1'
       }
     }
   ]
@@ -639,14 +672,13 @@
 </script>
 
 
-
-<p>For the chart titled ‘Cycling and Walking Information in 2023 (Monthly)’, it can be observed that after I began cycling in March, the distance covered by cycling increased while the distance covered by walking started to decrease. There was a specific increase during the National Day in October.</p>
-<div id="echarts1742" style="width: 85%;height: 400px;margin: 0 auto"></div>
+<p>For the chart titled <em>Cycling and Walking Information in 2023 (Monthly)</em>, it can be observed that after I began cycling in March, the distance covered by cycling increased while the distance covered by walking started to decrease. There was a specific increase during the National Day in October.</p>
+<div id="echarts1874" style="width: 85%;height: 400px;margin: 0 auto"></div>
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
         var isDarkTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        var id = 'echarts1742'
+        var id = 'echarts1874'
         var myChart = echarts.init(document.getElementById(id),isDarkTheme ? "dark" : "light");
         // 指定图表的配置项和数据
         var option = {
@@ -679,23 +711,23 @@
   yAxis: [
     {
       type: 'value',
-      name: 'Count of Walked',
+      name: 'Step Count /steps',
       min: 150000,
       max: 600000,
       position: 'right',
       axisLabel: {
-        formatter: '{value} '
+        formatter: '{value}'
       },
       dataZoom: {}
     },
     {
       type: 'value',
-      name: 'Distance',
+      name: 'Distance /meters',
       min: 50000,
       max: 280000,
       position: 'left',
       axisLabel: {
-        formatter: '{value} m'
+        formatter: '{value}'
       }
     }
   ],
@@ -726,7 +758,6 @@
         133682, 111630, 113999
       ],
       smooth: 0.2,
-
       itemStyle: {
         color: '#45C2F9'
       },
@@ -770,12 +801,12 @@
 
 
 <p>The sleep interval was gradually decreasing day by day. This chart reveals a disheartening reality. In 2021, there was a moment when, although I had relocated to a place closer to my office, my sleep duration still experienced a significant decrease. Aside from a variety of other factors, it appears that this shift roughly coincided with the time I transitioned to my current department.</p>
-<div id="echarts8984" style="width: 85%;height: 400px;margin: 0 auto"></div>
+<div id="echarts3501" style="width: 85%;height: 400px;margin: 0 auto"></div>
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
         var isDarkTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        var id = 'echarts8984'
+        var id = 'echarts3501'
         var myChart = echarts.init(document.getElementById(id),isDarkTheme ? "dark" : "light");
         // 指定图表的配置项和数据
         var option = {
@@ -797,16 +828,19 @@
   xAxis: {
     type: 'category',
     boundaryGap: false,
-   
     data: ["2020-11", "2020-12", "2021-01", "2021-02", "2021-03", "2021-04", "2021-05", "2021-06", "2021-07", "2021-08", "2021-09", "2021-10", "2021-11", "2021-12", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06", "2022-07", "2022-08", "2022-09", "2022-10", "2022-11", "2022-12", "2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06", "2023-07", "2023-08", "2023-09", "2023-10", "2023-11", "2023-12"]
   },
   yAxis: {
     type: 'value',
     min: 0,
     max: 43800,
-    name: 'total duration of month',
+    name: 'total duration of month /minutes',
     axisLabel: {
-        formatter: '{value} m'
+        formatter: '{value}'
+    },
+    nameLocation: 'end',
+    nameTextStyle: {
+      padding: [0, -100, 0, 0]
     },
   },
   series: [
@@ -854,6 +888,87 @@
 <p>On the other hand, even though it has lost nearly a quarter of the <em>existing things</em>, the total amount has already roughly reached 1M during this year, which was an unpractical milestone once before.</p>
 <p>I’ve been silent for a while, ever since my last social network account got ghost-banned. This shall be the first and last time that I have to face a situation like this – I will reduce the time wasted on those platforms. The public social networks run by the companies are not stable anymore for many reasons, and this makes me upset to post my thoughts on these platforms, it’s a good time for me to back to my blog and fully control everything I have without any limit. As for now, GitHub seems still a reliable platform to host my blog and will continue working for a long time. Anyone who wants to stay in touch with me can kindly keep “<a href="mailto:jixiaoyong1995+imissyou@gmail.com?subject=%5BMail%20From%20I%20Miss%20You%5D&charset=UTF-8">jixiaoyong1995@gmail.com</a>” and “<a href="https://jixiaoyong.github.io/">https://jixiaoyong.github.io</a>” in your notebook.</p>
 <h2 id="One-more-thing…"><a href="#One-more-thing…" class="headerlink" title="One more thing…"></a>One more thing…</h2><p>The book of this year for me is <strong><em>A Song of Ice and Fire</em></strong>. It’s been a lengthy journey, consuming over a hundred hours to finish all five volumes. Nearly half of my year’s leisure time was invested in immersing myself in the characters’ lives and exploring this magical and joyful world. At times, I can snap the familiar perspectives from <strong><em>The Three-Body</em></strong>, which is a wonderful experience like two guys you admire are already aware of and appreciate each other.</p>
+<div id="echarts396" style="width: 85%;height: 400px;margin: 0 auto"></div>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var isDarkTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        var id = 'echarts396'
+        var myChart = echarts.init(document.getElementById(id),isDarkTheme ? "dark" : "light");
+        // 指定图表的配置项和数据
+        var option = {
+  title: {
+    text: 'My yearly reading hours by weRead',
+    left: 'center'
+  },
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: {
+      type: 'shadow'
+    }
+  },
+  grid: {
+    left: '3%',
+    right: '4%',
+    bottom: '3%',
+    containLabel: true
+  },
+  xAxis: [
+    {
+      type: 'category',
+      data: ['2018', '2019', '2020', '2021', '2022', '2023'],
+      axisTick: {
+        alignWithLabel: true
+      }
+    }
+  ],
+  yAxis: [
+    {
+      type: 'value',
+      name: 'total hours /hours',
+      axisLabel: {
+        formatter: '{value}'
+      },
+      nameLocation: 'end',
+      nameTextStyle: {
+       padding: [0, -80, 0, 0]
+      },
+    }
+  ],
+  series: [
+    {
+      name: 'Reading /hours',
+      type: 'bar',
+      barWidth: '60%',
+      data: [137.46, 102.16, 169.22, 83.65, 45.5, 120.13],
+      itemStyle: {
+        color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
+          { offset: 1, color: '#33A9FF' },
+          { offset: 0, color: '#3CCBFF' }
+        ]),
+        borderRadius: [10]
+      }
+    }
+  ]
+};
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+
+
+        window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
+          var  isDarkTheme = e.matches;
+           // 销毁旧的echarts实例
+           myChart.dispose();
+           // 创建新的echarts实例
+          myChart = echarts.init(document.getElementById(id), isDarkTheme ? "dark" : "light");
+          // 使用新的主题和配置项显示图表
+          myChart.setOption(option);
+         });
+
+</script>
+
+
+<p>It turns out, I spent ninety percent of my reading time on <em>A Song of Ice and Fire</em> last year.</p>
 <p>The other thing that must be pointed out is the movie called <strong><em>Journey to the West</em></strong>. I didn’t expect it to be so perfect and up my street. What will happen when <em>Don Quixote</em> lives in our life right now? Hard to say what kind of story this movie is talking about, funny, ridiculous, or an idealist’s epitaph? I don’t know. I enjoyed it, that’s enough.</p>
 <p>There still are many other things that I didn’t notice, waiting for an adventure. I still remember some of them’s names, just list them here for whoever is interested in them:</p>
 <ul>
@@ -873,6 +988,9 @@
 <br/>
 <br/>
 ]]></content>
+      <tags>
+        <tag>岁岁今朝</tag>
+      </tags>
   </entry>
   <entry>
     <title>无题</title>
