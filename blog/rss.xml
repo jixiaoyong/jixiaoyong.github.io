@@ -6,8 +6,8 @@
     <link>https://jixiaoyong.github.io/blog/</link>
     <description>Let&amp;apos;s make something different!</description>
     <language>zh-CN</language>
-    <pubDate>Thu, 02 May 2024 13:21:48 GMT</pubDate>
-    <lastBuildDate>Thu, 02 May 2024 13:21:48 GMT</lastBuildDate>
+    <pubDate>Fri, 31 May 2024 09:34:29 GMT</pubDate>
+    <lastBuildDate>Fri, 31 May 2024 09:34:29 GMT</lastBuildDate>
     <generator>vuepress-plugin-feed2</generator>
     <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
     <copyright>©CC BY-NC-SA 许可协议授权，署名-非商业性使用-相同方式共享</copyright>
@@ -8075,7 +8075,7 @@ version 查看 hexo 的版本<br>
 <p><code>插入排序 &gt; 希尔排序 &gt; 快速排序 &gt; 归并排序 &gt; 堆排序</code></p>
 <p>归并排序：需要辅助存储空间</p>
 <p>堆排序：需要一个堆的数据结构，比快速排序更适于非随机数据</p>
-<p>快速排序：处理非随机数据时会慢到<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>N</mi><mn>2</mn></msup><mo stretchy="false">)</mo><mtext>​</mtext></mrow><annotation encoding="application/x-tex">O(N^2)​</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0641em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mord">​</span></span></span></span></p>
+<p>快速排序：处理非随机数据时会慢到<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>N</mi><mn>2</mn></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(N^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0641em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></p>
 <p>下面是排序算法比较：</p>
 <figure><img src="https://jixiaoyong.github.io/images/20190105142406.png" alt="排序算法比较" tabindex="0" loading="lazy"><figcaption>排序算法比较</figcaption></figure>
 ]]></content:encoded>
