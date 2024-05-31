@@ -6,8 +6,8 @@
     <link>https://jixiaoyong.github.io/blog/</link>
     <description>Let&amp;apos;s make something different!</description>
     <language>zh-CN</language>
-    <pubDate>Fri, 31 May 2024 12:16:49 GMT</pubDate>
-    <lastBuildDate>Fri, 31 May 2024 12:16:49 GMT</lastBuildDate>
+    <pubDate>Fri, 31 May 2024 16:02:21 GMT</pubDate>
+    <lastBuildDate>Fri, 31 May 2024 16:02:21 GMT</lastBuildDate>
     <generator>vuepress-plugin-feed2</generator>
     <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
     <copyright>©CC BY-NC-SA 许可协议授权，署名-非商业性使用-相同方式共享</copyright>
@@ -1730,12 +1730,8 @@ Client 将需要的 Binder 的名字发给 ServerManager，ServerManager 查询�
 <div class="language-kotlin line-numbers-mode" data-ext="kt"><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><figure><img src="https://jixiaoyong.github.io/images/20200413222302.jpg" alt="" tabindex="0" loading="lazy"><figcaption></figcaption></figure>
 <h2> 注意事项</h2>
 <ul>
-<li>
-<p>使用 canvas 绘制坐标时，需要注意 android 的坐标原点位于屏幕左上角。所以在绘制曲线图时可以先将坐标原点向下平移一段距离，再绘制对应坐标（可以绘制实际的 y 坐标负值）</p>
-</li>
-<li>
-<p>在拼接贝塞尔曲线的 path 时候注意，<code>path.moveTo()</code>方法会将 path 切断</p>
-</li>
+<li>使用 canvas 绘制坐标时，需要注意 android 的坐标原点位于屏幕左上角。所以在绘制曲线图时可以先将坐标原点向下平移一段距离，再绘制对应坐标（可以绘制实际的 y 坐标负值）</li>
+<li>在拼接贝塞尔曲线的 path 时候注意，<code>path.moveTo()</code>方法会将 path 切断</li>
 </ul>
 <h2> 参考资料</h2>
 <p><a href="https://wenku.baidu.com/view/c790f8d46bec0975f565e211.html" target="_blank" rel="noopener noreferrer">https://wenku.baidu.com/view/c790f8d46bec0975f565e211.html</a><br>
