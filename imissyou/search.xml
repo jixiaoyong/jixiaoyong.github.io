@@ -277,6 +277,9 @@
 <p>于是在这个时刻，准备着踏入新的纪元，赋予时间以象征，给予自己以依托，断别了昨日，来吧，新年。</p>
 <p>2016，再也不见。</p>
 ]]></content>
+      <tags>
+        <tag>岁岁今朝</tag>
+      </tags>
   </entry>
   <entry>
     <title>小镇来雪</title>
@@ -557,12 +560,12 @@
 <p>It’s not until we lose something that we understand its importance. If <em>it</em> didn’t happen, I would never know how deeply I love the fresh air and the view outside the house. Especially after I go through those horrible days when a person can be randomly forced into isolation for some * reason. How many misfortunes <em>come with goodness first</em> until they lose control and get mad? It’s unhelpful to discuss the wish good or bad, once the actions have been done, the only rule to judge is the effect they made. Anyway, I have explored as many places as I can during the year 2023, mother nature seems to have the power to cure one’s soul.</p>
 <p>To figure out the difference between these days and the previous days, I did some statistical analysis of my sporting data from Xiaomi Fitness and Amap(Unfortunately, all these applications only count the walking and biking information, other types such as car&#x2F;train&#x2F;bus… doesn’t included). What surprised me was the total size of the origin data is nearly 100Mb (What a crazy company!). This dataset is enormous. Neither <em>WPS</em>, <em>Apple Numbers</em>, nor even <em>Microsoft Excel</em> can handle such a large volume of data: it either crashes upon opening the file, or becomes too sluggish to respond to any operation. Eventually, after some programming, I managed to create a structured version of all this data and have completed some analytical tasks.</p>
 <p><del>It’s interesting to note that, despite my perception of spending most weekends out and about, the data indicates that the changes weren’t as significant as I thought.</del> From June 2020 to October 2021, I lived quite a distance from my office, which resulted in an unusually high total distance. Disregarding this period, it can be observed that the distance is increasing year by year. A notable change this year is my shift from walking to cycling, as evidenced by the rapid increase in the percentage of the total distance covered by cycling.</p>
-<div id="echarts8250" style="width: 85%;height: 400px;margin: 0 auto"></div>
+<div id="echarts3510" style="width: 85%;height: 400px;margin: 0 auto"></div>
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
         var isDarkTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        var id = 'echarts8250'
+        var id = 'echarts3510'
         var myChart = echarts.init(document.getElementById(id),isDarkTheme ? "dark" : "light");
         // 指定图表的配置项和数据
         var option = {
@@ -673,12 +676,12 @@
 
 
 <p>For the chart titled <em>Cycling and Walking Information in 2023 (Monthly)</em>, it can be observed that after I began cycling in March, the distance covered by cycling increased while the distance covered by walking started to decrease. There was a specific increase during the National Day in October.</p>
-<div id="echarts7299" style="width: 85%;height: 400px;margin: 0 auto"></div>
+<div id="echarts5443" style="width: 85%;height: 400px;margin: 0 auto"></div>
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
         var isDarkTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        var id = 'echarts7299'
+        var id = 'echarts5443'
         var myChart = echarts.init(document.getElementById(id),isDarkTheme ? "dark" : "light");
         // 指定图表的配置项和数据
         var option = {
@@ -801,12 +804,12 @@
 
 
 <p>The sleep interval was gradually decreasing day by day. This chart reveals a disheartening reality. In 2021, there was a moment when, although I had relocated to a place closer to my office, my sleep duration still experienced a significant decrease. Aside from a variety of other factors, it appears that this shift roughly coincided with the time I transitioned to my current department.</p>
-<div id="echarts290" style="width: 85%;height: 400px;margin: 0 auto"></div>
+<div id="echarts6622" style="width: 85%;height: 400px;margin: 0 auto"></div>
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
         var isDarkTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        var id = 'echarts290'
+        var id = 'echarts6622'
         var myChart = echarts.init(document.getElementById(id),isDarkTheme ? "dark" : "light");
         // 指定图表的配置项和数据
         var option = {
@@ -888,12 +891,12 @@
 <p>On the other hand, even though it has lost nearly a quarter of the <em>existing things</em>, the total amount has already roughly reached 1M during this year, which was an unpractical milestone once before.</p>
 <p>I’ve been silent for a while, ever since my last social network account got ghost-banned. This shall be the first and last time that I have to face a situation like this – I will reduce the time wasted on those platforms. The public social networks run by the companies are not stable anymore for many reasons, and this makes me upset to post my thoughts on these platforms, it’s a good time for me to back to my blog and fully control everything I have without any limit. As for now, GitHub seems still a reliable platform to host my blog and will continue working for a long time. Anyone who wants to stay in touch with me can kindly keep “<a href="mailto:jixiaoyong1995+imissyou@gmail.com?subject=%5BMail%20From%20I%20Miss%20You%5D&charset=UTF-8">jixiaoyong1995@gmail.com</a>” and “<a href="https://jixiaoyong.github.io/">https://jixiaoyong.github.io</a>” in your notebook.</p>
 <h2 id="One-more-thing…"><a href="#One-more-thing…" class="headerlink" title="One more thing…"></a>One more thing…</h2><p>The book of this year for me is <strong><em>A Song of Ice and Fire</em></strong>. It’s been a lengthy journey, consuming over a hundred hours to finish all five volumes. Nearly half of my year’s leisure time was invested in immersing myself in the characters’ lives and exploring this magical and joyful world. At times, I can snap the familiar perspectives from <strong><em>The Three-Body</em></strong>, which is a wonderful experience like two guys you admire are already aware of and appreciate each other.</p>
-<div id="echarts7997" style="width: 85%;height: 400px;margin: 0 auto"></div>
+<div id="echarts8605" style="width: 85%;height: 400px;margin: 0 auto"></div>
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
         var isDarkTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        var id = 'echarts7997'
+        var id = 'echarts8605'
         var myChart = echarts.init(document.getElementById(id),isDarkTheme ? "dark" : "light");
         // 指定图表的配置项和数据
         var option = {
@@ -1271,6 +1274,9 @@ Also Frequently Used
 <p align='center' ><span style="color:#337FE5;"><strong>你 好，二 〇 一 九 </strong></span></p>
 <br/><br/><br/>
 > 声明：本文禁止二次演绎。]]></content>
+      <tags>
+        <tag>岁岁今朝</tag>
+      </tags>
   </entry>
   <entry>
     <title>冬</title>
@@ -1411,7 +1417,7 @@ Also Frequently Used
 <p>仔细瞧时，冬日的阳光撒了一地，和那些斜躺在地上的油画变幻出各种奇妙的效果。由于我在此前有限的人生中并没有面对面的接触过真正的油画，当下就被这种富有层次感的表现形式所吸引。平日里屏幕中看到的画是一种质感，眼前这种触手可及的有着厚度的画又是一种质感，随着阳光的角度不同，颜料的反光与投影又好像是大自然对这幅画的第二次创造。</p>
 <p>比如眼前这幅小黄人与蒙拉丽莎的合体画，稳重中不失俏皮，嬉笑中不显轻浮，算的上是一次不错的尝试。再比如这幅比 V 字手拍照的奥巴马，还有这幅打红伞的小姑娘……</p>
 <p>可是等等！还容不得我再在这与艺术初次美妙的相会中多沉浸片刻，在十几步之外的另外一家也摆出了一串小黄人版的蒙拉丽莎、同样笑得龇牙咧嘴的奥巴马……原来这里人类不只是复读机，更是一台台勤恳的复印机。</p>
-<p>当我又一次从一幅”奥巴马“前路过时，一位师傅正在熟练的在一台二八杠自行车货架上别一个牛皮纸牌子，上面用黑墨水写着雄劲有力的八个大字——”一幅三十，四幅一百“。</p>
+<p>当我又一次从一幅“奥巴马”前路过时，一位师傅正在熟练的在一台二八杠自行车货架上别一个牛皮纸牌子，上面用黑墨水写着雄劲有力的八个大字——“一幅三十，四幅一百”。</p>
 <p>我再仔细看这块边缘已经有水渍的棕色纸板，上半部分的被铁丝穿在自行车黑色货架上，中间位置蜿蜒着一条清晰的折痕，有如雨天时蜗牛爬过树叶，在弯弯曲曲之中蔓延出一条深浅不一的凹痕。</p>
 <p>再抬起头望去，这仅有的几个工作室好像也拥挤的让人难受。</p>
 ]]></content>
@@ -1437,5 +1443,8 @@ Also Frequently Used
 <p>随着人类的进步，田螺已经无法满足流通的需求，于是日后逐渐出现了铜板，金银，直到现在的纸币，甚至于像更超前的比特币。</p>
 <p>于是，人便发现了时间的载体。</p>
 ]]></content>
+      <tags>
+        <tag>一派胡言</tag>
+      </tags>
   </entry>
 </search>
