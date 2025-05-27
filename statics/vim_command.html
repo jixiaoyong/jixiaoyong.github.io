@@ -1,675 +1,790 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vim 常用命令速查</title>
     <style>
-        :root {
-            --bg: #181f2a;
-            --card-bg: #232c3a;
-            --border: #2c3a4d;
-            --primary: #3de1c9;
-            --primary-dark: #1ec6b6;
-            --text: #e6eaf3;
-            --text-light: #a6b1c2;
-            --badge-bg: #2e8fff;
-            --badge-danger: #e74c3c;
-            --badge-text: #fff;
-            --header: #3de1c9;
-            --table-header: #2c3a4d;
-            --shadow: 0 4px 24px #0003;
-        }
+      :root {
+        --bg: #181f2a;
+        --card-bg: #232c3a;
+        --border: #2c3a4d;
+        --primary: #3de1c9;
+        --primary-dark: #1ec6b6;
+        --text: #e6eaf3;
+        --text-light: #a6b1c2;
+        --badge-bg: #2e8fff;
+        --badge-danger: #e74c3c;
+        --badge-text: #fff;
+        --header: #3de1c9;
+        --table-header: #2c3a4d;
+        --shadow: 0 4px 24px #0003;
+      }
 
-        html[data-theme='light'] {
-            --bg: #f7f8fa;
-            --card-bg: #fff;
-            --border: #e3e6eb;
-            --primary: #007aff;
-            --primary-dark: #0051a8;
-            --text: #23272f;
-            --text-light: #6b7685;
-            --badge-bg: #d6eaff;
-            --badge-danger: #e74c3c;
-            --badge-text: #007aff;
-            --header: #007aff;
-            --table-header: #f0f2f5;
-            --shadow: 0 4px 24px #0001;
-        }
+      html[data-theme="light"] {
+        --bg: #f7f8fa;
+        --card-bg: #fff;
+        --border: #e3e6eb;
+        --primary: #007aff;
+        --primary-dark: #0051a8;
+        --text: #23272f;
+        --text-light: #6b7685;
+        --badge-bg: #d6eaff;
+        --badge-danger: #e74c3c;
+        --badge-text: #007aff;
+        --header: #007aff;
+        --table-header: #f0f2f5;
+        --shadow: 0 4px 24px #0001;
+      }
 
-        html,
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: "Inter", "Fira Sans", "PingFang SC", "Microsoft YaHei",
-                sans-serif;
-            margin: 0;
-            padding: 0;
-            transition: background 0.3s, color 0.3s;
-        }
+      html,
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Inter", "Fira Sans", "PingFang SC", "Microsoft YaHei",
+          sans-serif;
+        margin: 0;
+        padding: 0;
+        transition: background 0.3s, color 0.3s;
+      }
 
-        .container {
-            max-width: 1100px;
-            margin: 40px auto 40px auto;
-            padding: 0 16px;
-        }
+      .container {
+        max-width: 1100px;
+        margin: 40px auto 40px auto;
+        padding: 0 16px;
+      }
 
-        h1 {
-            font-size: 2.2em;
-            font-weight: 700;
-            margin-bottom: 0.5em;
-            color: var(--header);
-            letter-spacing: 2px;
-        }
+      h1 {
+        font-size: 2.2em;
+        font-weight: 700;
+        margin-bottom: 0.5em;
+        color: var(--header);
+        letter-spacing: 2px;
+      }
 
-        .section-title {
-            font-size: 1.4em;
-            color: var(--header);
-            margin: 40px 0 18px 0;
-            font-weight: 600;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-        }
+      .section-title {
+        font-size: 1.4em;
+        color: var(--header);
+        margin: 40px 0 18px 0;
+        font-weight: 600;
+        letter-spacing: 1px;
+        display: flex;
+        align-items: center;
+      }
 
-        .section-title::before {
-            content: "#";
-            margin-right: 8px;
-            color: var(--primary);
-            font-size: 1.2em;
-        }
+      .section-title::before {
+        content: "#";
+        margin-right: 8px;
+        color: var(--primary);
+        font-size: 1.2em;
+      }
 
-        .top-row {
-            display: flex;
-            gap: 24px;
-            margin-bottom: 24px;
-        }
+      .top-row {
+        display: flex;
+        gap: 24px;
+        margin-bottom: 24px;
+      }
 
-        .normal-left,
-        .normal-right {
-            flex: 1 1 0;
-        }
+      .normal-left,
+      .normal-right {
+        flex: 1 1 0;
+      }
 
-        .bottom-row {
-            display: flex;
-            gap: 24px;
-        }
+      .bottom-row {
+        display: flex;
+        gap: 24px;
+      }
 
-        .command-mode {
-            flex: 1 1 0;
-        }
+      .command-mode {
+        flex: 1 1 0;
+      }
 
+      .right-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        flex: 1 1 0;
+      }
+
+      .card {
+        background: var(--card-bg);
+        border-radius: 16px;
+        box-shadow: var(--shadow);
+        padding: 28px 24px;
+        margin-bottom: 0;
+        border: 1px solid var(--border);
+        box-sizing: border-box;
+        transition: box-shadow 0.2s, border 0.2s, background 0.3s;
+      }
+
+      .card:hover {
+        box-shadow: 0 8px 32px #0004;
+        border-color: var(--primary);
+      }
+
+      .card-title {
+        font-weight: 700;
+        color: var(--primary);
+        margin-bottom: 16px;
+        font-size: 1.15em;
+        letter-spacing: 1px;
+      }
+
+      .table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+      }
+
+      .table th,
+      .table td {
+        padding: 10px 14px;
+        text-align: left;
+      }
+
+      .table th {
+        background: var(--table-header);
+        color: var(--primary);
+        font-weight: 600;
+        font-size: 1em;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .table tr {
+        border-bottom: 1px solid var(--border);
+      }
+
+      .table td {
+        color: var(--text-light);
+        font-size: 1em;
+      }
+
+      .badge {
+        display: inline-block;
+        background: var(--badge-bg);
+        color: var(--badge-text);
+        font-family: "Fira Mono", monospace;
+        font-size: 1em;
+        padding: 2px 16px;
+        border-radius: 16px;
+        margin-right: 8px;
+        min-width: 60px;
+        text-align: center;
+        box-shadow: 0 2px 8px #0001;
+        transition: background 0.2s, color 0.2s;
+        cursor: pointer;
+      }
+
+      .badge.danger {
+        background: var(--badge-danger);
+      }
+
+      .badge + .badge {
+        margin-left: 8px;
+      }
+
+      .badge.mastered {
+        background: #cfd8dc !important;
+        color: #fcfdfd !important;
+        border: 1px dashed #b0b8be;
+        opacity: 0.7;
+        cursor: pointer;
+      }
+
+      /* 主题切换按钮 */
+      .theme-toggle {
+        position: fixed;
+        top: 24px;
+        right: 32px;
+        z-index: 100;
+        background: var(--card-bg);
+        color: var(--primary);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 8px 22px;
+        font-size: 1em;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: var(--shadow);
+        transition: background 0.2s, color 0.2s, border 0.2s;
+      }
+
+      .theme-toggle:hover {
+        background: var(--primary);
+        color: #fff;
+        border-color: var(--primary);
+      }
+
+      @media (max-width: 900px) {
+        .top-row,
+        .bottom-row,
         .right-stack {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-            flex: 1 1 0;
+          flex-direction: column;
+          gap: 16px;
         }
 
-        .card {
-            background: var(--card-bg);
-            border-radius: 16px;
-            box-shadow: var(--shadow);
-            padding: 28px 24px;
-            margin-bottom: 0;
-            border: 1px solid var(--border);
-            box-sizing: border-box;
-            transition: box-shadow 0.2s, border 0.2s, background 0.3s;
-        }
-
-        .card:hover {
-            box-shadow: 0 8px 32px #0004;
-            border-color: var(--primary);
-        }
-
-        .card-title {
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 16px;
-            font-size: 1.15em;
-            letter-spacing: 1px;
-        }
-
-        .table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-        }
-
-        .table th,
-        .table td {
-            padding: 10px 14px;
-            text-align: left;
-        }
-
-        .table th {
-            background: var(--table-header);
-            color: var(--primary);
-            font-weight: 600;
-            font-size: 1em;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .table tr {
-            border-bottom: 1px solid var(--border);
-        }
-
-        .table td {
-            color: var(--text-light);
-            font-size: 1em;
-        }
-
-        .badge {
-            display: inline-block;
-            background: var(--badge-bg);
-            color: var(--badge-text);
-            font-family: "Fira Mono", monospace;
-            font-size: 1em;
-            padding: 2px 16px;
-            border-radius: 16px;
-            margin-right: 8px;
-            min-width: 60px;
-            text-align: center;
-            box-shadow: 0 2px 8px #0001;
-            transition: background 0.2s, color 0.2s;
-            cursor: pointer;
-        }
-
-        .badge.danger {
-            background: var(--badge-danger);
-        }
-
-        .badge + .badge {
-            margin-left: 8px;
-        }
-
-        .badge.mastered {
-            background: #cfd8dc !important;
-            color: #fcfdfd !important;
-            border: 1px dashed #b0b8be;
-            opacity: 0.7;
-            cursor: pointer;
-        }
-
-        /* 主题切换按钮 */
         .theme-toggle {
-            position: fixed;
-            top: 24px;
-            right: 32px;
-            z-index: 100;
-            background: var(--card-bg);
-            color: var(--primary);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 8px 22px;
-            font-size: 1em;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: var(--shadow);
-            transition: background 0.2s, color 0.2s, border 0.2s;
+          top: 12px;
+          right: 12px;
+          padding: 7px 16px;
+          font-size: 0.98em;
         }
+      }
 
-        .theme-toggle:hover {
-            background: var(--primary);
-            color: #fff;
-            border-color: var(--primary);
-        }
-
-        @media (max-width: 900px) {
-            .top-row,
-            .bottom-row,
-            .right-stack {
-                flex-direction: column;
-                gap: 16px;
-            }
-
-            .theme-toggle {
-                top: 12px;
-                right: 12px;
-                padding: 7px 16px;
-                font-size: 0.98em;
-            }
-        }
-
-        .page-commands-row {
-            display: flex;
-            gap: 24px;
-            margin-top: 24px;
-        }
-        .page-commands-spacer {
-            flex: 1 1 0;
-        }
+      .page-commands-row {
+        display: flex;
+        gap: 24px;
+        margin-top: 24px;
+      }
+      .page-commands-spacer {
+        flex: 1 1 0;
+      }
+      .page-commands-card {
+        background: var(--card-bg);
+        border-radius: 16px;
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border);
+        padding: 28px 24px;
+        box-sizing: border-box;
+        width: 100%;
+        margin-top: 24px;
+      }
+      @media (max-width: 900px) {
         .page-commands-card {
-            background: var(--card-bg);
-            border-radius: 16px;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
-            padding: 28px 24px;
-            box-sizing: border-box;
-            width: 100%;
-            margin-top: 24px;
+          margin-top: 16px;
+          width: 100%;
         }
-        @media (max-width: 900px) {
-            .page-commands-card {
-                margin-top: 16px;
-                width: 100%;
-            }
-        }
+      }
 
-        html[data-theme='light'] .badge {
-            background: transparent !important;
-            color: #007aff !important;
-            border: 1.5px solid #007aff;
-            box-shadow: none;
-        }
-        html[data-theme='light'] .badge:hover {
-            background: #eaf4ff !important;
-        }
+      html[data-theme="light"] .badge {
+        background: transparent !important;
+        color: #007aff !important;
+        border: 1.5px solid #007aff;
+        box-shadow: none;
+      }
+      html[data-theme="light"] .badge:hover {
+        background: #eaf4ff !important;
+      }
 
-        html[data-theme='light'] .badge.mastered {
-            background: #f2f3f5 !important;
-            color: #b0b8be !important;
-            border: 1.5px solid #d1d5db !important;
-            box-shadow: none;
+      html[data-theme="light"] .badge.mastered {
+        background: #f2f3f5 !important;
+        color: #b0b8be !important;
+        border: 1.5px solid #d1d5db !important;
+        box-shadow: none;
+      }
+
+      .scroll-move-table-row {
+        display: flex;
+        gap: 32px;
+      }
+      .scroll-move-table-row .table {
+        flex: 1 1 0;
+        width: 0;
+      }
+      @media (max-width: 900px) {
+        .scroll-move-table-row {
+          flex-direction: column;
+          gap: 0;
         }
+        .scroll-move-table-row .table {
+          width: 100%;
+        }
+      }
+      .scroll-move-table-row .table th:first-child,
+      .scroll-move-table-row .table td:first-child {
+        min-width: 110px;
+        width: 1%;
+        white-space: nowrap;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <button class="theme-toggle" id="themeToggle">🌙 暗色</button>
     <div class="container">
-        <h1>Vim 常用命令速查</h1>
-        <p style="margin-top: -12px; margin-bottom: 32px;">
-            <a href="https://vimcdoc.sourceforge.net/doc/" target="_blank" rel="noopener" style="color: var(--primary); font-weight: 500; text-decoration: underline dotted; font-size: 1.08em;">Vim 中文手册（所有命令与参考）</a>
-        </p>
-        <div class="section-title">常用模式命令分区</div>
-        <div class="top-row">
-            <div class="card normal-left">
-                <div class="card-title">普通模式（Normal Mode）</div>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>命令</th>
-                            <th>说明</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><span class="badge">h</span></td>
-                            <td>光标左移</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge">j</span></td>
-                            <td>光标下移</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge">k</span></td>
-                            <td>光标上移</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge">l</span></td>
-                            <td>光标右移</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge">w</span></td>
-                            <td>跳到下一个单词开头（小写包含标点）</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge">e</span></td>
-                            <td>跳到当前单词结尾（小写包含标点）</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge">b</span></td>
-                            <td>以单词为单位往前跳（小写包含标点）</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge">W</span></td>
-                            <td>跳到下一个单词开头（大写不含标点）</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge">E</span></td>
-                            <td>跳到当前单词结尾（大写不含标点）</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge">B</span></td>
-                            <td>以单词为单位往前跳（大写不含标点）</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge">^</span></td>
-                            <td>跳到当前行首</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge">$</span></td>
-                            <td>跳到当前行尾</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge">gg</span></td>
-                            <td>跳到文档第一行</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge">[N]G</span></td>
-                            <td>跳到第 N 行，省略 N 跳到最后一行</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge">dd</span></td>
-                            <td>删除当前行</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="card normal-right">
-                <div class="card-title">普通模式（Normal Mode）</div>
-                <table class="table">
-                    <thead style="display: none">
-                        <tr>
-                            <th>命令</th>
-                            <th>说明</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><span class="badge">dw</span></td>
-                            <td>删除一个单词</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge">x</span></td>
-                            <td>删除光标后的字符</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge">X</span></td>
-                            <td>删除光标前的字符</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge">D</span></td>
-                            <td>删除至行尾</td>
-                        </tr>
-                        <tr>
-                            <td style="display: flex; align-items: center; gap: 8px;">
-                                <span class="badge">[N]yy</span>
-                                <span style="color:#a6b1c2;font-size:0.95em;">或</span>
-                                <span class="badge">Y</span>
-                            </td>
-                            <td>复制当前行或 N 行</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge">yw</span></td>
-                            <td>复制一个单词</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge">p</span></td>
-                            <td>在光标后粘贴</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge">P</span></td>
-                            <td>在光标前粘贴</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge">u</span></td>
-                            <td>撤销上一步操作</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge">Ctrl + r</span></td>
-                            <td>恢复撤销</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge">.</span></td>
-                            <td>重复上一次命令</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge">/pattern</span></td>
-                            <td>向下搜索 pattern</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge">?pattern</span></td>
-                            <td>向上搜索 pattern</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge">n</span></td>
-                            <td>下一个匹配项</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge">N</span></td>
-                            <td>上一个匹配项</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge">o</span></td>
-                            <td>在当前行下方新开一行并进入插入模式</td>
-                        </tr>
-                        
-                    </tbody>
-                </table>
-            </div>
+      <h1>Vim 常用命令速查</h1>
+      <p style="margin-top: -12px; margin-bottom: 32px">
+        <a
+          href="https://vimcdoc.sourceforge.net/doc/"
+          target="_blank"
+          rel="noopener"
+          style="
+            color: var(--primary);
+            font-weight: 500;
+            text-decoration: underline dotted;
+            font-size: 1.08em;
+          "
+          >Vim 中文手册（所有命令与参考）</a
+        >
+      </p>
+      <div class="section-title">常用模式命令分区</div>
+      <div class="top-row">
+        <div class="card normal-left">
+          <div class="card-title">普通模式（Normal Mode）</div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>命令</th>
+                <th>说明</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="badge">h</span></td>
+                <td>光标左移</td>
+              </tr>
+              <tr>
+                <td><span class="badge">j</span></td>
+                <td>光标下移</td>
+              </tr>
+              <tr>
+                <td><span class="badge">k</span></td>
+                <td>光标上移</td>
+              </tr>
+              <tr>
+                <td><span class="badge">l</span></td>
+                <td>光标右移</td>
+              </tr>
+              <tr>
+                <td><span class="badge">w</span></td>
+                <td>跳到下一个单词开头（小写包含标点）</td>
+              </tr>
+              <tr>
+                <td><span class="badge">e</span></td>
+                <td>跳到当前单词结尾（小写包含标点）</td>
+              </tr>
+              <tr>
+                <td><span class="badge">b</span></td>
+                <td>以单词为单位往前跳（小写包含标点）</td>
+              </tr>
+              <tr>
+                <td><span class="badge">W</span></td>
+                <td>跳到下一个单词开头（大写不含标点）</td>
+              </tr>
+              <tr>
+                <td><span class="badge">E</span></td>
+                <td>跳到当前单词结尾（大写不含标点）</td>
+              </tr>
+              <tr>
+                <td><span class="badge">B</span></td>
+                <td>以单词为单位往前跳（大写不含标点）</td>
+              </tr>
+              <tr>
+                <td><span class="badge">^</span></td>
+                <td>跳到当前行首</td>
+              </tr>
+              <tr>
+                <td><span class="badge">$</span></td>
+                <td>跳到当前行尾</td>
+              </tr>
+              <tr>
+                <td><span class="badge">gg</span></td>
+                <td>跳到文档第一行</td>
+              </tr>
+              <tr>
+                <td><span class="badge">[N]G</span></td>
+                <td>跳到第 N 行，省略 N 跳到最后一行</td>
+              </tr>
+              <tr>
+                <td><span class="badge">dd</span></td>
+                <td>删除当前行</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <div class="bottom-row">
-            <div class="card command-mode">
-                <div class="card-title">底线命令模式（Command Mode）</div>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>命令</th>
-                            <th>说明</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><span class="badge">:w</span></td>
-                            <td>保存文件</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="badge">:wq</span> 或
-                                <span class="badge">:x</span>
-                            </td>
-                            <td>保存并关闭文件</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge">:q</span></td>
-                            <td>关闭文件（未保存会提示）</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge danger">:q!</span></td>
-                            <td>强制关闭文件，不保存修改</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge">:set nu</span></td>
-                            <td>显示行号</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge">:set nonu</span></td>
-                            <td>取消显示行号</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge">:set paste</span></td>
-                            <td>粘贴模式（避免自动缩进）</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge">:%s/old/new/g</span></td>
-                            <td>全文件替换 old 为 new</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge">:split</span></td>
-                            <td>水平分割窗口</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge">:vsplit</span></td>
-                            <td>垂直分割窗口</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge">:close</span></td>
-                            <td>关闭当前窗口</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge">Ctrl + w h/j/k/l/w</span></td>
-                            <td>窗口间切换</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="right-stack">
-                <div class="card insert-mode">
-                    <div class="card-title">输入模式（Insert Mode）</div>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>命令</th>
-                                <th>说明</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><span class="badge">i</span></td>
-                                <td>在光标前插入</td>
-                            </tr>
-                            <tr>
-                                <td><span class="badge">I</span></td>
-                                <td>在行首插入</td>
-                            </tr>
-                            <tr>
-                                <td><span class="badge">a</span></td>
-                                <td>在光标后插入</td>
-                            </tr>
-                            <tr>
-                                <td><span class="badge">A</span></td>
-                                <td>在行尾插入</td>
-                            </tr>
-                            <tr>
-                                <td><span class="badge">o</span></td>
-                                <td>在当前行下方新开一行</td>
-                            </tr>
-                            <tr>
-                                <td><span class="badge">O</span></td>
-                                <td>在当前行上方新开一行</td>
-                            </tr>
-                            <tr>
-                                <td><span class="badge">Esc</span></td>
-                                <td>退出插入模式</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="card visual-mode">
-                    <div class="card-title">视觉模式（Visual Mode）</div>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>命令</th>
-                                <th>说明</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><span class="badge">v</span></td>
-                                <td>字符选择模式</td>
-                            </tr>
-                            <tr>
-                                <td><span class="badge">V</span></td>
-                                <td>行选择模式</td>
-                            </tr>
-                            <tr>
-                                <td><span class="badge">Ctrl + v</span></td>
-                                <td>块选择模式</td>
-                            </tr>
-                            <tr>
-                                <td><span class="badge">d</span></td>
-                                <td>删除选中内容</td>
-                            </tr>
-                            <tr>
-                                <td><span class="badge">y</span></td>
-                                <td>复制选中内容</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+        <div class="card normal-right">
+          <div class="card-title">普通模式（Normal Mode）</div>
+          <table class="table">
+            <thead style="display: none">
+              <tr>
+                <th>命令</th>
+                <th>说明</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="badge">dw</span></td>
+                <td>删除一个单词</td>
+              </tr>
+              <tr>
+                <td><span class="badge">x</span></td>
+                <td>删除光标后的字符</td>
+              </tr>
+              <tr>
+                <td><span class="badge">X</span></td>
+                <td>删除光标前的字符</td>
+              </tr>
+              <tr>
+                <td><span class="badge">D</span></td>
+                <td>删除至行尾</td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="badge">[N]yy</span>
+                  <span style="color: #a6b1c2; font-size: 0.95em">或</span>
+                  <span class="badge">Y</span>
+                </td>
+                <td>复制当前行或 N 行</td>
+              </tr>
+              <tr>
+                <td><span class="badge">yw</span></td>
+                <td>复制一个单词</td>
+              </tr>
+              <tr>
+                <td><span class="badge">p</span></td>
+                <td>在光标后粘贴</td>
+              </tr>
+              <tr>
+                <td><span class="badge">P</span></td>
+                <td>在光标前粘贴</td>
+              </tr>
+              <tr>
+                <td><span class="badge">u</span></td>
+                <td>撤销上一步操作</td>
+              </tr>
+              <tr>
+                <td><span class="badge">Ctrl + r</span></td>
+                <td>恢复撤销</td>
+              </tr>
+              <tr>
+                <td><span class="badge">.</span></td>
+                <td>重复上一次命令</td>
+              </tr>
+              <tr>
+                <td><span class="badge">/pattern</span></td>
+                <td>向下搜索 pattern</td>
+              </tr>
+              <tr>
+                <td><span class="badge">?pattern</span></td>
+                <td>向上搜索 pattern</td>
+              </tr>
+              <tr>
+                <td><span class="badge">n</span></td>
+                <td>下一个匹配项</td>
+              </tr>
+              <tr>
+                <td><span class="badge">N</span></td>
+                <td>上一个匹配项</td>
+              </tr>
+              <tr>
+                <td><span class="badge">o</span></td>
+                <td>在当前行下方新开一行并进入插入模式</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <div class="page-commands-card">
-            <div style="font-weight:600;color:var(--primary);margin-bottom:8px;">翻页命令</div>
-            <table class="table" style="margin-bottom:0;">
-                <thead>
-                    <tr><th>命令</th><th>作用</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td><span class="badge">Ctrl + d</span></td><td>将光标向下翻半屏，通常每次翻屏12行</td></tr>
-                    <tr><td><span class="badge">Ctrl + u</span></td><td>将光标向上翻半屏，通常每次翻屏12行</td></tr>
-                    <tr><td><span class="badge">Ctrl + f</span></td><td>将光标向下翻满屏，通常每次翻屏24行</td></tr>
-                    <tr><td><span class="badge">Ctrl + b</span></td><td>将光标向上翻满屏，通常每次翻屏24行</td></tr>
-                </tbody>
+      </div>
+      <div class="bottom-row">
+        <div class="card command-mode">
+          <div class="card-title">底线命令模式（Command Mode）</div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>命令</th>
+                <th>说明</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="badge">:w</span></td>
+                <td>保存文件</td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="badge">:wq</span> 或
+                  <span class="badge">:x</span>
+                </td>
+                <td>保存并关闭文件</td>
+              </tr>
+              <tr>
+                <td><span class="badge">:q</span></td>
+                <td>关闭文件（未保存会提示）</td>
+              </tr>
+              <tr>
+                <td><span class="badge danger">:q!</span></td>
+                <td>强制关闭文件，不保存修改</td>
+              </tr>
+              <tr>
+                <td><span class="badge">:set nu</span></td>
+                <td>显示行号</td>
+              </tr>
+              <tr>
+                <td><span class="badge">:set nonu</span></td>
+                <td>取消显示行号</td>
+              </tr>
+              <tr>
+                <td><span class="badge">:set paste</span></td>
+                <td>粘贴模式（避免自动缩进）</td>
+              </tr>
+              <tr>
+                <td><span class="badge">:%s/old/new/g</span></td>
+                <td>全文件替换 old 为 new</td>
+              </tr>
+              <tr>
+                <td><span class="badge">:split</span></td>
+                <td>水平分割窗口</td>
+              </tr>
+              <tr>
+                <td><span class="badge">:vsplit</span></td>
+                <td>垂直分割窗口</td>
+              </tr>
+              <tr>
+                <td><span class="badge">:close</span></td>
+                <td>关闭当前窗口</td>
+              </tr>
+              <tr>
+                <td><span class="badge">Ctrl + w h/j/k/l/w</span></td>
+                <td>窗口间切换</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="right-stack">
+          <div class="card insert-mode">
+            <div class="card-title">输入模式（Insert Mode）</div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>命令</th>
+                  <th>说明</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="badge">i</span></td>
+                  <td>在光标前插入</td>
+                </tr>
+                <tr>
+                  <td><span class="badge">I</span></td>
+                  <td>在行首插入</td>
+                </tr>
+                <tr>
+                  <td><span class="badge">a</span></td>
+                  <td>在光标后插入</td>
+                </tr>
+                <tr>
+                  <td><span class="badge">A</span></td>
+                  <td>在行尾插入</td>
+                </tr>
+                <tr>
+                  <td><span class="badge">o</span></td>
+                  <td>在当前行下方新开一行</td>
+                </tr>
+                <tr>
+                  <td><span class="badge">O</span></td>
+                  <td>在当前行上方新开一行</td>
+                </tr>
+                <tr>
+                  <td><span class="badge">Esc</span></td>
+                  <td>退出插入模式</td>
+                </tr>
+              </tbody>
             </table>
+          </div>
+          <div class="card visual-mode">
+            <div class="card-title">视觉模式（Visual Mode）</div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>命令</th>
+                  <th>说明</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="badge">v</span></td>
+                  <td>字符选择模式</td>
+                </tr>
+                <tr>
+                  <td><span class="badge">V</span></td>
+                  <td>行选择模式</td>
+                </tr>
+                <tr>
+                  <td><span class="badge">Ctrl + v</span></td>
+                  <td>块选择模式</td>
+                </tr>
+                <tr>
+                  <td><span class="badge">d</span></td>
+                  <td>删除选中内容</td>
+                </tr>
+                <tr>
+                  <td><span class="badge">y</span></td>
+                  <td>复制选中内容</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
+      </div>
+      <div class="page-commands-card">
+        <div
+          style="font-weight: 600; color: var(--primary); margin-bottom: 8px"
+        >
+          屏幕滚动与光标移动
+        </div>
+        <div class="scroll-move-table-row">
+          <table class="table scroll-table">
+            <thead>
+              <tr>
+                <th>快捷键</th>
+                <th>作用说明</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td colspan="2" style="color: var(--primary); font-weight: 500">
+                  屏幕滚动相关
+                </td>
+              </tr>
+              <tr>
+                <td><span class="badge">Ctrl + e</span></td>
+                <td>向下滚动一行（屏幕内容下移一行，光标不动）</td>
+              </tr>
+              <tr>
+                <td><span class="badge">Ctrl + y</span></td>
+                <td>向上滚动一行（屏幕内容上移一行，光标不动）</td>
+              </tr>
+              <tr>
+                <td><span class="badge">Ctrl + d</span></td>
+                <td>向下滚动半屏（down half page）</td>
+              </tr>
+              <tr>
+                <td><span class="badge">Ctrl + u</span></td>
+                <td>向上滚动半屏（up half page）</td>
+              </tr>
+              <tr>
+                <td><span class="badge">Ctrl + f</span></td>
+                <td>向下滚动一整屏（forward page）</td>
+              </tr>
+              <tr>
+                <td><span class="badge">Ctrl + b</span></td>
+                <td>向上滚动一整屏（backward page）</td>
+              </tr>
+            </tbody>
+          </table>
+          <table class="table move-table">
+            <thead>
+              <tr>
+                <th>快捷键</th>
+                <th>作用说明</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td colspan="2" style="color: var(--primary); font-weight: 500">
+                  光标移动相关（常用）
+                </td>
+              </tr>
+              <tr>
+                <td><span class="badge">gg</span></td>
+                <td>跳到文件第一行</td>
+              </tr>
+              <tr>
+                <td><span class="badge">G</span></td>
+                <td>跳到文件最后一行</td>
+              </tr>
+              <tr>
+                <td><span class="badge">H</span></td>
+                <td>跳到屏幕顶部第一行</td>
+              </tr>
+              <tr>
+                <td><span class="badge">M</span></td>
+                <td>跳到屏幕中间那一行</td>
+              </tr>
+              <tr>
+                <td><span class="badge">L</span></td>
+                <td>跳到屏幕底部那一行</td>
+              </tr>
+              <tr>
+                <td><span class="badge">zz</span></td>
+                <td>当前行滚动到屏幕中间</td>
+              </tr>
+              <tr>
+                <td><span class="badge">zt</span></td>
+                <td>当前行滚动到屏幕顶部</td>
+              </tr>
+              <tr>
+                <td><span class="badge">zb</span></td>
+                <td>当前行滚动到屏幕底部</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
     <script>
-        // 主题切换
-        const themeToggle = document.getElementById('themeToggle');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-        function setTheme(theme) {
-            document.documentElement.setAttribute('data-theme', theme);
-            if (theme === 'light') {
-                themeToggle.textContent = '☀️ 亮色';
-            } else {
-                themeToggle.textContent = '🌙 暗色';
-            }
+      // 主题切换
+      const themeToggle = document.getElementById("themeToggle");
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
+      function setTheme(theme) {
+        document.documentElement.setAttribute("data-theme", theme);
+        if (theme === "light") {
+          themeToggle.textContent = "☀️ 亮色";
+        } else {
+          themeToggle.textContent = "🌙 暗色";
         }
-        // 初始主题
-        function initTheme() {
-            const saved = localStorage.getItem('theme');
-            if (saved) {
-                setTheme(saved);
-            } else {
-                setTheme(prefersDark.matches ? 'dark' : 'light');
-            }
+      }
+      // 初始主题
+      function initTheme() {
+        const saved = localStorage.getItem("theme");
+        if (saved) {
+          setTheme(saved);
+        } else {
+          setTheme(prefersDark.matches ? "dark" : "light");
         }
-        themeToggle.onclick = function () {
-            const current = document.documentElement.getAttribute('data-theme');
-            const next = current === 'light' ? 'dark' : 'light';
-            setTheme(next);
-            localStorage.setItem('theme', next);
-        };
-        prefersDark.addEventListener('change', e => {
-            if (!localStorage.getItem('theme')) {
-                setTheme(e.matches ? 'dark' : 'light');
-            }
-        });
-        initTheme();
+      }
+      themeToggle.onclick = function () {
+        const current = document.documentElement.getAttribute("data-theme");
+        const next = current === "light" ? "dark" : "light";
+        setTheme(next);
+        localStorage.setItem("theme", next);
+      };
+      prefersDark.addEventListener("change", (e) => {
+        if (!localStorage.getItem("theme")) {
+          setTheme(e.matches ? "dark" : "light");
+        }
+      });
+      initTheme();
 
-        // 已掌握命令功能
-        function getMastered() {
-            try {
-                return JSON.parse(localStorage.getItem('vim_mastered') || '[]');
-            } catch { return []; }
+      // 已掌握命令功能
+      function getMastered() {
+        try {
+          return JSON.parse(localStorage.getItem("vim_mastered") || "[]");
+        } catch {
+          return [];
         }
-        function setMastered(arr) {
-            localStorage.setItem('vim_mastered', JSON.stringify(arr));
-        }
-        function updateMasteredUI() {
-            const mastered = getMastered();
-            document.querySelectorAll('.badge').forEach(badge => {
-                const key = badge.textContent.trim();
-                if (mastered.includes(key)) {
-                    badge.classList.add('mastered');
-                } else {
-                    badge.classList.remove('mastered');
-                }
-            });
-        }
-        function toggleMastered(e) {
-            const key = e.target.textContent.trim();
-            let mastered = getMastered();
-            if (mastered.includes(key)) {
-                mastered = mastered.filter(k => k !== key);
-            } else {
-                mastered.push(key);
-            }
-            setMastered(mastered);
-            updateMasteredUI();
-        }
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.badge').forEach(badge => {
-                badge.addEventListener('click', toggleMastered);
-            });
-            updateMasteredUI();
+      }
+      function setMastered(arr) {
+        localStorage.setItem("vim_mastered", JSON.stringify(arr));
+      }
+      function updateMasteredUI() {
+        const mastered = getMastered();
+        document.querySelectorAll(".badge").forEach((badge) => {
+          const key = badge.textContent.trim();
+          if (mastered.includes(key)) {
+            badge.classList.add("mastered");
+          } else {
+            badge.classList.remove("mastered");
+          }
         });
+      }
+      function toggleMastered(e) {
+        const key = e.target.textContent.trim();
+        let mastered = getMastered();
+        if (mastered.includes(key)) {
+          mastered = mastered.filter((k) => k !== key);
+        } else {
+          mastered.push(key);
+        }
+        setMastered(mastered);
+        updateMasteredUI();
+      }
+      document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".badge").forEach((badge) => {
+          badge.addEventListener("click", toggleMastered);
+        });
+        updateMasteredUI();
+      });
     </script>
-</body>
-
+  </body>
 </html>
