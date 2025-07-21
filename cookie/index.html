@@ -1,279 +1,368 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cookie | 个人收藏夹</title>
-    <meta name="description" content="个人常用网站导航，包含价格PK、Moments、Elephant Eat Photo、数独等实用工具">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;600&display=swap" rel="stylesheet">
+    <meta
+      name="description"
+      content="个人常用网站导航，包含价格PK、Moments、Elephant Eat Photo、数独等实用工具"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        :root {
-            --card-bg: transparent;
-            --card-hover-bg: transparent;
-            --card-shadow: none;
-            --border-radius: 18px;
-            --transition: 0.2s cubic-bezier(.4, 0, .2, 1);
-            --icon-size: 48px;
-        }
+      :root {
+        --card-bg: transparent;
+        --card-hover-bg: transparent;
+        --card-shadow: none;
+        --border-radius: 18px;
+        --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        --icon-size: 30px;
+      }
 
-        html,
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        font-family: "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+        /* Apple风格渐变背景 */
+        background: linear-gradient(
+          120deg,
+          #f0f4ff 0%,
+          #e6e9f0 40%,
+          #f9fafc 100%
+        );
+        min-height: 100vh;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        min-height: 100vh;
+        padding: 32px 16px;
+      }
+
+      .header-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        margin-bottom: 24px;
+        width: 100%;
+      }
+
+      h1 {
+        font-weight: 800;
+        font-size: 2.8rem;
+        margin: 0;
+        letter-spacing: 0.02em;
+        color: #181818;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        font-family: "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+        display: flex;
+        align-items: center;
+      }
+
+      .header-divider {
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(0, 0, 0, 0.1),
+          transparent
+        );
+        margin: 8px auto 24px;
+        width: 60%;
+        max-width: 400px;
+      }
+
+      .nav-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 32px;
+        width: 100%;
+        max-width: 1200px;
+        padding: 0 16px;
+      }
+
+      .nav-card {
+        border-radius: 18px !important;
+        background: #fff !important;
+        border: 1.5px solid #e0e0e5 !important;
+        box-shadow: 0 4px 16px 0 rgba(60, 60, 67, 0.08) !important;
+        padding: 28px 24px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+          transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+          border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        min-height: 120px;
+        max-width: 600px;
+      }
+
+      .nav-card:hover {
+        background: #f7f8fa !important;
+        box-shadow: 0 8px 32px 0 rgba(60, 60, 67, 0.13) !important;
+        border-color: #bfc0c5 !important;
+        transform: translateY(-2px) scale(1.025);
+      }
+
+      .nav-icon {
+        width: var(--icon-size);
+        height: var(--icon-size);
+        min-width: var(--icon-size);
+        min-height: var(--icon-size);
+        margin-right: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #f8fafc 0%);
+        border-radius: 5px;
+        position: static;
+        flex-shrink: 0;
+        padding: 2px;
+      }
+
+      .nav-card-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        gap: 8px;
+        width: 100%;
+        align-items: flex-start;
+      }
+
+      .nav-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100%;
+        gap: 8px;
+        margin-left: 0;
+      }
+
+      .nav-card-body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+        margin-left: 0;
+        padding-left: 0;
+      }
+
+      .nav-title {
+        font-size: 1.32rem;
+        font-weight: 700;
+        color: #181818;
+        letter-spacing: 0.01em;
+        text-decoration: none;
+        line-height: 1.18;
+        font-family: "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+        display: flex;
+        align-items: center;
+      }
+
+      .nav-desc {
+        font-size: 1.08rem;
+        color: #222;
+        margin-bottom: 12px;
+        line-height: 1.6;
+        text-decoration: none;
+        font-weight: 400;
+        font-family: "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+        margin-left: 0;
+        padding-left: 0;
+      }
+
+      .nav-url {
+        font-size: 1.12rem !important;
+        color: #2d2d2d !important;
+        opacity: 0.8 !important;
+        user-select: text;
+        word-break: break-all;
+        margin-top: 10px;
+        text-decoration: none !important;
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        font-weight: 500 !important;
+        letter-spacing: 0.01em;
+        margin-left: 0;
+        padding-left: 0;
+      }
+
+      .nav-card:hover .nav-url {
+        opacity: 1;
+      }
+
+      .nav-card-watermark {
+        position: absolute;
+        top: 50%;
+        right: -40px;
+        transform: translateY(-50%) rotate(-15deg);
+        width: 200px;
+        height: 200px;
+        opacity: 0.15;
+        z-index: 0;
+        pointer-events: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .nav-card-watermark svg {
+        width: 100% !important;
+        height: 100% !important;
+        vertical-align: middle !important;
+        fill: #ccc !important;
+        stroke: #555 !important;
+        stroke-width: 2 !important;
+        overflow: visible !important;
+        object-fit: contain !important;
+        opacity: 1 !important;
+      }
+
+      .nav-card-watermark svg * {
+        fill: #ccc !important;
+        stroke: #555 !important;
+        stroke-width: 2 !important;
+      }
+
+      .nav-card-content {
+        position: relative;
+        z-index: 1;
+      }
+
+      a,
+      a:visited,
+      a:hover,
+      a:active,
+      .nav-title,
+      .nav-desc,
+      .nav-url {
+        text-decoration: none !important;
+      }
+
+      @media (max-width: 600px) {
         body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            font-family: 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
-            /* Apple风格渐变背景 */
-            background: linear-gradient(120deg, #f0f4ff 0%, #e6e9f0 40%, #f9fafc 100%);
-            min-height: 100vh;
-        }
-
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            min-height: 100vh;
-            padding: 32px 8px;
-        }
-
-        .header-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 16px;
-            margin-bottom: 24px;
-            width: 100%;
+          padding: 24px 12px;
         }
 
         h1 {
-            font-weight: 800;
-            font-size: 2.8rem;
-            margin: 0;
-            letter-spacing: 0.02em;
-            color: #181818;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-            font-family: 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
-            display: flex;
-            align-items: center;
-        }
-
-        .header-divider {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.1), transparent);
-            margin: 8px auto 24px;
-            width: 60%;
-            max-width: 400px;
+          font-size: 1.5rem;
+          margin: 0;
         }
 
         .nav-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 32px;
-            width: 100%;
-            max-width: 1200px;
+          gap: 18px;
+          padding: 0 8px;
         }
 
         .nav-card {
-            border-radius: 18px !important;
-            background: #fff !important;
-            border: 1.5px solid #e0e0e5 !important;
-            box-shadow: 0 4px 16px 0 rgba(60, 60, 67, 0.08) !important;
-            padding: 28px 24px !important;
-            display: flex !important;
-            flex-direction: row !important;
-            align-items: center !important;
-            transition: box-shadow 0.2s cubic-bezier(.4, 0, .2, 1), transform 0.2s cubic-bezier(.4, 0, .2, 1), border-color 0.2s cubic-bezier(.4, 0, .2, 1);
-            cursor: pointer;
-            position: relative;
-            overflow: visible;
-            min-height: 120px;
-            max-width: 600px;
+          padding: 14px 12px;
+          min-height: 70px;
         }
 
-        .nav-card:hover {
-            background: #f7f8fa !important;
-            box-shadow: 0 8px 32px 0 rgba(60, 60, 67, 0.13) !important;
-            border-color: #bfc0c5 !important;
-            transform: translateY(-2px) scale(1.025);
-        }
-
-        .nav-icon {
-            width: var(--icon-size);
-            height: var(--icon-size);
-            min-width: var(--icon-size);
-            min-height: var(--icon-size);
-            margin-right: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            background: none;
-            box-shadow: none;
-            position: static;
-            flex-shrink: 0;
-        }
-
-        .nav-card-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            gap: 8px;
-            width: 100%;
-        }
-
-        .nav-card-header {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            width: 100%;
-            gap: 12px;
-        }
-
-        .nav-card-body {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+        .nav-card-watermark {
+          width: 140px;
+          height: 140px;
+          right: -25px;
         }
 
         .nav-title {
-            font-size: 1.32rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: #181818;
-            letter-spacing: 0.01em;
-            text-decoration: none;
-            line-height: 1.18;
-            font-family: 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+          font-size: 1.08rem;
         }
 
         .nav-desc {
-            font-size: 1.08rem;
-            color: #222;
-            margin-bottom: 12px;
-            line-height: 1.6;
-            text-decoration: none;
-            font-weight: 400;
-            font-family: 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+          font-size: 0.92rem;
         }
 
         .nav-url {
-            font-size: 1.12rem !important;
-            color: #2d2d2d !important;
-            opacity: .8 !important;
-            user-select: text;
-            word-break: break-all;
-            margin-top: 10px;
-            text-decoration: none !important;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            font-weight: 500 !important;
-            letter-spacing: 0.01em;
+          font-size: 0.8rem;
         }
 
-        .nav-card:hover .nav-url {
-            opacity: 1;
+        :root {
+          --icon-size: 36px;
         }
 
-        a,
-        a:visited,
-        a:hover,
-        a:active,
-        .nav-title,
-        .nav-desc,
-        .nav-url {
-            text-decoration: none !important;
+        .nav-icon {
+          margin-right: 0;
+          padding: 6px;
         }
-
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 1.5rem;
-                margin: 0;
-            }
-
-            .nav-grid {
-                gap: 18px;
-            }
-
-            .nav-card {
-                padding: 14px 8px;
-                min-height: 70px;
-            }
-
-            .nav-title {
-                font-size: 1.08rem;
-            }
-
-            .nav-desc {
-                font-size: 0.92rem;
-            }
-
-            .nav-url {
-                font-size: 0.8rem;
-            }
-
-            :root {
-                --icon-size: 36px;
-            }
-
-            .nav-icon {
-                margin-right: 10px;
-            }
-        }
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="header-container">
-        <h1>Cookie</h1>
+      <h1>Cookie</h1>
     </div>
     <div class="header-divider"></div>
     <div class="nav-grid" id="navGrid"></div>
     <script>
-        // 网站数据 JSON
-        const sites = [
-            {
-                title: "价格PK",
-                url: "https://jixiaoyong.github.io/price_pk/",
-                svg: `<svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="6" y="10" width="8" height="16" rx="2" fill="#6366F1"/><rect x="22" y="6" width="8" height="20" rx="2" fill="#38BDF8"/><path d="M10 18h16" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>`,
-                desc: "单位价格对比神器"
-            },
-            {
-                title: "Moments",
-                url: "https://xiaoyong.pages.dev/",
-                svg: `<svg width="36" height="36" viewBox="0 0 36 36" fill="none"><path d="M18 29s-9-6.5-9-13a6 6 0 0 1 12 0 6 6 0 0 1 12 0c0 6.5-9 13-9 13z" fill="#F472B6" stroke="#fff" stroke-width="2"/><circle cx="13" cy="15" r="1.5" fill="#fff"/><circle cx="23" cy="15" r="1.5" fill="#fff"/></svg>`,
-                desc: "小羊和小勇的朋友圈🩷"
-            },
-            {
-                title: "Elephant Eat Photo",
-                url: "https://github.com/jixiaoyong/elephant_eat_photo",
-                svg: `<svg width="36" height="36" viewBox="0 0 36 36" fill="none"><ellipse cx="18" cy="20" rx="10" ry="8" fill="#A3E635"/><ellipse cx="18" cy="14" rx="6" ry="4" fill="#FDE68A"/><rect x="12" y="10" width="12" height="8" rx="4" fill="#F59E42"/><circle cx="24" cy="16" r="2" fill="#fff"/><rect x="16" y="24" width="4" height="6" rx="2" fill="#A3E635"/></svg>`,
-                desc: "🚧 图片管理与AI识别工具"
-            },
-            {
-                title: "数独 Sudoku",
-                url: "https://jixiaoyong.github.io/sudoku/",
-                svg: `<svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="6" y="6" width="24" height="24" rx="4" fill="#FBBF24"/><path d="M18 6v24M6 18h24" stroke="#fff" stroke-width="2"/><circle cx="12" cy="12" r="2" fill="#fff"/><circle cx="24" cy="24" r="2" fill="#fff"/></svg>`,
-                desc: "在线数独游戏，支持多种玩法与难度。"
-            }
-        ];
-        function getDomain(url) {
-            try {
-                return new URL(url).hostname.replace(/^www\./, '');
-            } catch {
-                return url;
-            }
+      // 网站数据 JSON
+      const sites = [
+        {
+          title: "价格PK",
+          url: "https://jixiaoyong.github.io/price_pk/",
+          svg: `<svg width="36" height="36" viewBox="0 0 1024 1024" fill="none" version="1.1" xmlns="http://www.w3.org/2000/svg"><rect x="170" y="284" width="227" height="455" rx="57" fill="#6366F1" stroke="#6366F1" stroke-width="20"/><rect x="627" y="170" width="227" height="568" rx="57" fill="#38BDF8" stroke="#38BDF8" stroke-width="20"/><path d="M284 512h455" stroke="#fff" stroke-width="57" stroke-linecap="round"/></svg>`,
+          desc: "单位价格对比神器",
+        },
+        {
+          title: "Moments",
+          url: "https://xiaoyong.pages.dev/",
+          svg: `
+<svg  width="32" height="32"class="svg-icon" style="width: 1.8em; height: 1.8em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M652.189 114.635s-55.86-22.614-140.234-22.614c-84.37 0-140.23 25.903-140.23 25.903l280.549 285.449-0.085-288.738z" fill="#FB5453" /><path d="M811.202 217.796c-61.928-58.727-121.8-79.649-121.8-79.649l-2.06 392.072 210.411-199.332c0 0.085-24.535-54.364-86.55-113.09z" fill="#6468F1" /><path d="M906.498 368.778L617.205 645.535h292.667s22.95-55.119 22.95-138.419c-0.087-83.215-26.324-138.338-26.324-138.338z" fill="#5283F0" /><path d="M696.62 887.697s56.813-22.842 118.033-80.602c61.223-57.757 83.1-113.488 83.1-113.488l-409.132-1.946L696.62 887.697z" fill="#00B2FE" /><path d="M371.806 911.213s55.864 22.61 140.234 22.61c84.455 0 140.234-25.902 140.234-25.902l-280.548-285.45 0.08 288.742z" fill="#66D020" /><path d="M224.484 808.047c61.934 58.732 121.806 79.65 121.806 79.65l2.057-392.072-210.411 199.33c0.084-0.08 24.619 54.365 86.548 113.092z" fill="#9AD122" /><path d="M114.134 368.778s-22.956 55.107-22.956 138.378c0 83.276 26.244 138.379 26.244 138.379l289.372-276.672h-292.66v-0.085z" fill="#FFC71A" /><path d="M339.07 138.147s-56.814 22.843-118.034 80.6c-61.222 57.758-83.1 113.494-83.1 113.494l409.132 1.942L339.07 138.147z" fill="#FF7612" /></svg>`,
+          desc: "xiaoyang和xiaoyong的朋友圈",
+        },
+        {
+          title: "Elephant Eat Photo",
+          url: "https://github.com/jixiaoyong/elephant_eat_photo",
+          svg: `
+<svg class="svg-icon" style="width: 1.8em; height: 1.8em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M578.064871 56.839889C660.64471 59.457884 718.452597 0.273999 792.774452 0.273999S1024 283.799446 1024 314.081387c0 107.35579-112.89578 77.147849-165.161677 181.677645-33.031935 66.063871-99.095806 99.095806-115.613775 99.095806L528.516968 314.081387 578.064871 56.839889M445.935129 56.839889C363.35529 59.457884 305.547403 0.273999 231.225548 0.273999S0 283.801446 0 314.081387c0 107.35579 112.89578 77.147849 165.161677 181.677645 33.031935 66.063871 99.095806 99.095806 115.613775 99.095806l214.70958-280.773451L445.935129 56.839889" fill="#937E6D" /><path d="M297.289419 248.017516s-16.515968 198.193613 115.613775 264.257483V248.017516h-115.613775zM726.710581 248.017516s16.515968 198.193613-115.613775 264.257483V248.017516h115.613775z" fill="#877364" /><path d="M364.105289 721.532591c3.297994-27.217947 16.475968-78.073848 65.315872-143.193721l-49.547903-49.547903c-11.875977 26.123949-42.891916 139.661727-27.591946 193.913621 1.779997 6.319988 11.031978 5.34599 11.823977-1.171997zM645.414739 528.790967l-49.547903 49.547903c48.813905 65.083873 62.005879 115.919774 65.311873 143.149721 0.791998 6.527987 10.05998 7.503985 11.841977 1.173998 15.26997-54.267894-15.733969-167.755672-27.605947-193.871622z" fill="#FFEBD2" /><path d="M743.226548 231.501548c0-33.031935 16.515968-181.677645-231.225548-181.677645s-231.225548 148.64571-231.225548 181.677645 82.579839 33.031935 99.095806 74.321855v115.245775c0 18.415964-16.515968 107.72179-16.515968 107.721789l67.399869 67.399869c9.073982 126.345753 16.269968 337.251341 48.211906 395.049228 21.677958 39.225923 77.667848 52.883897 148.645709-16.515968 29.003943-28.357945 46.15191-60.571882 56.935889-81.72984 4.92999-9.673981 0.989998-21.435958-8.719983-26.291949-8.639983-4.317992-19.083963-1.749997-24.659952 6.137988-19.431962 27.489946-62.821877 85.303833-73.101857 68.853866-8.911983-14.259972 9.863981-274.573464 15.16397-345.487325l67.415869-67.415869s-16.515968-89.307826-16.515968-107.721789v-115.245775c16.513968-41.289919 99.095806-41.289919 99.095806-74.321855z" fill="#9F8976" /><path d="M355.097306 305.817403m-24.773951 0a24.773952 24.773952 0 1 0 49.547903 0 24.773952 24.773952 0 1 0-49.547903 0Z" fill="#464655" /><path d="M668.902694 305.817403m-24.773952 0a24.773952 24.773952 0 1 0 49.547903 0 24.773952 24.773952 0 1 0-49.547903 0Z" fill="#464655" /></svg>`,
+          desc: "🚧 图片管理与AI识别工具",
+        },
+        {
+          title: "数独 Sudoku",
+          url: "https://jixiaoyong.github.io/sudoku/",
+          svg: `<svg width="36" height="36" viewBox="0 0 1024 1024" fill="none" version="1.1" xmlns="http://www.w3.org/2000/svg"><rect x="170" y="170" width="684" height="684" rx="114" fill="#FBBF24" stroke="#FBBF24" stroke-width="30"/><path d="M512 170v684M170 512h684" stroke="#fff" stroke-width="57" stroke-linecap="round"/><circle cx="341" cy="341" r="57" fill="#fff" stroke="#fff" stroke-width="10"/><circle cx="683" cy="683" r="57" fill="#fff" stroke="#fff" stroke-width="10"/></svg>`,
+          desc: "在线数独游戏，支持多种玩法与难度。",
+        },
+      ];
+      function getDomain(url) {
+        try {
+          return new URL(url).hostname.replace(/^www\./, "");
+        } catch {
+          return url;
         }
-        const navGrid = document.getElementById('navGrid');
-        sites.forEach(site => {
-            const a = document.createElement('a');
-            a.className = 'nav-card';
-            a.href = site.url;
-            a.target = '_blank';
-            a.rel = 'noopener noreferrer';
-            a.innerHTML = `
+      }
+      const navGrid = document.getElementById("navGrid");
+      sites.forEach((site) => {
+        const a = document.createElement("a");
+        a.className = "nav-card";
+        a.href = site.url;
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+        // 为水印创建SVG，移除内联样式并设置正确的尺寸
+        let watermarkSvg = site.svg
+          .replace(/style="[^"]*"/g, "")
+          .replace(/class="[^"]*"/g, "")
+          .replace(/width="[^"]*"/g, 'width="200"')
+          .replace(/height="[^"]*"/g, 'height="200"');
+
+        a.innerHTML = `
+                <div class="nav-card-watermark">${watermarkSvg}</div>
                 <div class="nav-card-content">
                     <div class="nav-card-header">
                         <div class="nav-icon">${site.svg}</div>
@@ -285,9 +374,8 @@
                     </div>
                 </div>
             `;
-            navGrid.appendChild(a);
-        });
+        navGrid.appendChild(a);
+      });
     </script>
-</body>
-
+  </body>
 </html>
