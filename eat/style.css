@@ -1,0 +1,1125 @@
+/* CSS 变量定义 */
+:root {
+  /* 亮色主题变量 */
+  --bg-primary: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+  --bg-secondary: rgba(255, 255, 255, 0.9);
+  --text-primary: #8b4513;
+  --text-secondary: #a0522d;
+  --text-dark: #1a1a1a;
+  --text-muted: #555;
+  --card-bg: #fff;
+  --button-primary: linear-gradient(145deg, #e74c3c, #c0392b);
+  --button-secondary: linear-gradient(145deg, #3498db, #2980b9);
+  --button-success: linear-gradient(145deg, #27ae60, #229954);
+  --button-warning: linear-gradient(145deg, #f39c12, #e67e22);
+  --button-danger: linear-gradient(145deg, #e74c3c, #c0392b);
+  --button-muted: #95a5a6;
+  --shadow-light: rgba(0, 0, 0, 0.1);
+  --shadow-medium: rgba(0, 0, 0, 0.2);
+  --shadow-heavy: rgba(0, 0, 0, 0.3);
+  --border-color: #ddd;
+  --rope-color: linear-gradient(to bottom, #8b4513, #a0522d);
+  --rope-handle: #ffd700;
+  --rope-handle-border: #b8860b;
+  --result-card-bg: linear-gradient(145deg, #ffd700, #ffa500);
+  --radial-glow: radial-gradient(
+    circle,
+    rgba(255, 215, 0, 0.3) 0%,
+    transparent 70%
+  );
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Microsoft YaHei", Arial, sans-serif;
+  background: var(--bg-primary);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.3s ease;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 1200px; /* 增大 container 尺寸 */
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+}
+
+/* 盒子容器样式 */
+.box-container {
+  position: relative;
+  width: 100%;
+  max-width: 1000px; /* 增大盒子容器 */
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.box-body {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+  min-height: 600px;
+}
+
+/* 卡片显示区域（左侧） */
+.card-display-area {
+  position: relative;
+  flex: 1;
+  max-width: 500px;
+  aspect-ratio: 1706 / 1279;
+  border-radius: 20px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  /* 添加一个明显的标识，表明这是盒子主体区域 */
+  position: relative;
+}
+
+.card-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.card-content-wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 28%;
+  height: 28%;
+  margin-left: 21%;
+  margin-bottom: 20%;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.card-bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: brightness(0.8) contrast(1.2);
+}
+
+.card-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+  flex-direction: column;
+  z-index: 1;
+}
+
+.card {
+  position: absolute;
+  width: 80%;
+  max-width: 300px;
+  height: 200px;
+  background: var(--card-bg);
+  border-radius: 15px;
+  padding: 0;
+  box-shadow: 0 8px 16px var(--shadow-medium);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  transform-style: preserve-3d;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+}
+
+.card h3 {
+  color: var(--text-dark);
+  font-size: 0.6em; /* 默认字体大小，会被 JavaScript 动态调整 */
+  margin: 0;
+  padding: 10px 15px;
+  transition: color 0.3s ease, font-size 0.3s ease;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.card p {
+  color: var(--text-muted);
+  font-size: 0.425em;
+  margin: 0;
+  padding: 10px 15px;
+  transition: color 0.3s ease;
+  width: 100%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  line-height: 1.2;
+  box-sizing: border-box;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* 翻书动画效果 */
+.card.flipping {
+  animation: flipBook 0.6s ease-in-out;
+}
+
+@keyframes flipBook {
+  0% {
+    transform: rotateY(0deg) translateY(0);
+  }
+  25% {
+    transform: rotateY(90deg) translateY(-20px);
+  }
+  50% {
+    transform: rotateY(180deg) translateY(-40px);
+  }
+  75% {
+    transform: rotateY(270deg) translateY(-20px);
+  }
+  100% {
+    transform: rotateY(360deg) translateY(0);
+  }
+}
+
+/* 新的翻书动画样式 */
+.book-page {
+  position: absolute;
+  width: 80%;
+  max-width: 300px;
+  height: 200px;
+  background: var(--card-bg);
+  border-radius: 15px;
+  padding: 0;
+  box-shadow: 0 8px 16px var(--shadow-medium);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  transform-style: preserve-3d;
+  transition: all 0.3s ease;
+  backface-visibility: hidden;
+  transform-origin: center center;
+  perspective: 1000px;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+}
+
+/* 添加页面弯曲效果 */
+.book-page::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.05) 50%,
+    transparent 100%
+  );
+  border-radius: 15px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.book-page.flipping-up::before,
+.book-page.flipping-in::before {
+  opacity: 1;
+}
+
+.book-page.active {
+  z-index: 2;
+  transform: translateY(0) rotateX(0deg);
+}
+
+.book-page.next {
+  z-index: 1;
+  transform: translateY(0) rotateX(90deg);
+}
+
+/* 向上翻页动画 */
+.book-page.flipping-up {
+  animation: flipUp var(--flip-duration, 0.8s) cubic-bezier(0.4, 0, 0.2, 1)
+    forwards;
+  filter: brightness(1.1) contrast(1.05);
+}
+
+@keyframes flipUp {
+  0% {
+    transform: translateY(0) rotateX(0deg);
+    z-index: 2;
+    box-shadow: 0 8px 16px var(--shadow-medium);
+  }
+  25% {
+    transform: translateY(0) rotateX(20deg);
+    z-index: 2;
+    box-shadow: 0 12px 24px var(--shadow-medium);
+  }
+  50% {
+    transform: translateY(0) rotateX(45deg);
+    z-index: 2;
+    box-shadow: 0 16px 32px var(--shadow-heavy);
+  }
+  75% {
+    transform: translateY(0) rotateX(70deg);
+    z-index: 1;
+    box-shadow: 0 20px 40px var(--shadow-heavy);
+  }
+  100% {
+    transform: translateY(0) rotateX(90deg);
+    z-index: 1;
+    box-shadow: 0 24px 48px var(--shadow-heavy);
+  }
+}
+
+/* 向下翻入动画 */
+.book-page.flipping-in {
+  animation: flipIn var(--flip-duration, 0.8s) cubic-bezier(0.4, 0, 0.2, 1)
+    forwards;
+  filter: brightness(1.05) contrast(1.02);
+}
+
+@keyframes flipIn {
+  0% {
+    transform: translateY(0) rotateX(-90deg);
+    z-index: 1;
+    box-shadow: 0 24px 48px var(--shadow-heavy);
+  }
+  25% {
+    transform: translateY(0) rotateX(-70deg);
+    z-index: 1;
+    box-shadow: 0 20px 40px var(--shadow-heavy);
+  }
+  50% {
+    transform: translateY(0) rotateX(-45deg);
+    z-index: 2;
+    box-shadow: 0 16px 32px var(--shadow-medium);
+  }
+  75% {
+    transform: translateY(0) rotateX(-20deg);
+    z-index: 2;
+    box-shadow: 0 12px 24px var(--shadow-medium);
+  }
+  100% {
+    transform: translateY(0) rotateX(0deg);
+    z-index: 2;
+    box-shadow: 0 8px 16px var(--shadow-medium);
+  }
+}
+
+/* 添加卡片切换时的过渡效果 */
+.book-page {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+}
+
+.book-page.active {
+  transform: translateY(0) rotateX(0deg);
+  z-index: 2;
+  box-shadow: 0 8px 16px var(--shadow-medium);
+  filter: brightness(1) contrast(1);
+}
+
+.book-page.next {
+  transform: translateY(0) rotateX(-90deg);
+  z-index: 1;
+  box-shadow: 0 24px 48px var(--shadow-heavy);
+  filter: brightness(0.9) contrast(0.95);
+}
+
+/* 卡片内容样式 */
+.card-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-content h3 {
+  color: var(--text-dark);
+  font-size: 0.6em; /* 默认字体大小，会被 JavaScript 动态调整 */
+  margin: 0;
+  padding: 10px 15px;
+  transition: color 0.3s ease, font-size 0.3s ease;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.card-content p {
+  color: var(--text-muted);
+  font-size: 0.425em;
+  margin: 0;
+  padding: 10px 15px;
+  transition: color 0.3s ease;
+  width: 100%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  line-height: 1.2;
+  box-sizing: border-box;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* 亮色模式下的翻书动画卡片标题样式 */
+.book-page .card-content h3 {
+  color: var(--text-dark);
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* 亮色模式下的翻书动画卡片描述文字样式 */
+.book-page .card-content p {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.card.rolling {
+  animation: rollCard 0.3s ease-in-out infinite;
+}
+
+@keyframes rollCard {
+  0%,
+  100% {
+    transform: translateY(0) rotateX(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotateX(5deg);
+  }
+}
+
+/* 放射光效果 */
+.card.radial-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+.card.radial-glow::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  height: 200px;
+  background: var(--radial-glow);
+  transform: translate(-50%, -50%);
+  animation: radialPulse 2s ease-in-out infinite;
+}
+
+@keyframes radialPulse {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+}
+
+/* 抖动效果 */
+.card.shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-5px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(5px);
+  }
+}
+
+.result-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 300px;
+  height: 200px;
+  background: var(--card-bg);
+  border-radius: 15px;
+  padding: 0;
+  box-shadow: 0 8px 16px var(--shadow-medium);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  transform-style: preserve-3d;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+  z-index: 10;
+  overflow: hidden;
+}
+
+/* 为 result-card 添加折痕效果 */
+.result-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.05) 50%,
+    transparent 100%
+  );
+  border-radius: 15px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes resultAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* result-content 样式，与 card-content 保持一致 */
+.result-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.result-content h2 {
+  color: var(--text-dark);
+  font-size: 0.6em; /* 默认字体大小，会被 JavaScript 动态调整 */
+  margin: 0;
+  padding: 10px 15px;
+  transition: color 0.3s ease, font-size 0.3s ease;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+  position: relative;
+  width: 100%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.result-content p {
+  color: var(--text-muted);
+  font-size: 0.425em;
+  margin: 0;
+  padding: 10px 15px;
+  transition: color 0.3s ease;
+  z-index: 2;
+  position: relative;
+  width: 100%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  line-height: 1.2;
+  box-sizing: border-box;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* 控制面板（右侧） */
+.control-panel {
+  flex: 1;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 30px;
+  background: transparent;
+  border-radius: 20px;
+  backdrop-filter: none;
+  box-shadow: none;
+  position: relative;
+}
+
+.title-area {
+  text-align: center;
+}
+
+.title {
+  color: var(--text-primary);
+  font-size: 2.5em;
+  margin-bottom: 15px;
+  text-shadow: 2px 2px 4px var(--shadow-heavy);
+  transition: color 0.3s ease;
+}
+
+.current-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.current-group span {
+  color: var(--text-secondary);
+  font-size: 1.1em;
+  transition: color 0.3s ease;
+}
+
+.change-group-btn {
+  background: var(--button-secondary);
+  color: var(--text-primary);
+  border: none;
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: all 0.3s ease;
+}
+
+.change-group-btn:hover {
+  opacity: 0.8;
+  transform: translateY(-1px);
+}
+
+.control-area {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.start-btn,
+.manage-btn {
+  width: 100%;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 25px;
+  font-size: 1.2em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: bold;
+}
+
+.start-btn {
+  background: var(--button-primary);
+  color: var(--text-primary);
+  position: relative;
+  overflow: hidden;
+}
+
+.start-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px var(--shadow-medium);
+}
+
+.start-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px var(--shadow-medium);
+}
+
+.start-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.manage-btn {
+  background: var(--button-secondary);
+  color: var(--text-primary);
+}
+
+.manage-btn:hover {
+  opacity: 0.8;
+  transform: translateY(-2px);
+}
+
+/* 按钮提示 */
+.button-tip {
+  color: var(--text-secondary);
+  font-size: 0.9em;
+  text-align: center;
+  transition: color 0.3s ease;
+}
+
+/* 进度指示器 */
+.progress-indicator {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: var(--shadow-light);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--button-primary);
+  border-radius: 4px;
+  transition: width 0.1s ease;
+  width: 0%;
+}
+
+.progress-text {
+  color: var(--text-secondary);
+  font-size: 0.9em;
+  text-align: center;
+}
+
+/* 组合选择器 */
+.group-selector {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.selector-content {
+  background: var(--card-bg);
+  border-radius: 15px;
+  padding: 30px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 30px var(--shadow-heavy);
+}
+
+.selector-content h3 {
+  color: var(--text-dark);
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  text-align: center;
+  transition: color 0.3s ease;
+}
+
+.group-list {
+  margin-bottom: 20px;
+}
+
+.group-item {
+  background: var(--shadow-light);
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.group-info h4 {
+  color: var(--text-dark);
+  font-size: 1.1em;
+  margin-bottom: 5px;
+  transition: color 0.3s ease;
+}
+
+.group-info p {
+  color: var(--text-muted);
+  font-size: 0.9em;
+  transition: color 0.3s ease;
+}
+
+.group-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px var(--shadow-medium);
+}
+
+.group-item.active {
+  border-color: var(--button-secondary);
+  background: var(--button-secondary);
+  color: var(--text-primary);
+}
+
+.close-btn {
+  background: var(--button-muted);
+  color: var(--text-primary);
+  border: none;
+  padding: 12px 25px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.close-btn:hover {
+  opacity: 0.8;
+  transform: translateY(-1px);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  body {
+    align-items: flex-start;
+    overflow-y: auto;
+    padding: 10px 0;
+  }
+
+  .container {
+    padding: 10px;
+    flex-direction: column;
+    min-height: 100vh;
+    align-items: stretch;
+    gap: 20px;
+  }
+
+  .box-container {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .box-body {
+    flex-direction: column;
+    gap: 20px;
+    min-height: auto;
+    order: 1; /* 确保盒子主体区域在最上面 */
+  }
+
+  .card-display-area {
+    max-width: 100%;
+    aspect-ratio: 1706 / 1279;
+    flex: none; /* 移除 flex: 1，使用固定高度 */
+    order: 1; /* 确保卡片显示区域在最上面 */
+    width: 100%; /* 确保宽度为 100% */
+    margin: 20px 0; /* 添加上下间距 */
+  }
+
+  .control-panel {
+    max-width: 100%;
+    padding: 20px;
+    flex: none; /* 移除 flex: 1，使用内容高度 */
+    order: 2; /* 控制区域在第二 */
+    width: 100%; /* 确保宽度为 100% */
+    background: transparent; /* 移除背景色 */
+    backdrop-filter: none; /* 移除背景模糊 */
+    box-shadow: none; /* 移除阴影 */
+    margin: 20px 0; /* 添加上下间距 */
+  }
+
+  .title {
+    font-size: 2em;
+  }
+
+  .card {
+    width: 90%;
+    height: 150px;
+    padding: 0;
+  }
+
+  .book-page {
+    width: 90%;
+    height: 150px;
+    padding: 0;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    transform-origin: center center;
+    perspective: 1000px;
+  }
+
+  .result-card {
+    width: 90%;
+    height: 150px;
+    padding: 0;
+  }
+
+  .start-btn,
+  .manage-btn {
+    padding: 12px 25px;
+    font-size: 1.1em;
+  }
+
+  /* 组合选择器在小屏幕上显示在底部 */
+  .group-selector {
+    order: 3; /* 组合选择器在最后 */
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    align-items: flex-start;
+    overflow-y: auto;
+    padding: 5px 0;
+  }
+
+  .container {
+    padding: 5px;
+    flex-direction: column;
+    min-height: 100vh;
+    align-items: stretch;
+    gap: 15px;
+  }
+
+  .box-container {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .box-body {
+    flex-direction: column;
+    gap: 15px;
+    order: 1; /* 确保盒子主体区域在最上面 */
+  }
+
+  .card-display-area {
+    aspect-ratio: 1706 / 1279;
+    flex: none; /* 移除 flex: 1，使用固定高度 */
+    order: 1; /* 确保卡片显示区域在最上面 */
+    width: 100%; /* 确保宽度为 100% */
+    margin: 15px 0; /* 添加上下间距 */
+  }
+
+  .control-panel {
+    padding: 15px;
+    flex: none; /* 移除 flex: 1，使用内容高度 */
+    order: 2; /* 控制区域在第二 */
+    width: 100%; /* 确保宽度为 100% */
+    margin: 15px 0; /* 添加上下间距 */
+  }
+
+  .title {
+    font-size: 1.8em;
+  }
+
+  .card {
+    width: 95%;
+    height: 120px;
+    padding: 0;
+  }
+
+  .book-page {
+    width: 95%;
+    height: 120px;
+    padding: 0;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    transform-origin: center center;
+    perspective: 1000px;
+  }
+
+  .result-card {
+    width: 95%;
+    height: 120px;
+    padding: 0;
+  }
+
+  .start-btn,
+  .manage-btn {
+    padding: 10px 20px;
+    font-size: 1em;
+  }
+
+  /* 组合选择器在小屏幕上显示在底部 */
+  .group-selector {
+    order: 3; /* 组合选择器在最后 */
+  }
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+  .container {
+    padding: 10px;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .box-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .box-body {
+    min-height: 400px;
+    gap: 20px;
+    order: 1; /* 确保盒子主体区域在最上面 */
+  }
+
+  .card-display-area {
+    aspect-ratio: 1706 / 1279;
+    flex: none; /* 移除 flex: 1，使用固定高度 */
+    order: 1; /* 确保卡片显示区域在最上面 */
+    width: 100%; /* 确保宽度为 100% */
+    margin: 15px 0; /* 添加上下间距 */
+  }
+
+  .book-page {
+    height: 120px;
+    padding: 0;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    transform-origin: center center;
+    perspective: 1000px;
+  }
+
+  .result-card {
+    height: 120px;
+    padding: 0;
+  }
+
+  .control-panel {
+    flex: none; /* 移除 flex: 1，使用内容高度 */
+    order: 2; /* 控制区域在第二 */
+    width: 100%; /* 确保宽度为 100% */
+    margin: 15px 0; /* 添加上下间距 */
+  }
+
+  .title {
+    font-size: 1.8em;
+    margin-bottom: 10px;
+  }
+
+  .title-area {
+    margin-bottom: 15px;
+  }
+
+  .control-area {
+    gap: 15px;
+  }
+
+  .group-selector {
+    order: 3; /* 组合选择器在最后 */
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1400px;
+  }
+
+  .card-display-area {
+    max-width: 600px;
+    aspect-ratio: 1706 / 1279;
+  }
+
+  .control-panel {
+    max-width: 450px;
+  }
+
+  .card {
+    max-width: 350px;
+    height: 220px;
+  }
+
+  .book-page {
+    max-width: 350px;
+    height: 220px;
+  }
+
+  .result-card {
+    max-width: 350px;
+    height: 220px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

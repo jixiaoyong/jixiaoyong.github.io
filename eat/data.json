@@ -1,0 +1,53 @@
+{
+  "groups": [
+    {
+      "id": "default",
+      "name": "默认组合",
+      "items": [
+        {
+          "id": "1",
+          "title": "火锅",
+          "description": "麻辣鲜香，温暖身心"
+        },
+        {
+          "id": "2",
+          "title": "烤肉",
+          "description": "滋滋作响，香气四溢"
+        },
+        {
+          "id": "3",
+          "title": "寿司",
+          "description": "新鲜美味，精致可口"
+        },
+        {
+          "id": "4",
+          "title": "披萨",
+          "description": "芝士拉丝，意式风情"
+        },
+        {
+          "id": "5",
+          "title": "炸鸡",
+          "description": "外酥内嫩，香脆可口"
+        },
+        {
+          "id": "6",
+          "title": "面条",
+          "description": "滑嫩爽口，汤鲜味美"
+        },
+        {
+          "id": "7",
+          "title": "汉堡",
+          "description": "层次丰富，满足感强"
+        },
+        {
+          "id": "8",
+          "title": "沙拉",
+          "description": "清爽健康，营养丰富"
+        }
+      ]
+    }
+  ],
+  "currentGroup": "default",
+  "lastDrawTime": null,
+  "drawHistory": []
+}
