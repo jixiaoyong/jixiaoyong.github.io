@@ -30,9 +30,17 @@
 eat/
 ├── index.html          # 主页面
 ├── manage.html         # 管理页面
-├── style.css           # 样式文件
-├── script.js           # 主页面脚本
-├── manage.js           # 管理页面脚本
+├── styles/             # 样式文件目录
+│   ├── style.css       # 主样式文件
+│   ├── manage-style.css # 管理页面样式
+│   ├── index-style.css # 首页特有样式
+│   ├── wechat-variables.css # 微信风格变量
+│   ├── wechat-layout.css   # 微信风格布局
+│   └── wechat-buttons.css  # 微信风格按钮
+├── javascript/         # JavaScript文件目录
+│   ├── script.js       # 主页面脚本
+│   ├── manage.js       # 管理页面脚本
+│   └── ...             # 其他JS模块
 ├── data.json           # 预置数据
 └── README.md           # 说明文档
 ```
@@ -107,7 +115,7 @@ eat/
 
 ### 自定义样式
 
-修改 `style.css` 文件来自定义界面外观。
+修改 `styles/style.css` 文件来自定义界面外观。
 
 ### 添加新功能
 
