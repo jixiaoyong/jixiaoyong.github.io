@@ -58,46 +58,44 @@
             <!-- 控制按钮 -->
             <div class="control-area">
               <div class="button-container">
-                <button
-                  class="start-btn"
-                  id="startBtn"
-                >
-                  开始抽取
-                </button>
-                <div class="button-tip" id="buttonTip">点击立即开始</div>
+                <button class="start-btn" id="startBtn">开始抽取</button>
               </div>
-              
+
+              <!-- 进度指示器 -->
+              <div
+                class="progress-indicator"
+                id="progressIndicator"
+                style="display: none"
+              >
+                <div class="progress-bar">
+                  <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">准备中...</div>
+              </div>
+
               <!-- 速度档位选择器 -->
               <div class="speed-selector">
                 <div class="speed-label">抽奖速度：</div>
                 <div class="speed-options">
-                  <button class="speed-btn" data-speed="slow" id="speedSlow">慢速</button>
-                  <button class="speed-btn active" data-speed="normal" id="speedNormal">正常</button>
-                  <button class="speed-btn" data-speed="fast" id="speedFast">快速</button>
+                  <button class="speed-btn" data-speed="slow" id="speedSlow">
+                    慢速
+                  </button>
+                  <button
+                    class="speed-btn active"
+                    data-speed="normal"
+                    id="speedNormal"
+                  >
+                    正常
+                  </button>
+                  <button class="speed-btn" data-speed="fast" id="speedFast">
+                    快速
+                  </button>
                 </div>
               </div>
-              
-              <!-- 随机性指示器 -->
-              <div class="randomness-indicator" id="randomnessIndicator" style="display: none">
-                <div class="randomness-label">🎲 随机性增强：</div>
-                <div class="randomness-info" id="randomnessInfo">动态选项池已启用</div>
-              </div>
-              
+
               <button class="manage-btn" onclick="openManagePage()">
                 管理选项
               </button>
-            </div>
-
-            <!-- 进度指示器 -->
-            <div
-              class="progress-indicator"
-              id="progressIndicator"
-              style="display: none"
-            >
-              <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
-              </div>
-              <div class="progress-text" id="progressText">准备中...</div>
             </div>
           </div>
         </div>

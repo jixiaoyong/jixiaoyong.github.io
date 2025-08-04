@@ -96,20 +96,19 @@ body {
 }
 
 .result-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--wechat-shadow-heavy);
+  box-shadow: 0 8px 256px rgba(255, 107, 53, 0.08);
   border-color: var(--wechat-primary);
 }
 
 .result-content h2 {
-  font-size: 24px;
+  font-size: 0.6em;
   font-weight: 600;
   color: var(--wechat-text-primary);
   margin-bottom: var(--wechat-spacing-md);
 }
 
 .result-content p {
-  font-size: 16px;
+  font-size: 0.8em;
   color: var(--wechat-text-secondary);
   line-height: 1.6;
 }
