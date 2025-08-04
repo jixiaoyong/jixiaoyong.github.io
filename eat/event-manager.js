@@ -43,26 +43,27 @@ class EventManager {
       if (!groupCard) return;
 
       const groupId = groupCard.dataset.groupId;
-      const actionBtn = target.closest(".action-btn");
+      const actionBtn = target.closest(".btn");
 
-      if (!actionBtn) return;
-
-      if (actionBtn.classList.contains("edit-btn")) {
-        this.editGroup(groupId);
-      } else if (actionBtn.classList.contains("duplicate-btn")) {
-        this.duplicateGroup(groupId);
-      } else if (actionBtn.classList.contains("delete-btn")) {
-        this.deleteGroup(groupId);
+      // 如果点击的是按钮，处理按钮事件
+      if (actionBtn && (actionBtn.classList.contains("edit-btn") || 
+                       actionBtn.classList.contains("duplicate-btn") || 
+                       actionBtn.classList.contains("delete-btn"))) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        if (actionBtn.classList.contains("edit-btn")) {
+          this.editGroup(groupId);
+        } else if (actionBtn.classList.contains("duplicate-btn")) {
+          this.duplicateGroup(groupId);
+        } else if (actionBtn.classList.contains("delete-btn")) {
+          this.deleteGroup(groupId);
+        }
+        return;
       }
-    });
 
-    // 组合卡片点击切换当前组合
-    this.uiManager.elements.groupListManage.addEventListener("click", (e) => {
-      const groupCard = e.target.closest(".group-card");
-      if (groupCard && !e.target.closest(".action-btn")) {
-        const groupId = groupCard.dataset.groupId;
-        this.setCurrentGroup(groupId);
-      }
+      // 如果点击的不是按钮，则切换当前组合
+      this.setCurrentGroup(groupId);
     });
   }
 
@@ -217,11 +218,26 @@ class EventManager {
   // 保存组合
   saveGroup(formData) {
     try {
+      // 检查组合名称是否重复
+      const existingGroups = this.dataManager.getGroups();
+      const isDuplicate = existingGroups.some(group => {
+        // 编辑时排除当前组合
+        if (this.app.editingGroupId && group.id === this.app.editingGroupId) {
+          return false;
+        }
+        return group.name === formData.name;
+      });
+
+      if (isDuplicate) {
+        toastManager.error("组合名称已存在，请使用其他名称");
+        return;
+      }
+
       if (this.app.editingGroupId) {
         // 编辑现有组合
         const group = this.dataManager.getGroupById(this.app.editingGroupId);
         if (!group) {
-          this.uiManager.showToast("组合不存在", "error");
+          toastManager.error("组合不存在");
           return;
         }
 

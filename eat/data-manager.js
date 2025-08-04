@@ -21,22 +21,31 @@ class DataManager {
   // 加载数据
   async load() {
     try {
-      // 首先尝试从Cookie加载
+      // 优先从localStorage加载（数据更新更及时）
+      const localData = localStorage.getItem("eatAppData");
+      if (localData) {
+        try {
+          const local = JSON.parse(localData);
+          this.appData = { ...this.appData, ...local };
+          console.log('从localStorage加载数据成功');
+          return;
+        } catch (error) {
+          console.warn('localStorage数据解析失败:', error);
+        }
+      }
+
+      // 如果localStorage没有数据，尝试从Cookie加载
       const cookieData = this.cookieManager.loadAppData();
       if (cookieData) {
         this.appData = { ...this.appData, ...cookieData };
         console.log('从Cookie加载数据成功');
-        return;
-      }
-
-      // 如果Cookie没有数据，尝试从localStorage加载（向后兼容）
-      const localData = localStorage.getItem("eatAppData");
-      if (localData) {
-        const local = JSON.parse(localData);
-        this.appData = { ...this.appData, ...local };
-        // 迁移到Cookie
-        this.save();
-        console.log('从localStorage迁移数据到Cookie成功');
+        // 同步到localStorage
+        try {
+          localStorage.setItem("eatAppData", JSON.stringify(this.appData));
+          console.log('数据同步到localStorage成功');
+        } catch (error) {
+          console.warn('同步到localStorage失败:', error);
+        }
         return;
       }
 
@@ -91,17 +100,53 @@ class DataManager {
         this.appData.drawHistory = this.appData.drawHistory.slice(-this.appData.settings.maxHistoryItems);
       }
 
+      // 同时保存到Cookie和localStorage，确保数据一致性
+      let cookieSaved = false;
+      let localStorageSaved = false;
+      
       // 保存到Cookie
-      if (this.cookieManager.saveAppData(this.appData)) {
-        console.log('数据保存到Cookie成功');
-      } else {
-        // 如果Cookie保存失败，回退到localStorage
-        localStorage.setItem("eatAppData", JSON.stringify(this.appData));
-        console.log('数据保存到localStorage成功');
+      try {
+        cookieSaved = this.cookieManager.saveAppData(this.appData);
+        if (cookieSaved) {
+          console.log('数据保存到Cookie成功');
+        }
+      } catch (error) {
+        console.warn('Cookie保存失败:', error);
       }
+      
+      // 同时保存到localStorage作为备份
+      try {
+        localStorage.setItem("eatAppData", JSON.stringify(this.appData));
+        localStorageSaved = true;
+        console.log('数据保存到localStorage成功');
+      } catch (error) {
+        console.warn('localStorage保存失败:', error);
+      }
+      
+      if (!cookieSaved && !localStorageSaved) {
+        throw new Error('所有存储方式都失败了');
+      }
+      
+      // 触发数据变化事件，通知其他页面刷新
+      this.triggerDataChangeEvent();
     } catch (error) {
       console.error('保存数据失败:', error);
     }
+  }
+  
+  // 触发数据变化事件
+  triggerDataChangeEvent() {
+    // 触发自定义事件
+    window.dispatchEvent(new CustomEvent('dataChanged'));
+    
+    // 触发storage事件（用于跨页面通信）
+    const event = new StorageEvent('storage', {
+      key: 'eatAppData',
+      newValue: JSON.stringify(this.appData),
+      oldValue: null,
+      storageArea: localStorage
+    });
+    window.dispatchEvent(event);
   }
 
   // 获取所有数据
@@ -145,6 +190,11 @@ class DataManager {
       throw new Error('组合ID已存在');
     }
 
+    // 检查名称是否重复
+    if (this.appData.groups.find(g => g.name === group.name)) {
+      throw new Error('组合名称已存在');
+    }
+
     this.appData.groups.push(group);
     this.save();
     return group;
@@ -155,6 +205,15 @@ class DataManager {
     const index = this.appData.groups.findIndex(g => g.id === updatedGroup.id);
     if (index === -1) {
       throw new Error('组合不存在');
+    }
+    
+    // 检查名称是否重复（排除当前组合）
+    const isDuplicate = this.appData.groups.some((g, i) => {
+      return i !== index && g.name === updatedGroup.name;
+    });
+    
+    if (isDuplicate) {
+      throw new Error('组合名称已存在');
     }
     
     this.appData.groups[index] = updatedGroup;
@@ -191,9 +250,17 @@ class DataManager {
       throw new Error('组合不存在');
     }
 
+    // 生成唯一的副本名称
+    let copyName = `${group.name} (副本)`;
+    let counter = 1;
+    while (this.appData.groups.find(g => g.name === copyName)) {
+      copyName = `${group.name} (副本${counter})`;
+      counter++;
+    }
+
     const newGroup = {
       id: `group_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-      name: `${group.name} (副本)`,
+      name: copyName,
       items: JSON.parse(JSON.stringify(group.items)),
     };
     
@@ -203,9 +270,12 @@ class DataManager {
   // 添加抽取记录
   addDrawRecord(item, groupName) {
     const record = {
-      id: `draw_${Date.now()}`,
-      item: item,
+      id: Date.now(),
+      title: item.title,
+      description: item.description,
       group: groupName,
+      time: new Date().toLocaleString(),
+      item: item, // 保留原始item对象用于兼容性
       timestamp: new Date().toISOString()
     };
     

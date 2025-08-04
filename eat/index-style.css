@@ -1,0 +1,118 @@
+/* =================================================================================================
+ * 首页特有样式 - 美食主题
+ * ================================================================================================= */
+
+/* 首页特有的动画效果 */
+@keyframes cardFlip {
+  0% {
+    transform: rotateY(0deg);
+  }
+  50% {
+    transform: rotateY(180deg);
+  }
+  100% {
+    transform: rotateY(360deg);
+  }
+}
+
+.card-flip {
+  animation: cardFlip 0.6s ease-in-out;
+}
+
+/* 首页特有的加载动画 */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.loading-pulse {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* 首页特有的按钮状态 */
+.start-btn.processing {
+  background: var(--wechat-text-disabled);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.start-btn.processing::before {
+  display: none;
+}
+
+/* 组合选择器样式已移至 wechat-layout.css */
+
+/* 首页特有的关闭按钮 */
+.close-btn {
+  background: var(--btn-start-gradient) !important;
+  color: var(--btn-text-light) !important;
+  border: none !important;
+  padding: var(--wechat-spacing-md) var(--wechat-spacing-xl) !important;
+  border-radius: var(--wechat-radius-medium) !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  transition: all var(--wechat-transition-normal) !important;
+  width: 100% !important;
+  font-family: var(--wechat-font-family) !important;
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3) !important;
+  margin-top: var(--wechat-spacing-lg) !important;
+}
+
+.close-btn:hover {
+  background: var(--btn-start-gradient-hover) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4) !important;
+}
+
+.close-btn:active {
+  background: var(--btn-start-active) !important;
+  transform: translateY(0) !important;
+  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3) !important;
+}
+
+/* 首页特有的响应式调整 */
+@media (max-width: 768px) {
+  .group-selector .group-item {
+    padding: var(--wechat-spacing-sm) var(--wechat-spacing-md);
+  }
+  
+  .group-selector .group-item .group-name {
+    font-size: 14px;
+  }
+  
+  .group-selector .group-item .group-count {
+    font-size: 11px;
+    padding: 1px var(--wechat-spacing-xs);
+  }
+  
+  .close-btn {
+    padding: var(--wechat-spacing-sm) var(--wechat-spacing-lg);
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .group-selector .group-item {
+    padding: var(--wechat-spacing-xs) var(--wechat-spacing-sm);
+  }
+  
+  .group-selector .group-item .group-name {
+    font-size: 13px;
+  }
+  
+  .group-selector .group-item .group-count {
+    font-size: 10px;
+    padding: 1px 4px;
+  }
+  
+  .close-btn {
+    padding: var(--wechat-spacing-xs) var(--wechat-spacing-md);
+    font-size: 13px;
+  }
+} 

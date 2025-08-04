@@ -1,0 +1,457 @@
+/* =================================================================================================
+ * 微信风格按钮组件 - 美食主题
+ * ================================================================================================= */
+
+/* 基础按钮样式 */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--wechat-spacing-xs);
+  padding: var(--wechat-spacing-sm) var(--wechat-spacing-md);
+  border: none;
+  border-radius: var(--wechat-radius-small);
+  font-size: 14px;
+  font-weight: 500;
+  font-family: var(--wechat-font-family);
+  cursor: pointer;
+  transition: all var(--wechat-transition-normal);
+  text-decoration: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--wechat-shadow-light);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+/* 按钮变体 - 美食主题 */
+.btn-primary {
+  background: var(--btn-start-gradient) !important;
+  color: var(--btn-text-light) !important;
+  border: none !important;
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3) !important;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--btn-start-gradient-hover) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4) !important;
+}
+
+.btn-secondary {
+  background: var(--wechat-blue);
+  color: white;
+  border: 1px solid var(--wechat-blue);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--wechat-blue-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--wechat-shadow-medium);
+}
+
+.btn-success {
+  background: var(--food-accent);
+  color: white;
+  border: 1px solid var(--food-accent);
+}
+
+.btn-success:hover:not(:disabled) {
+  background: #45a049;
+  transform: translateY(-1px);
+  box-shadow: var(--wechat-shadow-medium);
+}
+
+.btn-warning {
+  background: var(--wechat-orange);
+  color: white;
+  border: 1px solid var(--wechat-orange);
+}
+
+.btn-warning:hover:not(:disabled) {
+  background: var(--wechat-orange-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--wechat-shadow-medium);
+}
+
+.btn-danger {
+  background: var(--wechat-red);
+  color: white;
+  border: 1px solid var(--wechat-red);
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: var(--wechat-red-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--wechat-shadow-medium);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--wechat-text-secondary);
+  border: 1px solid var(--wechat-border);
+  box-shadow: none;
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background: var(--wechat-bg-tertiary);
+  border-color: var(--wechat-text-secondary);
+  transform: translateY(-1px);
+  box-shadow: var(--wechat-shadow-light);
+}
+
+/* 按钮尺寸 */
+.btn-sm {
+  padding: var(--wechat-spacing-xs) var(--wechat-spacing-sm);
+  font-size: 12px;
+  border-radius: var(--wechat-radius-small);
+}
+
+.btn-md {
+  padding: var(--wechat-spacing-sm) var(--wechat-spacing-md);
+  font-size: 14px;
+  border-radius: var(--wechat-radius-small);
+}
+
+.btn-lg {
+  padding: var(--wechat-spacing-md) var(--wechat-spacing-lg);
+  font-size: 16px;
+  border-radius: var(--wechat-radius-medium);
+}
+
+.btn-xl {
+  padding: var(--wechat-spacing-lg) var(--wechat-spacing-xl);
+  font-size: 18px;
+  border-radius: var(--wechat-radius-medium);
+  min-height: 56px;
+}
+
+/* 特殊按钮样式 */
+.start-btn {
+  width: 100% !important;
+  padding: var(--wechat-spacing-lg) var(--wechat-spacing-xl) !important;
+  background: var(--btn-start-gradient) !important;
+  color: var(--btn-text-light) !important;
+  border: none !important;
+  border-radius: var(--wechat-radius-xl) !important;
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all var(--wechat-transition-normal) !important;
+  position: relative !important;
+  overflow: hidden !important;
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3) !important;
+  min-height: 56px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-family: var(--wechat-font-family) !important;
+}
+
+.start-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.start-btn:hover::before {
+  left: 100%;
+}
+
+.start-btn:hover {
+  background: var(--btn-start-gradient-hover) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4) !important;
+}
+
+.start-btn:active {
+  background: var(--btn-start-active) !important;
+  transform: translateY(0) !important;
+  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3) !important;
+}
+
+.start-btn:disabled {
+  background: var(--wechat-text-disabled) !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.start-btn:disabled::before {
+  display: none;
+}
+
+/* 管理按钮 */
+.manage-btn {
+  width: 100% !important;
+  padding: var(--wechat-spacing-md) var(--wechat-spacing-xl) !important;
+  background: var(--btn-manage-gradient) !important;
+  color: var(--btn-text-light) !important;
+  border: none !important;
+  border-radius: var(--wechat-radius-xl) !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  transition: all var(--wechat-transition-normal) !important;
+  min-height: 48px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-family: var(--wechat-font-family) !important;
+  box-shadow: 0 4px 12px rgba(92, 107, 192, 0.3) !important;
+}
+
+.manage-btn:hover {
+  background: var(--btn-manage-gradient-hover) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 20px rgba(92, 107, 192, 0.4) !important;
+}
+
+.manage-btn:active {
+  background: var(--btn-manage-active) !important;
+  transform: translateY(0) !important;
+  box-shadow: 0 2px 8px rgba(92, 107, 192, 0.3) !important;
+}
+
+/* 切换组合按钮 */
+.change-group-btn {
+  background: var(--btn-manage-gradient) !important;
+  color: var(--btn-text-light) !important;
+  border: none !important;
+  padding: var(--wechat-spacing-sm) var(--wechat-spacing-md) !important;
+  border-radius: var(--wechat-radius-medium) !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  transition: all var(--wechat-transition-normal) !important;
+  min-width: 60px !important;
+  font-family: var(--wechat-font-family) !important;
+  box-shadow: 0 2px 8px rgba(92, 107, 192, 0.2) !important;
+}
+
+.change-group-btn:hover {
+  background: var(--btn-manage-gradient-hover) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(92, 107, 192, 0.3) !important;
+}
+
+.change-group-btn:active {
+  background: var(--btn-manage-active) !important;
+  transform: translateY(0) !important;
+  box-shadow: 0 2px 8px rgba(92, 107, 192, 0.2) !important;
+}
+
+/* 操作按钮 */
+.action-btn {
+  padding: var(--wechat-spacing-xs) var(--wechat-spacing-sm);
+  border-radius: var(--wechat-radius-small);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all var(--wechat-transition-normal);
+  min-width: 48px;
+  font-family: var(--wechat-font-family);
+}
+
+.edit-btn {
+  background: var(--wechat-blue);
+  color: white;
+  border: 1px solid var(--wechat-blue);
+}
+
+.edit-btn:hover {
+  background: var(--wechat-blue-hover);
+  transform: translateY(-1px);
+}
+
+.duplicate-btn {
+  background: var(--wechat-primary);
+  color: white;
+  border: 1px solid var(--wechat-primary);
+}
+
+.duplicate-btn:hover {
+  background: var(--wechat-primary-hover);
+  transform: translateY(-1px);
+}
+
+.delete-btn {
+  background: var(--wechat-red);
+  color: white;
+  border: 1px solid var(--wechat-red);
+}
+
+.delete-btn:hover {
+  background: var(--wechat-red-hover);
+  transform: translateY(-1px);
+}
+
+/* 新建组合按钮 */
+.add-group-btn {
+  background: var(--btn-start-gradient) !important;
+  color: var(--btn-text-light) !important;
+  border: none !important;
+  padding: var(--wechat-spacing-md) var(--wechat-spacing-xl) !important;
+  border-radius: var(--wechat-radius-medium) !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  transition: all var(--wechat-transition-normal) !important;
+  margin-bottom: var(--wechat-spacing-xl) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: var(--wechat-spacing-sm) !important;
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3) !important;
+  font-family: var(--wechat-font-family) !important;
+}
+
+.add-group-btn:hover {
+  background: var(--btn-start-gradient-hover) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4) !important;
+}
+
+.add-group-btn:active {
+  background: var(--btn-start-active) !important;
+  transform: translateY(0) !important;
+  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3) !important;
+}
+
+/* 标签页按钮 */
+.tab-btn {
+  flex: 1;
+  max-width: 200px;
+  padding: var(--wechat-spacing-md) var(--wechat-spacing-lg);
+  background: transparent;
+  border: none;
+  border-radius: var(--wechat-radius-medium);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--wechat-text-tertiary);
+  cursor: pointer;
+  transition: all var(--wechat-transition-normal);
+  position: relative;
+  font-family: var(--wechat-font-family);
+}
+
+.tab-btn:hover {
+  color: var(--wechat-text-secondary);
+  background: var(--wechat-bg-tertiary);
+}
+
+.tab-btn.active {
+  color: var(--btn-text-light) !important;
+  background: var(--btn-start-gradient) !important;
+  font-weight: 600 !important;
+  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.2);
+}
+
+/* 关闭按钮 */
+.close-modal {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--wechat-text-tertiary);
+  transition: color var(--wechat-transition-normal);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--wechat-radius-small);
+}
+
+.close-modal:hover {
+  color: var(--wechat-text-primary);
+  background: var(--wechat-bg-tertiary);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .start-btn {
+    padding: var(--wechat-spacing-md) var(--wechat-spacing-lg);
+    font-size: 16px;
+    min-height: 48px;
+  }
+  
+  .manage-btn {
+    padding: var(--wechat-spacing-sm) var(--wechat-spacing-lg);
+    font-size: 14px;
+    min-height: 44px;
+  }
+  
+  .change-group-btn {
+    padding: var(--wechat-spacing-xs) var(--wechat-spacing-sm);
+    font-size: 12px;
+    min-width: 50px;
+  }
+  
+  .action-btn {
+    padding: var(--wechat-spacing-xs) var(--wechat-spacing-sm);
+    font-size: 11px;
+    min-width: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .start-btn {
+    padding: var(--wechat-spacing-sm) var(--wechat-spacing-md);
+    font-size: 15px;
+    min-height: 44px;
+  }
+  
+  .manage-btn {
+    padding: var(--wechat-spacing-xs) var(--wechat-spacing-md);
+    font-size: 13px;
+    min-height: 40px;
+  }
+  
+  .change-group-btn {
+    padding: 2px var(--wechat-spacing-xs);
+    font-size: 11px;
+    min-width: 45px;
+  }
+  
+  .action-btn {
+    padding: 2px var(--wechat-spacing-xs);
+    font-size: 10px;
+    min-width: 36px;
+  }
+}
+
+/* 减少动画偏好 */
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .start-btn,
+  .manage-btn,
+  .change-group-btn,
+  .action-btn,
+  .add-group-btn,
+  .tab-btn {
+    transition: none;
+  }
+  
+  .start-btn::before {
+    animation: none;
+  }
+} 

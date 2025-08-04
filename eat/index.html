@@ -1,90 +1,123 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>今天吃什么？</title>
-    <link rel="icon"
-        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>">
-    <link rel="stylesheet" href="style.css">
-</head>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>"
+    />
+    <link rel="stylesheet" href="styles/wechat-variables.css" />
+    <link rel="stylesheet" href="styles/wechat-layout.css" />
+    <link rel="stylesheet" href="styles/wechat-buttons.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-<body>
-
-
+  <body>
     <div class="container">
-        <!-- 盒子容器 -->
-        <div class="box-container">
-            <!-- 盒子主体 -->
-            <div class="box-body">
-                <!-- 卡片显示区域（左侧） -->
-                <div class="card-display-area">
-                    <div class="card-background">
-                        <img src="box.png" alt="背景" class="card-bg-image">
-                    </div>
-                    <div class="card-content-wrapper">
-                        <div class="card-container" id="cardContainer" style="display: none;">
-                            <!-- 卡片将在这里动态生成 -->
-                        </div>
-                        <div class="result-card" id="resultCard">
-                            <div class="result-content">
-                                <h2 id="resultTitle">加载中...</h2>
-                                <p id="resultDescription">正在加载数据</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 控制区域（右侧） -->
-                <div class="control-panel">
-                    <!-- 标题区域 -->
-                    <div class="title-area">
-                        <h1 class="title">今天吃什么？</h1>
-                        <div class="current-group">
-                            <span id="currentGroupName">默认组合</span>
-                            <button class="change-group-btn" onclick="showGroupSelector()">切换</button>
-                        </div>
-                    </div>
-
-                    <!-- 控制按钮 -->
-                    <div class="control-area">
-                        <div class="button-container">
-                            <button class="start-btn" id="startBtn" onmousedown="startLongPress()"
-                                onmouseup="endLongPress()" ontouchstart="startLongPress()" ontouchend="endLongPress()">
-                                开始抽取
-                            </button>
-                            <div class="button-tip" id="buttonTip">点击立即开始</div>
-                        </div>
-                        <button class="manage-btn" onclick="openManagePage()">管理选项</button>
-                    </div>
-
-
-
-                    <!-- 进度指示器 -->
-                    <div class="progress-indicator" id="progressIndicator" style="display: none;">
-                        <div class="progress-bar">
-                            <div class="progress-fill" id="progressFill"></div>
-                        </div>
-                        <div class="progress-text" id="progressText">准备中...</div>
-                    </div>
-                </div>
+      <!-- 盒子容器 -->
+      <div class="box-container">
+        <!-- 盒子主体 -->
+        <div class="box-body">
+          <!-- 卡片显示区域（左侧） -->
+          <div class="card-display-area">
+            <div class="card-background">
+              <img src="box.png" alt="背景" class="card-bg-image" />
             </div>
-        </div>
-
-        <!-- 组合选择器 -->
-        <div class="group-selector" id="groupSelector" style="display: none;">
-            <div class="selector-content">
-                <h3>选择组合</h3>
-                <div class="group-list" id="groupList">
-                    <!-- 组合列表将在这里动态生成 -->
+            <div class="card-content-wrapper">
+              <div
+                class="card-container"
+                id="cardContainer"
+                style="display: none"
+              >
+                <!-- 卡片将在这里动态生成 -->
+              </div>
+              <div class="result-card" id="resultCard">
+                <div class="result-content">
+                  <h2 id="resultTitle">加载中...</h2>
+                  <p id="resultDescription">正在加载数据</p>
                 </div>
-                <button class="close-btn" onclick="hideGroupSelector()">关闭</button>
+              </div>
             </div>
+          </div>
+
+          <!-- 控制区域（右侧） -->
+          <div class="control-panel">
+            <!-- 标题区域 -->
+            <div class="title-area">
+              <h1 class="title">今天吃什么？</h1>
+              <div class="current-group">
+                <span id="currentGroupName">默认组合</span>
+                <button class="change-group-btn" onclick="showGroupSelector()">
+                  切换
+                </button>
+              </div>
+            </div>
+
+            <!-- 控制按钮 -->
+            <div class="control-area">
+              <div class="button-container">
+                <button
+                  class="start-btn"
+                  id="startBtn"
+                >
+                  开始抽取
+                </button>
+                <div class="button-tip" id="buttonTip">点击立即开始</div>
+              </div>
+              
+              <!-- 速度档位选择器 -->
+              <div class="speed-selector">
+                <div class="speed-label">抽奖速度：</div>
+                <div class="speed-options">
+                  <button class="speed-btn" data-speed="slow" id="speedSlow">慢速</button>
+                  <button class="speed-btn active" data-speed="normal" id="speedNormal">正常</button>
+                  <button class="speed-btn" data-speed="fast" id="speedFast">快速</button>
+                </div>
+              </div>
+              
+              <!-- 随机性指示器 -->
+              <div class="randomness-indicator" id="randomnessIndicator" style="display: none">
+                <div class="randomness-label">🎲 随机性增强：</div>
+                <div class="randomness-info" id="randomnessInfo">动态选项池已启用</div>
+              </div>
+              
+              <button class="manage-btn" onclick="openManagePage()">
+                管理选项
+              </button>
+            </div>
+
+            <!-- 进度指示器 -->
+            <div
+              class="progress-indicator"
+              id="progressIndicator"
+              style="display: none"
+            >
+              <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+              </div>
+              <div class="progress-text" id="progressText">准备中...</div>
+            </div>
+          </div>
         </div>
+      </div>
+
+      <!-- 组合选择器 -->
+      <div class="group-selector" id="groupSelector" style="display: none">
+        <div class="selector-content">
+          <h3>选择组合</h3>
+          <div class="group-list" id="groupList">
+            <!-- 组合列表将在这里动态生成 -->
+          </div>
+          <button class="close-btn" onclick="hideGroupSelector()">关闭</button>
+        </div>
+      </div>
     </div>
 
+    <!-- 添加数据管理相关的脚本 -->
+    <script src="cookie-manager.js"></script>
+    <script src="data-manager.js"></script>
     <script src="script.js"></script>
-</body>
-
+  </body>
 </html>

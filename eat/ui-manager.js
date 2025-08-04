@@ -61,7 +61,7 @@ class UIManager {
     }`;
     groupCard.dataset.groupId = group.id;
 
-    groupCard.innerHTML = `
+            groupCard.innerHTML = `
       <div class="group-header">
         <div class="group-info">
           <div class="group-name">${Utils.escapeHtml(group.name)}</div>
@@ -75,16 +75,16 @@ class UIManager {
           </div>
         </div>
         <div class="group-actions">
-          <button class="action-btn edit-btn" title="编辑组合">
-            <span class="icon">✏️</span>
+          <button class="btn btn-secondary btn-sm edit-btn" title="编辑组合">
+            编辑
           </button>
-          <button class="action-btn duplicate-btn" title="复制组合">
-            <span class="icon">📋</span>
+          <button class="btn btn-success btn-sm duplicate-btn" title="复制组合">
+            复制
           </button>
           ${
             group.id !== "default"
-              ? `<button class="action-btn delete-btn" title="删除组合">
-              <span class="icon">🗑️</span>
+              ? `<button class="btn btn-danger btn-sm delete-btn" title="删除组合">
+              删除
             </button>`
               : ""
           }
@@ -124,7 +124,9 @@ class UIManager {
 
     history.forEach((record) => {
       const historyItem = this.createHistoryItem(record);
-      this.elements.historyList.appendChild(historyItem);
+      if (historyItem) {
+        this.elements.historyList.appendChild(historyItem);
+      }
     });
   }
 
@@ -133,22 +135,41 @@ class UIManager {
     const historyItem = document.createElement("div");
     historyItem.className = "history-item";
 
-    const time = new Date(record.timestamp);
+    // 兼容两种数据结构
+    let title, description, group, timestamp;
+    
+    if (record.item && record.item.title) {
+      // data-manager.js 的结构: { id, item: { title, description }, group, timestamp }
+      title = record.item.title;
+      description = record.item.description;
+      group = record.group;
+      timestamp = record.timestamp;
+    } else if (record.title) {
+      // script.js 的结构: { title, description, group, time, randomSeed }
+      title = record.title;
+      description = record.description;
+      group = record.group;
+      timestamp = record.time;
+    } else {
+      // 无效数据，跳过
+      console.warn('无效的历史记录数据:', record);
+      return null;
+    }
+
+    const time = new Date(timestamp);
     const timeStr = time.toLocaleString("zh-CN");
     const timeAgo = Utils.getTimeAgo(time);
 
     historyItem.innerHTML = `
       <div class="history-header">
-        <div class="history-title">${Utils.escapeHtml(record.item.title)}</div>
+        <div class="history-title">${Utils.escapeHtml(title)}</div>
         <div class="history-time">
           <div class="time-ago">${timeAgo}</div>
           <div class="time-full">${timeStr}</div>
         </div>
       </div>
-      <div class="history-group">组合：${Utils.escapeHtml(record.group)}</div>
-      <div class="history-description">${Utils.escapeHtml(
-        record.item.description
-      )}</div>
+      <div class="history-group">组合：${Utils.escapeHtml(group)}</div>
+      <div class="history-description">${Utils.escapeHtml(description)}</div>
     `;
 
     return historyItem;
@@ -189,8 +210,8 @@ class UIManager {
                  item ? Utils.escapeHtml(item.description) : ""
                }" required>
       </div>
-      <button type="button" class="remove-item-btn" title="删除选项">
-        <span class="icon">🗑️</span>
+      <button type="button" class="btn btn-danger btn-sm remove-item-btn" title="删除选项">
+        删除
       </button>
     `;
 

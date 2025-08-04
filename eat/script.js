@@ -3,7 +3,12 @@ function seedRandom(seed) {
   let m = 0x80000000; // 2**31
   let a = 1103515245;
   let c = 12345;
-  let state = seed ? seed : Math.floor(Math.random() * (m - 1));
+  
+  // 如果没有提供种子，使用复合随机种子
+  let state = seed;
+  if (!state) {
+    state = generateCompositeSeed();
+  }
 
   return function () {
     state = (a * state + c) % m;
@@ -11,21 +16,33 @@ function seedRandom(seed) {
   };
 }
 
-// 生成复合随机种子
+// 生成复合随机种子 - 增强版
 function generateCompositeSeed() {
   const currentTime = Date.now();
-  const timeOfDay = new Date().getTime();
+  const now = new Date();
+  const timeOfDay = now.getTime();
+  const milliseconds = now.getMilliseconds();
   const screenWidth = window.innerWidth;
   const screenHeight = window.innerHeight;
   const userAgent = navigator.userAgent;
 
-  // 组合多个随机元素
+  // 组合多个随机元素，重点突出时间和鼠标坐标
   let compositeSeed = currentTime;
-  compositeSeed += clickPosition.x * 10000;
-  compositeSeed += clickPosition.y * 10000;
-  compositeSeed += buttonPressTime;
+  
+  // 添加精确的鼠标坐标信息
+  compositeSeed += clickPosition.x * 100000;
+  compositeSeed += clickPosition.y * 100000;
+  
+  // 添加时间信息（毫秒级精度）
   compositeSeed += timeOfDay;
+  compositeSeed += milliseconds * 1000;
+  
+  // 添加屏幕尺寸信息
   compositeSeed += screenWidth * screenHeight;
+  
+  // 添加鼠标位置和时间的交叉组合
+  compositeSeed += (clickPosition.x + clickPosition.y) * (currentTime % 100000);
+  compositeSeed += (clickPosition.x * clickPosition.y) * (milliseconds % 1000);
 
   // 添加用户代理字符串的哈希
   let userAgentHash = 0;
@@ -36,23 +53,197 @@ function generateCompositeSeed() {
   }
   compositeSeed += userAgentHash;
 
-  // 添加鼠标位置和时间的组合
-  compositeSeed += (clickPosition.x + clickPosition.y) * (currentTime % 10000);
+  // 添加额外的随机性：使用Math.random()作为额外的随机因子
+  compositeSeed += Math.floor(Math.random() * 1000000);
+  
+  // 添加性能时间戳（如果可用）
+  if (performance && performance.now) {
+    compositeSeed += Math.floor(performance.now() * 1000);
+  }
 
-  console.log("复合随机种子生成：", {
+  // 新增：添加更多随机因素
+  // 1. 添加当前页面滚动位置
+  compositeSeed += window.pageYOffset * 1000;
+  compositeSeed += window.pageXOffset * 1000;
+  
+  // 2. 添加当前URL的哈希值
+  if (window.location.hash) {
+    let urlHash = 0;
+    for (let i = 0; i < window.location.hash.length; i++) {
+      urlHash = ((urlHash << 5) - urlHash + window.location.hash.charCodeAt(i)) & 0xffffffff;
+    }
+    compositeSeed += urlHash;
+  }
+  
+  // 3. 添加当前文档标题的哈希值
+  let titleHash = 0;
+  const title = document.title;
+  for (let i = 0; i < title.length; i++) {
+    titleHash = ((titleHash << 5) - titleHash + title.charCodeAt(i)) & 0xffffffff;
+  }
+  compositeSeed += titleHash;
+  
+  // 4. 添加当前时间戳的微秒部分（如果可用）
+  if (performance && performance.now) {
+    const microSeconds = Math.floor((performance.now() % 1) * 1000000);
+    compositeSeed += microSeconds;
+  }
+  
+  // 5. 添加内存使用情况（如果可用）
+  if (performance && performance.memory) {
+    compositeSeed += performance.memory.usedJSHeapSize;
+    compositeSeed += performance.memory.totalJSHeapSize;
+  }
+
+  console.log("增强版复合随机种子生成：", {
     currentTime,
     clickPosition,
-    buttonPressTime,
     timeOfDay,
+    milliseconds,
     screenSize: `${screenWidth}x${screenHeight}`,
     userAgentHash,
+    scrollPosition: `${window.pageYOffset},${window.pageXOffset}`,
+    urlHash: window.location.hash,
+    titleHash,
+    microSeconds: performance && performance.now ? Math.floor((performance.now() % 1) * 1000000) : 'N/A',
+    memoryUsage: performance && performance.memory ? `${performance.memory.usedJSHeapSize}/${performance.memory.totalJSHeapSize}` : 'N/A',
     finalSeed: compositeSeed,
   });
 
   return compositeSeed;
 }
 
+// 创建动态选项池 - 新增函数
+function createDynamicItemPool(originalItems, randomSeed) {
+  const seededRandom = seedRandom(randomSeed);
+  
+  // 创建原始选项的深拷贝
+  let dynamicPool = JSON.parse(JSON.stringify(originalItems));
+  
+  // 计算要插入的随机选项数量（1-3个）
+  const insertCount = Math.floor(seededRandom() * 3) + 1;
+  
+  console.log(`准备插入 ${insertCount} 个随机选项到动态池中`);
+  
+  // 从原始选项中随机选择要插入的选项
+  for (let i = 0; i < insertCount; i++) {
+    // 随机选择一个原始选项
+    const randomIndex = Math.floor(seededRandom() * originalItems.length);
+    const selectedItem = originalItems[randomIndex];
+    
+    // 创建副本并添加随机标识
+    const clonedItem = {
+      ...selectedItem,
+      id: `${selectedItem.id}_random_${i}_${Date.now()}`,
+      title: `${selectedItem.title}`,
+      description: `${selectedItem.description}`,
+      isRandomInsert: true,
+      originalId: selectedItem.id
+    };
+    
+    // 随机插入位置（0 到当前池长度之间）
+    const insertPosition = Math.floor(seededRandom() * (dynamicPool.length + 1));
+    dynamicPool.splice(insertPosition, 0, clonedItem);
+    
+    console.log(`在位置 ${insertPosition} 插入随机选项: ${clonedItem.title}`);
+  }
+  
+  console.log(`动态选项池创建完成，总选项数: ${dynamicPool.length} (原始: ${originalItems.length})`);
+  return dynamicPool;
+}
+
+// 改进的随机结果计算 - 增强版
+function calculateRandomResult(dynamicPool, randomSeed) {
+  const seededRandom = seedRandom(randomSeed);
+  
+  // 使用更复杂的随机算法
+  let finalIndex = 0;
+  
+  // 方法1: 基础随机选择
+  const baseRandom = Math.floor(seededRandom() * dynamicPool.length);
+  
+  // 方法2: 基于时间的加权随机
+  const timeWeight = (Date.now() % 1000) / 1000; // 0-1之间的时间权重
+  const timeWeightedIndex = Math.floor(timeWeight * dynamicPool.length);
+  
+  // 方法3: 基于鼠标位置的加权随机
+  const mouseWeight = ((clickPosition.x + clickPosition.y) % 1000) / 1000;
+  const mouseWeightedIndex = Math.floor(mouseWeight * dynamicPool.length);
+  
+  // 方法4: 基于随机种子的哈希计算
+  const hashIndex = Math.abs(randomSeed) % dynamicPool.length;
+  
+  // 方法5: 新增 - 基于页面滚动位置的随机
+  const scrollWeight = ((window.pageYOffset + window.pageXOffset) % 1000) / 1000;
+  const scrollWeightedIndex = Math.floor(scrollWeight * dynamicPool.length);
+  
+  // 方法6: 新增 - 基于性能时间戳的随机
+  const performanceWeight = performance && performance.now ? (performance.now() % 1000) / 1000 : 0;
+  const performanceWeightedIndex = Math.floor(performanceWeight * dynamicPool.length);
+  
+  // 方法7: 新增 - 基于内存使用情况的随机
+  const memoryWeight = performance && performance.memory ? 
+    (performance.memory.usedJSHeapSize % 1000) / 1000 : 0;
+  const memoryWeightedIndex = Math.floor(memoryWeight * dynamicPool.length);
+  
+  // 方法8: 新增 - 基于URL哈希的随机
+  const urlWeight = window.location.hash ? 
+    (window.location.hash.length % 1000) / 1000 : 0;
+  const urlWeightedIndex = Math.floor(urlWeight * dynamicPool.length);
+  
+  // 综合多种方法，增加随机性
+  const method1 = seededRandom();
+  const method2 = seededRandom();
+  const method3 = seededRandom();
+  const method4 = seededRandom();
+  const method5 = seededRandom();
+  const method6 = seededRandom();
+  const method7 = seededRandom();
+  const method8 = seededRandom();
+  
+  // 加权平均 - 使用更多方法
+  finalIndex = Math.floor(
+    (baseRandom * method1 + 
+     timeWeightedIndex * method2 + 
+     mouseWeightedIndex * method3 + 
+     hashIndex * method4 +
+     scrollWeightedIndex * method5 +
+     performanceWeightedIndex * method6 +
+     memoryWeightedIndex * method7 +
+     urlWeightedIndex * method8) / 
+    (method1 + method2 + method3 + method4 + method5 + method6 + method7 + method8)
+  );
+  
+  // 确保索引在有效范围内
+  finalIndex = Math.max(0, Math.min(finalIndex, dynamicPool.length - 1));
+  
+  const result = dynamicPool[finalIndex];
+  
+  console.log("增强版随机结果计算详情:", {
+    baseRandom,
+    timeWeightedIndex,
+    mouseWeightedIndex,
+    hashIndex,
+    scrollWeightedIndex,
+    performanceWeightedIndex,
+    memoryWeightedIndex,
+    urlWeightedIndex,
+    method1, method2, method3, method4, method5, method6, method7, method8,
+    finalIndex,
+    result: result.title,
+    isRandomInsert: result.isRandomInsert || false,
+    poolSize: dynamicPool.length
+  });
+  
+  return {
+    item: result,
+    index: finalIndex,
+    isRandomInsert: result.isRandomInsert || false
+  };
+}
+
 // 全局变量
+let dataManager = null; // 数据管理器实例
 let appData = {
   groups: [],
   currentGroup: "default",
@@ -63,36 +254,108 @@ let appData = {
     flipDuration: 800, // 翻页动画持续时间（毫秒）
     pauseDuration: 500, // 每个卡片展示后的停顿时间（毫秒）
     totalDuration: 15000, // 抽奖总持续时间（毫秒）- 默认 15 秒
-    longPressDelay: 500, // 长按延迟时间（毫秒）
-    maxLongPressBonus: 5000, // 最大长按延长时间（毫秒）- 5 秒
   },
+  // 速度档位配置
+  speedLevels: {
+    slow: {
+      name: "慢速",
+      flipDuration: 1200, // 翻页动画持续时间（毫秒）
+      pauseDuration: 800, // 每个卡片展示后的停顿时间（毫秒）
+      totalDuration: 20000, // 抽奖总持续时间（毫秒）- 20 秒
+      description: "慢速模式，动画更慢，总时长20秒"
+    },
+    normal: {
+      name: "正常",
+      flipDuration: 800, // 翻页动画持续时间（毫秒）
+      pauseDuration: 500, // 每个卡片展示后的停顿时间（毫秒）
+      totalDuration: 15000, // 抽奖总持续时间（毫秒）- 15 秒
+      description: "正常模式，平衡的速度和时长"
+    },
+    fast: {
+      name: "快速",
+      flipDuration: 500, // 翻页动画持续时间（毫秒）
+      pauseDuration: 300, // 每个卡片展示后的停顿时间（毫秒）
+      totalDuration: 10000, // 抽奖总持续时间（毫秒）- 10 秒
+      description: "快速模式，动画更快，总时长10秒"
+    }
+  },
+  currentSpeedLevel: "normal" // 当前速度档位，默认为正常
 };
 
 let isDrawing = false;
 let drawInterval = null;
-let longPressTimer = null;
-let longPressStartTime = 0;
-let longPressDuration = 0; // 长按持续时间
 let randomSeed = 0; // 随机数种子
 let clickPosition = { x: 0, y: 0 }; // 点击位置
-let buttonPressTime = 0; // 按钮按下时间
 
 let currentCardIndex = 0;
-let isLongPressing = false;
 let currentDisplayedItem = null; // 当前显示的卡片项目
 
 // 初始化应用
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
+  // 初始化数据管理器
+  dataManager = new DataManager();
+  await dataManager.load();
+  
+  // 同步数据到本地变量
+  syncDataFromManager();
+  
   updateAnimationConfig(); // 更新动画配置
   setupResponsiveFeatures();
   setupButtonEvents(); // 设置按钮事件
 
   // 立即初始化 result-card 的样式
   initializeResultCard();
+  
+  // 更新按钮提示文本
+  updateButtonTip();
 
-  // 加载数据并显示第一张卡片
-  loadData();
+  // 加载数据并显示最后一次抽奖结果或第一张卡片
+  showLastDrawResult();
+  
+  // 数据加载完成后更新卡片内容区域位置
+  setTimeout(() => {
+    updateCardContentPosition();
+  }, 100);
+  
+  // 监听数据变化事件（来自管理页面）
+  setupDataChangeListener();
+  
+  // 执行随机性验证测试
+  setTimeout(() => {
+    console.log("🎲 系统初始化完成，开始随机性验证...");
+    validateRandomness();
+    testDataSync();
+  }, 2000);
 });
+
+// 从数据管理器同步数据到本地变量
+function syncDataFromManager() {
+  const managerData = dataManager.getData();
+  // 保留动画配置
+  const currentAnimationConfig = appData.animationConfig;
+  
+  appData = {
+    ...appData,
+    groups: managerData.groups || [],
+    currentGroup: managerData.currentGroup || "default",
+    lastDrawTime: managerData.lastDrawTime || null,
+    drawHistory: managerData.drawHistory || [],
+    animationConfig: currentAnimationConfig, // 保留动画配置
+  };
+}
+
+// 保存数据到数据管理器
+function saveData() {
+  // 同步本地数据到管理器
+  const managerData = dataManager.getData();
+  managerData.groups = appData.groups;
+  managerData.currentGroup = appData.currentGroup;
+  managerData.lastDrawTime = appData.lastDrawTime;
+  managerData.drawHistory = appData.drawHistory;
+  
+  // 保存数据
+  dataManager.save();
+}
 
 // 初始化 result-card 的样式
 function initializeResultCard() {
@@ -114,7 +377,7 @@ function setupButtonEvents() {
   // 点击事件 - 立即开始抽奖
   startBtn.addEventListener("click", function (e) {
     e.preventDefault();
-    if (!isDrawing && !isLongPressing) {
+    if (!isDrawing) {
       console.log("点击开始抽奖");
       // 记录点击位置
       clickPosition = { x: e.clientX, y: e.clientY };
@@ -122,100 +385,129 @@ function setupButtonEvents() {
     }
   });
 
-  // 鼠标按下事件 - 开始长按
-  startBtn.addEventListener("mousedown", function (e) {
-    e.preventDefault();
-    if (!isDrawing) {
-      console.log("鼠标按下，开始长按检测");
-      // 记录按下位置和时间
-      clickPosition = { x: e.clientX, y: e.clientY };
-      buttonPressTime = Date.now();
-      startLongPress();
-    }
-  });
-
-  // 鼠标松开事件 - 结束长按
-  startBtn.addEventListener("mouseup", function (e) {
-    e.preventDefault();
-    console.log("鼠标松开，结束长按");
-    endLongPress();
-  });
-
-  // 鼠标离开事件 - 结束长按
-  startBtn.addEventListener("mouseleave", function (e) {
-    e.preventDefault();
-    console.log("鼠标离开，结束长按");
-    endLongPress();
-  });
-
-  // 触摸开始事件 - 开始长按
-  startBtn.addEventListener(
-    "touchstart",
-    function (e) {
-      e.preventDefault();
-      if (!isDrawing) {
-        console.log("触摸开始，开始长按检测");
-        // 记录触摸位置和时间
-        const touch = e.touches[0];
-        clickPosition = { x: touch.clientX, y: touch.clientY };
-        buttonPressTime = Date.now();
-        startLongPress();
-      }
-    },
-    { passive: false }
-  );
-
-  // 触摸结束事件 - 结束长按
-  startBtn.addEventListener(
-    "touchend",
-    function (e) {
-      e.preventDefault();
-      console.log("触摸结束，结束长按");
-      endLongPress();
-    },
-    { passive: false }
-  );
-
-  // 触摸取消事件 - 结束长按
-  startBtn.addEventListener(
-    "touchcancel",
-    function (e) {
-      e.preventDefault();
-      console.log("触摸取消，结束长按");
-      endLongPress();
-    },
-    { passive: false }
-  );
-
   // 防止移动端长按菜单
   startBtn.addEventListener("contextmenu", function (e) {
     e.preventDefault();
   });
+  
+  // 设置速度选择器事件
+  setupSpeedSelector();
 }
 
-// 点击开始抽奖
+// 点击开始抽奖 - 增强版
 function startDrawWithClick() {
   if (isDrawing) {
     console.log("动画正在进行中，跳过");
     return;
   }
 
-  console.log("点击开始抽奖");
+  console.log("🎲 点击开始抽奖 - 增强随机性模式");
 
-  // 生成复合随机种子
+  // 第一次生成复合随机种子
   randomSeed = generateCompositeSeed();
+  
+  // 添加额外的随机延迟，确保每次点击都有不同的时间戳
+  const randomDelay = Math.floor(Math.random() * 100) + 10; // 10-110ms的随机延迟
+  
+  setTimeout(() => {
+    // 第二次更新随机种子，增加随机性
+    randomSeed = generateCompositeSeed();
+    
+    // 第三次生成最终随机种子，确保最大随机性
+    setTimeout(() => {
+      randomSeed = generateCompositeSeed();
+      console.log("🎯 最终随机种子：", randomSeed);
+      console.log("🎲 随机性验证：种子变化幅度", Math.abs(randomSeed - generateCompositeSeed()));
+      
+      // 开始抽奖
+      startDraw();
+    }, Math.floor(Math.random() * 30)); // 0-30ms的额外随机延迟
+    
+  }, randomDelay);
+}
 
-  // 开始抽奖
-  startDraw();
+// 设置速度选择器
+function setupSpeedSelector() {
+  const speedButtons = document.querySelectorAll('.speed-btn');
+  
+  speedButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      const speedLevel = this.getAttribute('data-speed');
+      setSpeedLevel(speedLevel);
+    });
+  });
+  
+  // 初始化当前速度档位的显示
+  updateSpeedSelectorDisplay();
+}
+
+// 设置速度档位
+function setSpeedLevel(speedLevel) {
+  if (!appData.speedLevels[speedLevel]) {
+    console.error('无效的速度档位：', speedLevel);
+    return;
+  }
+  
+  appData.currentSpeedLevel = speedLevel;
+  
+  // 更新动画配置
+  updateAnimationConfig();
+  
+  // 更新UI显示
+  updateSpeedSelectorDisplay();
+  
+  // 更新按钮提示文本
+  updateButtonTip();
+  
+  console.log('速度档位已设置为：', speedLevel, appData.speedLevels[speedLevel].name);
+}
+
+// 更新速度选择器显示
+function updateSpeedSelectorDisplay() {
+  const speedButtons = document.querySelectorAll('.speed-btn');
+  
+  speedButtons.forEach(button => {
+    const speedLevel = button.getAttribute('data-speed');
+    if (speedLevel === appData.currentSpeedLevel) {
+      button.classList.add('active');
+    } else {
+      button.classList.remove('active');
+    }
+  });
+}
+
+// 更新按钮提示文本
+function updateButtonTip() {
+  const buttonTip = document.getElementById('buttonTip');
+  const currentSpeed = appData.speedLevels[appData.currentSpeedLevel];
+  const durationSeconds = Math.round(currentSpeed.totalDuration / 1000);
+  
+  buttonTip.textContent = `点击立即开始 (${durationSeconds}秒)`;
 }
 
 // 更新动画配置
 function updateAnimationConfig() {
   const root = document.documentElement;
+  const currentSpeed = appData.speedLevels[appData.currentSpeedLevel];
+  
+  // 更新CSS变量
   root.style.setProperty(
     "--flip-duration",
-    `${appData.animationConfig.flipDuration}ms`
+    `${currentSpeed.flipDuration}ms`
   );
+  
+  // 更新动画配置
+  appData.animationConfig.flipDuration = currentSpeed.flipDuration;
+  appData.animationConfig.pauseDuration = currentSpeed.pauseDuration;
+  appData.animationConfig.totalDuration = currentSpeed.totalDuration;
+  
+  console.log("动画配置已更新：", {
+    speedLevel: appData.currentSpeedLevel,
+    name: currentSpeed.name,
+    flipDuration: currentSpeed.flipDuration,
+    pauseDuration: currentSpeed.pauseDuration,
+    totalDuration: currentSpeed.totalDuration
+  });
 }
 
 // 更新动画设置 UI
@@ -239,6 +531,107 @@ function setupResponsiveFeatures() {
   updateLayoutForOrientation();
 }
 
+// 确保 card-content-wrapper 相对于 card-display-area 保持固定比例
+function updateCardContentPosition() {
+  const cardDisplayArea = document.querySelector('.card-display-area');
+  const cardContentWrapper = document.querySelector('.card-content-wrapper');
+  
+  if (!cardDisplayArea || !cardContentWrapper) return;
+  
+  // 获取 card-display-area 的尺寸
+  const displayAreaRect = cardDisplayArea.getBoundingClientRect();
+  const displayAreaWidth = displayAreaRect.width;
+  const displayAreaHeight = displayAreaRect.height;
+  
+  // 计算 card-content-wrapper 应该的尺寸和位置
+  // 基于固定的百分比关系
+  const wrapperWidth = displayAreaWidth * 0.28; // 28%
+  const wrapperHeight = displayAreaHeight * 0.25; // 25%
+  const wrapperLeft = displayAreaWidth * 0.21; // 21% margin-left
+  const wrapperBottom = displayAreaHeight * 0.30; // 30% margin-bottom
+  
+  // 确保 card-content-wrapper 的尺寸和位置正确
+  cardContentWrapper.style.width = `${wrapperWidth}px`;
+  cardContentWrapper.style.height = `${wrapperHeight}px`;
+  cardContentWrapper.style.left = `${wrapperLeft}px`;
+  cardContentWrapper.style.bottom = `${wrapperBottom}px`;
+  cardContentWrapper.style.marginLeft = '0';
+  cardContentWrapper.style.marginBottom = '0';
+  
+  // 更新文字大小
+  applyTextScale();
+  
+  console.log('卡片内容区域位置和文字缩放已更新:', {
+    displayAreaWidth,
+    displayAreaHeight,
+    wrapperWidth,
+    wrapperHeight,
+    wrapperLeft,
+    wrapperBottom,
+    scaleFactor: calculateScaleFactor()
+  });
+}
+
+// 计算缩放因子
+function calculateScaleFactor() {
+  const displayAreaRect = document.querySelector('.card-display-area').getBoundingClientRect();
+  const baseWidth = 500;
+  const baseHeight = 375;
+  const widthScale = displayAreaRect.width / baseWidth;
+  const heightScale = displayAreaRect.height / baseHeight;
+  const scaleFactor = Math.min(widthScale, heightScale);
+  return Math.max(0.6, Math.min(1.5, scaleFactor));
+}
+
+// 应用文字缩放
+function applyTextScale() {
+  const cardContentWrapper = document.querySelector('.card-content-wrapper');
+  if (cardContentWrapper) {
+    const scaleFactor = calculateScaleFactor();
+    updateTextScale(cardContentWrapper, scaleFactor);
+  }
+}
+
+// 更新文字缩放
+function updateTextScale(container, scaleFactor) {
+  // 更新容器内所有文字元素的大小
+  const titleElements = container.querySelectorAll('h2, h3');
+  const descriptionElements = container.querySelectorAll('p');
+  
+  // 基准字体大小
+  const baseTitleSize = 0.6; // 对应 CSS 中的 0.6em
+  const baseDescriptionSize = 0.425; // 对应 CSS 中的 0.425em
+  
+  // 更新标题文字大小
+  titleElements.forEach(element => {
+    const newSize = baseTitleSize * scaleFactor;
+    element.style.fontSize = `${newSize}em`;
+  });
+  
+  // 更新描述文字大小
+  descriptionElements.forEach(element => {
+    const newSize = baseDescriptionSize * scaleFactor;
+    element.style.fontSize = `${newSize}em`;
+  });
+  
+  // 同时更新 result-card 内的文字
+  const resultCard = document.querySelector('.result-card');
+  if (resultCard) {
+    const resultTitle = resultCard.querySelector('h2');
+    const resultDescription = resultCard.querySelector('p');
+    
+    if (resultTitle) {
+      const newSize = baseTitleSize * scaleFactor;
+      resultTitle.style.fontSize = `${newSize}em`;
+    }
+    
+    if (resultDescription) {
+      const newSize = baseDescriptionSize * scaleFactor;
+      resultDescription.style.fontSize = `${newSize}em`;
+    }
+  }
+}
+
 // 根据屏幕方向更新布局
 function updateLayoutForOrientation() {
   const isLandscape = window.innerWidth > window.innerHeight;
@@ -256,83 +649,15 @@ function updateLayoutForOrientation() {
     // 桌面模式
     document.body.classList.remove("landscape-mobile", "portrait-mobile");
   }
+  
+  // 更新卡片内容区域的位置
+  setTimeout(() => {
+    updateCardContentPosition();
+  }, 100);
 }
 
 // 加载数据
-async function loadData() {
-  try {
-    const response = await fetch("data.json");
-    const data = await response.json();
 
-    // 保存当前的 animationConfig
-    const currentAnimationConfig = appData.animationConfig;
-
-    // 合并数据，但保留 animationConfig
-    appData = { ...appData, ...data };
-    appData.animationConfig = currentAnimationConfig;
-
-    // 检查本地存储
-    const localData = localStorage.getItem("eatAppData");
-    if (localData) {
-      const local = JSON.parse(localData);
-      // 再次保存 animationConfig
-      const savedAnimationConfig = appData.animationConfig;
-      appData = { ...appData, ...local };
-      appData.animationConfig = savedAnimationConfig;
-    }
-
-    updateUI();
-    // 数据加载完成后立即显示第一张卡片
-    showFirstCard();
-  } catch (error) {
-    console.error("加载数据失败:", error);
-    // 使用默认数据
-    loadDefaultData();
-    // 默认数据加载后也显示第一张卡片
-    showFirstCard();
-  }
-}
-
-// 加载默认数据
-function loadDefaultData() {
-  appData = {
-    groups: [
-      {
-        id: "default",
-        name: "默认组合",
-        items: [
-          { id: "1", title: "火锅", description: "麻辣鲜香，温暖身心" },
-          { id: "2", title: "烤肉", description: "滋滋作响，香气四溢" },
-          { id: "3", title: "寿司", description: "新鲜美味，精致可口" },
-          { id: "4", title: "披萨", description: "芝士拉丝，意式风情" },
-          { id: "5", title: "炸鸡", description: "外酥内嫩，香脆可口" },
-          { id: "6", title: "面条", description: "劲道爽滑，汤鲜味美" },
-          { id: "7", title: "汉堡", description: "多汁肉饼，搭配芝士" },
-          { id: "8", title: "沙拉", description: "清爽健康，营养均衡" },
-        ],
-      },
-    ],
-    currentGroup: "default",
-    lastDrawTime: null,
-    drawHistory: [],
-    // 动画配置
-    animationConfig: {
-      flipDuration: 800, // 翻页动画持续时间（毫秒）
-      pauseDuration: 500, // 每个卡片展示后的停顿时间（毫秒）
-      totalDuration: 15000, // 抽奖总持续时间（毫秒）- 默认15秒
-      longPressDelay: 500, // 长按延迟时间（毫秒）
-      maxLongPressBonus: 5000, // 最大长按延长时间（毫秒）- 5秒
-    },
-  };
-
-  // 更新UI
-  updateUI();
-}
-
-// 保存数据到本地存储
-function saveData() {
-  localStorage.setItem("eatAppData", JSON.stringify(appData));
-}
 
 // 显示第一个食品
 function showFirstCard() {
@@ -351,108 +676,7 @@ function showFirstCard() {
   }
 }
 
-// 长按开始
-function startLongPress() {
-  console.log("长按开始，isDrawing 状态：", isDrawing);
 
-  // 强制重置状态（防止状态卡住）
-  if (isDrawing && !drawInterval) {
-    console.log("检测到状态异常，强制重置");
-    isDrawing = false;
-  }
-
-  if (isDrawing) {
-    console.log("动画正在进行中，跳过长按开始");
-    return;
-  }
-
-  isLongPressing = true;
-  longPressStartTime = Date.now();
-  longPressDuration = 0;
-
-  console.log("长按开始时间：", longPressStartTime);
-
-  // 显示进度指示器
-  const progressIndicator = document.getElementById("progressIndicator");
-  const progressText = document.getElementById("progressText");
-  const progressFill = document.getElementById("progressFill");
-  progressIndicator.style.display = "flex";
-  progressText.textContent = "准备中...";
-  progressFill.style.width = "0%";
-
-  // 开始长按计时
-  longPressTimer = setTimeout(() => {
-    console.log("长按计时器触发，isLongPressing 状态：", isLongPressing);
-    if (isLongPressing) {
-      console.log("开始执行 startDraw");
-      // 计算长按持续时间
-      longPressDuration = Date.now() - longPressStartTime;
-      console.log("长按持续时间：", longPressDuration, "ms");
-      // 生成复合随机种子
-      randomSeed = generateCompositeSeed();
-      startDraw();
-    } else {
-      console.log("长按已结束，不执行 startDraw");
-    }
-  }, appData.animationConfig.longPressDelay); // 使用配置的长按延迟时间
-
-  // 更新进度条
-  updateProgressBar();
-}
-
-// 更新进度条
-function updateProgressBar() {
-  if (!isLongPressing) return;
-
-  const elapsed = Date.now() - longPressStartTime;
-  const maxDuration =
-    appData.animationConfig.longPressDelay +
-    appData.animationConfig.maxLongPressBonus;
-  const progress = Math.min((elapsed / maxDuration) * 100, 100);
-
-  const progressFill = document.getElementById("progressFill");
-  const progressText = document.getElementById("progressText");
-
-  progressFill.style.width = progress + "%";
-
-  // 更新提示文本
-  if (elapsed < appData.animationConfig.longPressDelay) {
-    progressText.textContent = "准备中...";
-  } else {
-    const bonusTime = Math.min(
-      elapsed - appData.animationConfig.longPressDelay,
-      appData.animationConfig.maxLongPressBonus
-    );
-    const bonusSeconds = (bonusTime / 1000).toFixed(1);
-    progressText.textContent = `延长 ${bonusSeconds}s`;
-  }
-
-  if (progress < 100) {
-    requestAnimationFrame(updateProgressBar);
-  }
-}
-
-// 长按结束
-function endLongPress() {
-  if (!isLongPressing) return;
-
-  console.log("长按结束");
-
-  isLongPressing = false;
-  clearTimeout(longPressTimer);
-  longPressTimer = null;
-
-  // 隐藏进度指示器
-  const progressIndicator = document.getElementById("progressIndicator");
-  progressIndicator.style.display = "none";
-
-  // 如果已经开始抽取，停止
-  if (isDrawing) {
-    endDraw();
-  } else {
-    console.log("没有正在进行的动画，状态已重置");
-  }
-}
 
 // 开始抽取
 function startDraw() {
@@ -480,26 +704,14 @@ function startDraw() {
 
   // 计算实际抽奖时间
   const baseDuration = appData.animationConfig.totalDuration; // 基础15秒
+  
+  // 使用随机种子生成 -3 到 +5 秒的随机时间调整
+  const seededRandom = seedRandom(randomSeed);
+  const timeAdjustmentSeconds = (seededRandom() * 8) - 3; // 0-8 减3 = -3到+5
+  const timeAdjustmentMs = Math.round(timeAdjustmentSeconds * 1000);
+  const actualDuration = Math.max(5000, baseDuration + timeAdjustmentMs); // 最少5秒
 
-  // 为延长时间创建独立的随机种子，确保延长时间真正随机
-  const timeRandomSeed =
-    (randomSeed || 0) + Date.now() + Math.random() * 1000000;
-  const timeSeededRandom = seedRandom(timeRandomSeed);
-
-  const bonusTime = Math.floor(
-    timeSeededRandom() * appData.animationConfig.maxLongPressBonus
-  ); // 0-5秒随机延长
-  const actualDuration = baseDuration + bonusTime;
-
-  console.log(
-    "实际抽奖时间：",
-    actualDuration,
-    "ms (基础:",
-    baseDuration,
-    "ms + 随机延长:",
-    bonusTime,
-    "ms)"
-  );
+  console.log("实际抽奖时间：", actualDuration, "ms (基础:", baseDuration, "ms + 调整:", timeAdjustmentMs, "ms)");
 
   // 启动抽奖进度条动画
   startDrawProgressBar(actualDuration);
@@ -565,14 +777,57 @@ function startCardRolling(duration) {
   resultCard.style.display = "none";
   cardContainer.style.display = "flex";
 
-  const items = currentGroup.items;
+  const originalItems = currentGroup.items;
 
-  // 使用随机种子来影响初始索引、转动速度和最终结果
+  // 创建动态选项池
+  const dynamicPool = createDynamicItemPool(originalItems, randomSeed);
+  
+  // 使用改进的随机算法计算最终结果
+  const randomResult = calculateRandomResult(dynamicPool, randomSeed);
+  const finalResult = randomResult.item;
+  
+  console.log("动态抽奖结果：", {
+    originalItemsCount: originalItems.length,
+    dynamicPoolCount: dynamicPool.length,
+    finalResult: finalResult.title,
+    isRandomInsert: randomResult.isRandomInsert,
+    finalIndex: randomResult.index
+  });
+
+  // 输出动态池的详细信息
+  console.log("动态选项池详情：", dynamicPool.map((item, index) => ({
+    index,
+    title: item.title,
+    isRandomInsert: item.isRandomInsert || false,
+    originalId: item.originalId || null
+  })));
+
+  // 使用随机种子来影响初始索引、转动速度和动画参数
   const seededRandom = seedRandom(randomSeed);
 
-  // 计算随机初始索引
-  let currentIndex = Math.floor(seededRandom() * items.length);
-  let nextIndex = (currentIndex + 1) % items.length;
+  // 验证随机性：生成多个随机数确保种子工作正常
+  const testRandom1 = seededRandom();
+  const testRandom2 = seededRandom();
+  const testRandom3 = seededRandom();
+  
+  console.log("随机性验证：", {
+    seed: randomSeed,
+    test1: testRandom1,
+    test2: testRandom2,
+    test3: testRandom3,
+    variance: Math.abs(testRandom1 - testRandom2) + Math.abs(testRandom2 - testRandom3)
+  });
+
+  // 计算随机初始索引（基于动态池）
+  let currentIndex = Math.floor(seededRandom() * dynamicPool.length);
+  let nextIndex = (currentIndex + 1) % dynamicPool.length;
+  
+  console.log("动态抽奖开始：", {
+    initialIndex: currentIndex,
+    initialItem: dynamicPool[currentIndex].title,
+    finalResult: finalResult.title,
+    finalIndex: randomResult.index
+  });
 
   // 计算随机转动速度（基于随机种子）
   const baseSpeed = appData.animationConfig.flipDuration; // 基础翻页速度
@@ -584,6 +839,21 @@ function startCardRolling(duration) {
   const pauseVariation = seededRandom() * 0.3 + 0.85; // 0.85-1.15 倍停顿变化
   const randomPause = Math.floor(basePause * pauseVariation);
 
+  // 计算随机动画路径：决定是否跳过某些选项
+  const skipProbability = seededRandom() * 0.3; // 0-30%的概率跳过选项
+  const shouldSkipRandomly = seededRandom() < skipProbability;
+  
+  console.log("动画参数随机化：", {
+    baseSpeed,
+    speedVariation,
+    randomSpeed,
+    basePause,
+    pauseVariation,
+    randomPause,
+    skipProbability,
+    shouldSkipRandomly
+  });
+
   let drawStartTime = Date.now();
   let isAnimating = false;
 
@@ -591,8 +861,8 @@ function startCardRolling(duration) {
   cardContainer.innerHTML = "";
 
   // 创建两个卡片用于翻书效果
-  let card1 = createCard(items[currentIndex]); // 当前显示的卡片
-  let card2 = createCard(items[nextIndex]); // 下一个要显示的卡片
+  let card1 = createCard(dynamicPool[currentIndex]); // 当前显示的卡片
+  let card2 = createCard(dynamicPool[nextIndex]); // 下一个要显示的卡片
 
   card1.className = "card book-page active";
   card2.className = "card book-page next";
@@ -621,10 +891,14 @@ function startCardRolling(duration) {
   cardContainer.appendChild(card2);
 
   console.log("开始动画，随机种子：", randomSeed);
-  console.log("初始索引：", currentIndex, "项目：", items[currentIndex].title);
+  console.log("初始索引：", currentIndex, "项目：", dynamicPool[currentIndex].title);
   console.log("随机转动速度：", randomSpeed, "ms (基础：", baseSpeed, "ms)");
   console.log("随机停顿时间：", randomPause, "ms (基础：", basePause, "ms)");
   console.log("动画持续时间：", duration, "ms");
+  console.log("🎲 本次抽奖使用动态选项池，增加了随机插入选项功能！");
+
+  // 显示随机性指示器
+  showRandomnessIndicator(dynamicPool.length, originalItems.length);
 
   function performNextAnimation() {
     // 检查是否超过总持续时间
@@ -632,13 +906,13 @@ function startCardRolling(duration) {
     console.log("动画检查：已过时间", elapsed, "ms，总时间", duration, "ms");
 
     if (elapsed >= duration) {
-      // 动画结束，使用当前显示的卡片作为最终结果
-      console.log("动画结束，当前显示的最终结果：", currentDisplayedItem.title);
+      // 动画结束，使用预计算的最终结果，而不是当前显示的卡片
+      console.log("动画结束，预计算的最终结果：", finalResult.title);
 
       // 隐藏 card-container，显示最终结果
       cardContainer.style.display = "none";
-      showLastCard(currentDisplayedItem);
-      endDraw(currentDisplayedItem); // 传递最终结果给 endDraw
+      showLastCard(finalResult);
+      endDraw(finalResult); // 传递预计算的最终结果给 endDraw
       return;
     }
 
@@ -649,8 +923,8 @@ function startCardRolling(duration) {
 
     isAnimating = true;
 
-    const currentItem = items[currentIndex];
-    const nextItem = items[nextIndex];
+    const currentItem = dynamicPool[currentIndex];
+    const nextItem = dynamicPool[nextIndex];
 
     console.log(
       `准备翻页：当前显示 ${currentItem.title}，切换到 ${nextItem.title}`
@@ -663,10 +937,16 @@ function startCardRolling(duration) {
 
       // 更新当前显示的索引
       currentIndex = nextIndex;
-      currentDisplayedItem = items[currentIndex];
+      currentDisplayedItem = dynamicPool[currentIndex];
 
       // 计算下一个要显示的索引（支持循环）
-      nextIndex = (nextIndex + 1) % items.length;
+      nextIndex = (nextIndex + 1) % dynamicPool.length;
+
+      // 随机跳过选项（增加随机性）
+      if (shouldSkipRandomly && seededRandom() < 0.2) { // 20%概率跳过
+        nextIndex = (nextIndex + 1) % dynamicPool.length;
+        console.log(`随机跳过选项，直接跳到：${dynamicPool[nextIndex].title}`);
+      }
 
       // 交换卡片引用
       const temp = card1;
@@ -674,7 +954,7 @@ function startCardRolling(duration) {
       card2 = temp;
 
       console.log(
-        `翻页完成：现在显示 ${items[currentIndex].title}，停顿 ${randomPause}ms 后继续`
+        `翻页完成：现在显示 ${dynamicPool[currentIndex].title}，停顿 ${randomPause}ms 后继续`
       );
 
       // 使用随机停顿时间
@@ -811,6 +1091,10 @@ function displayCard(item) {
   card.classList.add("radial-glow");
 
   cardContainer.appendChild(card);
+  
+  // 应用文字缩放
+  applyTextScale();
+  
   console.log("显示卡片：", item.title);
 }
 
@@ -827,7 +1111,59 @@ function displayFirstCard(item) {
   setTitleFontSize(resultTitle, item.title);
 
   resultCard.style.display = "flex";
+  
+  // 应用文字缩放
+  applyTextScale();
+  
   console.log("在 result-card 中显示第一个卡片：", item.title);
+}
+
+// 显示最后一次抽奖结果
+function showLastDrawResult() {
+  console.log("🔍 showLastDrawResult 被调用，当前数据状态：", {
+    hasDrawHistory: !!appData.drawHistory,
+    drawHistoryLength: appData.drawHistory ? appData.drawHistory.length : 0,
+    drawHistory: appData.drawHistory ? appData.drawHistory.slice(0, 3) : null, // 只显示前3条记录
+    currentGroup: appData.currentGroup,
+    lastDrawTime: appData.lastDrawTime
+  });
+  
+  // 检查是否有抽奖历史
+  if (appData.drawHistory && appData.drawHistory.length > 0) {
+    // 获取最后一次抽奖记录
+    const lastDraw = appData.drawHistory[0]; // 历史记录是按时间倒序排列的
+    console.log("🎯 显示最后一次抽奖结果：", lastDraw.title);
+    
+    // 显示最后一次抽奖的结果
+    const resultCard = document.getElementById("resultCard");
+    const resultTitle = document.getElementById("resultTitle");
+    const resultDescription = document.getElementById("resultDescription");
+
+    resultTitle.textContent = lastDraw.title;
+    resultDescription.textContent = lastDraw.description;
+
+    // 根据标题长度设置字体大小
+    setTitleFontSize(resultTitle, lastDraw.title);
+
+    resultCard.style.display = "flex";
+    
+    // 应用文字缩放
+    applyTextScale();
+    
+    // 设置当前显示的项目
+    currentDisplayedItem = lastDraw;
+    
+    console.log("✅ 已显示最后一次抽奖结果：", lastDraw.title);
+  } else {
+    // 如果没有抽奖历史，显示第一个卡片
+    console.log("📋 没有抽奖历史，显示第一个卡片");
+    console.log("📊 详细数据检查：", {
+      appDataKeys: Object.keys(appData),
+      groupsCount: appData.groups ? appData.groups.length : 0,
+      currentGroupData: appData.groups ? appData.groups.find(g => g.id === appData.currentGroup) : null
+    });
+    showFirstCard();
+  }
 }
 
 // 显示最后一个卡片
@@ -843,6 +1179,10 @@ function showLastCard(item) {
   setTitleFontSize(resultTitle, item.title);
 
   resultCard.style.display = "flex";
+  
+  // 应用文字缩放
+  applyTextScale();
+  
   console.log("显示最后一个卡片：", item.title);
 }
 
@@ -869,30 +1209,38 @@ function endDraw(finalItem = null) {
   if (resultItem) {
     console.log("动画结束，最终显示：", resultItem.title);
 
+    // 处理随机插入的选项：如果是随机插入的，使用原始选项记录历史
+    let historyItem = resultItem;
+    if (resultItem.isRandomInsert && resultItem.originalId) {
+      // 找到原始选项
+      const currentGroup = appData.groups.find(
+        (g) => g.id === appData.currentGroup
+      );
+      if (currentGroup) {
+        const originalItem = currentGroup.items.find(item => item.id === resultItem.originalId);
+        if (originalItem) {
+          historyItem = originalItem;
+          console.log("随机插入选项，使用原始选项记录历史：", originalItem.title);
+        }
+      }
+    }
+
     // 显示最终结果
     showResult(resultItem);
 
-    // 记录抽取历史
+    // 记录抽取历史 - 使用DataManager的方法
     const currentGroup = appData.groups.find(
       (g) => g.id === appData.currentGroup
     );
-    if (currentGroup) {
-      const historyEntry = {
-        id: Date.now(),
-        title: resultItem.title,
-        description: resultItem.description,
-        group: currentGroup.name,
-        time: new Date().toLocaleString(),
-        randomSeed: randomSeed, // 记录随机种子
-      };
-      appData.drawHistory.unshift(historyEntry);
-
-      // 限制历史记录数量
-      if (appData.drawHistory.length > 50) {
-        appData.drawHistory = appData.drawHistory.slice(0, 50);
-      }
-
-      saveData();
+    if (currentGroup && dataManager) {
+      // 使用DataManager的addDrawRecord方法，记录原始选项
+      dataManager.addDrawRecord(historyItem, currentGroup.name);
+      
+      // 延迟同步数据到本地变量，避免立即触发数据变化事件
+      setTimeout(() => {
+        syncDataFromManager();
+        console.log('📝 抽奖历史已记录并同步：', historyItem.title);
+      }, 100);
     }
   }
 }
@@ -919,6 +1267,9 @@ function showResult(item) {
 
   // 设置当前显示的项目
   currentDisplayedItem = item;
+  
+  // 应用文字缩放
+  applyTextScale();
 }
 
 // 更新 UI
@@ -958,11 +1309,101 @@ function updateGroupSelector() {
 
 // 选择组合
 function selectGroup(groupId) {
-  appData.currentGroup = groupId;
-  saveData();
-  updateUI();
-  hideGroupSelector();
-  showFirstCard(); // 显示新组合的第一个食品
+  if (dataManager && dataManager.setCurrentGroup(groupId)) {
+    appData.currentGroup = groupId;
+    updateUI();
+    hideGroupSelector();
+    showFirstCard(); // 显示新组合的第一个食品
+  }
+}
+
+// 显示随机性指示器
+function showRandomnessIndicator(dynamicCount, originalCount) {
+  const indicator = document.getElementById("randomnessIndicator");
+  const info = document.getElementById("randomnessInfo");
+  
+  if (indicator && info) {
+    const insertCount = dynamicCount - originalCount;
+    info.textContent = `动态池: ${dynamicCount}项 (原始: ${originalCount}项, 插入: ${insertCount}项)`;
+    indicator.style.display = "flex";
+    indicator.classList.add("show");
+    
+    // 3秒后隐藏指示器
+    setTimeout(() => {
+      indicator.classList.remove("show");
+      setTimeout(() => {
+        indicator.style.display = "none";
+      }, 500);
+    }, 3000);
+  }
+}
+
+// 随机性验证函数 - 用于测试和验证随机性
+function validateRandomness() {
+  console.log("🔍 开始随机性验证测试...");
+  
+  const testResults = [];
+  const testCount = 10;
+  
+  for (let i = 0; i < testCount; i++) {
+    // 模拟点击位置
+    clickPosition = {
+      x: Math.floor(Math.random() * window.innerWidth),
+      y: Math.floor(Math.random() * window.innerHeight)
+    };
+    
+    // 生成随机种子
+    const seed1 = generateCompositeSeed();
+    const seed2 = generateCompositeSeed();
+    
+    testResults.push({
+      testIndex: i + 1,
+      clickPosition,
+      seed1,
+      seed2,
+      seedDifference: Math.abs(seed1 - seed2),
+      isDifferent: seed1 !== seed2
+    });
+  }
+  
+  // 分析结果
+  const differentSeeds = testResults.filter(r => r.isDifferent).length;
+  const averageDifference = testResults.reduce((sum, r) => sum + r.seedDifference, 0) / testCount;
+  
+  console.log("🎲 随机性验证结果:", {
+    totalTests: testCount,
+    differentSeeds,
+    uniquenessRate: (differentSeeds / testCount * 100).toFixed(2) + "%",
+    averageDifference: Math.floor(averageDifference),
+    testResults
+  });
+  
+  return {
+    uniquenessRate: differentSeeds / testCount,
+    averageDifference,
+    testResults
+  };
+}
+
+// 数据同步测试函数
+function testDataSync() {
+  console.log("🧪 开始数据同步测试...");
+  console.log("📊 当前appData状态：", {
+    hasDrawHistory: !!appData.drawHistory,
+    drawHistoryLength: appData.drawHistory ? appData.drawHistory.length : 0,
+    lastDrawTime: appData.lastDrawTime,
+    currentGroup: appData.currentGroup
+  });
+  
+  if (dataManager) {
+    const managerData = dataManager.getData();
+    console.log("📊 DataManager状态：", {
+      hasDrawHistory: !!managerData.drawHistory,
+      drawHistoryLength: managerData.drawHistory ? managerData.drawHistory.length : 0,
+      lastDrawTime: managerData.lastDrawTime,
+      currentGroup: managerData.currentGroup
+    });
+  }
 }
 
 // 显示组合选择器
@@ -977,22 +1418,28 @@ function hideGroupSelector() {
 
 // 打开管理页面
 function openManagePage() {
+  // 确保当前数据已保存
+  if (dataManager) {
+    dataManager.save();
+  }
   window.open("manage.html", "_blank");
 }
 
 // 导出数据
 function exportData() {
-  const dataStr = JSON.stringify(appData, null, 2);
-  const dataBlob = new Blob([dataStr], { type: "application/json" });
-  const url = URL.createObjectURL(dataBlob);
+  if (dataManager) {
+    const dataStr = dataManager.export();
+    const dataBlob = new Blob([dataStr], { type: "application/json" });
+    const url = URL.createObjectURL(dataBlob);
 
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = `eat-app-data-${new Date().toISOString().split("T")[0]}.json`;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  URL.revokeObjectURL(url);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `eat-app-data-${new Date().toISOString().split("T")[0]}.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  }
 }
 
 // 导入数据
@@ -1001,11 +1448,13 @@ function importData(file) {
   reader.onload = function (e) {
     try {
       const importedData = JSON.parse(e.target.result);
-      appData = { ...appData, ...importedData };
-      saveData();
-      updateUI();
-      showFirstCard();
-      alert("数据导入成功！");
+      if (dataManager) {
+        dataManager.import(importedData);
+        syncDataFromManager();
+        updateUI();
+        showLastDrawResult(); // 显示最后一次抽奖结果
+        alert("数据导入成功！");
+      }
     } catch (error) {
       alert("数据格式错误，导入失败！");
       console.error("导入数据失败：", error);
@@ -1017,11 +1466,13 @@ function importData(file) {
 // 重置数据
 function resetData() {
   if (confirm("确定要重置所有数据吗？此操作不可恢复！")) {
-    localStorage.removeItem("eatAppData");
-    loadDefaultData();
-    updateUI();
-    showFirstCard();
-    alert("数据已重置！");
+    if (dataManager) {
+      dataManager.reset();
+      syncDataFromManager();
+      updateUI();
+      showFirstCard();
+      alert("数据已重置！");
+    }
   }
 }
 
@@ -1038,12 +1489,22 @@ function handleImportFile(input) {
 document.addEventListener("keydown", function (e) {
   if (e.code === "Space" && !isDrawing) {
     e.preventDefault();
-    startLongPress();
+    // 记录当前鼠标位置（如果鼠标在页面上）
+    const mousePosition = { x: 0, y: 0 };
+    if (e.clientX !== undefined && e.clientY !== undefined) {
+      mousePosition.x = e.clientX;
+      mousePosition.y = e.clientY;
+    } else {
+      // 如果没有鼠标位置信息，使用屏幕中心
+      mousePosition.x = window.innerWidth / 2;
+      mousePosition.y = window.innerHeight / 2;
+    }
+    clickPosition = mousePosition;
+    startDrawWithClick();
   }
 
   if (e.code === "Escape") {
     hideGroupSelector();
-    endLongPress();
   }
 });
 
@@ -1070,4 +1531,58 @@ if ("ontouchstart" in window) {
     },
     false
   );
+}
+
+// 数据变化防抖变量
+let dataChangeTimeout = null;
+
+// 设置数据变化监听器
+function setupDataChangeListener() {
+  // 监听storage事件，当其他页面修改localStorage时触发
+  window.addEventListener('storage', function(e) {
+    if (e.key === 'eatAppData' && e.newValue) {
+      console.log('🔄 检测到storage数据变化，正在刷新...');
+      console.log('📊 变化详情：', {
+        oldValue: e.oldValue,
+        newValue: e.newValue ? '有数据' : '无数据',
+        url: e.url,
+        storageArea: e.storageArea
+      });
+      
+      // 清除之前的定时器
+      if (dataChangeTimeout) {
+        clearTimeout(dataChangeTimeout);
+      }
+      
+      // 重新加载数据
+      dataManager.load().then(() => {
+        console.log('📥 数据重新加载完成');
+        syncDataFromManager();
+        updateUI();
+        // 添加延迟确保数据同步完成
+        dataChangeTimeout = setTimeout(() => {
+          console.log('⏰ 延迟后调用showLastDrawResult');
+          showLastDrawResult(); // 显示最后一次抽奖结果，而不是第一个卡片
+        }, 200); // 增加延迟时间到200ms
+      });
+    }
+  });
+  
+  // 监听自定义事件（用于同页面内的数据变化）
+  window.addEventListener('dataChanged', function() {
+    console.log('🔄 检测到自定义数据变化事件，正在刷新...');
+    
+    // 清除之前的定时器
+    if (dataChangeTimeout) {
+      clearTimeout(dataChangeTimeout);
+    }
+    
+    syncDataFromManager();
+    updateUI();
+    // 添加延迟确保数据同步完成
+    dataChangeTimeout = setTimeout(() => {
+      console.log('⏰ 延迟后调用showLastDrawResult');
+      showLastDrawResult(); // 显示最后一次抽奖结果，而不是第一个卡片
+    }, 200); // 增加延迟时间到200ms
+  });
 }

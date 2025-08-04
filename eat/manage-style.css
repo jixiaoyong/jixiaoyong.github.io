@@ -1,0 +1,333 @@
+/* =================================================================================================
+ * 管理页面特有样式 - 美食主题
+ * ================================================================================================= */
+
+/* 管理页面特有的按钮样式 */
+.add-item-btn {
+  background: var(--wechat-blue);
+  color: white;
+  border: 1px solid var(--wechat-blue);
+  padding: var(--wechat-spacing-sm) var(--wechat-spacing-md);
+  border-radius: var(--wechat-radius-small);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--wechat-transition-normal);
+  font-family: var(--wechat-font-family);
+}
+
+.add-item-btn:hover {
+  background: var(--wechat-blue-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--wechat-shadow-light);
+}
+
+.add-item-btn:active {
+  transform: translateY(0);
+}
+
+.remove-item-btn {
+  background: var(--wechat-red);
+  color: white;
+  border: 1px solid var(--wechat-red);
+  padding: var(--wechat-spacing-xs) var(--wechat-spacing-sm);
+  border-radius: var(--wechat-radius-small);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--wechat-transition-normal);
+  font-family: var(--wechat-font-family);
+  min-width: 60px;
+}
+
+.remove-item-btn:hover {
+  background: var(--wechat-red-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--wechat-shadow-light);
+}
+
+.remove-item-btn:active {
+  transform: translateY(0);
+}
+
+/* 管理页面特有的表单验证样式 */
+.form-group input.error,
+.form-group textarea.error {
+  border-color: var(--wechat-red);
+  box-shadow: 0 0 0 2px rgba(255, 71, 87, 0.1);
+}
+
+.form-group .error-message {
+  color: var(--wechat-red);
+  font-size: 12px;
+  margin-top: var(--wechat-spacing-xs);
+  display: none;
+}
+
+.form-group .error-message.show {
+  display: block;
+}
+
+/* 管理页面特有的加载状态 */
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid var(--wechat-border);
+  border-top: 2px solid var(--wechat-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 管理页面特有的空状态样式 */
+.empty-state {
+  text-align: center;
+  padding: var(--wechat-spacing-xxl);
+  color: var(--wechat-text-tertiary);
+  background: var(--wechat-bg-secondary);
+  border-radius: var(--wechat-radius-large);
+  border: 2px dashed var(--wechat-border);
+}
+
+.empty-state .empty-icon {
+  font-size: 48px;
+  margin-bottom: var(--wechat-spacing-lg);
+  opacity: 0.5;
+}
+
+.empty-state h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--wechat-text-secondary);
+  margin-bottom: var(--wechat-spacing-sm);
+}
+
+.empty-state p {
+  font-size: 14px;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* 管理页面特有的成功状态 */
+.success-state {
+  text-align: center;
+  padding: var(--wechat-spacing-xxl);
+  color: var(--food-accent);
+  background: var(--wechat-bg-secondary);
+  border-radius: var(--wechat-radius-large);
+  border: 2px solid var(--food-accent);
+}
+
+.success-state .success-icon {
+  font-size: 48px;
+  margin-bottom: var(--wechat-spacing-lg);
+}
+
+.success-state h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--food-accent);
+  margin-bottom: var(--wechat-spacing-sm);
+}
+
+.success-state p {
+  font-size: 14px;
+  margin: 0;
+  line-height: 1.5;
+  color: var(--wechat-text-secondary);
+}
+
+/* 管理页面特有的警告状态 */
+.warning-state {
+  text-align: center;
+  padding: var(--wechat-spacing-xxl);
+  color: var(--wechat-orange);
+  background: var(--wechat-bg-secondary);
+  border-radius: var(--wechat-radius-large);
+  border: 2px solid var(--wechat-orange);
+}
+
+.warning-state .warning-icon {
+  font-size: 48px;
+  margin-bottom: var(--wechat-spacing-lg);
+}
+
+.warning-state h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--wechat-orange);
+  margin-bottom: var(--wechat-spacing-sm);
+}
+
+.warning-state p {
+  font-size: 14px;
+  margin: 0;
+  line-height: 1.5;
+  color: var(--wechat-text-secondary);
+}
+
+/* 管理页面特有的确认对话框样式 */
+.confirm-dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+.confirm-content {
+  background: var(--wechat-bg-secondary);
+  border-radius: var(--wechat-radius-large);
+  padding: var(--wechat-spacing-xxl);
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  box-shadow: var(--wechat-shadow-heavy);
+  animation: modalSlideIn 0.3s ease;
+}
+
+.confirm-content h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--wechat-text-primary);
+  margin-bottom: var(--wechat-spacing-md);
+}
+
+.confirm-content p {
+  font-size: 14px;
+  color: var(--wechat-text-secondary);
+  margin-bottom: var(--wechat-spacing-xl);
+  line-height: 1.5;
+}
+
+.confirm-actions {
+  display: flex;
+  gap: var(--wechat-spacing-md);
+  justify-content: center;
+}
+
+.confirm-actions .btn {
+  min-width: 80px;
+}
+
+/* 管理页面特有的响应式调整 */
+@media (max-width: 768px) {
+  .add-item-btn {
+    width: 100%;
+    margin-top: var(--wechat-spacing-md);
+  }
+  
+  .remove-item-btn {
+    width: 100%;
+    margin-top: var(--wechat-spacing-sm);
+  }
+  
+  .confirm-content {
+    padding: var(--wechat-spacing-lg);
+    width: 95%;
+  }
+  
+  .confirm-actions {
+    flex-direction: column;
+  }
+  
+  .confirm-actions .btn {
+    width: 100%;
+  }
+  
+  .empty-state,
+  .success-state,
+  .warning-state {
+    padding: var(--wechat-spacing-lg);
+  }
+  
+  .empty-state .empty-icon,
+  .success-state .success-icon,
+  .warning-state .warning-icon {
+    font-size: 36px;
+    margin-bottom: var(--wechat-spacing-md);
+  }
+  
+  .empty-state h3,
+  .success-state h3,
+  .warning-state h3 {
+    font-size: 16px;
+  }
+  
+  .empty-state p,
+  .success-state p,
+  .warning-state p {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .add-item-btn {
+    padding: var(--wechat-spacing-xs) var(--wechat-spacing-sm);
+    font-size: 13px;
+  }
+  
+  .remove-item-btn {
+    padding: 2px var(--wechat-spacing-xs);
+    font-size: 11px;
+    min-width: 50px;
+  }
+  
+  .confirm-content {
+    padding: var(--wechat-spacing-md);
+  }
+  
+  .confirm-content h3 {
+    font-size: 16px;
+  }
+  
+  .confirm-content p {
+    font-size: 13px;
+  }
+  
+  .empty-state,
+  .success-state,
+  .warning-state {
+    padding: var(--wechat-spacing-md);
+  }
+  
+  .empty-state .empty-icon,
+  .success-state .success-icon,
+  .warning-state .warning-icon {
+    font-size: 32px;
+    margin-bottom: var(--wechat-spacing-sm);
+  }
+  
+  .empty-state h3,
+  .success-state h3,
+  .warning-state h3 {
+    font-size: 15px;
+  }
+  
+  .empty-state p,
+  .success-state p,
+  .warning-state p {
+    font-size: 12px;
+  }
+} 
