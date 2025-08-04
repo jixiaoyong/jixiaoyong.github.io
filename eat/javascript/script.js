@@ -1300,6 +1300,11 @@ function showResult(item) {
 
   // 设置当前显示的项目
   currentDisplayedItem = item;
+  
+  // 显示炫酷的结果浮层
+  setTimeout(() => {
+    showResultOverlay(item);
+  }, 800); // 延迟800ms显示浮层，让抖动效果先完成
 }
 
 // 更新 UI

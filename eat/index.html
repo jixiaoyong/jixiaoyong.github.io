@@ -116,6 +116,37 @@
     <!-- 添加数据管理相关的脚本 -->
     <script src="javascript/cookie-manager.js"></script>
     <script src="javascript/data-manager.js"></script>
+    <script src="javascript/fireworks.js"></script>
     <script src="javascript/script.js"></script>
+
+    <!-- 抽奖结果浮层 -->
+    <div class="result-overlay" id="resultOverlay" style="display: none;">
+      <!-- 半透明模糊背景 -->
+      <div class="overlay-background"></div>
+      
+      <!-- 烟花效果容器 -->
+      <div class="fireworks-container" id="fireworksContainer"></div>
+      
+      <!-- 结果展示区域 -->
+      <div class="result-showcase">
+        <!-- 标题文字 -->
+        <div class="result-title">
+          <h1>今天小羊吃：</h1>
+        </div>
+        
+        <!-- 结果卡片 -->
+        <div class="overlay-result-card" id="overlayResultCard">
+          <div class="overlay-result-content">
+            <h2 id="overlayResultTitle">加载中...</h2>
+            <p id="overlayResultDescription">正在加载数据</p>
+          </div>
+        </div>
+        
+        <!-- 关闭按钮 -->
+        <button class="close-overlay-btn" onclick="closeResultOverlay()">
+          <span>×</span>
+        </button>
+      </div>
+    </div>
   </body>
 </html>
