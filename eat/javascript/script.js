@@ -16,44 +16,31 @@ function seedRandom(seed) {
   };
 }
 
-// 生成复合随机种子 - 增强版
+// 生成复合随机种子 - 简化版
 function generateCompositeSeed() {
   const currentTime = Date.now();
   const now = new Date();
-  const timeOfDay = now.getTime();
   const milliseconds = now.getMilliseconds();
   const screenWidth = window.innerWidth;
   const screenHeight = window.innerHeight;
-  const userAgent = navigator.userAgent;
 
-  // 组合多个随机元素，重点突出时间和鼠标坐标
+  // 组合多个随机元素
   let compositeSeed = currentTime;
 
-  // 添加精确的鼠标坐标信息
-  compositeSeed += clickPosition.x * 100000;
-  compositeSeed += clickPosition.y * 100000;
+  // 添加鼠标坐标信息（如果可用）
+  if (clickPosition && clickPosition.x && clickPosition.y) {
+    compositeSeed += clickPosition.x * 100000;
+    compositeSeed += clickPosition.y * 100000;
+  }
 
-  // 添加时间信息（毫秒级精度）
-  compositeSeed += timeOfDay;
+  // 添加时间信息
+  compositeSeed += now.getTime();
   compositeSeed += milliseconds * 1000;
 
   // 添加屏幕尺寸信息
   compositeSeed += screenWidth * screenHeight;
 
-  // 添加鼠标位置和时间的交叉组合
-  compositeSeed += (clickPosition.x + clickPosition.y) * (currentTime % 100000);
-  compositeSeed += clickPosition.x * clickPosition.y * (milliseconds % 1000);
-
-  // 添加用户代理字符串的哈希
-  let userAgentHash = 0;
-  for (let i = 0; i < userAgent.length; i++) {
-    userAgentHash =
-      ((userAgentHash << 5) - userAgentHash + userAgent.charCodeAt(i)) &
-      0xffffffff;
-  }
-  compositeSeed += userAgentHash;
-
-  // 添加额外的随机性：使用Math.random()作为额外的随机因子
+  // 添加 Math.random() 作为额外的随机因子
   compositeSeed += Math.floor(Math.random() * 1000000);
 
   // 添加性能时间戳（如果可用）
@@ -61,65 +48,11 @@ function generateCompositeSeed() {
     compositeSeed += Math.floor(performance.now() * 1000);
   }
 
-  // 新增：添加更多随机因素
-  // 1. 添加当前页面滚动位置
+  // 添加页面滚动位置
   compositeSeed += window.pageYOffset * 1000;
   compositeSeed += window.pageXOffset * 1000;
 
-  // 2. 添加当前URL的哈希值
-  if (window.location.hash) {
-    let urlHash = 0;
-    for (let i = 0; i < window.location.hash.length; i++) {
-      urlHash =
-        ((urlHash << 5) - urlHash + window.location.hash.charCodeAt(i)) &
-        0xffffffff;
-    }
-    compositeSeed += urlHash;
-  }
-
-  // 3. 添加当前文档标题的哈希值
-  let titleHash = 0;
-  const title = document.title;
-  for (let i = 0; i < title.length; i++) {
-    titleHash =
-      ((titleHash << 5) - titleHash + title.charCodeAt(i)) & 0xffffffff;
-  }
-  compositeSeed += titleHash;
-
-  // 4. 添加当前时间戳的微秒部分（如果可用）
-  if (performance && performance.now) {
-    const microSeconds = Math.floor((performance.now() % 1) * 1000000);
-    compositeSeed += microSeconds;
-  }
-
-  // 5. 添加内存使用情况（如果可用）
-  if (performance && performance.memory) {
-    compositeSeed += performance.memory.usedJSHeapSize;
-    compositeSeed += performance.memory.totalJSHeapSize;
-  }
-
-  console.log("增强版复合随机种子生成：", {
-    currentTime,
-    clickPosition,
-    timeOfDay,
-    milliseconds,
-    screenSize: `${screenWidth}x${screenHeight}`,
-    userAgentHash,
-    scrollPosition: `${window.pageYOffset},${window.pageXOffset}`,
-    urlHash: window.location.hash,
-    titleHash,
-    microSeconds:
-      performance && performance.now
-        ? Math.floor((performance.now() % 1) * 1000000)
-        : "N/A",
-    memoryUsage:
-      performance && performance.memory
-        ? `${performance.memory.usedJSHeapSize}/${performance.memory.totalJSHeapSize}`
-        : "N/A",
-    finalSeed: compositeSeed,
-  });
-
-  return compositeSeed;
+  return Math.abs(compositeSeed);
 }
 
 // 创建动态选项池 - 新增函数
@@ -129,8 +62,8 @@ function createDynamicItemPool(originalItems, randomSeed) {
   // 创建原始选项的深拷贝
   let dynamicPool = JSON.parse(JSON.stringify(originalItems));
 
-  // 计算要插入的随机选项数量（1-3个）
-  const insertCount = Math.floor(seededRandom() * 3) + 1;
+  // 计算要插入的随机选项数量（0-3 个）
+  const insertCount = Math.floor(seededRandom() * 4);
 
   console.log(`准备插入 ${insertCount} 个随机选项到动态池中`);
 
@@ -143,7 +76,9 @@ function createDynamicItemPool(originalItems, randomSeed) {
     // 创建副本并添加随机标识
     const clonedItem = {
       ...selectedItem,
-      id: `${selectedItem.id}_random_${i}_${Date.now()}`,
+      id: `${selectedItem.id}_random_${i}_${Date.now()}_${Math.floor(
+        seededRandom() * 10000
+      )}`,
       title: `${selectedItem.title}`,
       description: `${selectedItem.description}`,
       isRandomInsert: true,
@@ -159,111 +94,54 @@ function createDynamicItemPool(originalItems, randomSeed) {
     console.log(`在位置 ${insertPosition} 插入随机选项: ${clonedItem.title}`);
   }
 
+  // 对动态池进行随机排序，增加随机性
+  for (let i = dynamicPool.length - 1; i > 0; i--) {
+    const j = Math.floor(seededRandom() * (i + 1));
+    [dynamicPool[i], dynamicPool[j]] = [dynamicPool[j], dynamicPool[i]];
+  }
+
   console.log(
-    `动态选项池创建完成，总选项数: ${dynamicPool.length} (原始: ${originalItems.length})`
+    `动态选项池创建完成，总选项数：${dynamicPool.length} (原始：${originalItems.length})`
   );
   return dynamicPool;
 }
 
-// 改进的随机结果计算 - 增强版
+// 简化的随机结果计算 - 重写版
 function calculateRandomResult(dynamicPool, randomSeed) {
   const seededRandom = seedRandom(randomSeed);
 
-  // 使用更复杂的随机算法
-  let finalIndex = 0;
+  // 生成多个随机数来增加随机性
+  const random1 = seededRandom();
+  const random2 = seededRandom();
+  const random3 = seededRandom();
+  const random4 = seededRandom();
+  const random5 = seededRandom();
 
-  // 方法1: 基础随机选择
-  const baseRandom = Math.floor(seededRandom() * dynamicPool.length);
+  // 使用多种方法计算索引
+  const method1 = Math.floor(random1 * dynamicPool.length);
+  const method2 = Math.floor(random2 * dynamicPool.length);
+  const method3 = Math.floor(random3 * dynamicPool.length);
+  const method4 = Math.floor(random4 * dynamicPool.length);
+  const method5 = Math.floor(random5 * dynamicPool.length);
 
-  // 方法2: 基于时间的加权随机
-  const timeWeight = (Date.now() % 1000) / 1000; // 0-1之间的时间权重
-  const timeWeightedIndex = Math.floor(timeWeight * dynamicPool.length);
-
-  // 方法3: 基于鼠标位置的加权随机
-  const mouseWeight = ((clickPosition.x + clickPosition.y) % 1000) / 1000;
-  const mouseWeightedIndex = Math.floor(mouseWeight * dynamicPool.length);
-
-  // 方法4: 基于随机种子的哈希计算
-  const hashIndex = Math.abs(randomSeed) % dynamicPool.length;
-
-  // 方法5: 新增 - 基于页面滚动位置的随机
-  const scrollWeight =
-    ((window.pageYOffset + window.pageXOffset) % 1000) / 1000;
-  const scrollWeightedIndex = Math.floor(scrollWeight * dynamicPool.length);
-
-  // 方法6: 新增 - 基于性能时间戳的随机
-  const performanceWeight =
-    performance && performance.now ? (performance.now() % 1000) / 1000 : 0;
-  const performanceWeightedIndex = Math.floor(
-    performanceWeight * dynamicPool.length
-  );
-
-  // 方法7: 新增 - 基于内存使用情况的随机
-  const memoryWeight =
-    performance && performance.memory
-      ? (performance.memory.usedJSHeapSize % 1000) / 1000
-      : 0;
-  const memoryWeightedIndex = Math.floor(memoryWeight * dynamicPool.length);
-
-  // 方法8: 新增 - 基于URL哈希的随机
-  const urlWeight = window.location.hash
-    ? (window.location.hash.length % 1000) / 1000
-    : 0;
-  const urlWeightedIndex = Math.floor(urlWeight * dynamicPool.length);
-
-  // 综合多种方法，增加随机性
-  const method1 = seededRandom();
-  const method2 = seededRandom();
-  const method3 = seededRandom();
-  const method4 = seededRandom();
-  const method5 = seededRandom();
-  const method6 = seededRandom();
-  const method7 = seededRandom();
-  const method8 = seededRandom();
-
-  // 加权平均 - 使用更多方法
-  finalIndex = Math.floor(
-    (baseRandom * method1 +
-      timeWeightedIndex * method2 +
-      mouseWeightedIndex * method3 +
-      hashIndex * method4 +
-      scrollWeightedIndex * method5 +
-      performanceWeightedIndex * method6 +
-      memoryWeightedIndex * method7 +
-      urlWeightedIndex * method8) /
-      (method1 +
-        method2 +
-        method3 +
-        method4 +
-        method5 +
-        method6 +
-        method7 +
-        method8)
+  // 简单平均，确保真正的随机性
+  const finalIndex = Math.floor(
+    (method1 + method2 + method3 + method4 + method5) / 5
   );
 
   // 确保索引在有效范围内
-  finalIndex = Math.max(0, Math.min(finalIndex, dynamicPool.length - 1));
+  const safeIndex = Math.max(0, Math.min(finalIndex, dynamicPool.length - 1));
 
-  const result = dynamicPool[finalIndex];
+  const result = dynamicPool[safeIndex];
 
-  console.log("增强版随机结果计算详情:", {
-    baseRandom,
-    timeWeightedIndex,
-    mouseWeightedIndex,
-    hashIndex,
-    scrollWeightedIndex,
-    performanceWeightedIndex,
-    memoryWeightedIndex,
-    urlWeightedIndex,
+  console.log("重写版随机结果计算详情：", {
     method1,
     method2,
     method3,
     method4,
     method5,
-    method6,
-    method7,
-    method8,
     finalIndex,
+    safeIndex,
     result: result.title,
     isRandomInsert: result.isRandomInsert || false,
     poolSize: dynamicPool.length,
@@ -271,7 +149,7 @@ function calculateRandomResult(dynamicPool, randomSeed) {
 
   return {
     item: result,
-    index: finalIndex,
+    index: safeIndex,
     isRandomInsert: result.isRandomInsert || false,
   };
 }
@@ -296,7 +174,7 @@ let appData = {
       flipDuration: 600, // 翻页动画持续时间（毫秒）- 砍半
       pauseDuration: 800, // 每个卡片展示后的停顿时间（毫秒）
       totalDuration: 20000, // 抽奖总持续时间（毫秒）- 20 秒
-      description: "慢速模式，动画更慢，总时长20秒",
+      description: "慢速模式，动画更慢，总时长 20 秒",
     },
     normal: {
       name: "正常",
@@ -310,7 +188,7 @@ let appData = {
       flipDuration: 250, // 翻页动画持续时间（毫秒）- 砍半
       pauseDuration: 300, // 每个卡片展示后的停顿时间（毫秒）
       totalDuration: 10000, // 抽奖总持续时间（毫秒）- 10 秒
-      description: "快速模式，动画更快，总时长10秒",
+      description: "快速模式，动画更快，总时长 10 秒",
     },
   },
   currentSpeedLevel: "normal", // 当前速度档位，默认为正常
@@ -442,38 +320,26 @@ function setupButtonEvents() {
   setupSpeedSelector();
 }
 
-// 点击开始抽奖 - 增强版
+// 点击开始抽奖 - 简化版
 function startDrawWithClick() {
   if (isDrawing) {
     console.log("动画正在进行中，跳过");
     return;
   }
 
-  console.log("🎲 点击开始抽奖 - 增强随机性模式");
+  console.log("🎲 点击开始抽奖 - 简化随机性模式");
 
-  // 第一次生成复合随机种子
+  // 生成随机种子
   randomSeed = generateCompositeSeed();
 
-  // 添加额外的随机延迟，确保每次点击都有不同的时间戳
-  const randomDelay = Math.floor(Math.random() * 100) + 10; // 10-110ms 的随机延迟
-
+  // 添加小延迟确保时间戳不同
   setTimeout(() => {
-    // 第二次更新随机种子，增加随机性
     randomSeed = generateCompositeSeed();
+    console.log("🎯 随机种子：", randomSeed);
 
-    // 第三次生成最终随机种子，确保最大随机性
-    setTimeout(() => {
-      randomSeed = generateCompositeSeed();
-      console.log("🎯 最终随机种子：", randomSeed);
-      console.log(
-        "🎲 随机性验证：种子变化幅度",
-        Math.abs(randomSeed - generateCompositeSeed())
-      );
-
-      // 开始抽奖
-      startDraw();
-    }, Math.floor(Math.random() * 30)); // 0-30ms 的额外随机延迟
-  }, randomDelay);
+    // 开始抽奖
+    startDraw();
+  }, Math.floor(Math.random() * 50) + 10); // 10-60ms 的随机延迟
 }
 
 // 设置速度选择器
@@ -931,11 +797,22 @@ function startCardRolling(duration) {
   let currentIndex = Math.floor(seededRandom() * dynamicPool.length);
   let nextIndex = (currentIndex + 1) % dynamicPool.length;
 
+  // 如果只有一个选项，确保 nextIndex 与 currentIndex 不同
+  if (dynamicPool.length === 1) {
+    nextIndex = currentIndex; // 只有一个选项时，只能显示同一个
+  } else if (nextIndex === currentIndex) {
+    // 如果 nextIndex 等于 currentIndex，向前一步
+    nextIndex = (nextIndex + 1) % dynamicPool.length;
+  }
+
   console.log("动态抽奖开始：", {
     initialIndex: currentIndex,
     initialItem: dynamicPool[currentIndex].title,
+    nextIndex: nextIndex,
+    nextItem: dynamicPool[nextIndex].title,
     finalResult: finalResult.title,
     finalIndex: randomResult.index,
+    poolSize: dynamicPool.length,
   });
 
   // 计算随机转动速度（基于随机种子）
@@ -1052,13 +929,28 @@ function startCardRolling(duration) {
       currentIndex = nextIndex;
       currentDisplayedItem = dynamicPool[currentIndex];
 
-      // 计算下一个要显示的索引（支持循环）
-      nextIndex = (nextIndex + 1) % dynamicPool.length;
+      // 计算下一个要显示的索引（确保不与当前索引相同）
+      let newNextIndex = (nextIndex + 1) % dynamicPool.length;
 
-      // 随机跳过选项（增加随机性）
-      if (shouldSkipRandomly && seededRandom() < 0.2) {
-        // 20%概率跳过
-        nextIndex = (nextIndex + 1) % dynamicPool.length;
+      // 如果下一个索引与当前索引相同，再向前一步
+      if (newNextIndex === currentIndex && dynamicPool.length > 1) {
+        newNextIndex = (newNextIndex + 1) % dynamicPool.length;
+      }
+
+      nextIndex = newNextIndex;
+
+      // 随机跳过选项（增加随机性，但确保不跳过当前索引）
+      if (
+        shouldSkipRandomly &&
+        seededRandom() < 0.2 &&
+        dynamicPool.length > 2
+      ) {
+        // 20% 概率跳过，但确保不跳过当前索引
+        let skipIndex = (nextIndex + 1) % dynamicPool.length;
+        if (skipIndex === currentIndex) {
+          skipIndex = (skipIndex + 1) % dynamicPool.length;
+        }
+        nextIndex = skipIndex;
         console.log(`随机跳过选项，直接跳到：${dynamicPool[nextIndex].title}`);
       }
 
@@ -1069,6 +961,9 @@ function startCardRolling(duration) {
 
       console.log(
         `翻页完成：现在显示 ${dynamicPool[currentIndex].title}，停顿 ${randomPause}ms 后继续`
+      );
+      console.log(
+        `索引更新：currentIndex=${currentIndex}, nextIndex=${nextIndex}, 下一个项目=${dynamicPool[nextIndex].title}`
       );
 
       // 使用随机停顿时间
