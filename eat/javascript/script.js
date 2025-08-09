@@ -180,15 +180,15 @@ let appData = {
       name: "正常",
       flipDuration: 400, // 翻页动画持续时间（毫秒）- 砍半
       pauseDuration: 500, // 每个卡片展示后的停顿时间（毫秒）
-      totalDuration: 15000, // 抽奖总持续时间（毫秒）- 15 秒
+      totalDuration: 12000, // 抽奖总持续时间（毫秒）- 12 秒
       description: "正常模式，平衡的速度和时长",
     },
     fast: {
       name: "快速",
       flipDuration: 250, // 翻页动画持续时间（毫秒）- 砍半
       pauseDuration: 300, // 每个卡片展示后的停顿时间（毫秒）
-      totalDuration: 10000, // 抽奖总持续时间（毫秒）- 10 秒
-      description: "快速模式，动画更快，总时长 10 秒",
+      totalDuration: 8000, // 抽奖总持续时间（毫秒）- 8 秒
+      description: "快速模式，动画更快，总时长 8 秒",
     },
   },
   currentSpeedLevel: "normal", // 当前速度档位，默认为正常
