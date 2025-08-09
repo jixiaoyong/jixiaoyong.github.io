@@ -42,7 +42,7 @@ function generateCompositeSeed() {
 
   // 添加鼠标位置和时间的交叉组合
   compositeSeed += (clickPosition.x + clickPosition.y) * (currentTime % 100000);
-  compositeSeed += (clickPosition.x * clickPosition.y) * (milliseconds % 1000);
+  compositeSeed += clickPosition.x * clickPosition.y * (milliseconds % 1000);
 
   // 添加用户代理字符串的哈希
   let userAgentHash = 0;
@@ -70,7 +70,9 @@ function generateCompositeSeed() {
   if (window.location.hash) {
     let urlHash = 0;
     for (let i = 0; i < window.location.hash.length; i++) {
-      urlHash = ((urlHash << 5) - urlHash + window.location.hash.charCodeAt(i)) & 0xffffffff;
+      urlHash =
+        ((urlHash << 5) - urlHash + window.location.hash.charCodeAt(i)) &
+        0xffffffff;
     }
     compositeSeed += urlHash;
   }
@@ -79,7 +81,8 @@ function generateCompositeSeed() {
   let titleHash = 0;
   const title = document.title;
   for (let i = 0; i < title.length; i++) {
-    titleHash = ((titleHash << 5) - titleHash + title.charCodeAt(i)) & 0xffffffff;
+    titleHash =
+      ((titleHash << 5) - titleHash + title.charCodeAt(i)) & 0xffffffff;
   }
   compositeSeed += titleHash;
 
@@ -105,8 +108,14 @@ function generateCompositeSeed() {
     scrollPosition: `${window.pageYOffset},${window.pageXOffset}`,
     urlHash: window.location.hash,
     titleHash,
-    microSeconds: performance && performance.now ? Math.floor((performance.now() % 1) * 1000000) : 'N/A',
-    memoryUsage: performance && performance.memory ? `${performance.memory.usedJSHeapSize}/${performance.memory.totalJSHeapSize}` : 'N/A',
+    microSeconds:
+      performance && performance.now
+        ? Math.floor((performance.now() % 1) * 1000000)
+        : "N/A",
+    memoryUsage:
+      performance && performance.memory
+        ? `${performance.memory.usedJSHeapSize}/${performance.memory.totalJSHeapSize}`
+        : "N/A",
     finalSeed: compositeSeed,
   });
 
@@ -138,17 +147,21 @@ function createDynamicItemPool(originalItems, randomSeed) {
       title: `${selectedItem.title}`,
       description: `${selectedItem.description}`,
       isRandomInsert: true,
-      originalId: selectedItem.id
+      originalId: selectedItem.id,
     };
 
     // 随机插入位置（0 到当前池长度之间）
-    const insertPosition = Math.floor(seededRandom() * (dynamicPool.length + 1));
+    const insertPosition = Math.floor(
+      seededRandom() * (dynamicPool.length + 1)
+    );
     dynamicPool.splice(insertPosition, 0, clonedItem);
 
     console.log(`在位置 ${insertPosition} 插入随机选项: ${clonedItem.title}`);
   }
 
-  console.log(`动态选项池创建完成，总选项数: ${dynamicPool.length} (原始: ${originalItems.length})`);
+  console.log(
+    `动态选项池创建完成，总选项数: ${dynamicPool.length} (原始: ${originalItems.length})`
+  );
   return dynamicPool;
 }
 
@@ -174,21 +187,28 @@ function calculateRandomResult(dynamicPool, randomSeed) {
   const hashIndex = Math.abs(randomSeed) % dynamicPool.length;
 
   // 方法5: 新增 - 基于页面滚动位置的随机
-  const scrollWeight = ((window.pageYOffset + window.pageXOffset) % 1000) / 1000;
+  const scrollWeight =
+    ((window.pageYOffset + window.pageXOffset) % 1000) / 1000;
   const scrollWeightedIndex = Math.floor(scrollWeight * dynamicPool.length);
 
   // 方法6: 新增 - 基于性能时间戳的随机
-  const performanceWeight = performance && performance.now ? (performance.now() % 1000) / 1000 : 0;
-  const performanceWeightedIndex = Math.floor(performanceWeight * dynamicPool.length);
+  const performanceWeight =
+    performance && performance.now ? (performance.now() % 1000) / 1000 : 0;
+  const performanceWeightedIndex = Math.floor(
+    performanceWeight * dynamicPool.length
+  );
 
   // 方法7: 新增 - 基于内存使用情况的随机
-  const memoryWeight = performance && performance.memory ?
-    (performance.memory.usedJSHeapSize % 1000) / 1000 : 0;
+  const memoryWeight =
+    performance && performance.memory
+      ? (performance.memory.usedJSHeapSize % 1000) / 1000
+      : 0;
   const memoryWeightedIndex = Math.floor(memoryWeight * dynamicPool.length);
 
   // 方法8: 新增 - 基于URL哈希的随机
-  const urlWeight = window.location.hash ?
-    (window.location.hash.length % 1000) / 1000 : 0;
+  const urlWeight = window.location.hash
+    ? (window.location.hash.length % 1000) / 1000
+    : 0;
   const urlWeightedIndex = Math.floor(urlWeight * dynamicPool.length);
 
   // 综合多种方法，增加随机性
@@ -211,7 +231,14 @@ function calculateRandomResult(dynamicPool, randomSeed) {
       performanceWeightedIndex * method6 +
       memoryWeightedIndex * method7 +
       urlWeightedIndex * method8) /
-    (method1 + method2 + method3 + method4 + method5 + method6 + method7 + method8)
+      (method1 +
+        method2 +
+        method3 +
+        method4 +
+        method5 +
+        method6 +
+        method7 +
+        method8)
   );
 
   // 确保索引在有效范围内
@@ -228,17 +255,24 @@ function calculateRandomResult(dynamicPool, randomSeed) {
     performanceWeightedIndex,
     memoryWeightedIndex,
     urlWeightedIndex,
-    method1, method2, method3, method4, method5, method6, method7, method8,
+    method1,
+    method2,
+    method3,
+    method4,
+    method5,
+    method6,
+    method7,
+    method8,
     finalIndex,
     result: result.title,
     isRandomInsert: result.isRandomInsert || false,
-    poolSize: dynamicPool.length
+    poolSize: dynamicPool.length,
   });
 
   return {
     item: result,
     index: finalIndex,
-    isRandomInsert: result.isRandomInsert || false
+    isRandomInsert: result.isRandomInsert || false,
   };
 }
 
@@ -262,24 +296,24 @@ let appData = {
       flipDuration: 600, // 翻页动画持续时间（毫秒）- 砍半
       pauseDuration: 800, // 每个卡片展示后的停顿时间（毫秒）
       totalDuration: 20000, // 抽奖总持续时间（毫秒）- 20 秒
-      description: "慢速模式，动画更慢，总时长20秒"
+      description: "慢速模式，动画更慢，总时长20秒",
     },
     normal: {
       name: "正常",
       flipDuration: 400, // 翻页动画持续时间（毫秒）- 砍半
       pauseDuration: 500, // 每个卡片展示后的停顿时间（毫秒）
       totalDuration: 15000, // 抽奖总持续时间（毫秒）- 15 秒
-      description: "正常模式，平衡的速度和时长"
+      description: "正常模式，平衡的速度和时长",
     },
     fast: {
       name: "快速",
       flipDuration: 250, // 翻页动画持续时间（毫秒）- 砍半
       pauseDuration: 300, // 每个卡片展示后的停顿时间（毫秒）
       totalDuration: 10000, // 抽奖总持续时间（毫秒）- 10 秒
-      description: "快速模式，动画更快，总时长10秒"
-    }
+      description: "快速模式，动画更快，总时长10秒",
+    },
   },
-  currentSpeedLevel: "normal" // 当前速度档位，默认为正常
+  currentSpeedLevel: "normal", // 当前速度档位，默认为正常
 };
 
 let isDrawing = false;
@@ -292,66 +326,83 @@ let currentDisplayedItem = null; // 当前显示的卡片项目
 
 // 初始化应用
 document.addEventListener("DOMContentLoaded", async function () {
-  // 初始化数据管理器
-  dataManager = new DataManager();
-  await dataManager.load();
+  try {
+    // 初始化数据管理器
+    dataManager = new DataManager();
+    await dataManager.load();
 
-  // 同步数据到本地变量
-  syncDataFromManager();
+    // 同步数据到本地变量
+    syncDataFromManager();
 
-  updateAnimationConfig(); // 更新动画配置
-  setupResponsiveFeatures();
-  setupButtonEvents(); // 设置按钮事件
+    updateAnimationConfig(); // 更新动画配置
+    setupResponsiveFeatures();
+    setupButtonEvents(); // 设置按钮事件
 
-  // 立即初始化 result-card 的样式
-  initializeResultCard();
+    // 立即初始化 result-card 的样式
+    initializeResultCard();
 
-  // 加载数据并显示最后一次抽奖结果或第一张卡片
-  showLastDrawResult();
+    // 加载数据并显示最后一次抽奖结果或第一张卡片
+    showLastDrawResult();
 
-  // 数据加载完成后更新卡片内容区域位置
-  setTimeout(() => {
-    updateCardContentPosition();
-  }, 100);
+    // 数据加载完成后更新卡片内容区域位置
+    setTimeout(() => {
+      updateCardContentPosition();
+    }, 100);
 
-  // 监听数据变化事件（来自管理页面）
-  setupDataChangeListener();
+    // 监听数据变化事件（来自管理页面）
+    setupDataChangeListener();
 
-  // 执行随机性验证测试
-  setTimeout(() => {
-    console.log("🎲 系统初始化完成，开始随机性验证...");
-    validateRandomness();
-    testDataSync();
-  }, 2000);
+    // 执行随机性验证测试
+    setTimeout(() => {
+      console.log("🎲 系统初始化完成，开始随机性验证...");
+      validateRandomness();
+      testDataSync();
+    }, 2000);
+
+    console.log("主页初始化成功");
+  } catch (error) {
+    console.error("主页初始化失败：", error);
+  }
 });
 
 // 从数据管理器同步数据到本地变量
 function syncDataFromManager() {
-  const managerData = dataManager.getData();
-  // 保留动画配置
-  const currentAnimationConfig = appData.animationConfig;
+  try {
+    const managerData = dataManager.getData();
+    // 保留动画配置
+    const currentAnimationConfig = appData.animationConfig;
 
-  appData = {
-    ...appData,
-    groups: managerData.groups || [],
-    currentGroup: managerData.currentGroup || "default",
-    lastDrawTime: managerData.lastDrawTime || null,
-    drawHistory: managerData.drawHistory || [],
-    animationConfig: currentAnimationConfig, // 保留动画配置
-  };
+    appData = {
+      ...appData,
+      groups: managerData.groups || [],
+      currentGroup: managerData.currentGroup || "default",
+      lastDrawTime: managerData.lastDrawTime || null,
+      drawHistory: managerData.drawHistory || [],
+      animationConfig: currentAnimationConfig, // 保留动画配置
+    };
+
+    console.log("数据同步成功，当前组合数：", appData.groups.length);
+  } catch (error) {
+    console.error("数据同步失败：", error);
+  }
 }
 
 // 保存数据到数据管理器
 function saveData() {
-  // 同步本地数据到管理器
-  const managerData = dataManager.getData();
-  managerData.groups = appData.groups;
-  managerData.currentGroup = appData.currentGroup;
-  managerData.lastDrawTime = appData.lastDrawTime;
-  managerData.drawHistory = appData.drawHistory;
+  try {
+    // 同步本地数据到管理器
+    const managerData = dataManager.getData();
+    managerData.groups = appData.groups;
+    managerData.currentGroup = appData.currentGroup;
+    managerData.lastDrawTime = appData.lastDrawTime;
+    managerData.drawHistory = appData.drawHistory;
 
-  // 保存数据
-  dataManager.save();
+    // 保存数据
+    dataManager.save();
+    console.log("数据保存成功");
+  } catch (error) {
+    console.error("数据保存失败：", error);
+  }
 }
 
 // 初始化 result-card 的样式
@@ -404,7 +455,7 @@ function startDrawWithClick() {
   randomSeed = generateCompositeSeed();
 
   // 添加额外的随机延迟，确保每次点击都有不同的时间戳
-  const randomDelay = Math.floor(Math.random() * 100) + 10; // 10-110ms的随机延迟
+  const randomDelay = Math.floor(Math.random() * 100) + 10; // 10-110ms 的随机延迟
 
   setTimeout(() => {
     // 第二次更新随机种子，增加随机性
@@ -414,22 +465,24 @@ function startDrawWithClick() {
     setTimeout(() => {
       randomSeed = generateCompositeSeed();
       console.log("🎯 最终随机种子：", randomSeed);
-      console.log("🎲 随机性验证：种子变化幅度", Math.abs(randomSeed - generateCompositeSeed()));
+      console.log(
+        "🎲 随机性验证：种子变化幅度",
+        Math.abs(randomSeed - generateCompositeSeed())
+      );
 
       // 开始抽奖
       startDraw();
-    }, Math.floor(Math.random() * 30)); // 0-30ms的额外随机延迟
-
+    }, Math.floor(Math.random() * 30)); // 0-30ms 的额外随机延迟
   }, randomDelay);
 }
 
 // 设置速度选择器
 function setupSpeedSelector() {
-  const speedButtons = document.querySelectorAll('.speed-btn');
+  const speedButtons = document.querySelectorAll(".speed-btn");
 
-  speedButtons.forEach(button => {
-    button.addEventListener('click', function () {
-      const speedLevel = this.getAttribute('data-speed');
+  speedButtons.forEach((button) => {
+    button.addEventListener("click", function () {
+      const speedLevel = this.getAttribute("data-speed");
       setSpeedLevel(speedLevel);
     });
   });
@@ -441,7 +494,7 @@ function setupSpeedSelector() {
 // 设置速度档位
 function setSpeedLevel(speedLevel) {
   if (!appData.speedLevels[speedLevel]) {
-    console.error('无效的速度档位：', speedLevel);
+    console.error("无效的速度档位：", speedLevel);
     return;
   }
 
@@ -450,48 +503,52 @@ function setSpeedLevel(speedLevel) {
   // 更新动画配置
   updateAnimationConfig();
 
-  // 更新UI显示
+  // 更新 UI 显示
   updateSpeedSelectorDisplay();
 
-  console.log('速度档位已设置为：', speedLevel, appData.speedLevels[speedLevel].name);
+  console.log(
+    "速度档位已设置为：",
+    speedLevel,
+    appData.speedLevels[speedLevel].name
+  );
 }
 
 // 更新速度选择器显示
 function updateSpeedSelectorDisplay() {
-  const speedButtons = document.querySelectorAll('.speed-btn');
+  const speedButtons = document.querySelectorAll(".speed-btn");
 
-  speedButtons.forEach(button => {
-    const speedLevel = button.getAttribute('data-speed');
+  speedButtons.forEach((button) => {
+    const speedLevel = button.getAttribute("data-speed");
     if (speedLevel === appData.currentSpeedLevel) {
-      button.classList.add('active');
+      button.classList.add("active");
     } else {
-      button.classList.remove('active');
+      button.classList.remove("active");
     }
   });
 }
 
-// 禁用control-panel区域的按钮
+// 禁用 control-panel 区域的按钮
 function disableControlPanelButtons() {
-  const controlPanel = document.querySelector('.control-panel');
+  const controlPanel = document.querySelector(".control-panel");
   if (controlPanel) {
-    const buttons = controlPanel.querySelectorAll('button');
-    buttons.forEach(button => {
+    const buttons = controlPanel.querySelectorAll("button");
+    buttons.forEach((button) => {
       button.disabled = true;
-      button.style.pointerEvents = 'none';
-      button.style.opacity = '0.6';
+      button.style.pointerEvents = "none";
+      button.style.opacity = "0.6";
     });
   }
 }
 
-// 启用control-panel区域的按钮
+// 启用 control-panel 区域的按钮
 function enableControlPanelButtons() {
-  const controlPanel = document.querySelector('.control-panel');
+  const controlPanel = document.querySelector(".control-panel");
   if (controlPanel) {
-    const buttons = controlPanel.querySelectorAll('button');
-    buttons.forEach(button => {
+    const buttons = controlPanel.querySelectorAll("button");
+    buttons.forEach((button) => {
       button.disabled = false;
-      button.style.pointerEvents = 'auto';
-      button.style.opacity = '1';
+      button.style.pointerEvents = "auto";
+      button.style.opacity = "1";
     });
   }
 }
@@ -501,11 +558,8 @@ function updateAnimationConfig() {
   const root = document.documentElement;
   const currentSpeed = appData.speedLevels[appData.currentSpeedLevel];
 
-  // 更新CSS变量
-  root.style.setProperty(
-    "--flip-duration",
-    `${currentSpeed.flipDuration}ms`
-  );
+  // 更新 CSS 变量
+  root.style.setProperty("--flip-duration", `${currentSpeed.flipDuration}ms`);
 
   // 更新动画配置
   appData.animationConfig.flipDuration = currentSpeed.flipDuration;
@@ -517,7 +571,7 @@ function updateAnimationConfig() {
     name: currentSpeed.name,
     flipDuration: currentSpeed.flipDuration,
     pauseDuration: currentSpeed.pauseDuration,
-    totalDuration: currentSpeed.totalDuration
+    totalDuration: currentSpeed.totalDuration,
   });
 }
 
@@ -544,8 +598,8 @@ function setupResponsiveFeatures() {
 
 // 确保 card-content-wrapper 相对于 card-display-area 保持固定比例
 function updateCardContentPosition() {
-  const cardDisplayArea = document.querySelector('.card-display-area');
-  const cardContentWrapper = document.querySelector('.card-content-wrapper');
+  const cardDisplayArea = document.querySelector(".card-display-area");
+  const cardContentWrapper = document.querySelector(".card-content-wrapper");
 
   if (!cardDisplayArea || !cardContentWrapper) return;
 
@@ -558,7 +612,7 @@ function updateCardContentPosition() {
   // 基于固定的百分比关系
   const wrapperWidth = displayAreaWidth * 0.28; // 28%
   const wrapperHeight = displayAreaHeight * 0.25; // 25%
-  const wrapperLeft = displayAreaWidth * 0.20; // 21% margin-left
+  const wrapperLeft = displayAreaWidth * 0.2; // 21% margin-left
   const wrapperBottom = displayAreaHeight * 0.33; // 25% margin-bottom (稍微向上)
 
   // 确保 card-content-wrapper 的尺寸和位置正确
@@ -566,26 +620,28 @@ function updateCardContentPosition() {
   cardContentWrapper.style.height = `${wrapperHeight}px`;
   cardContentWrapper.style.left = `${wrapperLeft}px`;
   cardContentWrapper.style.bottom = `${wrapperBottom}px`;
-  cardContentWrapper.style.marginLeft = '0';
-  cardContentWrapper.style.marginBottom = '0';
+  cardContentWrapper.style.marginLeft = "0";
+  cardContentWrapper.style.marginBottom = "0";
 
   // 更新文字大小
   applyTextScale();
 
-  console.log('卡片内容区域位置和文字缩放已更新:', {
+  console.log("卡片内容区域位置和文字缩放已更新：", {
     displayAreaWidth,
     displayAreaHeight,
     wrapperWidth,
     wrapperHeight,
     wrapperLeft,
     wrapperBottom,
-    scaleFactor: calculateScaleFactor()
+    scaleFactor: calculateScaleFactor(),
   });
 }
 
 // 计算缩放因子
 function calculateScaleFactor() {
-  const displayAreaRect = document.querySelector('.card-display-area').getBoundingClientRect();
+  const displayAreaRect = document
+    .querySelector(".card-display-area")
+    .getBoundingClientRect();
   const baseWidth = 500;
   const baseHeight = 375;
   const widthScale = displayAreaRect.width / baseWidth;
@@ -596,7 +652,7 @@ function calculateScaleFactor() {
 
 // 应用文字缩放
 function applyTextScale() {
-  const cardContentWrapper = document.querySelector('.card-content-wrapper');
+  const cardContentWrapper = document.querySelector(".card-content-wrapper");
   if (cardContentWrapper) {
     const scaleFactor = calculateScaleFactor();
     updateTextScale(cardContentWrapper, scaleFactor);
@@ -606,48 +662,50 @@ function applyTextScale() {
 // 更新文字缩放
 function updateTextScale(container, scaleFactor) {
   // 更新容器内所有文字元素的大小
-  const titleElements = container.querySelectorAll('h2, h3');
-  const descriptionElements = container.querySelectorAll('p');
+  const titleElements = container.querySelectorAll("h2, h3");
+  const descriptionElements = container.querySelectorAll("p");
 
   // 基准字体大小
   const baseTitleSize = 0.6; // 对应旋转卡片的字体大小
   const baseDescriptionSize = 0.425; // 对应旋转卡片的描述字体大小
-  
+
   // result-card 的倍数调整
   const resultCardTitleMultiplier = 1.5; // result-card 标题倍数
   const resultCardDescriptionMultiplier = 1.2; // result-card 描述倍数
 
   // 更新标题文字大小
-  titleElements.forEach(element => {
+  titleElements.forEach((element) => {
     const newSize = baseTitleSize * scaleFactor;
     element.style.fontSize = `${newSize}em`;
   });
 
   // 更新描述文字大小
-  descriptionElements.forEach(element => {
+  descriptionElements.forEach((element) => {
     const newSize = baseDescriptionSize * scaleFactor;
     element.style.fontSize = `${newSize}em`;
   });
 
   // 同时更新 result-card 内的文字
-  const resultCard = document.querySelector('.result-card');
+  const resultCard = document.querySelector(".result-card");
   if (resultCard) {
-    const resultTitle = resultCard.querySelector('h2');
-    const resultDescription = resultCard.querySelector('p');
+    const resultTitle = resultCard.querySelector("h2");
+    const resultDescription = resultCard.querySelector("p");
 
     if (resultTitle) {
       // 检查标题是否已经有内容，如果有则使用 setTitleFontSize 的逻辑
-      if (resultTitle.textContent && resultTitle.textContent.trim() !== '') {
+      if (resultTitle.textContent && resultTitle.textContent.trim() !== "") {
         // 使用 setTitleFontSize 的逻辑，但应用缩放系数
         const scaleFactor = calculateScaleFactor();
         const shortTitleSize = 1.2; // 短标题的字体大小
         const baseTitleSize = 0.6; // 对应旋转卡片的字体大小
-        
+
         if (resultTitle.textContent.length <= 3) {
-          const newSize = shortTitleSize * scaleFactor * resultCardTitleMultiplier;
+          const newSize =
+            shortTitleSize * scaleFactor * resultCardTitleMultiplier;
           resultTitle.style.fontSize = `${newSize}em`;
         } else {
-          const newSize = baseTitleSize * scaleFactor * resultCardTitleMultiplier;
+          const newSize =
+            baseTitleSize * scaleFactor * resultCardTitleMultiplier;
           resultTitle.style.fontSize = `${newSize}em`;
         }
       } else {
@@ -659,7 +717,9 @@ function updateTextScale(container, scaleFactor) {
 
     if (resultDescription) {
       const newSize = baseDescriptionSize * scaleFactor;
-      resultDescription.style.fontSize = `${newSize * resultCardDescriptionMultiplier}em`; // result-card 描述使用倍数调整
+      resultDescription.style.fontSize = `${
+        newSize * resultCardDescriptionMultiplier
+      }em`; // result-card 描述使用倍数调整
     }
   }
 }
@@ -690,25 +750,28 @@ function updateLayoutForOrientation() {
 
 // 加载数据
 
-
 // 显示第一个食品
 function showFirstCard() {
-  const currentGroup = appData.groups.find(
-    (g) => g.id === appData.currentGroup
-  );
-  if (currentGroup && currentGroup.items.length > 0) {
-    const firstItem = currentGroup.items[0];
-    currentDisplayedItem = firstItem; // 设置当前显示的项目
-    displayFirstCard(firstItem);
-    console.log("显示第一个卡片：", firstItem.title);
-  } else {
-    // 如果没有数据，确保显示默认样式
+  try {
+    const currentGroup = appData.groups.find(
+      (g) => g.id === appData.currentGroup
+    );
+    if (currentGroup && currentGroup.items && currentGroup.items.length > 0) {
+      const firstItem = currentGroup.items[0];
+      currentDisplayedItem = firstItem; // 设置当前显示的项目
+      displayFirstCard(firstItem);
+      console.log("显示第一个卡片：", firstItem.title);
+    } else {
+      // 如果没有数据，确保显示默认样式
+      initializeResultCard();
+      console.log("没有数据，显示默认样式");
+    }
+  } catch (error) {
+    console.error("显示第一个卡片失败：", error);
+    // 出错时显示默认样式
     initializeResultCard();
-    console.log("没有数据，显示默认样式");
   }
 }
-
-
 
 // 开始抽取
 function startDraw() {
@@ -730,22 +793,30 @@ function startDraw() {
   const progressIndicator = document.getElementById("progressIndicator");
   const progressText = document.getElementById("progressText");
 
-  // 禁用control-panel区域的所有按钮
+  // 禁用 control-panel 区域的所有按钮
   disableControlPanelButtons();
-  
+
   progressIndicator.style.display = "flex";
   progressText.textContent = "抽取中...";
 
   // 计算实际抽奖时间
-  const baseDuration = appData.animationConfig.totalDuration; // 基础15秒
+  const baseDuration = appData.animationConfig.totalDuration; // 基础 15 秒
 
   // 使用随机种子生成 -3 到 +5 秒的随机时间调整
   const seededRandom = seedRandom(randomSeed);
-  const timeAdjustmentSeconds = (seededRandom() * 8) - 3; // 0-8 减3 = -3到+5
+  const timeAdjustmentSeconds = seededRandom() * 8 - 3; // 0-8 减 3 = -3 到 +5
   const timeAdjustmentMs = Math.round(timeAdjustmentSeconds * 1000);
-  const actualDuration = Math.max(5000, baseDuration + timeAdjustmentMs); // 最少5秒
+  const actualDuration = Math.max(5000, baseDuration + timeAdjustmentMs); // 最少 5 秒
 
-  console.log("实际抽奖时间：", actualDuration, "ms (基础:", baseDuration, "ms + 调整:", timeAdjustmentMs, "ms)");
+  console.log(
+    "实际抽奖时间：",
+    actualDuration,
+    "ms (基础：",
+    baseDuration,
+    "ms + 调整：",
+    timeAdjustmentMs,
+    "ms)"
+  );
 
   // 启动抽奖进度条动画
   startDrawProgressBar(actualDuration);
@@ -825,16 +896,19 @@ function startCardRolling(duration) {
     dynamicPoolCount: dynamicPool.length,
     finalResult: finalResult.title,
     isRandomInsert: randomResult.isRandomInsert,
-    finalIndex: randomResult.index
+    finalIndex: randomResult.index,
   });
 
   // 输出动态池的详细信息
-  console.log("动态选项池详情：", dynamicPool.map((item, index) => ({
-    index,
-    title: item.title,
-    isRandomInsert: item.isRandomInsert || false,
-    originalId: item.originalId || null
-  })));
+  console.log(
+    "动态选项池详情：",
+    dynamicPool.map((item, index) => ({
+      index,
+      title: item.title,
+      isRandomInsert: item.isRandomInsert || false,
+      originalId: item.originalId || null,
+    }))
+  );
 
   // 使用随机种子来影响初始索引、转动速度和动画参数
   const seededRandom = seedRandom(randomSeed);
@@ -849,7 +923,8 @@ function startCardRolling(duration) {
     test1: testRandom1,
     test2: testRandom2,
     test3: testRandom3,
-    variance: Math.abs(testRandom1 - testRandom2) + Math.abs(testRandom2 - testRandom3)
+    variance:
+      Math.abs(testRandom1 - testRandom2) + Math.abs(testRandom2 - testRandom3),
   });
 
   // 计算随机初始索引（基于动态池）
@@ -860,7 +935,7 @@ function startCardRolling(duration) {
     initialIndex: currentIndex,
     initialItem: dynamicPool[currentIndex].title,
     finalResult: finalResult.title,
-    finalIndex: randomResult.index
+    finalIndex: randomResult.index,
   });
 
   // 计算随机转动速度（基于随机种子）
@@ -874,7 +949,7 @@ function startCardRolling(duration) {
   const randomPause = Math.floor(basePause * pauseVariation);
 
   // 计算随机动画路径：决定是否跳过某些选项
-  const skipProbability = seededRandom() * 0.3; // 0-30%的概率跳过选项
+  const skipProbability = seededRandom() * 0.3; // 0-30% 的概率跳过选项
   const shouldSkipRandomly = seededRandom() < skipProbability;
 
   console.log("动画参数随机化：", {
@@ -885,7 +960,7 @@ function startCardRolling(duration) {
     pauseVariation,
     randomPause,
     skipProbability,
-    shouldSkipRandomly
+    shouldSkipRandomly,
   });
 
   let drawStartTime = Date.now();
@@ -925,7 +1000,12 @@ function startCardRolling(duration) {
   cardContainer.appendChild(card2);
 
   console.log("开始动画，随机种子：", randomSeed);
-  console.log("初始索引：", currentIndex, "项目：", dynamicPool[currentIndex].title);
+  console.log(
+    "初始索引：",
+    currentIndex,
+    "项目：",
+    dynamicPool[currentIndex].title
+  );
   console.log("随机转动速度：", randomSpeed, "ms (基础：", baseSpeed, "ms)");
   console.log("随机停顿时间：", randomPause, "ms (基础：", basePause, "ms)");
   console.log("动画持续时间：", duration, "ms");
@@ -976,7 +1056,8 @@ function startCardRolling(duration) {
       nextIndex = (nextIndex + 1) % dynamicPool.length;
 
       // 随机跳过选项（增加随机性）
-      if (shouldSkipRandomly && seededRandom() < 0.2) { // 20%概率跳过
+      if (shouldSkipRandomly && seededRandom() < 0.2) {
+        // 20%概率跳过
         nextIndex = (nextIndex + 1) % dynamicPool.length;
         console.log(`随机跳过选项，直接跳到：${dynamicPool[nextIndex].title}`);
       }
@@ -1026,7 +1107,6 @@ function createCard(item) {
 
 // 根据标题长度设置字体大小
 function setTitleFontSize(titleElement, title) {
-
   // 获取缩放系数
   const scaleFactor = calculateScaleFactor();
 
@@ -1070,7 +1150,8 @@ function performBookFlip(
 
   // 优化打印的日志，表明动画的开始和持续时间
   console.log(
-    `[LOG] 动画开始：从 ${currentCard.querySelector("h3").textContent} 翻转到 ${nextItem.title
+    `[LOG] 动画开始：从 ${currentCard.querySelector("h3").textContent} 翻转到 ${
+      nextItem.title
     }, 持续时间: ${customDuration}ms`
   );
 
@@ -1157,45 +1238,58 @@ function displayFirstCard(item) {
 
 // 显示最后一次抽奖结果
 function showLastDrawResult() {
-  console.log("🔍 showLastDrawResult 被调用，当前数据状态：", {
-    hasDrawHistory: !!appData.drawHistory,
-    drawHistoryLength: appData.drawHistory ? appData.drawHistory.length : 0,
-    drawHistory: appData.drawHistory ? appData.drawHistory.slice(0, 3) : null, // 只显示前3条记录
-    currentGroup: appData.currentGroup,
-    lastDrawTime: appData.lastDrawTime
-  });
-
-  // 检查是否有抽奖历史
-  if (appData.drawHistory && appData.drawHistory.length > 0) {
-    // 获取最后一次抽奖记录
-    const lastDraw = appData.drawHistory[0]; // 历史记录是按时间倒序排列的
-    console.log("🎯 显示最后一次抽奖结果：", lastDraw.title);
-
-    // 显示最后一次抽奖的结果
-    const resultCard = document.getElementById("resultCard");
-    const resultTitle = document.getElementById("resultTitle");
-    const resultDescription = document.getElementById("resultDescription");
-
-    resultTitle.textContent = lastDraw.title;
-    resultDescription.textContent = lastDraw.description;
-
-    // 根据标题长度设置字体大小
-    setTitleFontSize(resultTitle, lastDraw.title);
-
-    resultCard.style.display = "flex";
-
-    // 设置当前显示的项目
-    currentDisplayedItem = lastDraw;
-
-    console.log("✅ 已显示最后一次抽奖结果：", lastDraw.title);
-  } else {
-    // 如果没有抽奖历史，显示第一个卡片
-    console.log("📋 没有抽奖历史，显示第一个卡片");
-    console.log("📊 详细数据检查：", {
-      appDataKeys: Object.keys(appData),
-      groupsCount: appData.groups ? appData.groups.length : 0,
-      currentGroupData: appData.groups ? appData.groups.find(g => g.id === appData.currentGroup) : null
+  try {
+    console.log("🔍 showLastDrawResult 被调用，当前数据状态：", {
+      hasDrawHistory: !!appData.drawHistory,
+      drawHistoryLength: appData.drawHistory ? appData.drawHistory.length : 0,
+      drawHistory: appData.drawHistory ? appData.drawHistory.slice(0, 3) : null, // 只显示前 3 条记录
+      currentGroup: appData.currentGroup,
+      lastDrawTime: appData.lastDrawTime,
     });
+
+    // 检查是否有抽奖历史
+    if (appData.drawHistory && appData.drawHistory.length > 0) {
+      // 获取最后一次抽奖记录
+      const lastDraw = appData.drawHistory[0]; // 历史记录是按时间倒序排列的
+      console.log("🎯 显示最后一次抽奖结果：", lastDraw.title);
+
+      // 显示最后一次抽奖的结果
+      const resultCard = document.getElementById("resultCard");
+      const resultTitle = document.getElementById("resultTitle");
+      const resultDescription = document.getElementById("resultDescription");
+
+      if (resultCard && resultTitle && resultDescription) {
+        resultTitle.textContent = lastDraw.title;
+        resultDescription.textContent = lastDraw.description;
+
+        // 根据标题长度设置字体大小
+        setTitleFontSize(resultTitle, lastDraw.title);
+
+        resultCard.style.display = "flex";
+
+        // 设置当前显示的项目
+        currentDisplayedItem = lastDraw;
+
+        console.log("✅ 已显示最后一次抽奖结果：", lastDraw.title);
+      } else {
+        console.error("结果卡片元素不存在");
+        showFirstCard();
+      }
+    } else {
+      // 如果没有抽奖历史，显示第一个卡片
+      console.log("📋 没有抽奖历史，显示第一个卡片");
+      console.log("📊 详细数据检查：", {
+        appDataKeys: Object.keys(appData),
+        groupsCount: appData.groups ? appData.groups.length : 0,
+        currentGroupData: appData.groups
+          ? appData.groups.find((g) => g.id === appData.currentGroup)
+          : null,
+      });
+      showFirstCard();
+    }
+  } catch (error) {
+    console.error("显示最后一次抽奖结果失败：", error);
+    // 出错时显示第一个卡片
     showFirstCard();
   }
 }
@@ -1231,9 +1325,9 @@ function endDraw(finalItem = null) {
   const progressIndicator = document.getElementById("progressIndicator");
   const progressText = document.getElementById("progressText");
 
-  // 启用control-panel区域的所有按钮
+  // 启用 control-panel 区域的所有按钮
   enableControlPanelButtons();
-  
+
   progressIndicator.style.display = "none";
 
   // 优先使用传入的最终结果，否则使用当前显示的卡片
@@ -1250,10 +1344,15 @@ function endDraw(finalItem = null) {
         (g) => g.id === appData.currentGroup
       );
       if (currentGroup) {
-        const originalItem = currentGroup.items.find(item => item.id === resultItem.originalId);
+        const originalItem = currentGroup.items.find(
+          (item) => item.id === resultItem.originalId
+        );
         if (originalItem) {
           historyItem = originalItem;
-          console.log("随机插入选项，使用原始选项记录历史：", originalItem.title);
+          console.log(
+            "随机插入选项，使用原始选项记录历史：",
+            originalItem.title
+          );
         }
       }
     }
@@ -1261,19 +1360,23 @@ function endDraw(finalItem = null) {
     // 显示最终结果
     showResult(resultItem);
 
-    // 记录抽取历史 - 使用DataManager的方法
+    // 记录抽取历史 - 使用 DataManager 的方法
     const currentGroup = appData.groups.find(
       (g) => g.id === appData.currentGroup
     );
     if (currentGroup && dataManager) {
-      // 使用DataManager的addDrawRecord方法，记录原始选项
-      dataManager.addDrawRecord(historyItem, currentGroup.name);
+      try {
+        // 使用 DataManager 的 addDrawRecord 方法，记录原始选项
+        dataManager.addDrawRecord(historyItem, currentGroup.name);
 
-      // 延迟同步数据到本地变量，避免立即触发数据变化事件
-      setTimeout(() => {
-        syncDataFromManager();
-        console.log('📝 抽奖历史已记录并同步：', historyItem.title);
-      }, 100);
+        // 延迟同步数据到本地变量，避免立即触发数据变化事件
+        setTimeout(() => {
+          syncDataFromManager();
+          console.log("📝 抽奖历史已记录并同步：", historyItem.title);
+        }, 100);
+      } catch (error) {
+        console.error("记录抽奖历史失败：", error);
+      }
     }
   }
 }
@@ -1300,58 +1403,96 @@ function showResult(item) {
 
   // 设置当前显示的项目
   currentDisplayedItem = item;
-  
+
   // 显示炫酷的结果浮层
   setTimeout(() => {
     showResultOverlay(item);
-  }, 800); // 延迟800ms显示浮层，让抖动效果先完成
+  }, 800); // 延迟 800ms 显示浮层，让抖动效果先完成
 }
 
 // 更新 UI
 function updateUI() {
-  const currentGroup = appData.groups.find(
-    (g) => g.id === appData.currentGroup
-  );
-  if (currentGroup) {
-    document.getElementById("currentGroupName").textContent = currentGroup.name;
+  try {
+    const currentGroup = appData.groups.find(
+      (g) => g.id === appData.currentGroup
+    );
+    if (currentGroup) {
+      document.getElementById("currentGroupName").textContent =
+        currentGroup.name;
+    }
+    updateGroupSelector();
+    console.log(
+      "UI 更新成功，当前组合：",
+      currentGroup ? currentGroup.name : "未知"
+    );
+  } catch (error) {
+    console.error("UI 更新失败：", error);
   }
-  updateGroupSelector();
 }
 
 // 更新组合选择器
 function updateGroupSelector() {
-  const groupList = document.getElementById("groupList");
-  groupList.innerHTML = "";
-
-  appData.groups.forEach((group) => {
-    const groupItem = document.createElement("div");
-    groupItem.className = "group-item";
-    if (group.id === appData.currentGroup) {
-      groupItem.classList.add("active");
+  try {
+    const groupList = document.getElementById("groupList");
+    if (!groupList) {
+      console.error("组合选择器元素不存在");
+      return;
     }
 
-    groupItem.innerHTML = `
-            <div class="group-info">
-                <h4>${group.name}</h4>
-                <p>${group.items.length} 个选项</p>
-            </div>
-        `;
+    groupList.innerHTML = "";
 
-    groupItem.addEventListener("click", () => selectGroup(group.id));
-    groupList.appendChild(groupItem);
-  });
+    // 验证数据完整性
+    if (!appData.groups || !Array.isArray(appData.groups)) {
+      console.warn("组合数据格式错误，显示空列表");
+      return;
+    }
+
+    appData.groups.forEach((group) => {
+      // 验证组合数据完整性
+      if (!group || !group.id || !group.name || !Array.isArray(group.items)) {
+        console.warn("跳过无效的组合数据：", group);
+        return;
+      }
+
+      const groupItem = document.createElement("div");
+      groupItem.className = "group-item";
+      if (group.id === appData.currentGroup) {
+        groupItem.classList.add("active");
+      }
+
+      groupItem.innerHTML = `
+              <div class="group-info">
+                  <h4>${Utils.escapeHtml(group.name)}</h4>
+                  <p>${group.items.length} 个选项</p>
+              </div>
+          `;
+
+      groupItem.addEventListener("click", () => selectGroup(group.id));
+      groupList.appendChild(groupItem);
+    });
+
+    console.log("组合选择器更新成功，共", appData.groups.length, "个组合");
+  } catch (error) {
+    console.error("更新组合选择器失败：", error);
+  }
 }
 
 // 选择组合
 function selectGroup(groupId) {
-  if (dataManager && dataManager.setCurrentGroup(groupId)) {
-    appData.currentGroup = groupId;
-    updateUI();
-    hideGroupSelector();
-    showFirstCard(); // 显示新组合的第一个食品
+  try {
+    if (dataManager && dataManager.setCurrentGroup(groupId)) {
+      appData.currentGroup = groupId;
+      updateUI();
+      hideGroupSelector();
+      showFirstCard(); // 显示新组合的第一个食品
+      console.log("组合切换成功：", groupId);
+    } else {
+      console.error("组合切换失败：", groupId);
+    }
+  } catch (error) {
+    console.error("组合切换出错：", error);
   }
 }
-
 
 // 随机性验证函数 - 用于测试和验证随机性
 function validateRandomness() {
@@ -1364,7 +1505,7 @@ function validateRandomness() {
     // 模拟点击位置
     clickPosition = {
       x: Math.floor(Math.random() * window.innerWidth),
-      y: Math.floor(Math.random() * window.innerHeight)
+      y: Math.floor(Math.random() * window.innerHeight),
     };
 
     // 生成随机种子
@@ -1377,83 +1518,127 @@ function validateRandomness() {
       seed1,
       seed2,
       seedDifference: Math.abs(seed1 - seed2),
-      isDifferent: seed1 !== seed2
+      isDifferent: seed1 !== seed2,
     });
   }
 
   // 分析结果
-  const differentSeeds = testResults.filter(r => r.isDifferent).length;
-  const averageDifference = testResults.reduce((sum, r) => sum + r.seedDifference, 0) / testCount;
+  const differentSeeds = testResults.filter((r) => r.isDifferent).length;
+  const averageDifference =
+    testResults.reduce((sum, r) => sum + r.seedDifference, 0) / testCount;
 
-  console.log("🎲 随机性验证结果:", {
+  console.log("🎲 随机性验证结果：", {
     totalTests: testCount,
     differentSeeds,
-    uniquenessRate: (differentSeeds / testCount * 100).toFixed(2) + "%",
+    uniquenessRate: ((differentSeeds / testCount) * 100).toFixed(2) + "%",
     averageDifference: Math.floor(averageDifference),
-    testResults
+    testResults,
   });
 
   return {
     uniquenessRate: differentSeeds / testCount,
     averageDifference,
-    testResults
+    testResults,
   };
 }
 
 // 数据同步测试函数
 function testDataSync() {
   console.log("🧪 开始数据同步测试...");
-  console.log("📊 当前appData状态：", {
+  console.log("📊 当前 appData 状态：", {
     hasDrawHistory: !!appData.drawHistory,
     drawHistoryLength: appData.drawHistory ? appData.drawHistory.length : 0,
     lastDrawTime: appData.lastDrawTime,
-    currentGroup: appData.currentGroup
+    currentGroup: appData.currentGroup,
   });
 
   if (dataManager) {
     const managerData = dataManager.getData();
-    console.log("📊 DataManager状态：", {
+    console.log("📊 DataManager 状态：", {
       hasDrawHistory: !!managerData.drawHistory,
-      drawHistoryLength: managerData.drawHistory ? managerData.drawHistory.length : 0,
+      drawHistoryLength: managerData.drawHistory
+        ? managerData.drawHistory.length
+        : 0,
       lastDrawTime: managerData.lastDrawTime,
-      currentGroup: managerData.currentGroup
+      currentGroup: managerData.currentGroup,
     });
   }
 }
 
 // 显示组合选择器
 function showGroupSelector() {
-  document.getElementById("groupSelector").style.display = "flex";
+  try {
+    // 确保数据是最新的
+    if (dataManager) {
+      syncDataFromManager();
+    }
+
+    // 更新组合选择器
+    updateGroupSelector();
+
+    // 显示弹窗
+    const groupSelector = document.getElementById("groupSelector");
+    if (groupSelector) {
+      groupSelector.style.display = "flex";
+      console.log("组合选择器已显示");
+    } else {
+      console.error("组合选择器元素不存在");
+    }
+  } catch (error) {
+    console.error("显示组合选择器失败：", error);
+  }
 }
 
 // 隐藏组合选择器
 function hideGroupSelector() {
-  document.getElementById("groupSelector").style.display = "none";
+  try {
+    const groupSelector = document.getElementById("groupSelector");
+    if (groupSelector) {
+      groupSelector.style.display = "none";
+      console.log("组合选择器已隐藏");
+    } else {
+      console.error("组合选择器元素不存在");
+    }
+  } catch (error) {
+    console.error("隐藏组合选择器失败：", error);
+  }
 }
 
 // 打开管理页面
 function openManagePage() {
-  // 确保当前数据已保存
-  if (dataManager) {
-    dataManager.save();
+  try {
+    // 确保当前数据已保存
+    if (dataManager) {
+      dataManager.save();
+    }
+    window.open("manage.html", "_blank");
+    console.log("管理页面已打开");
+  } catch (error) {
+    console.error("打开管理页面失败：", error);
   }
-  window.open("manage.html", "_blank");
 }
 
 // 导出数据
 function exportData() {
-  if (dataManager) {
-    const dataStr = dataManager.export();
-    const dataBlob = new Blob([dataStr], { type: "application/json" });
-    const url = URL.createObjectURL(dataBlob);
+  try {
+    if (dataManager) {
+      const dataStr = dataManager.export();
+      const dataBlob = new Blob([dataStr], { type: "application/json" });
+      const url = URL.createObjectURL(dataBlob);
 
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = `eat-app-data-${new Date().toISOString().split("T")[0]}.json`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `eat-app-data-${
+        new Date().toISOString().split("T")[0]
+      }.json`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      console.log("数据导出成功");
+    }
+  } catch (error) {
+    console.error("数据导出失败：", error);
   }
 }
 
@@ -1468,12 +1653,17 @@ function importData(file) {
         syncDataFromManager();
         updateUI();
         showLastDrawResult(); // 显示最后一次抽奖结果
+        console.log("数据导入成功");
         alert("数据导入成功！");
       }
     } catch (error) {
-      alert("数据格式错误，导入失败！");
       console.error("导入数据失败：", error);
+      alert("数据格式错误，导入失败！");
     }
+  };
+  reader.onerror = () => {
+    console.error("文件读取失败");
+    alert("文件读取失败");
   };
   reader.readAsText(file);
 }
@@ -1481,12 +1671,18 @@ function importData(file) {
 // 重置数据
 function resetData() {
   if (confirm("确定要重置所有数据吗？此操作不可恢复！")) {
-    if (dataManager) {
-      dataManager.reset();
-      syncDataFromManager();
-      updateUI();
-      showFirstCard();
-      alert("数据已重置！");
+    try {
+      if (dataManager) {
+        dataManager.reset();
+        syncDataFromManager();
+        updateUI();
+        showFirstCard();
+        console.log("数据重置成功");
+        alert("数据已重置！");
+      }
+    } catch (error) {
+      console.error("数据重置失败：", error);
+      alert("数据重置失败！");
     }
   }
 }
@@ -1525,13 +1721,17 @@ document.addEventListener("keydown", function (e) {
 
 // 防止页面刷新时丢失数据
 window.addEventListener("beforeunload", function () {
-  saveData();
+  try {
+    saveData();
+  } catch (error) {
+    console.error("页面关闭前保存数据失败：", error);
+  }
 });
 
 // 移动端特殊处理
 if ("ontouchstart" in window) {
   // 移动端优化
-  document.addEventListener("touchstart", function () { }, { passive: true });
+  document.addEventListener("touchstart", function () {}, { passive: true });
 
   // 防止双击缩放
   let lastTouchEnd = 0;
@@ -1554,14 +1754,14 @@ let dataChangeTimeout = null;
 // 设置数据变化监听器
 function setupDataChangeListener() {
   // 监听storage事件，当其他页面修改localStorage时触发
-  window.addEventListener('storage', function (e) {
-    if (e.key === 'eatAppData' && e.newValue) {
-      console.log('🔄 检测到storage数据变化，正在刷新...');
-      console.log('📊 变化详情：', {
+  window.addEventListener("storage", function (e) {
+    if (e.key === "eatAppData" && e.newValue) {
+      console.log("🔄 检测到storage数据变化，正在刷新...");
+      console.log("📊 变化详情：", {
         oldValue: e.oldValue,
-        newValue: e.newValue ? '有数据' : '无数据',
+        newValue: e.newValue ? "有数据" : "无数据",
         url: e.url,
-        storageArea: e.storageArea
+        storageArea: e.storageArea,
       });
 
       // 清除之前的定时器
@@ -1570,34 +1770,43 @@ function setupDataChangeListener() {
       }
 
       // 重新加载数据
-      dataManager.load().then(() => {
-        console.log('📥 数据重新加载完成');
-        syncDataFromManager();
-        updateUI();
-        // 添加延迟确保数据同步完成
-        dataChangeTimeout = setTimeout(() => {
-          console.log('⏰ 延迟后调用showLastDrawResult');
-          showLastDrawResult(); // 显示最后一次抽奖结果，而不是第一个卡片
-        }, 200); // 增加延迟时间到200ms
-      });
+      dataManager
+        .load()
+        .then(() => {
+          console.log("📥 数据重新加载完成");
+          syncDataFromManager();
+          updateUI();
+          // 添加延迟确保数据同步完成
+          dataChangeTimeout = setTimeout(() => {
+            console.log("⏰ 延迟后调用 showLastDrawResult");
+            showLastDrawResult(); // 显示最后一次抽奖结果，而不是第一个卡片
+          }, 200); // 增加延迟时间到 200ms
+        })
+        .catch((error) => {
+          console.error("数据重新加载失败：", error);
+        });
     }
   });
 
   // 监听自定义事件（用于同页面内的数据变化）
-  window.addEventListener('dataChanged', function () {
-    console.log('🔄 检测到自定义数据变化事件，正在刷新...');
+  window.addEventListener("dataChanged", function () {
+    console.log("🔄 检测到自定义数据变化事件，正在刷新...");
 
     // 清除之前的定时器
     if (dataChangeTimeout) {
       clearTimeout(dataChangeTimeout);
     }
 
-    syncDataFromManager();
-    updateUI();
-    // 添加延迟确保数据同步完成
-    dataChangeTimeout = setTimeout(() => {
-      console.log('⏰ 延迟后调用showLastDrawResult');
-      showLastDrawResult(); // 显示最后一次抽奖结果，而不是第一个卡片
-    }, 200); // 增加延迟时间到200ms
+    try {
+      syncDataFromManager();
+      updateUI();
+      // 添加延迟确保数据同步完成
+      dataChangeTimeout = setTimeout(() => {
+        console.log("⏰ 延迟后调用 showLastDrawResult");
+        showLastDrawResult(); // 显示最后一次抽奖结果，而不是第一个卡片
+      }, 200); // 增加延迟时间到 200ms
+    } catch (error) {
+      console.error("处理数据变化事件失败：", error);
+    }
   });
 }
