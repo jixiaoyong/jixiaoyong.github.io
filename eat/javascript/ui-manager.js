@@ -61,7 +61,7 @@ class UIManager {
     }`;
     groupCard.dataset.groupId = group.id;
 
-            groupCard.innerHTML = `
+    groupCard.innerHTML = `
       <div class="group-header">
         <div class="group-info">
           <div class="group-name">${Utils.escapeHtml(group.name)}</div>
@@ -137,22 +137,22 @@ class UIManager {
 
     // 兼容两种数据结构
     let title, description, group, timestamp;
-    
+
     if (record.item && record.item.title) {
-      // data-manager.js 的结构: { id, item: { title, description }, group, timestamp }
+      // data-manager.js 的结构：{ id, item: { title, description }, group, timestamp }
       title = record.item.title;
       description = record.item.description;
       group = record.group;
       timestamp = record.timestamp;
     } else if (record.title) {
-      // script.js 的结构: { title, description, group, time, randomSeed }
+      // script.js 的结构：{ title, description, group, time, randomSeed }
       title = record.title;
       description = record.description;
       group = record.group;
       timestamp = record.time;
     } else {
       // 无效数据，跳过
-      console.warn('无效的历史记录数据:', record);
+      console.warn("无效的历史记录数据：", record);
       return null;
     }
 
@@ -205,10 +205,8 @@ class UIManager {
       <div class="item-inputs">
         <input type="text" class="item-title" placeholder="选项标题" 
                value="${item ? Utils.escapeHtml(item.title) : ""}" required>
-        <input type="text" class="item-description" placeholder="选项描述" 
-               value="${
-                 item ? Utils.escapeHtml(item.description) : ""
-               }" required>
+        <input type="text" class="item-description" placeholder="选项描述（可选）" 
+               value="${item ? Utils.escapeHtml(item.description) : ""}">
       </div>
       <button type="button" class="btn btn-danger btn-sm remove-item-btn" title="删除选项">
         删除
@@ -246,11 +244,11 @@ class UIManager {
       const title = titleInput.value.trim();
       const description = descInput.value.trim();
 
-      if (title && description) {
+      if (title) {
         items.push({
           id: Utils.generateId("item"),
           title,
-          description,
+          description: description || "",
         });
       }
     }

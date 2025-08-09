@@ -27,9 +27,7 @@ class FormValidator {
       if (!item.title || item.title.trim().length === 0) {
         this.errors.push(`第${index + 1}个选项缺少标题`);
       }
-      if (!item.description || item.description.trim().length === 0) {
-        this.errors.push(`第${index + 1}个选项缺少描述`);
-      }
+      // 描述字段为可选项，不需要验证
     });
 
     return this.errors.length === 0;
@@ -41,12 +39,12 @@ class FormValidator {
     const descInput = itemForm.querySelector(".item-description");
 
     const titleValid = titleInput.value.trim().length > 0;
-    const descValid = descInput.value.trim().length > 0;
+    // 描述字段为可选项，不需要验证
 
     titleInput.classList.toggle("invalid", !titleValid);
-    descInput.classList.toggle("invalid", !descValid);
+    descInput.classList.toggle("invalid", false); // 描述字段不显示验证错误
 
-    return titleValid && descValid;
+    return titleValid;
   }
 
   // 获取错误信息
