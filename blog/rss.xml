@@ -6,11 +6,48 @@
     <link>https://jixiaoyong.github.io/blog/</link>
     <description>Let&amp;apos;s make something different!</description>
     <language>zh-CN</language>
-    <pubDate>Tue, 30 Sep 2025 09:18:39 GMT</pubDate>
-    <lastBuildDate>Tue, 30 Sep 2025 09:18:39 GMT</lastBuildDate>
+    <pubDate>Tue, 14 Oct 2025 10:49:34 GMT</pubDate>
+    <lastBuildDate>Tue, 14 Oct 2025 10:49:34 GMT</lastBuildDate>
     <generator>@vuepress/plugin-feed</generator>
     <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
     <copyright>©CC BY-NC-SA 许可协议授权，署名 - 非商业性使用 - 相同方式共享</copyright>
+    <category>flutter</category>
+    <item>
+      <title>Signals.dart使用介绍</title>
+      <link>https://jixiaoyong.github.io/blog/posts/42a9077b.html</link>
+      <guid>https://jixiaoyong.github.io/blog/posts/42a9077b.html</guid>
+      <source url="https://jixiaoyong.github.io/blog/rss.xml">Signals.dart使用介绍</source>
+      <description>Let&amp;apos;s make something different!</description>
+      <category>flutter</category>
+      <pubDate>Tue, 14 Oct 2025 10:46:22 GMT</pubDate>
+      <content:encoded><![CDATA[<p>本文旨在为 Dart 和 Flutter 开发者提供 <a href="https://dartsignals.dev" target="_blank" rel="noopener noreferrer">Signals.dart</a> 框架的全面介绍。Signals.dart 借鉴了现代前端响应式系统（如 SolidJS 或 Vue 3）的核心理念，提供了一种基于 Pull-Based（拉取式） 架构的、高效且极简的状态管理方案。</p>
+<p>文档重点阐述了框架的核心 API、Flutter 集成能力以及两种主流的应用架构模式（轻量级局部状态和分层 MVC 模式），旨在帮助开发者快速掌握 Signals 的基础使用。</p>
+<blockquote>
+<p>声明：本文部分内容由 AI 参考官方文档整理，但所有核心要点用法均经过人工核对</p>
+</blockquote>
+<h2><a class="header-anchor" href="#官方文档要点-signals-dart-overview"><span>官方文档要点（</span></a><a href="https://dartsignals.dev/reference/overview/" target="_blank" rel="noopener noreferrer">Signals.dart Overview</a>）</h2>
+<h3>核心理念</h3>
+<ul>
+<li><strong>Pull-Based 架构</strong>：Signals 采用"拉取"模式，只有在<strong>读取值时</strong>才会触发计算（区别于传统的 push-based <code>notifyListeners</code>）</li>
+<li><strong>极简更新（Minimal Updates）</strong>：
+<ul>
+<li>如果从不读取某个 <code>computed</code>，它的回调永远不会被调用</li>
+<li>链式 computed 会缓存值，只在依赖变化<strong>且被读取时</strong>才重新计算</li>
+<li>使用链表实现依赖追踪（signal boosting），性能更优</li>
+</ul>
+</li>
+</ul>
+<p><strong>示例：懒计算</strong></p>
+<div class="language-dart line-numbers-mode" data-highlighter="shiki" data-ext="dart" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span style="--shiki-light:#A626A4;--shiki-dark:#C678DD">final</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF"> a </span><span style="--shiki-light:#383A42;--shiki-dark:#56B6C2">=</span><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF"> signal</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">(</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66">0</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">);</span></span>
+<span class="line"><span style="--shiki-light:#A626A4;--shiki-dark:#C678DD">final</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF"> b </span><span style="--shiki-light:#383A42;--shiki-dark:#56B6C2">=</span><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF"> computed</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">(() =&gt; a.value </span><span style="--shiki-light:#383A42;--shiki-dark:#56B6C2">+</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66"> 1</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">);</span></span>
+<span class="line"><span style="--shiki-light:#A626A4;--shiki-dark:#C678DD">final</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF"> c </span><span style="--shiki-light:#383A42;--shiki-dark:#56B6C2">=</span><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF"> computed</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">(() =&gt; b.value </span><span style="--shiki-light:#383A42;--shiki-dark:#56B6C2">+</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66"> 1</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">);</span></span>
+<span class="line"><span style="--shiki-light:#A626A4;--shiki-dark:#C678DD">final</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF"> d </span><span style="--shiki-light:#383A42;--shiki-dark:#56B6C2">=</span><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF"> computed</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">(() =&gt; c.value </span><span style="--shiki-light:#383A42;--shiki-dark:#56B6C2">+</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66"> 1</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#A0A1A7;--shiki-light-font-style:italic;--shiki-dark:#7F848E;--shiki-dark-font-style:italic">// 如果从不读取 d.value，所有回调都不会执行</span></span>
+<span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">print</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">(d.value); </span><span style="--shiki-light:#A0A1A7;--shiki-light-font-style:italic;--shiki-dark:#7F848E;--shiki-dark-font-style:italic">// 3 - 此时才会计算整个链路</span></span>
+<span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">print</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">(d.value); </span><span style="--shiki-light:#A0A1A7;--shiki-light-font-style:italic;--shiki-dark:#7F848E;--shiki-dark-font-style:italic">// 3 - 直接返回缓存值，无需重新计算</span></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div>]]></content:encoded>
+    </item>
     <item>
       <title>Android Flutter 插件第三方 aar 库依赖方式对比分析</title>
       <link>https://jixiaoyong.github.io/blog/posts/d89b1d83.html</link>
@@ -19507,86 +19544,6 @@ version 查看 hexo 的版本<br>
 <figure><img src="https://jixiaoyong.github.io/images/20190105142406.png" alt="排序算法比较" tabindex="0" loading="lazy"><figcaption>排序算法比较</figcaption></figure>
 ]]></content:encoded>
       <enclosure url="https://jixiaoyong.github.io/images/20190105140704.png" type="image/png"/>
-    </item>
-    <item>
-      <title>数据结构_数组，链表</title>
-      <link>https://jixiaoyong.github.io/blog/posts/9a784fe0.html</link>
-      <guid>https://jixiaoyong.github.io/blog/posts/9a784fe0.html</guid>
-      <source url="https://jixiaoyong.github.io/blog/rss.xml">数据结构_数组，链表</source>
-      <description>Let&amp;apos;s make something different!</description>
-      <pubDate>Tue, 01 Jan 2019 03:19:52 GMT</pubDate>
-      <content:encoded><![CDATA[<h2>前言</h2>
-<p>本文介绍了数组、链表等数据结构。</p>
-<p>设定所有排序：小 → 大。</p>
-<h2>数组</h2>
-<p>数组（array）是一组具有相同类型元素的集合，用一段连续的内存来保存。使用下标来访问保存的元素，如<code>a[0]</code>。</p>
-<p>数组是一种数据存储结构。</p>
-<div class="language-java line-numbers-mode" data-highlighter="shiki" data-ext="java" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span style="--shiki-light:#A626A4;--shiki-dark:#C678DD">int</span><span style="--shiki-light:#E45649;--shiki-dark:#E06C75"> a[] </span><span style="--shiki-light:#383A42;--shiki-dark:#56B6C2">=</span><span style="--shiki-light:#A626A4;--shiki-dark:#C678DD"> new</span><span style="--shiki-light:#C18401;--shiki-dark:#C678DD"> int</span><span style="--shiki-light:#383A42;--shiki-dark:#E06C75">[</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66">10</span><span style="--shiki-light:#383A42;--shiki-dark:#E06C75">]</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">;</span></span></code></pre>
-<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div></div></div><p>数组大小固定，对指定下标元素读写快 O(1)，但是查找慢 O(N)，删除元素慢 O(N)。</p>
-<h3>有序数组</h3>
-<p>在每次插入的时候对元素进行排序，就得到有序数组。</p>
-<p>有序数组查找快 O(LogN)，但插入慢 O(N)，删除元素慢 O(N)。</p>
-<p><strong>有序数组插入</strong>：</p>
-<div class="language-kotlin line-numbers-mode" data-highlighter="shiki" data-ext="kotlin" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span style="--shiki-light:#A626A4;--shiki-dark:#C678DD">fun</span><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF"> insertSort</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">(key: </span><span style="--shiki-light:#C18401;--shiki-dark:#E5C07B">Int</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">) {</span></span>
-<span class="line"><span style="--shiki-light:#A626A4;--shiki-dark:#C678DD">    if</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF"> (size </span><span style="--shiki-light:#383A42;--shiki-dark:#56B6C2">&gt;=</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF"> sortArr.size) {</span></span>
-<span class="line"><span style="--shiki-light:#A626A4;--shiki-dark:#C678DD">        return</span></span>
-<span class="line"><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">    }</span></span>
-<span class="line"><span style="--shiki-light:#A626A4;--shiki-dark:#C678DD">    if</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF"> (size </span><span style="--shiki-light:#383A42;--shiki-dark:#56B6C2">==</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66"> 0</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">) {</span></span>
-<span class="line"><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">        sortArr[size</span><span style="--shiki-light:#383A42;--shiki-dark:#56B6C2">++</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">] </span><span style="--shiki-light:#383A42;--shiki-dark:#56B6C2">=</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF"> key</span></span>
-<span class="line"><span style="--shiki-light:#A626A4;--shiki-dark:#C678DD">        return</span></span>
-<span class="line"><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">    }</span></span>
-<span class="line"><span style="--shiki-light:#A626A4;--shiki-dark:#C678DD">    var</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF"> insertIndex </span><span style="--shiki-light:#383A42;--shiki-dark:#56B6C2">=</span><span style="--shiki-light:#383A42;--shiki-dark:#56B6C2"> ++</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">size </span><span style="--shiki-light:#383A42;--shiki-dark:#56B6C2">-</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66"> 1</span></span>
-<span class="line"><span style="--shiki-light:#A626A4;--shiki-dark:#C678DD">    while</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF"> (key </span><span style="--shiki-light:#383A42;--shiki-dark:#56B6C2">&lt;</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF"> sortArr[insertIndex </span><span style="--shiki-light:#383A42;--shiki-dark:#56B6C2">-</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66"> 1</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">]) {</span></span>
-<span class="line"><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">        sortArr[insertIndex] </span><span style="--shiki-light:#383A42;--shiki-dark:#56B6C2">=</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF"> sortArr[insertIndex </span><span style="--shiki-light:#383A42;--shiki-dark:#56B6C2">-</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66"> 1</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">]</span></span>
-<span class="line"><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">        insertIndex</span><span style="--shiki-light:#383A42;--shiki-dark:#56B6C2">--</span></span>
-<span class="line"><span style="--shiki-light:#A626A4;--shiki-dark:#C678DD">        if</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF"> (insertIndex </span><span style="--shiki-light:#383A42;--shiki-dark:#56B6C2">==</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66"> 0</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">) {</span></span>
-<span class="line"><span style="--shiki-light:#A626A4;--shiki-dark:#C678DD">            break</span></span>
-<span class="line"><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">        }</span></span>
-<span class="line"><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">    }</span></span>
-<span class="line"><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">    sortArr[insertIndex] </span><span style="--shiki-light:#383A42;--shiki-dark:#56B6C2">=</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF"> key</span></span>
-<span class="line"><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">}</span></span></code></pre>
-<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>在有序数组要找到某个元素 t 可以使用二分查找，其思想是：</p>
-<ol>
-<li>选取一个中间值 n 将当前数组一分为二。</li>
-<li>如果<code>t==n</code>那么查找结束，如果<code>t&lt;n</code>,那么在右半部分数组查找，否则在左半部分数组查找。</li>
-<li>重复步骤<code>1</code>,<code>2</code>，直到找到 n 或者数组已经不可再分（不存在 n），结束查找。</li>
-</ol>
-<p><strong>二分法查找</strong>：</p>
-<div class="language-kotlin line-numbers-mode" data-highlighter="shiki" data-ext="kotlin" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span style="--shiki-light:#A626A4;--shiki-dark:#C678DD">fun</span><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF"> dichotomy</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">(array: </span><span style="--shiki-light:#C18401;--shiki-dark:#E5C07B">IntArray</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">, key: </span><span style="--shiki-light:#C18401;--shiki-dark:#E5C07B">Int</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">): </span><span style="--shiki-light:#C18401;--shiki-dark:#E5C07B">Int</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF"> {</span></span>
-<span class="line"><span style="--shiki-light:#A626A4;--shiki-dark:#C678DD">    if</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF"> (array.size </span><span style="--shiki-light:#383A42;--shiki-dark:#56B6C2">&lt;</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66"> 2</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">) {</span></span>
-<span class="line"><span style="--shiki-light:#A626A4;--shiki-dark:#C678DD">        return</span><span style="--shiki-light:#383A42;--shiki-dark:#56B6C2"> -</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66">1</span></span>
-<span class="line"><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">    }</span></span>
-<span class="line"><span style="--shiki-light:#A626A4;--shiki-dark:#C678DD">    var</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF"> centerIndex </span><span style="--shiki-light:#383A42;--shiki-dark:#56B6C2">=</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF"> array.size </span><span style="--shiki-light:#383A42;--shiki-dark:#56B6C2">/</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66"> 2</span></span>
-<span class="line"><span style="--shiki-light:#A626A4;--shiki-dark:#C678DD">    var</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF"> centerKey </span><span style="--shiki-light:#383A42;--shiki-dark:#56B6C2">=</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF"> array[centerIndex]</span></span>
-<span class="line"><span style="--shiki-light:#A626A4;--shiki-dark:#C678DD">    return</span><span style="--shiki-light:#A626A4;--shiki-dark:#C678DD"> when</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF"> {</span></span>
-<span class="line"><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">        key </span><span style="--shiki-light:#383A42;--shiki-dark:#56B6C2">==</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF"> centerKey </span><span style="--shiki-light:#A626A4;--shiki-dark:#C678DD">-&gt;</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF"> centerIndex</span></span>
-<span class="line"><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">        key </span><span style="--shiki-light:#383A42;--shiki-dark:#56B6C2">&lt;</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF"> centerKey </span><span style="--shiki-light:#A626A4;--shiki-dark:#C678DD">-&gt;</span><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF"> dichotomy</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">(array.</span><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">copyOfRange</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">(</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66">0</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">, centerIndex), key)</span></span>
-<span class="line"><span style="--shiki-light:#A626A4;--shiki-dark:#C678DD">        else</span><span style="--shiki-light:#A626A4;--shiki-dark:#C678DD"> -&gt;</span><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF"> dichotomy</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">(array.</span><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">copyOfRange</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">(centerIndex </span><span style="--shiki-light:#383A42;--shiki-dark:#56B6C2">-</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66"> 1</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">, array.size), key)</span></span>
-<span class="line"><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">    }</span></span>
-<span class="line"><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">}</span></span></code></pre>
-<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2>链表</h2>
-<p>链表的每个节点除了保存的数据外，还保存着下一个节点的引用<code>next</code>，最后一个元素中该引用为<code>null</code>。</p>
-<p>链表的大小不固定，查找，删除，插入指定节点都需要 O(N)</p>
-<p>链表有以下分类：</p>
-<ul>
-<li>
-<p>单链表 每个节点只有指向下一个节点的引用，链表只保留第一个链节点的引用<code>first</code></p>
-<figure><img src="https://jixiaoyong.github.io/images/20190101132535.png" alt="单链表" tabindex="0" loading="lazy"><figcaption>单链表</figcaption></figure>
-</li>
-<li>
-<p>双向链表 每个节点保存有父节点和子节点的引用。双向链表也可以是双端链表。</p>
-<figure><img src="https://jixiaoyong.github.io/images/20190101132614.png" alt="双向链表" tabindex="0" loading="lazy"><figcaption>双向链表</figcaption></figure>
-</li>
-</ul>
-<p><strong>双端链表</strong> 双端链表保存第一个链节点<code>farst</code>和最后一个链节点<code>last</code>的引用。</p>
-<figure><img src="https://jixiaoyong.github.io/images/20190101132649.png" alt="双端链表" tabindex="0" loading="lazy"><figcaption>双端链表</figcaption></figure>
-<h2>源码</h2>
-<p><a href="https://github.com/jixiaoyong/Notes-Files/tree/master/AndroidLearningResource/java_note/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AD%A6%E4%B9%A0/link" target="_blank" rel="noopener noreferrer">👉 点这里</a> 查看<code>链表</code>源码</p>
-<h2>参考文献</h2>
-<p><a href="https://zh.wikipedia.org/wiki/%E6%95%B0%E7%BB%84" target="_blank" rel="noopener noreferrer">数组--维基百科</a></p>
-<p><a href="https://book.douban.com/subject/1144007/" target="_blank" rel="noopener noreferrer">Java 数据结构和算法（第二版）Robert Laforce 计晓云等译</a></p>
-]]></content:encoded>
-      <enclosure url="https://jixiaoyong.github.io/images/20190101132535.png" type="image/png"/>
     </item>
   </channel>
 </rss>
