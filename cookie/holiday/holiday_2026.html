@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="page-title">2026 年中国大陆公众节假日安排</title>
+    <style>
+      /* 1. 全局和排版 */
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f4f7f6;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        padding: 20px 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        text-align: center;
+        color: #007bff;
+        border-bottom: 2px solid #007bff;
+        padding-bottom: 10px;
+        margin-bottom: 30px;
+        font-size: 24px;
+      }
+
+      /* 2. 节假日列表样式 */
+      .current-time-info {
+        margin-bottom: 20px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        color: #333;
+      }
+
+      .current-time-info .time-display {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 8px;
+        font-family: "Courier New", monospace;
+      }
+
+      .current-time-info .next-holiday {
+        font-size: 14px;
+        opacity: 0.95;
+      }
+
+      .current-time-info .next-holiday strong {
+        color: #007bff;
+      }
+
+      .holiday-list {
+        margin-bottom: 40px;
+      }
+
+      .holiday-list h2 {
+        font-size: 20px;
+        color: #28a745;
+        margin-top: 0;
+        padding-left: 10px;
+        border-left: 5px solid #28a745;
+        cursor: pointer;
+        -webkit-user-select: none;
+        user-select: none;
+        position: relative;
+        padding-right: 30px;
+      }
+
+      .holiday-list h2::after {
+        content: "▼";
+        position: absolute;
+        right: 10px;
+        font-size: 14px;
+        transition: transform 0.3s;
+      }
+
+      .holiday-list h2.collapsed::after {
+        transform: rotate(-90deg);
+      }
+
+      .holiday-list-content {
+        max-height: 1000px;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out;
+      }
+
+      .holiday-list-content.collapsed {
+        max-height: 0;
+        overflow: hidden;
+      }
+
+      .holiday-item {
+        margin-bottom: 15px;
+        padding: 10px;
+        border-left: 3px solid #ccc;
+        background-color: #f9f9f9;
+        border-radius: 4px;
+      }
+
+      .holiday-item strong {
+        color: #dc3545; /* 强调节日名称 */
+        font-size: 16px;
+        display: inline-block;
+        margin-right: 10px;
+      }
+
+      .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 5px;
+        text-align: center;
+        position: relative;
+      }
+
+      .day-header {
+        font-weight: bold;
+        color: #6c757d;
+        padding: 8px 0;
+        border-bottom: 1px solid #eee;
+      }
+
+      .day-cell {
+        padding: 10px 5px;
+        border-radius: 4px;
+        cursor: default;
+        position: relative;
+      }
+
+      .day-cell-work-badge {
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        background-color: #ffc107;
+        color: #333;
+        font-size: 10px;
+        font-weight: bold;
+        padding: 1px 3px;
+        border-radius: 2px;
+        z-index: 5;
+      }
+
+      .day-cell-holiday-badge {
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        background-color: #28a745;
+        color: white;
+        font-size: 9px;
+        font-weight: bold;
+        padding: 1px 3px;
+        border-radius: 2px;
+        z-index: 5;
+        max-width: 60%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      /* 4. 颜色区分 */
+      /* 工作日/普通日期：默认颜色 */
+      .day-cell.weekend {
+        color: #17a2b8; /* 周末/休息日：蓝色 */
+      }
+
+      .day-cell.holiday {
+        background-color: #28a745; /* 放假：绿色 */
+        color: white;
+        font-weight: bold;
+      }
+
+      .day-cell.restday-work {
+        background-color: #ffc107; /* 调休上班日：橙色 */
+        color: #333;
+        font-weight: bold;
+        box-shadow: 0 0 5px rgba(255, 193, 7, 0.5); /* 增加区分度 */
+      }
+
+      .legend {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        font-size: 14px;
+      }
+
+      .legend-item {
+        margin: 5px 15px;
+        display: flex;
+        align-items: center;
+      }
+
+      .color-box {
+        width: 15px;
+        height: 15px;
+        margin-right: 5px;
+        border-radius: 3px;
+      }
+
+      .color-box.restday-work {
+        background-color: #ffc107;
+      }
+
+      .color-box.weekend {
+        background-color: #17a2b8;
+      }
+
+      .color-box.workday {
+        background-color: #333;
+        border: 1px solid #ddd;
+      }
+
+      /* 6. 缩略图日历样式 */
+      .mini-calendar-section {
+        margin: 30px 0;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+      }
+
+      .mini-calendar-section h2 {
+        font-size: 20px;
+        color: #007bff;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .mini-calendars-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+
+      .mini-calendar {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 10px;
+        background-color: #fff;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+
+      .mini-calendar:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      }
+
+      .mini-calendar-title {
+        text-align: center;
+        font-weight: bold;
+        margin-bottom: 8px;
+        color: #495057;
+        font-size: 14px;
+      }
+
+      .mini-calendar-title .holiday-tag {
+        font-size: 11px;
+        font-weight: normal;
+        color: #6c757d;
+        margin-left: 5px;
+      }
+
+      .mini-calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 2px;
+        font-size: 10px;
+      }
+
+      .mini-day-header {
+        font-weight: bold;
+        color: #6c757d;
+        padding: 2px 0;
+        font-size: 10px;
+        text-align: center;
+      }
+
+      .mini-day-cell {
+        padding: 3px 1px;
+        text-align: center;
+        border-radius: 2px;
+        font-size: 10px;
+        min-height: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .mini-day-cell.weekend {
+        color: #17a2b8;
+      }
+
+      .mini-day-cell.holiday {
+        background-color: #28a745;
+        color: white;
+        font-weight: bold;
+      }
+
+      .mini-day-cell.restday-work {
+        background-color: #ffc107;
+        color: #333;
+        font-weight: bold;
+      }
+
+      .mini-day-cell.empty {
+        visibility: hidden;
+      }
+
+      /* 7. 模态框样式 */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        animation: fadeIn 0.3s;
+      }
+
+      .modal.active {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal-content {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 12px;
+        max-width: 800px;
+        width: 90%;
+        max-height: 90vh;
+        overflow-y: auto;
+        position: relative;
+        animation: slideIn 0.3s;
+      }
+
+      .modal-close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        font-size: 28px;
+        font-weight: bold;
+        color: #aaa;
+        cursor: pointer;
+        line-height: 1;
+        transition: color 0.2s;
+      }
+
+      .modal-close:hover {
+        color: #000;
+      }
+
+      .modal-calendar-view h3 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        color: #007bff;
+        text-align: center;
+      }
+
+      .modal-calendar-view .month-info {
+        margin-bottom: 20px;
+        padding: 10px;
+        background-color: #f8f9fa;
+        border-radius: 4px;
+        font-size: 13px;
+        color: #495057;
+        line-height: 1.8;
+      }
+
+      .modal-calendar-view .month-info .holiday-info {
+        margin-bottom: 8px;
+      }
+
+      .modal-calendar-view .month-info .holiday-info:last-child {
+        margin-bottom: 0;
+      }
+
+      .modal-calendar-view .legend {
+        margin-top: 25px;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes slideIn {
+        from {
+          transform: translateY(-50px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      /* 8. 移动端优化 */
+      @media (max-width: 600px) {
+        .container {
+          padding: 15px;
+          margin: 0 5px;
+        }
+
+        h1 {
+          font-size: 20px;
+        }
+
+        .month-nav {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr); /* 移动端一行 4 个按钮 */
+          gap: 5px;
+        }
+
+        .month-btn {
+          padding: 8px 0;
+          margin: 0;
+          font-size: 12px;
+        }
+
+        .holiday-item strong {
+          display: block; /* 移动端节日名独占一行 */
+          margin-bottom: 5px;
+        }
+
+        .mini-calendars-grid {
+          grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+          gap: 10px;
+        }
+
+        .modal-content {
+          padding: 20px;
+          width: 95%;
+        }
+      }
+
+      /* 移除不再使用的样式 */
+      @media (max-width: 600px) {
+        .month-nav {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 id="page-heading">📅 2026 年中国大陆公众节假日安排</h1>
+
+      <div id="current-time-info" class="current-time-info">
+        <!-- 当前时间和最近节假日信息将动态生成 -->
+      </div>
+
+      <div class="holiday-list">
+        <h2 id="holiday-toggle" class="collapsed">🎉 年度假期概览</h2>
+
+        <div id="holiday-list-content" class="holiday-list-content collapsed">
+          <!-- 年度假期概览将动态生成 -->
+        </div>
+      </div>
+
+      <div class="mini-calendar-section">
+        <h2>📆 全年日历缩略图</h2>
+        <div id="mini-calendars-container" class="mini-calendars-grid"></div>
+      </div>
+
+      <!-- 模态框 -->
+      <div id="calendar-modal" class="modal">
+        <div class="modal-content">
+          <span class="modal-close">&times;</span>
+          <div id="modal-calendar-content" class="modal-calendar-view"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // ==================== 配置区域 ====================
+      // 修改这里的年份即可更新整个页面的年份
+      const CONFIG = {
+        YEAR: 2026, // 当前年份
+      };
+
+      // ==================== 节假日类型枚举 ====================
+      // 定义固定的节假日类型，包含显示名称和显示顺序
+      const HolidayType = {
+        NEW_YEAR: { name: "元旦", order: 1 },
+        SPRING_FESTIVAL: { name: "春节", order: 2 },
+        QINGMING: { name: "清明节", order: 3 },
+        LABOR_DAY: { name: "劳动节", order: 4 },
+        DRAGON_BOAT: { name: "端午节", order: 5 },
+        MID_AUTUMN: { name: "中秋节", order: 6 },
+        NATIONAL_DAY: { name: "国庆节", order: 7 },
+      };
+
+      // ==================== 节假日数据配置 ====================
+      // 格式：{ 年份: { 月份: [{ type: 'H'|'W', day: 日期, holiday: HolidayType.XXX }, ...] } }
+      // 类型：'H' (Holiday/放假), 'W' (Work/调休上班)
+      // day: 该月的具体日期（1-31）
+      // holiday: 节假日类型枚举值
+      const HOLIDAYS_DATA = {
+        2026: {
+          1: [
+            // 1月
+            { type: "H", day: 1, holiday: HolidayType.NEW_YEAR, isMain: true }, // 元旦（节假日本体）
+            { type: "H", day: 2, holiday: HolidayType.NEW_YEAR },
+            { type: "H", day: 3, holiday: HolidayType.NEW_YEAR },
+            { type: "W", day: 4, holiday: HolidayType.NEW_YEAR }, // 元旦调休上班
+          ],
+          2: [
+            // 2月
+            { type: "W", day: 14, holiday: HolidayType.SPRING_FESTIVAL }, // 春节调休上班
+            { type: "H", day: 15, holiday: HolidayType.SPRING_FESTIVAL },
+            { type: "H", day: 16, holiday: HolidayType.SPRING_FESTIVAL }, // 除夕（农历腊月三十，节假日本体）
+            {
+              type: "H",
+              day: 17,
+              holiday: HolidayType.SPRING_FESTIVAL,
+              isMain: true,
+            }, // 春节（正月初一，节假日本体）
+            { type: "H", day: 18, holiday: HolidayType.SPRING_FESTIVAL },
+            { type: "H", day: 19, holiday: HolidayType.SPRING_FESTIVAL },
+            { type: "H", day: 20, holiday: HolidayType.SPRING_FESTIVAL },
+            { type: "H", day: 21, holiday: HolidayType.SPRING_FESTIVAL },
+            { type: "H", day: 22, holiday: HolidayType.SPRING_FESTIVAL },
+            { type: "H", day: 23, holiday: HolidayType.SPRING_FESTIVAL },
+            { type: "W", day: 28, holiday: HolidayType.SPRING_FESTIVAL }, // 春节调休上班
+          ],
+          3: [], // 3月
+          4: [
+            // 4月
+            { type: "H", day: 4, holiday: HolidayType.QINGMING },
+            { type: "H", day: 5, holiday: HolidayType.QINGMING, isMain: true }, // 清明节（节假日本体）
+            { type: "H", day: 6, holiday: HolidayType.QINGMING },
+          ],
+          5: [
+            // 5月
+            { type: "H", day: 1, holiday: HolidayType.LABOR_DAY, isMain: true }, // 劳动节（节假日本体）
+            { type: "H", day: 2, holiday: HolidayType.LABOR_DAY },
+            { type: "H", day: 3, holiday: HolidayType.LABOR_DAY },
+            { type: "H", day: 4, holiday: HolidayType.LABOR_DAY },
+            { type: "H", day: 5, holiday: HolidayType.LABOR_DAY },
+            { type: "W", day: 9, holiday: HolidayType.LABOR_DAY }, // 劳动节调休上班
+          ],
+          6: [
+            // 6月
+            {
+              type: "H",
+              day: 19,
+              holiday: HolidayType.DRAGON_BOAT,
+              isMain: true,
+            }, // 端午节（农历五月初五，节假日本体）
+            { type: "H", day: 20, holiday: HolidayType.DRAGON_BOAT },
+            { type: "H", day: 21, holiday: HolidayType.DRAGON_BOAT },
+          ],
+          7: [], // 7月
+          8: [], // 8月
+          9: [
+            // 9月
+            {
+              type: "H",
+              day: 25,
+              holiday: HolidayType.MID_AUTUMN,
+              isMain: true,
+            }, // 中秋节（农历八月十五，节假日本体）
+            { type: "H", day: 26, holiday: HolidayType.MID_AUTUMN },
+            { type: "H", day: 27, holiday: HolidayType.MID_AUTUMN },
+            { type: "W", day: 20, holiday: HolidayType.NATIONAL_DAY }, // 国庆节调休上班（跨月）
+          ],
+          10: [
+            // 10月
+            {
+              type: "H",
+              day: 1,
+              holiday: HolidayType.NATIONAL_DAY,
+              isMain: true,
+            }, // 国庆节（节假日本体）
+            { type: "H", day: 2, holiday: HolidayType.NATIONAL_DAY },
+            { type: "H", day: 3, holiday: HolidayType.NATIONAL_DAY },
+            { type: "H", day: 4, holiday: HolidayType.NATIONAL_DAY },
+            { type: "H", day: 5, holiday: HolidayType.NATIONAL_DAY },
+            { type: "H", day: 6, holiday: HolidayType.NATIONAL_DAY },
+            { type: "H", day: 7, holiday: HolidayType.NATIONAL_DAY },
+            { type: "W", day: 10, holiday: HolidayType.NATIONAL_DAY }, // 国庆节调休上班
+          ],
+          11: [], // 11月
+          12: [], // 12月
+        },
+        // 可以在这里添加其他年份的数据
+        // 2027: { 1: [], 2: [], ... },
+      };
+
+      // ==================== 工具函数 ====================
+      // 获取指定年份、月份、日期的节假日类型
+      function getHolidayType(year, month, day) {
+        const yearData = HOLIDAYS_DATA[year];
+        if (!yearData) return null;
+        const monthData = yearData[month];
+        if (!monthData || !Array.isArray(monthData)) return null;
+
+        const item = monthData.find((item) => item.day === day);
+        return item ? item.type : null;
+      }
+
+      // 获取指定年份、月份、日期的节假日信息（包含类型和节假日枚举）
+      function getHolidayInfo(year, month, day) {
+        const yearData = HOLIDAYS_DATA[year];
+        if (!yearData) return null;
+        const monthData = yearData[month];
+        if (!monthData || !Array.isArray(monthData)) return null;
+
+        const item = monthData.find((item) => item.day === day);
+        return item || null;
+      }
+
+      // 获取节假日的中文名称
+      function getHolidayName(holidayType) {
+        return holidayType ? holidayType.name : null;
+      }
+
+      // 获取所有节假日类型，按 order 排序
+      function getAllHolidayTypes() {
+        return Object.values(HolidayType).sort((a, b) => a.order - b.order);
+      }
+
+      // 获取星期几的中文名称
+      function getDayOfWeekName(year, month, day) {
+        const date = new Date(year, month - 1, day);
+        const dayNames = ["日", "一", "二", "三", "四", "五", "六"];
+        return dayNames[date.getDay()];
+      }
+
+      // 根据节假日数据生成年度假期概览
+      function generateHolidayOverview() {
+        const year = CONFIG.YEAR;
+        const yearData = HOLIDAYS_DATA[year];
+        if (!yearData) return "";
+
+        // 按节假日类型分组收集数据
+        const holidayMap = new Map(); // key: HolidayType对象, value: {holidayDates: [], workDates: []}
+
+        // 遍历所有月份，收集节假日数据
+        const monthOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
+        for (const monthNum of monthOrder) {
+          if (!yearData[monthNum]) continue;
+
+          const monthData = yearData[monthNum];
+          if (!Array.isArray(monthData)) continue;
+
+          // 遍历该月的所有节假日数据
+          for (const item of monthData) {
+            const { type, day, holiday } = item;
+            if (!holiday) continue;
+
+            // 初始化或获取该节假日的数据
+            if (!holidayMap.has(holiday)) {
+              holidayMap.set(holiday, {
+                holidayDates: [], // 放假日期
+                workDates: [], // 调休上班日期
+              });
+            }
+
+            const holidayData = holidayMap.get(holiday);
+
+            if (type === "H") {
+              // 放假日期
+              holidayData.holidayDates.push({ month: monthNum, day: day });
+            } else if (type === "W") {
+              // 调休上班日期
+              holidayData.workDates.push({ month: monthNum, day: day });
+            }
+          }
+        }
+
+        // 生成节假日列表，按枚举的 order 排序
+        const holidays = [];
+        const allHolidayTypes = getAllHolidayTypes();
+
+        for (const holidayType of allHolidayTypes) {
+          if (!holidayMap.has(holidayType)) continue;
+
+          const holidayData = holidayMap.get(holidayType);
+          const { holidayDates, workDates } = holidayData;
+
+          if (holidayDates.length === 0) continue;
+
+          const holidayName = holidayType.name;
+
+          // 按月份和日期排序
+          holidayDates.sort((a, b) => {
+            if (a.month !== b.month) return a.month - b.month;
+            return a.day - b.day;
+          });
+          workDates.sort((a, b) => {
+            if (a.month !== b.month) return a.month - b.month;
+            return a.day - b.day;
+          });
+
+          // 找出连续的放假日期段（按月份分组）
+          const holidayRanges = [];
+          let currentMonth = holidayDates[0].month;
+          let currentRange = {
+            month: currentMonth,
+            start: holidayDates[0].day,
+            end: holidayDates[0].day,
+          };
+
+          for (let i = 1; i < holidayDates.length; i++) {
+            const date = holidayDates[i];
+
+            // 如果跨月或日期不连续，保存当前范围并开始新范围
+            if (
+              date.month !== currentRange.month ||
+              date.day !== currentRange.end + 1
+            ) {
+              holidayRanges.push(currentRange);
+              currentMonth = date.month;
+              currentRange = {
+                month: date.month,
+                start: date.day,
+                end: date.day,
+              };
+            } else {
+              // 日期连续，扩展当前范围
+              currentRange.end = date.day;
+            }
+          }
+          holidayRanges.push(currentRange);
+
+          // 查找节假日本体日期
+          let mainDayInfo = null;
+          for (const monthNum of monthOrder) {
+            if (!yearData[monthNum] || !Array.isArray(yearData[monthNum])) continue;
+            for (const item of yearData[monthNum]) {
+              if (item.holiday === holidayType && item.type === "H" && item.isMain) {
+                mainDayInfo = { month: monthNum, day: item.day };
+                break;
+              }
+            }
+            if (mainDayInfo) break;
+          }
+
+          // 如果没有找到标记的本体日期，使用第一个放假日期
+          if (!mainDayInfo && holidayDates.length > 0) {
+            mainDayInfo = { month: holidayDates[0].month, day: holidayDates[0].day };
+          }
+
+          // 生成文本
+          let text = `<strong>${holidayName}${mainDayInfo ? `（${mainDayInfo.month}月${mainDayInfo.day}日）` : ""}：</strong>`;
+          const rangesText = holidayRanges
+            .map((range) => {
+              const startWeekday = getDayOfWeekName(
+                year,
+                range.month,
+                range.start
+              );
+              const endWeekday = getDayOfWeekName(year, range.month, range.end);
+
+              if (range.start === range.end) {
+                return `${range.month} 月 ${range.start} 日（${startWeekday}）`;
+              } else {
+                return `${range.month} 月 ${range.start} 日（${startWeekday}）-${range.end} 日（${endWeekday}）`;
+              }
+            })
+            .join("、");
+
+          text += rangesText;
+          const totalDays = holidayDates.length;
+          text += `放假${
+            workDates.length > 0 ? "调休" : ""
+          }，共 ${totalDays} 天。`;
+
+          if (workDates.length > 0) {
+            const workDatesText = workDates
+              .map((wd) => {
+                const weekday = getDayOfWeekName(year, wd.month, wd.day);
+                return `${wd.month} 月 ${wd.day} 日（${weekday}）`;
+              })
+              .join("、");
+            text += ` <br />调休上班日：${workDatesText}。`;
+          }
+
+          holidays.push({
+            name: holidayName,
+            order: holidayType.order,
+            text: text,
+          });
+        }
+
+        // 生成HTML
+        return holidays
+          .map((holiday) => `<div class="holiday-item">${holiday.text}</div>`)
+          .join("");
+      }
+
+      // 创建图例 HTML
+      function createLegendHTML() {
+        return `
+          <div class="legend">
+            <div class="legend-item">
+              <div class="color-box holiday"></div>
+              <span>放假/节日</span>
+            </div>
+            <div class="legend-item">
+              <div class="color-box restday-work"></div>
+              <span>调休上班日</span>
+            </div>
+            <div class="legend-item">
+              <div class="color-box weekend"></div>
+              <span>正常周末/休息日</span>
+            </div>
+            <div class="legend-item">
+              <div class="color-box workday"></div>
+              <span>工作日/其他</span>
+            </div>
+          </div>
+        `;
+      }
+
+      // ==================== DOM 元素 ====================
+      const miniCalendarsContainer = document.getElementById(
+        "mini-calendars-container"
+      );
+      const modal = document.getElementById("calendar-modal");
+      const modalContent = document.getElementById("modal-calendar-content");
+      const modalClose = document.querySelector(".modal-close");
+      const holidayToggle = document.getElementById("holiday-toggle");
+      const holidayContent = document.getElementById("holiday-list-content");
+      const pageTitle = document.getElementById("page-title");
+      const pageHeading = document.getElementById("page-heading");
+      const currentTimeInfo = document.getElementById("current-time-info");
+
+      // ==================== 工具函数：时间相关 ====================
+      // 格式化日期时间
+      function formatDateTime(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        const hours = String(date.getHours()).padStart(2, "0");
+        const minutes = String(date.getMinutes()).padStart(2, "0");
+        const seconds = String(date.getSeconds()).padStart(2, "0");
+        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+      }
+
+      // 计算两个日期之间的天数差
+      function daysBetween(date1, date2) {
+        const oneDay = 24 * 60 * 60 * 1000;
+        const diffTime = date2.getTime() - date1.getTime();
+        return Math.ceil(diffTime / oneDay);
+      }
+
+      // 获取最近的节假日
+      function getNextHoliday() {
+        const now = new Date();
+        const currentYear = now.getFullYear();
+        const yearData = HOLIDAYS_DATA[currentYear];
+
+        if (!yearData) return null;
+
+        let nearestHoliday = null;
+        let nearestDate = null;
+        let minDays = Infinity;
+
+        // 遍历所有月份
+        for (let month = 1; month <= 12; month++) {
+          if (!yearData[month] || !Array.isArray(yearData[month])) continue;
+
+          // 遍历该月的所有节假日数据，只找放假日期（type === "H"）
+          for (const item of yearData[month]) {
+            if (item.type !== "H") continue;
+
+            const holidayDate = new Date(currentYear, month - 1, item.day);
+            const daysDiff = daysBetween(now, holidayDate);
+
+            // 只找未来的节假日（包括今天）
+            if (daysDiff >= 0 && daysDiff < minDays) {
+              minDays = daysDiff;
+              nearestDate = holidayDate;
+              nearestHoliday = item.holiday;
+            }
+          }
+        }
+
+        if (!nearestHoliday) return null;
+
+        return {
+          holiday: nearestHoliday,
+          date: nearestDate,
+          days: minDays,
+        };
+      }
+
+      // 更新当前时间和最近节假日信息
+      function updateCurrentTimeInfo() {
+        const now = new Date();
+        const timeStr = formatDateTime(now);
+        const nextHoliday = getNextHoliday();
+
+        let html = `<div class="time-display">🕐 ${timeStr}</div>`;
+
+        if (nextHoliday) {
+          const holidayName = getHolidayName(nextHoliday.holiday);
+          const dateStr = `${
+            nextHoliday.date.getMonth() + 1
+          }月${nextHoliday.date.getDate()}日`;
+
+          if (nextHoliday.days === 0) {
+            html += `<div class="next-holiday">🎉 今天是<strong>${holidayName}</strong>！</div>`;
+          } else if (nextHoliday.days === 1) {
+            html += `<div class="next-holiday">📅 最近的节假日是<strong>${holidayName}</strong>（${dateStr}），还有<strong>1</strong>天</div>`;
+          } else {
+            html += `<div class="next-holiday">📅 最近的节假日是<strong>${holidayName}</strong>（${dateStr}），还有<strong>${nextHoliday.days}</strong>天</div>`;
+          }
+        } else {
+          html += `<div class="next-holiday">📅 本年度暂无更多节假日</div>`;
+        }
+
+        currentTimeInfo.innerHTML = html;
+      }
+
+      // ==================== 初始化 ====================
+      // 更新页面标题和标题
+      pageTitle.textContent = `${CONFIG.YEAR} 年中国大陆公众节假日安排`;
+      pageHeading.textContent = `📅 ${CONFIG.YEAR} 年中国大陆公众节假日安排`;
+
+      // 初始化并定期更新当前时间信息
+      updateCurrentTimeInfo();
+      setInterval(updateCurrentTimeInfo, 1000); // 每秒更新一次
+
+      // 生成年度假期概览
+      holidayContent.innerHTML = generateHolidayOverview();
+
+      // 折叠/展开年度假期概览
+      holidayToggle.addEventListener("click", function () {
+        holidayToggle.classList.toggle("collapsed");
+        holidayContent.classList.toggle("collapsed");
+      });
+
+      // 获取月份包含的节假日名称
+      function getMonthHolidayNames(month) {
+        const year = CONFIG.YEAR;
+        const yearData = HOLIDAYS_DATA[year];
+        if (!yearData || !yearData[month] || !Array.isArray(yearData[month])) {
+          return [];
+        }
+
+        const holidayNames = new Set();
+        for (const item of yearData[month]) {
+          if (item.type === "H" && item.holiday) {
+            const holidayName = getHolidayName(item.holiday);
+            if (holidayName) {
+              holidayNames.add(holidayName);
+            }
+          }
+        }
+        return Array.from(holidayNames);
+      }
+
+      // 生成缩略图日历函数
+      function createMiniCalendar(month) {
+        const miniCalendar = document.createElement("div");
+        miniCalendar.className = "mini-calendar";
+        miniCalendar.setAttribute("data-month", month);
+
+        const title = document.createElement("div");
+        title.className = "mini-calendar-title";
+        
+        const monthHolidays = getMonthHolidayNames(month);
+        let titleText = `${month} 月`;
+        if (monthHolidays.length > 0) {
+          titleText += `<span class="holiday-tag">（${monthHolidays.join("、")}）</span>`;
+        }
+        title.innerHTML = titleText;
+        miniCalendar.appendChild(title);
+
+        const grid = document.createElement("div");
+        grid.className = "mini-calendar-grid";
+
+        // 星期几表头
+        const dayNames = ["日", "一", "二", "三", "四", "五", "六"];
+        dayNames.forEach((name) => {
+          const header = document.createElement("div");
+          header.className = "mini-day-header";
+          header.textContent = name;
+          grid.appendChild(header);
+        });
+
+        // 获取该月第一天的日期对象
+        const firstDayOfMonth = new Date(CONFIG.YEAR, month - 1, 1);
+        // 获取该月的天数
+        const daysInMonth = new Date(CONFIG.YEAR, month, 0).getDate();
+        // 获取该月第一天是星期几 (0=周日, 1=周一...)
+        const startingDay = firstDayOfMonth.getDay();
+
+        // 填充空白单元格
+        for (let i = 0; i < startingDay; i++) {
+          const emptyCell = document.createElement("div");
+          emptyCell.className = "mini-day-cell empty";
+          grid.appendChild(emptyCell);
+        }
+
+        // 填充日期单元格
+        for (let day = 1; day <= daysInMonth; day++) {
+          const date = new Date(CONFIG.YEAR, month - 1, day);
+          const dayOfWeek = date.getDay(); // 0=周日, 6=周六
+          const cell = document.createElement("div");
+          cell.className = "mini-day-cell";
+          cell.textContent = day;
+
+          // 检查节假日数据
+          const holidayData = getHolidayType(CONFIG.YEAR, month, day);
+
+          if (holidayData === "H") {
+            // 放假
+            cell.classList.add("holiday");
+          } else if (holidayData === "W") {
+            // 调休上班日
+            cell.classList.add("restday-work");
+          } else if (dayOfWeek === 0 || dayOfWeek === 6) {
+            // 正常周末 (周六或周日)，且非调休上班
+            cell.classList.add("weekend");
+          }
+
+          grid.appendChild(cell);
+        }
+
+        miniCalendar.appendChild(grid);
+        miniCalendar.addEventListener("click", function () {
+          showCalendarInModal(month);
+        });
+
+        return miniCalendar;
+      }
+
+      // 生成所有缩略图日历
+      for (let month = 1; month <= 12; month++) {
+        miniCalendarsContainer.appendChild(createMiniCalendar(month));
+      }
+
+      // 生成月份假日信息说明
+      function generateMonthHolidayInfo(month) {
+        const year = CONFIG.YEAR;
+        const yearData = HOLIDAYS_DATA[year];
+        if (!yearData || !yearData[month] || !Array.isArray(yearData[month])) {
+          return "";
+        }
+
+        const monthData = yearData[month];
+        const holidayMap = new Map(); // key: 节假日名称, value: {holidays: [], works: [], mainDay: null}
+
+        // 收集该月的节假日信息
+        for (const item of monthData) {
+          const holidayName = getHolidayName(item.holiday);
+          if (!holidayName) continue;
+
+          if (!holidayMap.has(holidayName)) {
+            holidayMap.set(holidayName, {
+              holidays: [], // 放假日期数组，包含完整信息
+              works: [], // 调休上班日期
+              mainDay: null, // 节假日本体日期
+            });
+          }
+
+          const data = holidayMap.get(holidayName);
+          if (item.type === "H") {
+            data.holidays.push({ day: item.day, isMain: item.isMain || false });
+            // 如果标记为节假日本体，记录下来
+            if (item.isMain) {
+              data.mainDay = item.day;
+            }
+          } else if (item.type === "W") {
+            data.works.push(item.day);
+          }
+        }
+
+        if (holidayMap.size === 0) {
+          return "";
+        }
+
+        const infoLines = [];
+
+        // 按节假日类型排序
+        const allHolidayTypes = getAllHolidayTypes();
+        for (const holidayType of allHolidayTypes) {
+          const holidayName = holidayType.name;
+          if (!holidayMap.has(holidayName)) continue;
+
+          const data = holidayMap.get(holidayName);
+          const { holidays, works, mainDay } = data;
+
+          if (holidays.length === 0 && works.length === 0) continue;
+
+          // 如果没有标记节假日本体，使用第一个放假日期作为节假日本体
+          const actualMainDay =
+            mainDay || (holidays.length > 0 ? holidays[0].day : null);
+
+          // 处理放假日期
+          let holidayText = "";
+          if (holidays.length > 0) {
+            const holidayDays = holidays
+              .map((h) => h.day)
+              .sort((a, b) => a - b);
+
+            // 找出连续的日期段
+            const ranges = [];
+            let start = holidayDays[0];
+            let end = holidayDays[0];
+
+            for (let i = 1; i < holidayDays.length; i++) {
+              if (holidayDays[i] === end + 1) {
+                end = holidayDays[i];
+              } else {
+                ranges.push({ start, end });
+                start = holidayDays[i];
+                end = holidayDays[i];
+              }
+            }
+            ranges.push({ start, end });
+
+            // 生成日期范围文本
+            const rangeTexts = ranges.map((range) => {
+              if (range.start === range.end) {
+                return `${range.start}日`;
+              } else {
+                return `${range.start}日-${range.end}日`;
+              }
+            });
+
+            const weekdayNames = ranges.map((range) => {
+              const startWeekday = getDayOfWeekName(year, month, range.start);
+              const endWeekday = getDayOfWeekName(year, month, range.end);
+              if (range.start === range.end) {
+                return `（${startWeekday}）`;
+              } else {
+                return `（${startWeekday}-${endWeekday}）`;
+              }
+            });
+
+            // 生成节假日本体说明
+            let mainDayText = "";
+            if (actualMainDay) {
+              const mainWeekday = getDayOfWeekName(year, month, actualMainDay);
+              mainDayText = `（${month}月${actualMainDay}日是<strong>${holidayName}</strong>）`;
+            }
+
+            holidayText = `${rangeTexts.join("、")}${weekdayNames.join(
+              "、"
+            )}是<strong>${holidayName}</strong>放假${mainDayText}`;
+          }
+
+          // 处理调休上班日期
+          let workText = "";
+          if (works.length > 0) {
+            works.sort((a, b) => a - b);
+            const workTexts = works.map((day) => {
+              const weekday = getDayOfWeekName(year, month, day);
+              return `${day}日（${weekday}）`;
+            });
+            workText = `${workTexts.join(
+              "、"
+            )}是<strong>${holidayName}</strong>的调休上班日`;
+          }
+
+          // 合并放假和调休信息到一行
+          if (holidayText || workText) {
+            const combinedText = [holidayText, workText]
+              .filter(Boolean)
+              .join("；");
+            infoLines.push(combinedText);
+          }
+        }
+
+        if (infoLines.length === 0) {
+          return "";
+        }
+
+        return `<div class="month-info">${infoLines
+          .map((line) => `<div class="holiday-info">${line}</div>`)
+          .join("")}</div>`;
+      }
+
+      // 在模态框中显示日历
+      function showCalendarInModal(month) {
+        const monthInfo = generateMonthHolidayInfo(month);
+        modalContent.innerHTML = `<h3>${CONFIG.YEAR} 年 ${month} 月日历详情</h3>${monthInfo}`;
+        const grid = document.createElement("div");
+        grid.className = "calendar-grid";
+
+        // 星期几表头
+        const dayNames = ["日", "一", "二", "三", "四", "五", "六"];
+        dayNames.forEach((name) => {
+          const header = document.createElement("div");
+          header.className = "day-header";
+          header.textContent = name;
+          grid.appendChild(header);
+        });
+
+        // 获取该月第一天的日期对象
+        const firstDayOfMonth = new Date(CONFIG.YEAR, month - 1, 1);
+        // 获取该月的天数
+        const daysInMonth = new Date(CONFIG.YEAR, month, 0).getDate();
+        // 获取该月第一天是星期几 (0=周日, 1=周一...)
+        const startingDay = firstDayOfMonth.getDay();
+
+        // 填充空白单元格
+        for (let i = 0; i < startingDay; i++) {
+          const emptyCell = document.createElement("div");
+          emptyCell.className = "day-cell";
+          grid.appendChild(emptyCell);
+        }
+
+        // 填充日期单元格
+        for (let day = 1; day <= daysInMonth; day++) {
+          const date = new Date(CONFIG.YEAR, month - 1, day);
+          const dayOfWeek = date.getDay(); // 0=周日, 6=周六
+          const cell = document.createElement("div");
+          cell.className = "day-cell";
+          cell.textContent = day;
+
+          // 检查节假日数据
+          const holidayInfo = getHolidayInfo(CONFIG.YEAR, month, day);
+          const holidayType = holidayInfo ? holidayInfo.type : null;
+
+          if (holidayType === "H") {
+            // 放假
+            cell.classList.add("holiday");
+            
+            // 如果是节假日本体，添加节假日名称标记
+            if (holidayInfo.isMain) {
+              const holidayName = getHolidayName(holidayInfo.holiday);
+              if (holidayName) {
+                const badge = document.createElement("div");
+                badge.className = "day-cell-holiday-badge";
+                badge.textContent = holidayName;
+                cell.appendChild(badge);
+              }
+            }
+          } else if (holidayType === "W") {
+            // 调休上班日
+            cell.classList.add("restday-work");
+            // 添加"班"标记
+            const badge = document.createElement("div");
+            badge.className = "day-cell-work-badge";
+            badge.textContent = "班";
+            cell.appendChild(badge);
+          } else if (dayOfWeek === 0 || dayOfWeek === 6) {
+            // 正常周末 (周六或周日)，且非调休上班
+            cell.classList.add("weekend");
+          }
+          // 否则为普通工作日 (默认颜色)
+
+          grid.appendChild(cell);
+        }
+
+        modalContent.appendChild(grid);
+        // 添加图例
+        modalContent.insertAdjacentHTML("beforeend", createLegendHTML());
+        modal.classList.add("active");
+      }
+
+      // 关闭模态框
+      modalClose.addEventListener("click", function () {
+        modal.classList.remove("active");
+      });
+
+      // 点击模态框外部关闭
+      modal.addEventListener("click", function (e) {
+        if (e.target === modal) {
+          modal.classList.remove("active");
+        }
+      });
+    </script>
+  </body>
+</html>
