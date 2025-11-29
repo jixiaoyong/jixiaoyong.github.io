@@ -124,20 +124,27 @@
 
     const text = isChinese ? messages.zh : messages.en;
 
-    // GitHub Pages SPA 重定向解决方案
-    // 当用户直接访问一个路由（如 /imissyou/about）时，GitHub Pages 会返回 404
-    // 这个脚本会将路径信息保存到 sessionStorage，然后重定向到 index.html
+    // GitHub Pages Hash 路由重定向解决方案
+    // 当用户直接访问一个非 hash 路由（如 /imissyou/about）时，GitHub Pages 会返回 404
+    // 这个脚本会截取路径信息，并重定向到 index.html 的 hash 路由
     
-    sessionStorage.setItem('redirect', location.pathname.slice(0, -1) === location.pathname 
-      ? location.pathname 
-      : location.pathname.slice(0, -1));
+    // 获取完整路径（移除末尾的斜杠）
+    let fullPath = location.pathname;
+    if (fullPath.endsWith('/') && fullPath.length > 1) {
+      fullPath = fullPath.slice(0, -1);
+    }
     
-    // 重定向到 index.html，保留 query 参数
-    location.replace(
-      (location.pathname.split('/').slice(0, -1).join('/') || '/') + 
-      '/' + 
-      (location.search || '')
-    );
+    // 提取基础路径后的部分（/imissyou/posts/123 -> /posts/123）
+    const baseUrl = (location.pathname.match(/^\/[^\/]+/) || [''])[0]; // 获取 /imissyou
+    const routePath = fullPath.replace(baseUrl, ''); // 获取 /posts/123 或 /about
+    
+    // 构建 hash URL
+    // 如果有路由路径，则重定向到 index.html#/路径
+    // 否则重定向到 index.html
+    const targetUrl = baseUrl + '/' + (routePath ? '#' + routePath : '');
+    
+    // 重定向到目标 URL，保留 query 参数
+    location.replace(targetUrl + (location.search || ''));
   </script>
 </head>
 <body>
