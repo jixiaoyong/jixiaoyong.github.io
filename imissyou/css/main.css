@@ -720,6 +720,12 @@ kbd {
 figure.highlight {
   overflow: auto;
   position: relative;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  figure.highlight {
+    color-scheme: dark;
+  }
 }
 figure.highlight pre {
   border: 0;
@@ -1407,7 +1413,7 @@ pre code {
   vertical-align: middle;
 }
 .links-of-author a::before {
-  background: #034f61;
+  background: #fff;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);
