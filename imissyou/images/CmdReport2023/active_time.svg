@@ -1,0 +1,89 @@
+<svg class="w-full h-auto" width="800" height="400" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" baseProfile="full" viewBox="0 0 800 400">
+<rect width="800" height="400" x="0" y="0" fill="none"></rect>
+<path d="M120 320.5L720 320.5" fill="none" pointer-events="visible" stroke="#888888" stroke-opacity="0.2" class="zr2-cls-4"></path>
+<path d="M120 283.5L720 283.5" fill="none" pointer-events="visible" stroke="#888888" stroke-opacity="0.2" class="zr2-cls-4"></path>
+<path d="M120 247.5L720 247.5" fill="none" pointer-events="visible" stroke="#888888" stroke-opacity="0.2" class="zr2-cls-4"></path>
+<path d="M120 210.5L720 210.5" fill="none" pointer-events="visible" stroke="#888888" stroke-opacity="0.2" class="zr2-cls-4"></path>
+<path d="M120 174.5L720 174.5" fill="none" pointer-events="visible" stroke="#888888" stroke-opacity="0.2" class="zr2-cls-4"></path>
+<path d="M120 138.5L720 138.5" fill="none" pointer-events="visible" stroke="#888888" stroke-opacity="0.2" class="zr2-cls-4"></path>
+<path d="M120 101.5L720 101.5" fill="none" pointer-events="visible" stroke="#888888" stroke-opacity="0.2" class="zr2-cls-4"></path>
+<path d="M120 65.5L720 65.5" fill="none" pointer-events="visible" stroke="#888888" stroke-opacity="0.2" class="zr2-cls-4"></path>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:sans-serif;" y="-6" transform="translate(120 50)" fill="#888888">Commands</text>
+<path d="M120 320.5L720 320.5" fill="none" pointer-events="visible" stroke="#888888" stroke-linecap="round" class="zr2-cls-4"></path>
+<text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:sans-serif;" transform="translate(112 320)" fill="#888888">0</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:sans-serif;" transform="translate(112 283.5714)" fill="#888888">100</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:sans-serif;" transform="translate(112 247.1429)" fill="#888888">200</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:sans-serif;" transform="translate(112 210.7143)" fill="#888888">300</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:sans-serif;" transform="translate(112 174.2857)" fill="#888888">400</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:sans-serif;" transform="translate(112 137.8571)" fill="#888888">500</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:sans-serif;" transform="translate(112 101.4286)" fill="#888888">600</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:sans-serif;" transform="translate(112 65)" fill="#888888">700</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:sans-serif;" y="6" transform="translate(132.5 328)" fill="#888888">7</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:sans-serif;" y="6" transform="translate(157.5 328)" fill="#888888">8</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:sans-serif;" y="6" transform="translate(182.5 328)" fill="#888888">9</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:sans-serif;" y="6" transform="translate(207.5 328)" fill="#888888">10</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:sans-serif;" y="6" transform="translate(232.5 328)" fill="#888888">11</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:sans-serif;" y="6" transform="translate(257.5 328)" fill="#888888">12</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:sans-serif;" y="6" transform="translate(282.5 328)" fill="#888888">13</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:sans-serif;" y="6" transform="translate(307.5 328)" fill="#888888">14</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:sans-serif;" y="6" transform="translate(332.5 328)" fill="#888888">15</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:sans-serif;" y="6" transform="translate(357.5 328)" fill="#888888">16</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:sans-serif;" y="6" transform="translate(382.5 328)" fill="#888888">17</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:sans-serif;" y="6" transform="translate(407.5 328)" fill="#888888">18</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:sans-serif;" y="6" transform="translate(432.5 328)" fill="#888888">19</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:sans-serif;" y="6" transform="translate(457.5 328)" fill="#888888">20</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:sans-serif;" y="6" transform="translate(482.5 328)" fill="#888888">21</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:sans-serif;" y="6" transform="translate(507.5 328)" fill="#888888">22</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:sans-serif;" y="6" transform="translate(532.5 328)" fill="#888888">23</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:sans-serif;" y="6" transform="translate(557.5 328)" fill="#888888">0</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:sans-serif;" y="6" transform="translate(582.5 328)" fill="#888888">1</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:sans-serif;" y="6" transform="translate(607.5 328)" fill="#888888">2</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:sans-serif;" y="6" transform="translate(632.5 328)" fill="#888888">3</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:sans-serif;" y="6" transform="translate(657.5 328)" fill="#888888">4</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:sans-serif;" y="6" transform="translate(682.5 328)" fill="#888888">5</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:sans-serif;" y="6" transform="translate(707.5 328)" fill="#888888">6</text>
+<path d="M123.9 320L141.1 320L123.9 320" fill="url(#zr2-g0)" ecmeta_series_index="0" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr2-cls-5"></path>
+<path d="M150.7 318.2L164.3 318.2A1.8 1.8 0 0 1 166.1 320L148.9 320A1.8 1.8 0 0 1 150.7 318.2" fill="url(#zr2-g0)" ecmeta_series_index="0" ecmeta_data_index="1" ecmeta_ssr_type="chart" class="zr2-cls-5"></path>
+<path d="M178.9 266.1L186.1 266.1A5 5 0 0 1 191.1 271.1L191.1 320L173.9 320L173.9 271.1A5 5 0 0 1 178.9 266.1" fill="url(#zr2-g0)" ecmeta_series_index="0" ecmeta_data_index="2" ecmeta_ssr_type="chart" class="zr2-cls-5"></path>
+<path d="M203.9 129.8L211.1 129.8A5 5 0 0 1 216.1 134.8L216.1 320L198.9 320L198.9 134.8A5 5 0 0 1 203.9 129.8" fill="url(#zr2-g0)" ecmeta_series_index="0" ecmeta_data_index="3" ecmeta_ssr_type="chart" class="zr2-cls-5"></path>
+<path d="M228.9 103.3L236.1 103.3A5 5 0 0 1 241.1 108.3L241.1 320L223.9 320L223.9 108.3A5 5 0 0 1 228.9 103.3" fill="url(#zr2-g0)" ecmeta_series_index="0" ecmeta_data_index="4" ecmeta_ssr_type="chart" class="zr2-cls-5"></path>
+<path d="M253.9 243.9L261.1 243.9A5 5 0 0 1 266.1 248.9L266.1 320L248.9 320L248.9 248.9A5 5 0 0 1 253.9 243.9" fill="url(#zr2-g0)" ecmeta_series_index="0" ecmeta_data_index="5" ecmeta_ssr_type="chart" class="zr2-cls-5"></path>
+<path d="M278.9 309.8L286.1 309.8A5 5 0 0 1 291.1 314.8L291.1 320L273.9 320L273.9 314.8A5 5 0 0 1 278.9 309.8" fill="url(#zr2-g0)" ecmeta_series_index="0" ecmeta_data_index="6" ecmeta_ssr_type="chart" class="zr2-cls-5"></path>
+<path d="M303.9 110.5L311.1 110.5A5 5 0 0 1 316.1 115.5L316.1 320L298.9 320L298.9 115.5A5 5 0 0 1 303.9 110.5" fill="url(#zr2-g0)" ecmeta_series_index="0" ecmeta_data_index="7" ecmeta_ssr_type="chart" class="zr2-cls-5"></path>
+<path d="M328.9 78.5L336.1 78.5A5 5 0 0 1 341.1 83.5L341.1 320L323.9 320L323.9 83.5A5 5 0 0 1 328.9 78.5" fill="url(#zr2-g0)" ecmeta_series_index="0" ecmeta_data_index="8" ecmeta_ssr_type="chart" class="zr2-cls-5"></path>
+<path d="M353.9 146.6L361.1 146.6A5 5 0 0 1 366.1 151.6L366.1 320L348.9 320L348.9 151.6A5 5 0 0 1 353.9 146.6" fill="url(#zr2-g0)" ecmeta_series_index="0" ecmeta_data_index="9" ecmeta_ssr_type="chart" class="zr2-cls-5"></path>
+<path d="M378.9 116L386.1 116A5 5 0 0 1 391.1 121L391.1 320L373.9 320L373.9 121A5 5 0 0 1 378.9 116" fill="url(#zr2-g0)" ecmeta_series_index="0" ecmeta_data_index="10" ecmeta_ssr_type="chart" class="zr2-cls-5"></path>
+<path d="M403.9 183L411.1 183A5 5 0 0 1 416.1 188L416.1 320L398.9 320L398.9 188A5 5 0 0 1 403.9 183" fill="url(#zr2-g0)" ecmeta_series_index="0" ecmeta_data_index="11" ecmeta_ssr_type="chart" class="zr2-cls-5"></path>
+<path d="M428.9 238.8L436.1 238.8A5 5 0 0 1 441.1 243.8L441.1 320L423.9 320L423.9 243.8A5 5 0 0 1 428.9 238.8" fill="url(#zr2-g0)" ecmeta_series_index="0" ecmeta_data_index="12" ecmeta_ssr_type="chart" class="zr2-cls-5"></path>
+<path d="M453.9 148.1L461.1 148.1A5 5 0 0 1 466.1 153.1L466.1 320L448.9 320L448.9 153.1A5 5 0 0 1 453.9 148.1" fill="url(#zr2-g0)" ecmeta_series_index="0" ecmeta_data_index="13" ecmeta_ssr_type="chart" class="zr2-cls-5"></path>
+<path d="M478.9 253L486.1 253A5 5 0 0 1 491.1 258L491.1 320L473.9 320L473.9 258A5 5 0 0 1 478.9 253" fill="url(#zr2-g0)" ecmeta_series_index="0" ecmeta_data_index="14" ecmeta_ssr_type="chart" class="zr2-cls-5"></path>
+<path d="M503.9 290.5L511.1 290.5A5 5 0 0 1 516.1 295.5L516.1 320L498.9 320L498.9 295.5A5 5 0 0 1 503.9 290.5" fill="url(#zr2-g0)" ecmeta_series_index="0" ecmeta_data_index="15" ecmeta_ssr_type="chart" class="zr2-cls-5"></path>
+<path d="M528.9 290.5L536.1 290.5A5 5 0 0 1 541.1 295.5L541.1 320L523.9 320L523.9 295.5A5 5 0 0 1 528.9 290.5" fill="url(#zr2-g0)" ecmeta_series_index="0" ecmeta_data_index="16" ecmeta_ssr_type="chart" class="zr2-cls-5"></path>
+<path d="M553.9 302.2L561.1 302.2A5 5 0 0 1 566.1 307.2L566.1 320L548.9 320L548.9 307.2A5 5 0 0 1 553.9 302.2" fill="url(#zr2-g0)" ecmeta_series_index="0" ecmeta_data_index="17" ecmeta_ssr_type="chart" class="zr2-cls-5"></path>
+<path d="M578.9 313.4L586.1 313.4A5 5 0 0 1 591.1 318.4L591.1 320L573.9 320L573.9 318.4A5 5 0 0 1 578.9 313.4" fill="url(#zr2-g0)" ecmeta_series_index="0" ecmeta_data_index="18" ecmeta_ssr_type="chart" class="zr2-cls-5"></path>
+<path d="M598.9 320L616.1 320L598.9 320" fill="url(#zr2-g0)" ecmeta_series_index="0" ecmeta_data_index="19" ecmeta_ssr_type="chart" class="zr2-cls-5"></path>
+<path d="M623.9 320L641.1 320L623.9 320" fill="url(#zr2-g0)" ecmeta_series_index="0" ecmeta_data_index="20" ecmeta_ssr_type="chart" class="zr2-cls-5"></path>
+<path d="M649.2 319.6L665.8 319.6A0.4 0.4 0 0 1 666.1 320L648.9 320A0.4 0.4 0 0 1 649.2 319.6" fill="url(#zr2-g0)" ecmeta_series_index="0" ecmeta_data_index="21" ecmeta_ssr_type="chart" class="zr2-cls-5"></path>
+<path d="M673.9 320L691.1 320L673.9 320" fill="url(#zr2-g0)" ecmeta_series_index="0" ecmeta_data_index="22" ecmeta_ssr_type="chart" class="zr2-cls-5"></path>
+<path d="M698.9 320L716.1 320L698.9 320" fill="url(#zr2-g0)" ecmeta_series_index="0" ecmeta_data_index="23" ecmeta_ssr_type="chart" class="zr2-cls-5"></path>
+<path d="M-74.1 -5l148.2 0l0 28l-148.2 0Z" transform="translate(400 20)" fill="rgb(0,0,0)" fill-opacity="0" stroke="#3c3c41" stroke-width="0" class="zr2-cls-4"></path>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:18px;font-family:sans-serif;font-weight:bold;" xml:space="preserve" y="9" transform="translate(400 20)" fill="#888888">Most Active Time</text>
+<defs >
+<linearGradient gradientUnits="objectBoundingBox" x1="0" y1="0" x2="0" y2="1" id="zr2-g0">
+<stop offset="0%" stop-color="#91cc75"></stop>
+<stop offset="100%" stop-color="#5470c6"></stop>
+</linearGradient>
+</defs>
+<style ><![CDATA[
+.zr2-cls-4:hover {
+pointer-events:none;
+}
+.zr2-cls-5:hover {
+cursor:pointer;
+fill:[object Object];
+}
+
+]]>
+
+</style>
+</svg>
