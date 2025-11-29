@@ -12,40 +12,7 @@
     <!-- FZBoYaFangKanSongS Font (cn-font-split optimized) -->
     <link rel="stylesheet" href="https://jixiaoyong.github.io/fonts/FZBoYaFangKanSongS/result.css" />
     
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
-    <script>
-      tailwind.config = {
-        darkMode: 'class',
-        theme: {
-          extend: {
-            fontFamily: {
-              // Priority: FZBoYaFangKanSongS (cn-font-split optimized) → Noto fonts → system fonts
-              sans: ['"FZBoYaFangKanSongS"', '"Noto Sans SC"', 'Inter', 'sans-serif'],
-              serif: ['"FZBoYaFangKanSongS"', '"Noto Serif SC"', 'Merriweather', 'serif'],
-            },
-            colors: {
-              dark: {
-                bg: '#111111',
-                card: '#1a1a1a',
-                text: '#e5e5e5',
-                muted: '#a3a3a3'
-              }
-            },
-            typography: (theme) => ({
-              DEFAULT: {
-                css: {
-                  'h1, h2, h3, h4': {
-                    fontFamily: theme('fontFamily.serif').join(', '),
-                    fontWeight: '700',
-                  },
-                },
-              },
-            }),
-          },
-        },
-      }
-    </script>
+
     
     <!-- China-friendly Font Optimization (Subset via npm.elemecdn.com) -->
     <!-- Noto Serif SC (Songti) -->
@@ -58,23 +25,23 @@
     <link rel="stylesheet" href="https://npm.elemecdn.com/@fontsource/inter@4.5.15/400.css">
     <link rel="stylesheet" href="https://npm.elemecdn.com/@fontsource/inter@4.5.15/700.css">
 
-
-  <script type="importmap">
-{
-  "imports": {
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "react-dom/client": "https://aistudiocdn.com/react-dom@^19.2.0/client",
-    "react-router-dom": "https://aistudiocdn.com/react-router-dom@^7.9.6",
-    "markdown-it": "https://cdn.jsdelivr.net/npm/markdown-it@14.0.0/+esm",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/"
-  }
-}
-</script>
-  <script type="module" crossorigin src="/imissyou/assets/index--KAvrM31.js"></script>
+    <!-- SPA 路由恢复脚本 (用于 GitHub Pages) -->
+    <script>
+      // 这个脚本必须在应用加载之前执行
+      // 它会检查 sessionStorage 中是否有重定向路径（由 404.html 设置）
+      // 如果有，就使用 history.replaceState 恢复正确的 URL
+      (function() {
+        var redirect = sessionStorage.getItem('redirect');
+        if (redirect && redirect !== '/') {
+          sessionStorage.removeItem('redirect');
+          history.replaceState(null, null, redirect);
+        }
+      })();
+    </script>
+  <script type="module" crossorigin src="/imissyou/assets/index-Bl0lC64U.js"></script>
   <link rel="modulepreload" crossorigin href="/imissyou/assets/vendor-react-VjKaFcN4.js">
-  <link rel="modulepreload" crossorigin href="/imissyou/assets/vendor-utils-DILbIPBA.js">
-  <link rel="stylesheet" crossorigin href="/imissyou/assets/index-DIQ6i-V2.css">
+  <link rel="modulepreload" crossorigin href="/imissyou/assets/vendor-utils-BMSQkwth.js">
+  <link rel="stylesheet" crossorigin href="/imissyou/assets/index-CkonAG3V.css">
 </head>
   <body class="antialiased transition-colors duration-300 bg-white dark:bg-dark-bg text-gray-900 dark:text-dark-text">
     <div id="root"></div>
