@@ -1,8 +1,0 @@
-import{u as i,j as e,g as x}from"./index-D33kj_CB.js";import{r as s}from"./vendor-react-DmTLPJCu.js";import"./vendor-ui-8bCH5ZKl.js";const h=()=>{const[t,a]=s.useState(null),{language:r,t:n}=i();if(s.useEffect(()=>{(async()=>{const l=await x(r);a(l)})()},[r]),!t)return e.jsx("div",{className:"max-w-2xl mx-auto px-4 py-12 text-center animate-pulse",children:"Loading..."});const o=`https://github.com/jixiaoyong/blog_source_code/edit/master/imissyou/${t.filePath}`;return e.jsxs("article",{className:"max-w-3xl mx-auto px-4 py-12 md:py-16",children:[e.jsxs("header",{className:"mb-10 text-center relative group",children:[e.jsx("h1",{className:"text-3xl md:text-5xl font-bold font-serif leading-tight text-neutral-900 dark:text-neutral-50 tracking-tight",children:t.title}),e.jsx("div",{className:"mt-4 flex justify-center",children:e.jsxs("a",{href:o,target:"_blank",rel:"noopener noreferrer",className:"text-xs font-medium text-neutral-400 hover:text-black dark:hover:text-white transition-colors flex items-center gap-1",children:[e.jsx("svg",{xmlns:"http://www.w3.org/2000/svg",width:"12",height:"12",viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:"2",strokeLinecap:"round",strokeLinejoin:"round",children:e.jsx("path",{d:"M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"})}),e.jsx("span",{children:n("editOnGithub")})]})})]}),e.jsx("div",{className:`
-          prose prose-lg md:prose-xl dark:prose-invert 
-          font-serif 
-          mx-auto
-          prose-headings:font-bold prose-headings:font-serif
-          prose-p:leading-loose prose-p:text-neutral-800 dark:prose-p:text-neutral-300
-          prose-a:text-neutral-900 dark:prose-a:text-neutral-100
-        `,dangerouslySetInnerHTML:{__html:t.content}})]})};export{h as default};

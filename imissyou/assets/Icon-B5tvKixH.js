@@ -1,1 +1,0 @@
-import{j as s}from"./index-D33kj_CB.js";const n=({src:e,className:a="",alt:t})=>s.jsx("span",{className:`inline-block bg-current ${a}`,style:{maskImage:`url(${e})`,maskRepeat:"no-repeat",maskPosition:"center",maskSize:"contain",WebkitMaskImage:`url(${e})`,WebkitMaskRepeat:"no-repeat",WebkitMaskPosition:"center",WebkitMaskSize:"contain"},role:"img","aria-label":t});export{n as I};

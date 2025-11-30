@@ -1,0 +1,10 @@
+import{u as y,j as d,I as p,r as f}from"./index-WYorTVHP.js";const g=async t=>{if(navigator.clipboard&&navigator.clipboard.writeText)try{return await navigator.clipboard.writeText(t),!0}catch(e){console.warn("navigator.clipboard.writeText failed:",e)}try{const e=document.createElement("textarea");e.value=t,e.style.position="fixed",e.style.left="-9999px",e.style.top="0",document.body.appendChild(e),e.focus(),e.select();const c=document.execCommand("copy");return document.body.removeChild(e),c}catch(e){return console.error("Fallback copy method failed:",e),!1}};function i(t){return t.replace(/\+/g,"%2B")}function $(t,e,c,n){const a=`${n.emailSubject}《${e}》`,l=`${n.emailBodyHello}
+
+${n.emailBodyIntro}《${e}》
+${c}${n.emailBodyFeedback}`,m=i(t),o=encodeURIComponent(a),r=encodeURIComponent(l);return`mailto:${m}?subject=${o}&body=${r}`}function x(t,e,c,n){console.log("📧 Mailto link:",t),console.log("📧 Email (encoded):",i(e)),console.log("📧 Subject (decoded):",c),console.log("📧 Body (decoded):",n)}const j=({email:t,articleTitle:e,articleUrl:c,emailSubject:n,emailBodyHello:a,emailBodyIntro:l,emailBodyFeedback:m})=>{const{t:o}=y(),r=()=>{try{if(!t){alert(`${o("comment").cantSendEmail} N/A`);return}const s=$(t,e,c,{emailSubject:n||o("comment").emailSubject,emailBodyHello:a||o("comment").emailBodyHello,emailBodyIntro:l||o("comment").emailBodyIntro,emailBodyFeedback:m||o("comment").emailBodyFeedback}),u=`${n||o("comment").emailSubject}《${e}》`,b=`${a||o("comment").emailBodyHello}
+
+${l||o("comment").emailBodyIntro}[《${e}》](${c})${m||o("comment").emailBodyFeedback}`;x(s,t,u,b),window.location.href=s}catch{confirm(`${o("comment").cantSendEmail}
+
+${t}
+
+${o("comment").copyEmail}?`)&&g(t)}};return d.jsxs("button",{onClick:r,className:"inline-flex items-center gap-2 px-6 py-3 bg-neutral-900 dark:bg-neutral-100 text-white dark:text-black rounded-lg hover:bg-neutral-700 dark:hover:bg-neutral-300 transition-all font-sans font-medium shadow-sm hover:shadow-md",title:o("comment").button,children:[d.jsx(p,{src:f("assets/icons/email.svg"),alt:"Email",className:"w-[18px] h-[18px]"}),d.jsx("span",{children:o("comment").button})]})};export{j as C,g as c};

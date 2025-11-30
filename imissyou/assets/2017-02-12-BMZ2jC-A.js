@@ -1,0 +1,33 @@
+const n=`---
+title: 小镇来雪
+abbrlink: ce99c7c0
+date: 2017-02-12T14:54:19+0800
+updated: 2023-12-30T14:26:22+0800
+tags:
+summaryZh: 作者描绘了小镇的第二场雪，细腻地刻画了雪天的寒冷与萧瑟。通过对环境的描写，如灰蒙蒙的天地、枯落的荒草、发霉般的积雪，营造出一种凄清的氛围。作者回忆起三年前初次踏上这片土地的情景，感叹时光飞逝，物是人非。文章最后以“摔了一跤”作结，既是写实，也隐喻了生活中的挫折。
+summaryEn: The author depicts the second snow in the small town, delicately portraying the cold and bleakness of the snowy day. Through descriptions of the environment, such as the gray world, withered grass, and moldy-looking snow, a desolate atmosphere is created. The author recalls the scene when they first stepped on this land three years ago, sighing at the fleeting time and the changes in people and things. The article ends with "I fell down", which is both realistic and a metaphor for setbacks in life.
+---
+
+小镇下雪了，这已是今年第二场雪。
+
+灰蒙蒙的天地，谁人不小心划破了口袋，窸窣的洒落，甜甜的白砂糖的味道。
+
+早就有人说今年当是暖冬了，说有多少年难遇，又有人说这降温应当只是个插曲，合当还是要暖起来。然而终究还是降温了，席卷了大半个疆域的寒潮终究还是来了，把雪花撒进了天南海北的故乡，撒进了一个个朋友圈的动态。
+
+枯落的荒草简直要刺破眼镜，口鼻里是从未闻过的味道，落雪的土地僵硬冰凉，手机陷在不远的落叶堆里，揪开了耳机的束缚，静静的弹着一个流浪的故事。
+
+这样的冬天，却不是太冷，只是到处透着一股子凉。像是手里怀里尽是塞着刚刚取出的雪糕，慢慢的化成水。手脚稍微挪动，它便从脖子钻进，贴着衣服，黏着空隙钻进来，贴着皮肉一点点蠕动，吸去最后的一丝精热。
+
+路上的雪早就被打扫过，上面刚刚铺就的薄薄的一层，横竖看都像是发霉了的斑点。这薄薄的雪地上，两条灰线浅浅的伸向远方，不知哪家少年已经踏上回家的路。
+
+第一次踏上这片土地已是三年前，光阴似箭，难免不被刺个透心凉。
+
+往事历历，谁人能换旧时光。
+
+耳机里嘻嘻呵呵的打趣，被脚下酥软的草地黏住，像是松了线的风筝，像是离开枝头的落叶，像是被时间一枪打中，一个踉跄醒来，整个人便趴在了草丛里。
+
+这样的日子，没有撕心裂骨的寒，像是血液里掺了冰渣，倒显得过于痛快。却只有一点点儿，一点点儿凉，从脚底板第一个细胞开始，慢慢的侵蚀、浸入，一口一口的，撕咬，吞噬。如同一匹巨蟒。
+
+大雪终于还是又来了，弹着吉他烧着酒，唱着炉火边的歌儿。
+
+小镇下雪了，我摔了一跤。`;export{n as default};
