@@ -1,174 +1,446 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>I Miss You</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="/imissyou/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/imissyou/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/imissyou/favicon-16x16.png">
-    <link rel="manifest" href="/imissyou/site.webmanifest">
-    
-    <!-- FZBoYaFangKanSongS Font (cn-font-split optimized) -->
-    <link rel="stylesheet" href="https://jixiaoyong.github.io/fonts/FZBoYaFangKanSongS/result.css" 
-          onerror="if(!this.dataset.retried){this.dataset.retried=true;console.log('Font load failed, retrying...');this.href=this.href+'?retry='+Date.now()}" />
-    
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/imissyou/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/imissyou/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/imissyou/favicon-16x16.png" />
+    <link rel="manifest" href="/imissyou/site.webmanifest" />
 
-    
+    <!-- FZBoYaFangKanSongS Font (cn-font-split optimized) -->
+    <!-- Preload font CSS to reduce FOUT -->
+    <link
+      rel="preload"
+      href="https://jixiaoyong.github.io/fonts/FZBoYaFangKanSongS/result.css"
+      as="style"
+    />
+    <link
+      rel="stylesheet"
+      href="https://jixiaoyong.github.io/fonts/FZBoYaFangKanSongS/result.css"
+      onerror="if(!this.dataset.retried){this.dataset.retried=true;console.log('Font load failed, retrying...');this.href=this.href+'?retry='+Date.now()}"
+    />
+
     <!-- China-friendly Font Optimization (Subset via npm.elemecdn.com) -->
     <!-- Noto Serif SC (Songti) -->
-    <link rel="stylesheet" href="https://npm.elemecdn.com/@fontsource/noto-serif-sc@4.5.12/400.css">
-    <link rel="stylesheet" href="https://npm.elemecdn.com/@fontsource/noto-serif-sc@4.5.12/700.css">
+    <link
+      rel="stylesheet"
+      href="https://npm.elemecdn.com/@fontsource/noto-serif-sc@4.5.12/400.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://npm.elemecdn.com/@fontsource/noto-serif-sc@4.5.12/700.css"
+    />
     <!-- Noto Sans SC (Heiti) -->
-    <link rel="stylesheet" href="https://npm.elemecdn.com/@fontsource/noto-sans-sc@4.5.12/400.css">
-    <link rel="stylesheet" href="https://npm.elemecdn.com/@fontsource/noto-sans-sc@4.5.12/700.css">
+    <link
+      rel="stylesheet"
+      href="https://npm.elemecdn.com/@fontsource/noto-sans-sc@4.5.12/400.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://npm.elemecdn.com/@fontsource/noto-sans-sc@4.5.12/700.css"
+    />
     <!-- English Inter (Optional, fallback handled by system if slow, but good to have) -->
-    <link rel="stylesheet" href="https://npm.elemecdn.com/@fontsource/inter@4.5.15/400.css">
-    <link rel="stylesheet" href="https://npm.elemecdn.com/@fontsource/inter@4.5.15/700.css">
+    <link
+      rel="stylesheet"
+      href="https://npm.elemecdn.com/@fontsource/inter@4.5.15/400.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://npm.elemecdn.com/@fontsource/inter@4.5.15/700.css"
+    />
 
-    <!-- SPA 路由恢复脚本 (用于 GitHub Pages) -->
+    <style>
+      /* 重置和基础样式 */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        background: #ffffff;
+        min-height: 100vh;
+      }
+
+      /* 加载容器 - 独立于 #root，遮盖整个页面 */
+      #loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #ffffff;
+        display: flex;
+        flex-direction: column;
+        z-index: 9999;
+        transition: opacity 0.3s ease-out;
+      }
+
+      #loading-screen.fade-out {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      /* 骨架屏头部 - 匹配 Header.tsx 布局 */
+      .skeleton-header {
+        height: 64px; /* h-16 = 64px */
+        border-bottom: 1px solid #f2f2f2;
+        display: flex;
+        align-items: center;
+        padding: 0 16px; /* px-4 = 16px */
+        box-sizing: border-box;
+        position: sticky;
+        top: 0;
+        background: #ffffff;
+        z-index: 50;
+      }
+
+      @media (min-width: 640px) {
+        .skeleton-header {
+          padding: 0 24px; /* sm:px-6 = 24px */
+        }
+      }
+
+      .skeleton-header-content {
+        max-width: 896px; /* max-w-4xl = 896px */
+        width: 100%;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        gap: 12px; /* gap-3 = 12px */
+      }
+
+      .skeleton-logo {
+        width: 32px; /* w-8 = 32px */
+        height: 32px; /* h-8 = 32px */
+        border-radius: 50%;
+        background-color: #f2f2f2;
+        -o-object-fit: cover;
+           object-fit: cover;
+        flex-shrink: 0;
+      }
+
+      .skeleton-site-title {
+        font-family: "FZBoYaFangKanSongS", ui-serif, Georgia, serif;
+        font-weight: 700;
+        font-size: 18px; /* text-lg on mobile */
+        color: #292929;
+        letter-spacing: -0.025em; /* tracking-tight */
+        /* Hide text until font loads to avoid FOUT */
+        opacity: 0;
+        animation: fadeIn 0s 0.1s forwards;
+      }
+
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+        }
+      }
+
+      @media (min-width: 640px) {
+        .skeleton-site-title {
+          font-size: 20px; /* text-xl on desktop */
+        }
+      }
+
+      /* 骨架屏内容 - 匹配 PostList.tsx 布局 (max-w-2xl = 672px) */
+      .skeleton-content {
+        flex: 1;
+        max-width: 672px; /* max-w-2xl = 672px */
+        width: 100%;
+        margin: 0 auto;
+        padding: 48px 16px; /* py-12 px-4 */
+        box-sizing: border-box;
+        overflow-y: auto;
+      }
+
+      @media (min-width: 640px) {
+        .skeleton-content {
+          padding: 48px 24px;
+        }
+      }
+
+      .skeleton-post {
+        margin-bottom: 64px; /* space-y-16 = 64px */
+      }
+
+      .skeleton-post-title {
+        width: 70%;
+        height: 32px;
+        background-color: #f2f2f2;
+        border-radius: 4px;
+        margin-bottom: 16px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .skeleton-post-meta {
+        width: 40%;
+        height: 14px;
+        background-color: #f2f2f2;
+        border-radius: 4px;
+        margin-bottom: 24px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .skeleton-post-text {
+        width: 100%;
+        height: 16px;
+        background-color: #f2f2f2;
+        border-radius: 4px;
+        margin-bottom: 12px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* 骨架屏闪烁动画 */
+      .skeleton-post-title::before,
+      .skeleton-post-meta::before,
+      .skeleton-post-text::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          rgba(255, 255, 255, 0.6) 50%,
+          transparent 100%
+        );
+        animation: shimmer 1.5s infinite;
+      }
+
+      @keyframes shimmer {
+        0% {
+          left: -100%;
+        }
+        100% {
+          left: 100%;
+        }
+      }
+
+      .skeleton-loading-text {
+        text-align: center;
+        margin-top: 40px;
+        color: #757575;
+        font-size: 14px;
+        animation: fadeInOut 2s ease-in-out infinite;
+      }
+
+      @keyframes fadeInOut {
+        0%,
+        100% {
+          opacity: 0.6;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+
+      /* React 应用容器初始隐藏 */
+      #root {
+        opacity: 0;
+        transition: opacity 0.3s ease-in;
+      }
+
+      #root.loaded {
+        opacity: 1;
+      }
+
+      /* Dark Mode Styles - 使用 data-theme 属性 */
+      [data-theme="dark"] body {
+        background: #111111;
+        color: #e5e5e5;
+      }
+
+      [data-theme="dark"] #loading-screen {
+        background: #111111;
+      }
+
+      [data-theme="dark"] .skeleton-header {
+        border-bottom-color: #292929;
+        background: #111111;
+      }
+
+      [data-theme="dark"] .skeleton-site-title {
+        color: #e5e5e5;
+      }
+
+      [data-theme="dark"] .skeleton-logo {
+        background-color: #333;
+        border: 1px solid #333;
+      }
+
+      [data-theme="dark"] .skeleton-post-title,
+      [data-theme="dark"] .skeleton-post-meta,
+      [data-theme="dark"] .skeleton-post-text {
+        background-color: #333;
+      }
+
+      [data-theme="dark"] .skeleton-post-title::before,
+      [data-theme="dark"] .skeleton-post-meta::before,
+      [data-theme="dark"] .skeleton-post-text::before {
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          rgba(255, 255, 255, 0.05) 50%,
+          transparent 100%
+        );
+      }
+
+      [data-theme="dark"] .skeleton-loading-text {
+        color: #a3a3a3;
+      }
+    </style>
+
     <script>
       // 这个脚本必须在应用加载之前执行
-      // 它会检查 sessionStorage 中是否有重定向路径（由 404.html 设置）
-      // 如果有，就使用 history.replaceState 恢复正确的 URL
-      (function() {
-        var redirect = sessionStorage.getItem('redirect');
-        if (redirect && redirect !== '/') {
-          sessionStorage.removeItem('redirect');
+      (function () {
+        // 1. SPA 路由恢复 (用于 GitHub Pages)
+        var redirect = sessionStorage.getItem("redirect");
+        if (redirect && redirect !== "/") {
+          sessionStorage.removeItem("redirect");
           history.replaceState(null, null, redirect);
+        }
+
+        // 2. 初始化主题
+        var localTheme = localStorage.getItem("theme");
+        var prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
+
+        var currentTheme = "light";
+        if (localTheme === "dark") {
+          currentTheme = "dark";
+        } else if (localTheme === "light") {
+          currentTheme = "light";
+        } else {
+          // system 或 null - 跟随系统
+          currentTheme = prefersDark ? "dark" : "light";
+        }
+
+        // 设置 data-theme 属性（骨架屏和状态栏颜色都依赖这个）
+        document.documentElement.setAttribute("data-theme", currentTheme);
+
+        // 同时设置 dark class（next-themes 需要）
+        if (currentTheme === "dark") {
+          document.documentElement.classList.add("dark");
+        }
+
+        // 更新 theme-color meta 标签
+        var metaThemeColor = document.querySelector('meta[name="theme-color"]');
+        if (metaThemeColor) {
+          metaThemeColor.setAttribute(
+            "content",
+            currentTheme === "dark" ? "#111111" : "#ffffff"
+          );
+        }
+
+        // 更新 iOS 状态栏样式
+        var metaAppleStatusBar = document.querySelector(
+          'meta[name="apple-mobile-web-app-status-bar-style"]'
+        );
+        if (metaAppleStatusBar) {
+          metaAppleStatusBar.setAttribute(
+            "content",
+            currentTheme === "dark" ? "black-translucent" : "default"
+          );
         }
       })();
     </script>
-  <script type="module" crossorigin src="/imissyou/assets/index-WYorTVHP.js"></script>
-  <link rel="modulepreload" crossorigin href="/imissyou/assets/vendor-react-C6b2uurr.js">
-  <link rel="modulepreload" crossorigin href="/imissyou/assets/vendor-ui-Uj90Oc1I.js">
-  <link rel="stylesheet" crossorigin href="/imissyou/assets/index-Ba45yXrW.css">
-</head>
-  <body class="antialiased transition-colors duration-300 bg-white dark:bg-dark-bg text-gray-900 dark:text-dark-text">
-    <div id="root">
-      <!-- Skeleton Screen for Initial Load -->
-      <style>
-        .skeleton-wrapper {
-          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
-        .skeleton-header {
-          height: 64px;
-          border-bottom: 1px solid #f2f2f2;
-          display: flex;
-          align-items: center;
-          padding: 0 24px;
-          max-width: 100%;
-          margin: 0 auto;
-          box-sizing: border-box;
-        }
-        .skeleton-header-content {
-          max-width: 896px;
-          width: 100%;
-          margin: 0 auto;
-          display: flex;
-          align-items: center;
-        }
-        .skeleton-logo {
-          width: 32px;
-          height: 32px;
-          border-radius: 50%;
-          background-color: #f2f2f2;
-          margin-right: 12px;
-          background-image: url('/imissyou/assets/me.jpeg');
-          background-size: cover;
-          background-position: center;
-        }
-        .skeleton-site-title {
-          font-weight: 700;
-          font-size: 20px;
-          color: #292929;
-          letter-spacing: -0.5px;
-        }
-        .skeleton-content {
-          max-width: 672px;
-          margin: 48px auto;
-          padding: 0 24px;
-          box-sizing: border-box;
-        }
-        .skeleton-post {
-          margin-bottom: 64px;
-        }
-        .skeleton-post-title {
-          width: 70%;
-          height: 32px;
-          background-color: #f2f2f2;
-          border-radius: 4px;
-          margin-bottom: 16px;
-          animation: pulse 1.5s infinite ease-in-out;
-        }
-        .skeleton-post-meta {
-          width: 40%;
-          height: 14px;
-          background-color: #f2f2f2;
-          border-radius: 4px;
-          margin-bottom: 24px;
-          animation: pulse 1.5s infinite ease-in-out;
-          animation-delay: 0.1s;
-        }
-        .skeleton-post-text {
-          width: 100%;
-          height: 16px;
-          background-color: #f2f2f2;
-          border-radius: 4px;
-          margin-bottom: 12px;
-          animation: pulse 1.5s infinite ease-in-out;
-          animation-delay: 0.2s;
-        }
-        .skeleton-loading-text {
-          text-align: center;
-          margin-top: 40px;
-          color: #757575;
-          font-size: 14px;
-          animation: fade 2s infinite;
-        }
-        @keyframes pulse {
-          0% { opacity: 0.6; }
-          50% { opacity: 1; }
-          100% { opacity: 0.6; }
-        }
-        @keyframes fade {
-          0% { opacity: 0.4; }
-          50% { opacity: 1; }
-          100% { opacity: 0.4; }
-        }
-        @media (prefers-color-scheme: dark) {
-          body { background-color: #111; }
-          .skeleton-header { border-bottom-color: #292929; }
-          .skeleton-site-title { color: #e5e5e5; }
-          .skeleton-logo { background-color: #333; border: 1px solid #333; }
-          .skeleton-post-title, .skeleton-post-meta, .skeleton-post-text { background-color: #333; }
-          .skeleton-loading-text { color: #a3a3a3; }
-        }
-      </style>
-      <div class="skeleton-wrapper">
-        <div class="skeleton-header">
-          <div class="skeleton-header-content">
-            <div class="skeleton-logo"></div>
-            <div class="skeleton-site-title">I Miss You</div>
-          </div>
-        </div>
-        <div class="skeleton-content">
-          <div class="skeleton-post">
-            <div class="skeleton-post-title"></div>
-            <div class="skeleton-post-meta"></div>
-            <div class="skeleton-post-text"></div>
-            <div class="skeleton-post-text" style="width: 92%"></div>
-            <div class="skeleton-post-text" style="width: 85%"></div>
-          </div>
-          <div class="skeleton-post">
-            <div class="skeleton-post-title" style="width: 60%"></div>
-            <div class="skeleton-post-meta"></div>
-            <div class="skeleton-post-text"></div>
-            <div class="skeleton-post-text" style="width: 96%"></div>
-          </div>
-          <div class="skeleton-loading-text">Loading content...</div>
+    <script type="module" crossorigin src="/imissyou/assets/index-twpCt15O.js"></script>
+    <link rel="modulepreload" crossorigin href="/imissyou/assets/vendor-react-jC4hbvuS.js">
+    <link rel="modulepreload" crossorigin href="/imissyou/assets/vendor-ui-DFZripsP.js">
+    <link rel="modulepreload" crossorigin href="/imissyou/assets/vendor-markdown-BMSQkwth.js">
+    <link rel="stylesheet" crossorigin href="/imissyou/assets/index-d37Djv38.css">
+  </head>
+  <body
+    class="antialiased transition-colors duration-300 bg-white dark:bg-dark-bg text-gray-900 dark:text-dark-text"
+  >
+    <!-- 加载骨架屏 - 独立于 #root，不会被 React 覆盖 -->
+    <div id="loading-screen">
+      <div class="skeleton-header">
+        <div class="skeleton-header-content">
+          <img src="/imissyou/assets/me.jpeg" alt="" class="skeleton-logo" />
+          <div class="skeleton-site-title">I Miss You</div>
         </div>
       </div>
+      <div class="skeleton-content">
+        <div class="skeleton-post">
+          <div class="skeleton-post-title"></div>
+          <div class="skeleton-post-meta"></div>
+          <div class="skeleton-post-text"></div>
+          <div class="skeleton-post-text" style="width: 92%"></div>
+          <div class="skeleton-post-text" style="width: 85%"></div>
+        </div>
+        <div class="skeleton-post">
+          <div class="skeleton-post-title" style="width: 60%"></div>
+          <div class="skeleton-post-meta"></div>
+          <div class="skeleton-post-text"></div>
+          <div class="skeleton-post-text" style="width: 96%"></div>
+        </div>
+        <div class="skeleton-post">
+          <div class="skeleton-post-title" style="width: 75%"></div>
+          <div class="skeleton-post-meta"></div>
+          <div class="skeleton-post-text"></div>
+          <div class="skeleton-post-text" style="width: 88%"></div>
+        </div>
+        <div class="skeleton-post">
+          <div class="skeleton-post-title" style="width: 55%"></div>
+          <div class="skeleton-post-meta"></div>
+          <div class="skeleton-post-text"></div>
+          <div class="skeleton-post-text" style="width: 90%"></div>
+        </div>
+        <div class="skeleton-loading-text" id="loading-text">
+          Loading content...
+        </div>
+      </div>
+      <script>
+        // 根据系统语言设置加载文本
+        (function () {
+          var lang = navigator.language || navigator.userLanguage;
+          var loadingText = document.getElementById("loading-text");
+          if (loadingText && lang.startsWith("zh")) {
+            loadingText.textContent = "正在加载...";
+          }
+        })();
+      </script>
     </div>
+
+    <!-- React 应用容器 -->
+    <div id="root"></div>
+
+    <script>
+      // 当 React 应用加载完成后，隐藏骨架屏
+      window.addEventListener("load", function () {
+        setTimeout(function () {
+          var loadingScreen = document.getElementById("loading-screen");
+          var root = document.getElementById("root");
+
+          if (loadingScreen) {
+            loadingScreen.classList.add("fade-out");
+            setTimeout(function () {
+              loadingScreen.style.display = "none";
+            }, 300);
+          }
+
+          if (root) {
+            root.classList.add("loaded");
+          }
+        }, 100); // 短暂延迟确保 React 渲染完成
+      });
+    </script>
   </body>
 </html>
