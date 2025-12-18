@@ -163,50 +163,49 @@
 
         function handleSpaRedirect(projectRoot) {
           // Circuit Breaker: Prevent infinite redirects
-          // If we redirected recently (e.g. < 2s ago) and are BACK here, it means the target index.html failed to load.
+          // Use a counter to allow a few retries (e.g. for flaky connections or user refreshes)
           var storageKey = "spa_redirect_guard";
           var lastRedirect = sessionStorage.getItem(storageKey);
           var now = Date.now();
+          var MAX_RETRIES = 3;
+          var TIME_WINDOW = 5000; // 5 seconds
 
-          // Check if we are stuck in a loop for the SAME project
+          var guardData = { path: path, count: 1, time: now };
+
           if (lastRedirect) {
             try {
               var data = JSON.parse(lastRedirect);
-              // If path matches AND it was very recent (< 2000ms), we are looping.
-              if (data.path === path && now - data.time < 2000) {
-                console.error("Infinite redirect loop detected for:", path);
-                // Stop! Show 404.
-                show404WithMsg(
-                  "无法加载子应用 (" +
-                    projectRoot +
-                    ")。<br>可能该模块已被移除或损坏。"
-                );
-                sessionStorage.removeItem(storageKey); // Clear for next fresh try
-                return;
+              // Check if it's the same path and within time window
+              if (data.path === path && now - data.time < TIME_WINDOW) {
+                if (data.count >= MAX_RETRIES) {
+                  console.error("Infinite redirect loop detected for:", path);
+                  show404WithMsg(
+                    "无法加载子应用 (" +
+                      projectRoot +
+                      ")。<br>检测到重定向循环，可能该模块已被移除或损坏。"
+                  );
+                  sessionStorage.removeItem(storageKey); // Clear for next fresh try
+                  return;
+                }
+                // Increment count
+                guardData.count = data.count + 1;
+                guardData.time = data.time; // Keep original start time window
               }
             } catch (e) {
               // ignore JSON error
             }
           }
 
-          // If Hash already exists in *URL*?
-          // Note: path does NOT contain hash. hash is separate.
-          // If user visits /blog/#/foo directly, the server returns index.html (200), so we NEVER reach here (404.html).
-          // We ONLY reach here if the server returned 404.
-          // So if we are here, we MUST redirect to convert Path to Hash.
-
           // Set Guard
-          sessionStorage.setItem(
-            storageKey,
-            JSON.stringify({ path: path, time: now })
-          );
+          sessionStorage.setItem(storageKey, JSON.stringify(guardData));
 
           // Calculate subpath
           var subPath = path.substring(projectRoot.length);
           if (!subPath || subPath === "/") subPath = "/";
 
-          // Construct new URL: /blog + /# + /article/1
-          var newUrl = projectRoot + "/#" + subPath + search + hash;
+          // Construct new URL: /blog + /index.html + /# + /article/1
+          // We explicitly add index.html to avoid 404s on servers that don't auto-resolve directories
+          var newUrl = projectRoot + "/index.html#" + subPath + search + hash;
 
           // Redirect
           window.location.replace(newUrl);
