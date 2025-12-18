@@ -1,174 +1,315 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>页面未找到 - 404 Not Found</title>
-    
+
     <style>
-        /* ==============================
+      /* ==============================
            1. 现代化 UI 样式
            ============================== */
-        :root {
-            --primary-color: #333;
-            --accent-color: #007bff;
-            --bg-color: #f8f9fa;
-        }
-        body, html {
-            height: 100%;
-            margin: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--primary-color);
-        }
-        
-        /* 默认隐藏内容，由 JS 决定显示 Loading 还是 404 */
-        #main-content { display: none; }
-        
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            text-align: center;
-            padding: 20px;
-        }
+      :root {
+        --primary-color: #333;
+        --accent-color: #007bff;
+        --bg-color: #f8f9fa;
+      }
+      body,
+      html {
+        height: 100%;
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        background-color: var(--bg-color);
+        color: var(--primary-color);
+      }
 
-        .illustration {
-            max-width: 300px;
-            width: 80%;
-            margin-bottom: 2rem;
-            opacity: 0.8;
-        }
+      /* 默认隐藏内容，由 JS 决定显示 Loading 还是 404 */
+      #main-content {
+        display: none;
+      }
 
-        h1 { font-size: 2rem; margin-bottom: 0.5rem; }
-        p { font-size: 1rem; color: #666; margin-bottom: 2rem; max-width: 400px; line-height: 1.6; }
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        text-align: center;
+        padding: 20px;
+      }
 
-        .btn-group {
-            display: flex;
-            gap: 15px;
-        }
+      .illustration {
+        max-width: 300px;
+        width: 80%;
+        margin-bottom: 2rem;
+        opacity: 0.8;
+      }
 
-        .btn {
-            text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: 500;
-            transition: all 0.2s ease;
-        }
+      h1 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+      }
+      p {
+        font-size: 1rem;
+        color: #666;
+        margin-bottom: 2rem;
+        max-width: 400px;
+        line-height: 1.6;
+      }
 
-        .btn-primary {
-            background-color: var(--accent-color);
-            color: white;
-            box-shadow: 0 4px 6px rgba(0,123,255,0.2);
-        }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 8px rgba(0,123,255,0.3); }
+      .btn-group {
+        display: flex;
+        gap: 15px;
+      }
 
-        .btn-secondary {
-            background-color: #fff;
-            color: #555;
-            border: 1px solid #ddd;
-        }
-        .btn-secondary:hover { background-color: #f1f1f1; }
+      .btn {
+        text-decoration: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+      }
 
-        /* Loading 状态样式 */
-        #redirect-msg {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 1.1rem;
-            color: #666;
-            display: block; /* 默认显示 loading */
-        }
+      .btn-primary {
+        background-color: var(--accent-color);
+        color: white;
+        box-shadow: 0 4px 6px rgba(0, 123, 255, 0.2);
+      }
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 8px rgba(0, 123, 255, 0.3);
+      }
+
+      .btn-secondary {
+        background-color: #fff;
+        color: #555;
+        border: 1px solid #ddd;
+      }
+      .btn-secondary:hover {
+        background-color: #f1f1f1;
+      }
+
+      /* Loading 状态样式 */
+      #redirect-msg {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 1.1rem;
+        color: #666;
+        display: block; /* 默认显示 loading */
+      }
     </style>
 
     <script>
-        (function() {
-            // =========================================================
-            // 2. 核心路由配置 (在这里管理你的子项目)
-            // =========================================================
-            
-            // 定义哪些目录是单页应用 (SPA)，需要自动修复 404 到 Hash 模式
-            // 只要在这里列出的目录，访问 deep link 时都会自动加上 /#/
-            var spaProjects = [
-                '/imissyou', 
-                '/blog', 
-                '/editor', 
-                '/cookie'
-            ];
+      (function () {
+        // =========================================================
+        // 2. 核心路由配置 | Route Configuration
+        // =========================================================
 
-            // =========================================================
-            // 3. 路由分发逻辑
-            // =========================================================
-            var path = window.location.pathname;
-            var search = window.location.search;
-            var hash = window.location.hash;
+        // Type A: SPA Projects (Vue/React/etc with Client-Side Routing)
+        // Strategy: Redirect to Hash mode (e.g., /blog/p/1 -> /blog/#/p/1)
+        // Requirement: Project MUST handle hash routing in its own index.html.
+        var spaProjects = ["/imissyou", "/blog", "/editor"];
 
-            // 检查当前路径是否属于某个 SPA 项目
-            var matchedProject = spaProjects.find(function(proj) {
-                return path.startsWith(proj);
+        // Type B: Static/Simple Projects (HTML/JS without Router)
+        // Strategy: Do NOT redirect. Show 404 UI but add a specialized "Go to Home" button.
+        // Why: /eat/unknown -> Redirecting to /eat/#/unknown is useless if /eat/index.html ignores hash.
+        var staticProjects = {
+          "/eat": { name: "今天吃什么", home: "/eat/" },
+          "/cookie": { name: "小饼干", home: "/cookie/" },
+        };
+
+        // =========================================================
+        // 3. 路由分发逻辑 | Dispatch Logic
+        // =========================================================
+        var path = window.location.pathname;
+        var search = window.location.search;
+        var hash = window.location.hash;
+
+        // --- Helper: Find matched project ---
+        function findStartedWith(str, list) {
+          if (Array.isArray(list)) {
+            return list.find(function (p) {
+              return str.startsWith(p);
             });
+          }
+          for (var key in list) {
+            if (str.startsWith(key)) return list[key];
+          }
+          return null;
+        }
 
-            if (matchedProject) {
-                // 如果已经是 Hash 模式，则说明是真的 404 (文件真的丢了，或者 Router 没匹配到)
-                // 这种情况下，我们不再跳转，直接显示 404 界面
-                if (path.includes('/#/')) {
-                    show404();
-                    return;
-                }
+        // Logic 1: Check if it's an SPA
+        var matchedSpa = findStartedWith(path, spaProjects);
 
-                // 计算子路径
-                // 例如: /imissyou/posts/123 -> /posts/123
-                var subPath = path.substring(matchedProject.length);
-                if (!subPath || subPath === '/') subPath = '/';
+        if (matchedSpa) {
+          handleSpaRedirect(matchedSpa);
+        } else {
+          // Logic 2: Check if it's a Static Project
+          var matchedStatic = findStartedWith(path, staticProjects);
+          if (matchedStatic) {
+            handleStaticError(matchedStatic);
+          } else {
+            // Logic 3: Unknown path
+            show404();
+          }
+        }
 
-                // 构造 Hash 模式的新 URL
-                // 结果: /imissyou/#/posts/123
-                var newUrl = matchedProject + '/#' + subPath + search + hash;
+        // =========================================================
+        // 4. 处理函数 | Handlers
+        // =========================================================
 
-                // 执行跳转
-                // 使用 replace 防止历史记录堆叠
-                window.location.replace(newUrl);
-            } else {
-                // 如果不属于任何已知项目，说明是主站的 404
-                show404();
+        function handleSpaRedirect(projectRoot) {
+          // Circuit Breaker: Prevent infinite redirects
+          // If we redirected recently (e.g. < 2s ago) and are BACK here, it means the target index.html failed to load.
+          var storageKey = "spa_redirect_guard";
+          var lastRedirect = sessionStorage.getItem(storageKey);
+          var now = Date.now();
+
+          // Check if we are stuck in a loop for the SAME project
+          if (lastRedirect) {
+            try {
+              var data = JSON.parse(lastRedirect);
+              // If path matches AND it was very recent (< 2000ms), we are looping.
+              if (data.path === path && now - data.time < 2000) {
+                console.error("Infinite redirect loop detected for:", path);
+                // Stop! Show 404.
+                show404WithMsg(
+                  "无法加载子应用 (" +
+                    projectRoot +
+                    ")。<br>可能该模块已被移除或损坏。"
+                );
+                sessionStorage.removeItem(storageKey); // Clear for next fresh try
+                return;
+              }
+            } catch (e) {
+              // ignore JSON error
+            }
+          }
+
+          // If Hash already exists in *URL*?
+          // Note: path does NOT contain hash. hash is separate.
+          // If user visits /blog/#/foo directly, the server returns index.html (200), so we NEVER reach here (404.html).
+          // We ONLY reach here if the server returned 404.
+          // So if we are here, we MUST redirect to convert Path to Hash.
+
+          // Set Guard
+          sessionStorage.setItem(
+            storageKey,
+            JSON.stringify({ path: path, time: now })
+          );
+
+          // Calculate subpath
+          var subPath = path.substring(projectRoot.length);
+          if (!subPath || subPath === "/") subPath = "/";
+
+          // Construct new URL: /blog + /# + /article/1
+          var newUrl = projectRoot + "/#" + subPath + search + hash;
+
+          // Redirect
+          window.location.replace(newUrl);
+        }
+
+        function handleStaticError(projectConfig) {
+          // Show 404 immediately
+          show404();
+
+          // Add a smart suggestion button
+          setTimeout(function () {
+            var btnGroup = document.querySelector(".btn-group");
+            if (btnGroup) {
+              var newBtn = document.createElement("a");
+              newBtn.href = projectConfig.home;
+              newBtn.className = "btn btn-primary"; // Make this one primary
+              newBtn.style.backgroundColor = "#17a2b8"; // Distinct color (Teal)
+              newBtn.innerText = "前往 [" + projectConfig.name + "] 首页";
+
+              btnGroup.insertBefore(newBtn, btnGroup.firstChild);
             }
 
-            // =========================================================
-            // 4. 显示 404 界面辅助函数
-            // =========================================================
-            function show404() {
-                // 稍微延迟一丢丢，确保 JS 逻辑跑完
-                setTimeout(function() {
-                    document.getElementById('redirect-msg').style.display = 'none'; // 隐藏 loading
-                    document.getElementById('main-content').style.display = 'flex'; // 显示 UI
-                }, 50);
-            }
-        })();
+            // Optional: Update title text
+            var titleEl = document.querySelector("h1");
+            if (titleEl)
+              titleEl.innerText = "页面未找到 (" + projectConfig.name + ")";
+          }, 100);
+        }
+
+        function show404WithMsg(msg) {
+          show404();
+          setTimeout(function () {
+            var p = document.querySelector("p");
+            if (p) p.innerHTML = msg;
+          }, 60);
+        }
+
+        function show404() {
+          // Show UI
+          setTimeout(function () {
+            var loader = document.getElementById("redirect-msg");
+            var content = document.getElementById("main-content");
+            if (loader) loader.style.display = "none";
+            if (content) content.style.display = "flex";
+          }, 50);
+        }
+      })();
     </script>
-</head>
-<body>
-
+  </head>
+  <body>
     <div id="redirect-msg">正在尝试定位页面...</div>
 
     <div class="container" id="main-content">
-        <svg class="illustration" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
-            <style>.cls-1{fill:#e6e6e6;}.cls-2{fill:#007bff;}</style>
-            <circle cx="200" cy="150" r="100" class="cls-1"/>
-            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-weight="bold" font-size="60" fill="#999">404</text>
-            <text x="50%" y="70%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#666">Page Not Found</text>
-        </svg>
+      <svg
+        class="illustration"
+        viewBox="0 0 400 300"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <style>
+          .cls-1 {
+            fill: #e6e6e6;
+          }
+          .cls-2 {
+            fill: #007bff;
+          }
+        </style>
+        <circle cx="200" cy="150" r="100" class="cls-1" />
+        <text
+          x="50%"
+          y="50%"
+          dominant-baseline="middle"
+          text-anchor="middle"
+          font-family="sans-serif"
+          font-weight="bold"
+          font-size="60"
+          fill="#999"
+        >
+          404
+        </text>
+        <text
+          x="50%"
+          y="70%"
+          dominant-baseline="middle"
+          text-anchor="middle"
+          font-family="sans-serif"
+          font-size="14"
+          fill="#666"
+        >
+          Page Not Found
+        </text>
+      </svg>
 
-        <h1>哎呀，迷路了</h1>
-        <p>您访问的页面不存在，或者已经被移动到了新的地址。<br>我们会自动尝试为您寻找正确的路径。</p>
+      <h1>哎呀，迷路了</h1>
+      <p>
+        您访问的页面不存在，或者已经被移动到了新的地址。<br />我们会自动尝试为您寻找正确的路径。
+      </p>
 
-        <div class="btn-group">
-            <a href="javascript:history.back()" class="btn btn-secondary">返回上一页</a>
-            <a href="/" class="btn btn-primary">回到首页</a>
-        </div>
+      <div class="btn-group">
+        <a href="javascript:history.back()" class="btn btn-secondary"
+          >返回上一页</a
+        >
+        <a href="/" class="btn btn-primary">回到首页</a>
+      </div>
     </div>
-
-</body>
+  </body>
 </html>
