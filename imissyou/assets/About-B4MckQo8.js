@@ -1,8 +1,0 @@
-import{u as n,j as e,s as r,I as c,r as m,g as d}from"./index-twpCt15O.js";import{r as o}from"./vendor-react-jC4hbvuS.js";import{C as x}from"./CommentButton-hEuwEq_N.js";import"./vendor-ui-DFZripsP.js";import"./vendor-markdown-BMSQkwth.js";const b=()=>{const[a,l]=o.useState(null),{language:s,t}=n();return o.useEffect(()=>{(async()=>{const i=await d(s);l(i)})()},[s]),a?e.jsxs("article",{className:"max-w-3xl mx-auto px-4 py-12 md:py-16",children:[e.jsx("header",{className:"mb-10 text-center relative group",children:e.jsx("div",{className:"flex justify-center",children:r.repository&&localStorage.getItem("github_token")&&e.jsxs("a",{href:`/imissyou/admin/edit/${a.filePath}`,className:"text-xs font-medium text-neutral-400 hover:text-black dark:hover:text-white transition-colors flex items-center gap-1",children:[e.jsx(c,{src:m("assets/icons/edit-pencil.svg"),alt:"Edit",className:"w-3 h-3"}),e.jsx("span",{children:t("edit")})]})})}),e.jsx("div",{className:`
-          prose prose-lg md:prose-xl dark:prose-invert 
-          font-serif 
-          mx-auto
-          prose-headings:font-bold prose-headings:font-serif
-          prose-p:leading-loose prose-p:text-neutral-800 dark:prose-p:text-neutral-300
-          prose-a:text-neutral-900 dark:prose-a:text-neutral-100
-        `,dangerouslySetInnerHTML:{__html:a.content}}),e.jsx("div",{className:"mt-12 flex justify-center",children:e.jsx(x,{email:r.social.email,articleTitle:a.title,articleUrl:window.location.href,emailSubject:`${t("aboutEmail").subject}`,emailBodyHello:t("aboutEmail").hello,emailBodyIntro:t("aboutEmail").intro,emailBodyFeedback:t("aboutEmail").feedback})})]}):e.jsx("div",{className:"max-w-2xl mx-auto px-4 py-12 text-center animate-pulse",children:"Loading..."})};export{b as default};
