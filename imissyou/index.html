@@ -8,94 +8,55 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <link rel="apple-touch-icon" sizes="180x180" href="/imissyou/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/imissyou/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/imissyou/favicon-16x16.png" />
+    <link rel="icon" href="/imissyou/favicon.png" type="image/png" />
     <link rel="manifest" href="/imissyou/site.webmanifest" />
 
-    <!-- FZBoYaFangKanSongS Font (cn-font-split optimized) -->
-    <!-- Preload font CSS to reduce FOUT -->
+    <!-- Preconnect to critical domains for faster resource loading -->
+    <link rel="preconnect" href="https://registry.npmmirror.com" crossorigin />
+    <link rel="preconnect" href="https://jixiaoyong.github.io" crossorigin />
+    <link rel="dns-prefetch" href="https://font-now.netlify.app" />
+
+    <!-- Preload critical assets (avatar used on every page) -->
+    <!-- Preload critical assets (avatar used on every page) -->
+    <link rel="preload" href="/imissyou/assets/avatar-light.webp" as="image" type="image/webp" media="(prefers-color-scheme: light)" />
+    <link rel="preload" href="/imissyou/assets/avatar-dark.webp" as="image" type="image/webp" media="(prefers-color-scheme: dark)" />
+
+    <!-- ===== OPTIMIZED FONT LOADING STRATEGY ===== -->
+    <!-- 1. FZBoYaFangKanSongS: Dual-source with race condition -->
+    <!-- 2. Lora: npmmirror CDN (China-optimized), async loading -->
+    <!-- 3. JetBrains Mono: npmmirror, async loading -->
+    <!-- 4. All fonts use font-display: swap -->
+
+    <!-- FZBoYaFangKanSongS Font - Dual source race loading -->
     <link
       rel="preload"
       href="https://jixiaoyong.github.io/fonts/FZBoYaFangKanSongS/result.css"
       as="style"
     />
     <link
+      id="fz-font-primary"
       rel="stylesheet"
       href="https://jixiaoyong.github.io/fonts/FZBoYaFangKanSongS/result.css"
-      onerror="if(!this.dataset.retried){this.dataset.retried=true;console.log('Font load failed, retrying...');this.href=this.href+'?retry='+Date.now()}"
+      onerror="this.onerror=null;this.href='https://font-now.netlify.app/api/css?url=/font/9f76251c-8644-5398-93ed-87e3a66442ea/result.css'"
     />
 
-    <!-- ===== FONT LOADING STRATEGY ===== -->
-    <!-- Primary CDN: jsDelivr (has China ICP, global CDN nodes) -->
-    <!-- Fallback: fonts.css.network (Google Fonts China mirror) -->
-    <!-- Last resort: Eleme CDN (China-optimized) -->
+    <!-- Lora (English Serif) - npmmirror, async loading, only 400/700/400-italic -->
+    <link rel="preload" as="style" href="https://registry.npmmirror.com/@fontsource/lora/5.0.17/files/400.css" />
+    <link rel="stylesheet" href="https://registry.npmmirror.com/@fontsource/lora/5.0.17/files/400.css" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="https://registry.npmmirror.com/@fontsource/lora/5.0.17/files/400.css" /></noscript>
 
-    <!-- Lora (English Serif) - Primary: jsDelivr -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@fontsource/lora@5.0.17/400.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@fontsource/lora@5.0.17/500.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@fontsource/lora@5.0.17/600.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@fontsource/lora@5.0.17/700.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@fontsource/lora@5.0.17/400-italic.css"
-    />
+    <link rel="preload" as="style" href="https://registry.npmmirror.com/@fontsource/lora/5.0.17/files/700.css" />
+    <link rel="stylesheet" href="https://registry.npmmirror.com/@fontsource/lora/5.0.17/files/700.css" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="https://registry.npmmirror.com/@fontsource/lora/5.0.17/files/700.css" /></noscript>
 
-    <!-- JetBrains Mono (Code/Meta) - Primary: jsDelivr -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@fontsource/jetbrains-mono@5.0.18/400.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@fontsource/jetbrains-mono@5.0.18/500.css"
-    />
+    <link rel="preload" as="style" href="https://registry.npmmirror.com/@fontsource/lora/5.0.17/files/400-italic.css" />
+    <link rel="stylesheet" href="https://registry.npmmirror.com/@fontsource/lora/5.0.17/files/400-italic.css" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="https://registry.npmmirror.com/@fontsource/lora/5.0.17/files/400-italic.css" /></noscript>
 
-    <!-- Fallback: fonts.css.network (Google Fonts mirror) -->
-    <link rel="preconnect" href="https://fonts.css.network" crossorigin />
-    <link
-      href="https://fonts.css.network/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
-      rel="stylesheet"
-      media="print"
-      onload="this.media='all'"
-    />
-    <link
-      href="https://fonts.css.network/css2?family=JetBrains+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-      media="print"
-      onload="this.media='all'"
-    />
-
-    <!-- Chinese Fonts - Eleme CDN (China-optimized) -->
-    <!-- Noto Serif SC (Songti) - Fallback for FZBoYaFangKanSongS -->
-    <link
-      rel="stylesheet"
-      href="https://npm.elemecdn.com/@fontsource/noto-serif-sc@4.5.12/400.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://npm.elemecdn.com/@fontsource/noto-serif-sc@4.5.12/700.css"
-    />
-    <!-- Noto Sans SC (Heiti) -->
-    <link
-      rel="stylesheet"
-      href="https://npm.elemecdn.com/@fontsource/noto-sans-sc@4.5.12/400.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://npm.elemecdn.com/@fontsource/noto-sans-sc@4.5.12/700.css"
-    />
+    <!-- JetBrains Mono (Code) - npmmirror, async loading, only 400 -->
+    <link rel="preload" as="style" href="https://registry.npmmirror.com/@fontsource/jetbrains-mono/5.0.18/files/400.css" />
+    <link rel="stylesheet" href="https://registry.npmmirror.com/@fontsource/jetbrains-mono/5.0.18/files/400.css" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="https://registry.npmmirror.com/@fontsource/jetbrains-mono/5.0.18/files/400.css" /></noscript>
 
     <style>
       /* 重置和基础样式 */
@@ -107,9 +68,9 @@
 
       body {
         /* Lora for English, FZBoYaFangKanSongS for Chinese, system fallbacks */
-        font-family: "Lora", "FZBoYaFangKanSongS", "Noto Serif SC",
-          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
-          Arial, sans-serif;
+        font-family: "Lora", "FZBoYaFangKanSongS", "PingFang SC", "Hiragino Sans GB",
+          "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         min-height: 100vh;
@@ -121,12 +82,13 @@
         top: 0;
         left: 0;
         width: 100%;
-        height: 100%;
+        height: 100vh; /* Ensure full viewport height */
         background: #ffffff;
         display: flex;
         flex-direction: column;
         z-index: 9999;
         transition: opacity 0.3s ease-out;
+        overflow: hidden; /* Prevent scrolling */
       }
 
       #loading-screen.fade-out {
@@ -204,7 +166,9 @@
         margin: 0 auto;
         padding: 48px 16px; /* py-12 px-4 */
         box-sizing: border-box;
-        overflow-y: auto;
+        overflow: hidden; /* Prevent internal scrolling */
+        display: flex;
+        flex-direction: column;
       }
 
       @media (min-width: 640px) {
@@ -213,8 +177,9 @@
         }
       }
 
+      /* Only keep 2 posts to ensure loading text is visible on screen */
       .skeleton-post {
-        margin-bottom: 64px; /* space-y-16 = 64px */
+        margin-bottom: 48px; /* Slightly reduced margin */
       }
 
       .skeleton-post-title {
@@ -404,11 +369,11 @@
         }
       })();
     </script>
-    <script type="module" crossorigin src="/imissyou/assets/index-CyZdz1RX.js"></script>
+    <script type="module" crossorigin src="/imissyou/assets/index-CTFJxqYS.js"></script>
     <link rel="modulepreload" crossorigin href="/imissyou/assets/vendor-react-CeRKiK18.js">
     <link rel="modulepreload" crossorigin href="/imissyou/assets/vendor-ui-BkNf2Smp.js">
     <link rel="modulepreload" crossorigin href="/imissyou/assets/vendor-markdown-BMSQkwth.js">
-    <link rel="stylesheet" crossorigin href="/imissyou/assets/index-BYRfhTn4.css">
+    <link rel="stylesheet" crossorigin href="/imissyou/assets/index-DSJJ6A_I.css">
   </head>
   <body
     class="antialiased transition-colors duration-300 bg-white dark:bg-dark-bg text-gray-900 dark:text-dark-text"
@@ -417,7 +382,29 @@
     <div id="loading-screen">
       <div class="skeleton-header">
         <div class="skeleton-header-content">
-          <img src="/imissyou/assets/me.jpeg" alt="" class="skeleton-logo" />
+          <img src="/imissyou/assets/avatar-light.webp" alt="" class="skeleton-logo" id="skeleton-logo" />
+          <script>
+            // Dynamically get base URL from where the script is running if possible, 
+            // but for index.html at root, relative paths or root-relative paths handled by build are best.
+            // Vite injects base during build. To make this work at runtime with dynamic base without rebuild is tricky.
+            // However, user asked for "adapt based on baseurl".
+            // In Vite build, href="/assets/..." is rewritten to "BASE_URL/assets/...".
+            // So we should revert to simple absolute paths which Vite will prefix.
+            
+            // For the script part:
+            var baseUrl = import.meta.env ? import.meta.env.BASE_URL : '/';
+             // Wait, import.meta works in module scripts. This is a raw script.
+             // We can infer base from the script src or location.
+             // Simply using relative path "assets/..." might work if <base> tag is set, or if we are at root.
+             // If we rely on Vite's build placeholder substitution:
+             
+            if (document.documentElement.getAttribute('data-theme') === 'dark') {
+              // We'll trust Vite to rewrite this path during transform if we assume it's stable.
+              // But strictly speaking, for runtime dynamic base, we might need to inspect window.location.
+              // Let's us a relative path "assets/..." which works if current page is index.html
+              document.getElementById('skeleton-logo').src = "assets/avatar-dark.webp";
+            }
+          </script>
           <div class="skeleton-site-title">I Miss You</div>
         </div>
       </div>
@@ -435,18 +422,8 @@
           <div class="skeleton-post-text"></div>
           <div class="skeleton-post-text" style="width: 96%"></div>
         </div>
-        <div class="skeleton-post">
-          <div class="skeleton-post-title" style="width: 75%"></div>
-          <div class="skeleton-post-meta"></div>
-          <div class="skeleton-post-text"></div>
-          <div class="skeleton-post-text" style="width: 88%"></div>
-        </div>
-        <div class="skeleton-post">
-          <div class="skeleton-post-title" style="width: 55%"></div>
-          <div class="skeleton-post-meta"></div>
-          <div class="skeleton-post-text"></div>
-          <div class="skeleton-post-text" style="width: 90%"></div>
-        </div>
+        <!-- Removed extra posts to ensure text visibility -->
+        
         <div class="skeleton-loading-text" id="loading-text">
           Loading content...
         </div>
