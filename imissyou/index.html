@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>I Miss You</title>
     <meta name="theme-color" content="#ffffff" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <link rel="apple-touch-icon" sizes="180x180" href="/imissyou/apple-touch-icon.png" />
     <link rel="icon" href="/imissyou/favicon.png" type="image/png" />
@@ -369,11 +369,11 @@
         }
       })();
     </script>
-    <script type="module" crossorigin src="/imissyou/assets/index-CTFJxqYS.js"></script>
+    <script type="module" crossorigin src="/imissyou/assets/index-CXu6VgCy.js"></script>
     <link rel="modulepreload" crossorigin href="/imissyou/assets/vendor-react-CeRKiK18.js">
     <link rel="modulepreload" crossorigin href="/imissyou/assets/vendor-ui-BkNf2Smp.js">
     <link rel="modulepreload" crossorigin href="/imissyou/assets/vendor-markdown-BMSQkwth.js">
-    <link rel="stylesheet" crossorigin href="/imissyou/assets/index-DSJJ6A_I.css">
+    <link rel="stylesheet" crossorigin href="/imissyou/assets/index-BfC_h4er.css">
   </head>
   <body
     class="antialiased transition-colors duration-300 bg-white dark:bg-dark-bg text-gray-900 dark:text-dark-text"
@@ -383,28 +383,6 @@
       <div class="skeleton-header">
         <div class="skeleton-header-content">
           <img src="/imissyou/assets/avatar-light.webp" alt="" class="skeleton-logo" id="skeleton-logo" />
-          <script>
-            // Dynamically get base URL from where the script is running if possible, 
-            // but for index.html at root, relative paths or root-relative paths handled by build are best.
-            // Vite injects base during build. To make this work at runtime with dynamic base without rebuild is tricky.
-            // However, user asked for "adapt based on baseurl".
-            // In Vite build, href="/assets/..." is rewritten to "BASE_URL/assets/...".
-            // So we should revert to simple absolute paths which Vite will prefix.
-            
-            // For the script part:
-            var baseUrl = import.meta.env ? import.meta.env.BASE_URL : '/';
-             // Wait, import.meta works in module scripts. This is a raw script.
-             // We can infer base from the script src or location.
-             // Simply using relative path "assets/..." might work if <base> tag is set, or if we are at root.
-             // If we rely on Vite's build placeholder substitution:
-             
-            if (document.documentElement.getAttribute('data-theme') === 'dark') {
-              // We'll trust Vite to rewrite this path during transform if we assume it's stable.
-              // But strictly speaking, for runtime dynamic base, we might need to inspect window.location.
-              // Let's us a relative path "assets/..." which works if current page is index.html
-              document.getElementById('skeleton-logo').src = "assets/avatar-dark.webp";
-            }
-          </script>
           <div class="skeleton-site-title">I Miss You</div>
         </div>
       </div>
