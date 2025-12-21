@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AppWidget 的使用之 PendingIntent - JI,XIAOYONG's Blog</title>
+    <!-- Fonts: Use System Fonts + Merriweather/Fira via Staticfile if available or fallback -->
+    <!-- Prioritize system fonts for speed in China -->
+    <link rel="preconnect" href="https://fonts.loli.net">
+    <link rel="preconnect" href="https://gstatic.loli.net" crossorigin>
+    <link href="https://fonts.loli.net/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=Inter:wght@300;400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Icons: Staticfile CDN -->
+    <link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/blog/styles/main.css">
+    <link rel="stylesheet" href="/blog/styles/containers.css">
+
+    <!-- Highlight.js Theme (Staticfile does not have all themes, checking common ones) -->
+    <!-- Using cdnjs.cloudflare.com as fallback if staticfile misses specific themes, but staticfile usually has them -->
+    <link rel="stylesheet" href="https://cdn.staticfile.net/highlight.js/11.7.0/styles/github.min.css" id="hljs-theme">
+
+    <script>
+        // Check local storage for theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        // Language detection - simplistic redirect if on root
+        const userLang = navigator.language || navigator.userLanguage;
+        const basePath = '/blog';
+        if (window.location.pathname === basePath + '/' && userLang.startsWith('en')) {
+           window.location.href = basePath + '/en/';
+        }
+    </script>
+</head>
+<body>
+
+    
+    <header>
+        <div class="container">
+            <a href="/blog/en/" class="logo">
+                <img src="https://jixiaoyong.github.io/images/user_avatar.webp" alt="JI,XIAOYONG" class="logo-avatar">
+                JI,XIAOYONG
+            </a>
+            
+            <!-- Desktop Nav -->
+            <nav class="desktop-nav">
+                <ul>
+                    
+        <li><a href="/blog/en/"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="/blog/en/about.html"><i class="fas fa-user"></i> About</a></li>
+    
+                    <li><a href="#" onclick="switchView('search')" title="Search"><i class="fas fa-search"></i></a></li>
+                    <li><button onclick="switchLanguage()" class="theme-toggle" title="Language"><i class="fas fa-language"></i><span style="font-size:0.7rem;vertical-align:super;">En</span></button></li>
+                    <li><button onclick="toggleTheme()" class="theme-toggle" title="Theme"><i id="theme-icon" class="fas fa-adjust"></i></button></li>
+                </ul>
+            </nav>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-btn btn" onclick="toggleMobileMenu()">
+                <i id="menu-icon" class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Container (Hidden by default) -->
+        <div id="mobile-menu" class="mobile-menu hidden">
+            <ul>
+                <li><a href="/blog/en/"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/blog/en/about.html"><i class="fas fa-user"></i> About</a></li>
+                <li><a href="#" onclick="switchView('search')"><i class="fas fa-search"></i> Search</a></li>
+                <li>
+                    <button class="btn theme-toggle-mobile" onclick="switchLanguage()">
+                        <i class="fas fa-language"></i> Language: 中文
+                    </button>
+                </li>
+                <li>
+                    <button class="btn theme-toggle-mobile" onclick="toggleTheme()">
+                        <i class="fas fa-palette"></i> Theme: <span id="theme-text-mobile">Auto</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </header>
+    
+
+    <!-- Search Overlay -->
+    <div id="search-overlay" class="search-overlay hidden">
+        <button class="close-search" onclick="closeSearch()">&times;</button>
+        <div class="search-box">
+            <input type="text" id="search-input" class="search-input" placeholder="Search..." autocomplete="off">
+        </div>
+        <div id="search-results" class="search-results"></div>
+    </div>
+
+    <main class="container">
+        
+    <div id="article" class="view active article-with-toc" style="display: block;">
+        <!-- TOC Sidebar (Desktop) -->
+        <aside class="toc-sidebar" id="toc-sidebar">
+            <div class="toc-header">Table of Contents</div>
+            <nav class="toc-nav" id="toc-nav">
+                <!-- TOC items will be generated by JavaScript -->
+            </nav>
+        </aside>
+
+        <article class="blog-post">
+            <!-- 1. Header: Title & Meta -->
+            <div class="article-header-info">
+                <h1 class="article-title">AppWidget 的使用之 PendingIntent</h1>
+                <div class="post-meta mathjax_ignore">
+                    <span class="author">JI,XIAOYONG</span>
+                    <span class="meta-separator">•</span>
+                    <span class="publish-date mathjax_ignore">Published on 2016-04-24</span>
+                    <span class="publish-date mathjax_ignore">(Updated on 2023-12-30)</span>
+                    
+                </div>
+            </div>
+
+            <!-- 2. Content -->
+            <div class="article-content">
+                <p>这几天学习 AppWidget，很简单的组件却花费了不少功夫，今天对 PendingIntent 的用法做了一些简单的整理。</p>
+<p><strong>PendingIntent</strong></p>
+<blockquote>
+<p>PandingIntent 就像是一个设计好的处理预案，当达到某个特定条件时，便会调用该 Intent 所指定动作（打开服务，Activity 或者发送广播）。</p>
+<p>这里使用该方法在 AppWidget 里面为按钮添加监听事件，当按钮被点击的时候触发相应的动作</p>
+</blockquote>
+<p>AppWidget 和应用程序不再同一个进程当中，而是在 HomeScreen 上面执行，所以不能直接为 AppWidget 中的 Button 添加监听事件，需要用 <code>remoteViews.setPendingIntent(R.id.widget_button,pendingIntent);</code>意思是当按下按钮的时候 pendingIntent 中的 Intent 就会执行</p>
+<p>PendingIntent 当某个事件出现之后才会执行</p>
+<p>RemoteViews 对象 代表了一系列的 View 对象，和主程序不在同一个进程为 AppWidget 控件绑定处理器</p>
+<p><strong>流程概述：</strong></p>
+<ul>
+<li><p>添加 appwidget_provider_info.xml 在 res/xml 下新建 appwidget_provider_info.xml</p>
+<ul>
+<li>描述 AppWidget 的基本信息如最小高度、宽度等，还有就是该挂件的布局文件</li>
+</ul>
+</li>
+<li><p>在 res/layout 下面为该挂件设置具体的布局样式</p>
+<ul>
+<li>向 AppWidget 的布局文件中添加一个 Button</li>
+<li>向 AppWidget 的布局文件中添加一个 TextView</li>
+</ul>
+</li>
+<li><p>新建 MyAppWidget.java 继承自 AppWidgetProvider</p>
+<p>在该类的 onUpdate() 方法中为 Button 设置、添加监听事件</p>
+<ul>
+<li>建立一个 Intent 对象</li>
+<li>用该 Intent 对象创建一个 PendingIntent 对象</li>
+<li>创建一个 RemoteViews 对象</li>
+<li>用该 RemoveViews 对象为 按钮绑定事件处理器</li>
+<li>更新按钮</li>
+</ul>
+</li>
+<li><p>注册事件</p>
+</li>
+<li><p>备注：要是为 AppWidget 中的 Button 设置的事件是打开一个 TargetActivity，还需要添加一个 TargetActivity 类和对应的布局文件</p>
+</li>
+</ul>
+<p><strong>以下是代码</strong></p>
+<ul>
+<li>appwidget_provider_info.xml</li>
+</ul>
+<p>这个布局文件是 AppWidget 的信息</p>
+<p>描述了 AppWidget 的最小高，最小宽以及它的布局文件</p>
+<pre><code>&lt;appwidget-provider
+    android:minHeight=&quot;200dp&quot;
+    android:minWidth=&quot;300dp&quot;
+    android:initialLayout=&quot;@layout/app_widget&quot;
+    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot; &gt;
+&lt;/appwidget-provider&gt;
+</code></pre>
+<ul>
+<li>app_widget.xml</li>
+</ul>
+<p>这个布局文件是 Widget 在桌面上显示的样式</p>
+<p>定义了 AppWidget 中各个组件及其样式</p>
+<p>其中 Button 用来响应点击事件，加入 TargetActivity</p>
+<pre><code>&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    android:layout_width=&quot;200dp&quot;
+    android:layout_height=&quot;200dp&quot;
+    android:orientation=&quot;vertical&quot;&gt;
+
+&lt;TextView
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:text=&quot;hello,world!&quot;/&gt;
+
+&lt;Button
+        android:id=&quot;@+id/app_widget_btn&quot;
+        android:layout_width=&quot;200dp&quot;
+        android:layout_height=&quot;150dp&quot;
+        android:background=&quot;#ff00ff&quot;
+        android:text=&quot;this is my app widget button&quot;/&gt;
+&lt;/LinearLayout&gt;
+</code></pre>
+<ul>
+<li>target_activity.xml</li>
+</ul>
+<pre><code>&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;&gt;
+
+    &lt;TextView
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:textSize=&quot;50sp&quot;
+        android:background=&quot;#00ff00&quot;
+        android:text=&quot;\n hello,welcome to target activity!&quot;/&gt;
+
+&lt;/LinearLayout&gt;
+</code></pre>
+<ul>
+<li>MyAppWidget.java</li>
+</ul>
+<p>主要是修改了 update() 方法：</p>
+<p>定义了一个预先设定的动作—- Intent 对象；</p>
+<p>利用该 Intent 读写，创建一个 PendingIntent 对象；</p>
+<p>创建一个 RemoteView 对象，并为按钮绑定监听事件</p>
+<p>刷新 AppWidget。</p>
+<pre><code>public class MyAppWidget extends AppWidgetProvider {
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        // TODO Auto-generated method stub
+        super.onReceive(context, intent);
+    }
+
+    @Override
+    public void onUpdate(Context context, AppWidgetManager appWidgetManager,
+                         int[] appWidgetIds) {
+        // TODO Auto-generated method stub
+        super.onUpdate(context, appWidgetManager, appWidgetIds);
+
+        //appWidgetIds 每一次向屏幕添加 AppWidget 的时候都会增加一个唯一的 appWidget 的 Id
+        for(int i = 0; i &lt; appWidgetIds.length;i++){
+          //创建一个 Intent 对象
+            Intent intent = new Intent(context,TargetActivity.class);
+            //创建一个 PendingIntent 对象
+            PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent,0);
+            // remoteViews 代表 AppWidget 上所有的控件
+            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.app_widget);
+            //为按钮绑定事件处理器
+            /*
+            * 参1，指定被绑定处理器的控件id
+            * 参2，指定事件发生时会被执行的 PendingIntent
+             */
+            remoteViews.setOnClickPendingIntent(R.id.app_widget_btn,pendingIntent);
+            //更新 AppWidget ，参1是用于指定被更新 appWidget 的ID
+            appWidgetManager.updateAppWidget(appWidgetIds[i],remoteViews);
+        }
+    }
+
+    @Override
+    public void onDeleted(Context context, int[] appWidgetIds) {
+        // TODO Auto-generated method stub
+        super.onDeleted(context, appWidgetIds);
+    }
+
+    @Override
+    public void onEnabled(Context context) {
+        // TODO Auto-generated method stub
+        super.onEnabled(context);
+    }
+
+    @Override
+    public void onDisabled(Context context) {
+        // TODO Auto-generated method stub
+        super.onDisabled(context);
+    }
+}
+</code></pre>
+<ul>
+<li>TargetActivity.java</li>
+</ul>
+<pre><code>public class TargetActivity extends Activity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.target_activity);
+    }
+}
+</code></pre>
+<ul>
+<li>AndroidManifest.xml</li>
+</ul>
+<p>在 AndroidManifest.xml 中注册 TargetActivity 和 MyAppWidget</p>
+<pre><code class="language-xml">&lt;application&gt;
+...
+    &lt;activity android:name=&quot;.TargetActivity&quot;&gt;
+    &lt;/activity&gt;
+
+    &lt;!-- 注意这里注册了一个 MyAppWidget 接收数据--&gt;
+    &lt;receiver android:name=&quot;.MyAppWidget&quot;&gt;
+        &lt;intent-filter&gt;
+            &lt;action android:name=&quot;android.appwidget.action.APPWIDGET_UPDATE&quot; /&gt;
+        &lt;/intent-filter&gt;
+        &lt;meta-data
+            android:name=&quot;android.appwidget.provider&quot;
+            android:resource=&quot;@xml/appwidget_provider_info&quot;/&gt;
+    &lt;/receiver&gt;
+&lt;/application&gt;
+</code></pre>
+
+            </div>
+
+            <!-- 3. Tags -->
+            <div class="tags">
+                
+            </div>
+
+            <!-- 4. Email Comment -->
+            <div class="comment-section">
+                <p class="comment-text">Any thoughts? Feel free to discuss via email.</p>
+                <button 
+                    class="btn btn-email" 
+                    onclick="sendEmailComment('AppWidget 的使用之 PendingIntent', '/blog/en/posts/fcfc830b.html')"
+                    data-email-subject="Comment on article"
+                    data-email-hello="Hi!"
+                    data-email-intro="I read your article and here are my thoughts:"
+                    data-email-fallback="Cannot open email client. Copy email address?"
+                >
+                    <i class="far fa-envelope"></i> Email Comment
+                </button>
+            </div>
+        </article>
+        
+        <!-- 5. Prev/Next Navigation -->
+        <nav class="post-nav">
+            
+            <a href="/blog/en/posts/ca532ade.html" class="post-nav-item post-nav-prev">
+                <span class="post-nav-label">← Previous</span>
+                <span class="post-nav-title">Linux 下配置 JDK 和 AndroidStudio 开发环境</span>
+            </a>
+            
+            
+            <a href="/blog/en/posts/f7965978.html" class="post-nav-item post-nav-next">
+                <span class="post-nav-label">Next →</span>
+                <span class="post-nav-title">Hexo+Github=Blog</span>
+            </a>
+            
+        </nav>
+    </div>
+
+    <!-- TOC Mobile Button -->
+    <button id="toc-mobile-btn" class="toc-mobile-btn" title="Table of Contents">
+        <i class="fas fa-list-ul"></i>
+    </button>
+
+    <!-- TOC Mobile Bottom Sheet -->
+    <div id="toc-bottomsheet" class="toc-bottomsheet">
+        <div class="toc-bottomsheet-overlay"></div>
+        <div class="toc-bottomsheet-content">
+            <div class="toc-bottomsheet-header">
+                <span>Table of Contents</span>
+                <button class="toc-bottomsheet-close"><i class="fas fa-times"></i></button>
+            </div>
+            <nav class="toc-bottomsheet-nav" id="toc-bottomsheet-nav">
+                <!-- TOC items will be generated by JavaScript -->
+            </nav>
+        </div>
+    </div>
+    
+    </main>
+
+    
+    <footer>
+        <div class="container">
+            <div class="footer-author">
+                <span>&copy; 2016-2025 </span>
+                <a href="https://github.com/jixiaoyong" target="_blank" rel="noopener noreferrer" title="GitHub">
+                    <i class="fab fa-github"></i>
+                    JI,XIAOYONG
+                </a>
+            </div>
+            <div>
+                <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer" class="footer-link">
+                    <i class="fab fa-creative-commons"></i> BY-NC-SA 4.0
+                </a>
+            </div>
+        </div>
+    </footer>
+    
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" title="Back to Top">
+        <i class="fas fa-rocket"></i>
+    </button>
+
+    <!-- Scripts: Staticfile CDN -->
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/dart.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/kotlin.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/gradle.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/groovy.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/yaml.min.js"></script>
+    <script>
+        // MathJax Configuration - Enable $...$ inline math
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\(', '\)']],
+                displayMath: [['$$', '$$'], ['\[', '\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+                ignoreHtmlClass: 'mathjax_ignore'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.staticfile.net/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+    <script src="/blog/scripts/client.js"></script>
+</body>
+</html>

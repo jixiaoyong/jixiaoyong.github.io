@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java 笔记之 ThreadLocal - JI,XIAOYONG's Blog</title>
+    <!-- Fonts: Use System Fonts + Merriweather/Fira via Staticfile if available or fallback -->
+    <!-- Prioritize system fonts for speed in China -->
+    <link rel="preconnect" href="https://fonts.loli.net">
+    <link rel="preconnect" href="https://gstatic.loli.net" crossorigin>
+    <link href="https://fonts.loli.net/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=Inter:wght@300;400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Icons: Staticfile CDN -->
+    <link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/blog/styles/main.css">
+    <link rel="stylesheet" href="/blog/styles/containers.css">
+
+    <!-- Highlight.js Theme (Staticfile does not have all themes, checking common ones) -->
+    <!-- Using cdnjs.cloudflare.com as fallback if staticfile misses specific themes, but staticfile usually has them -->
+    <link rel="stylesheet" href="https://cdn.staticfile.net/highlight.js/11.7.0/styles/github.min.css" id="hljs-theme">
+
+    <script>
+        // Check local storage for theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        // Language detection - simplistic redirect if on root
+        const userLang = navigator.language || navigator.userLanguage;
+        const basePath = '/blog';
+        if (window.location.pathname === basePath + '/' && userLang.startsWith('en')) {
+           window.location.href = basePath + '/en/';
+        }
+    </script>
+</head>
+<body>
+
+    
+    <header>
+        <div class="container">
+            <a href="/blog/en/" class="logo">
+                <img src="https://jixiaoyong.github.io/images/user_avatar.webp" alt="JI,XIAOYONG" class="logo-avatar">
+                JI,XIAOYONG
+            </a>
+            
+            <!-- Desktop Nav -->
+            <nav class="desktop-nav">
+                <ul>
+                    
+        <li><a href="/blog/en/"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="/blog/en/about.html"><i class="fas fa-user"></i> About</a></li>
+    
+                    <li><a href="#" onclick="switchView('search')" title="Search"><i class="fas fa-search"></i></a></li>
+                    <li><button onclick="switchLanguage()" class="theme-toggle" title="Language"><i class="fas fa-language"></i><span style="font-size:0.7rem;vertical-align:super;">En</span></button></li>
+                    <li><button onclick="toggleTheme()" class="theme-toggle" title="Theme"><i id="theme-icon" class="fas fa-adjust"></i></button></li>
+                </ul>
+            </nav>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-btn btn" onclick="toggleMobileMenu()">
+                <i id="menu-icon" class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Container (Hidden by default) -->
+        <div id="mobile-menu" class="mobile-menu hidden">
+            <ul>
+                <li><a href="/blog/en/"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/blog/en/about.html"><i class="fas fa-user"></i> About</a></li>
+                <li><a href="#" onclick="switchView('search')"><i class="fas fa-search"></i> Search</a></li>
+                <li>
+                    <button class="btn theme-toggle-mobile" onclick="switchLanguage()">
+                        <i class="fas fa-language"></i> Language: 中文
+                    </button>
+                </li>
+                <li>
+                    <button class="btn theme-toggle-mobile" onclick="toggleTheme()">
+                        <i class="fas fa-palette"></i> Theme: <span id="theme-text-mobile">Auto</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </header>
+    
+
+    <!-- Search Overlay -->
+    <div id="search-overlay" class="search-overlay hidden">
+        <button class="close-search" onclick="closeSearch()">&times;</button>
+        <div class="search-box">
+            <input type="text" id="search-input" class="search-input" placeholder="Search..." autocomplete="off">
+        </div>
+        <div id="search-results" class="search-results"></div>
+    </div>
+
+    <main class="container">
+        
+    <div id="article" class="view active article-with-toc" style="display: block;">
+        <!-- TOC Sidebar (Desktop) -->
+        <aside class="toc-sidebar" id="toc-sidebar">
+            <div class="toc-header">Table of Contents</div>
+            <nav class="toc-nav" id="toc-nav">
+                <!-- TOC items will be generated by JavaScript -->
+            </nav>
+        </aside>
+
+        <article class="blog-post">
+            <!-- 1. Header: Title & Meta -->
+            <div class="article-header-info">
+                <h1 class="article-title">Java 笔记之 ThreadLocal</h1>
+                <div class="post-meta mathjax_ignore">
+                    <span class="author">JI,XIAOYONG</span>
+                    <span class="meta-separator">•</span>
+                    <span class="publish-date mathjax_ignore">Published on 2019-12-20</span>
+                    <span class="publish-date mathjax_ignore">(Updated on 2023-12-30)</span>
+                    
+                </div>
+            </div>
+
+            <!-- 2. Content -->
+            <div class="article-content">
+                <p><code>ThreadLocal</code>是<code>Thread</code>中用来保存<strong>线程私有变量</strong>的数据结构。</p>
+<p>一个<code>ThreadLocal</code>只能保存一个值，有<code>set/get/remove</code>方法。</p>
+<p>在<code>Thread</code>有一个<code>threadLocals</code>（<code>ThreadLocal.ThreadLocalMap</code>）变量，该变量是一个定制的 Hash Map，用来保存线程私有的数据（类型为<code>ThreadLocal&lt;?&gt; Key, Object Value</code>）。</p>
+<h2>特点</h2>
+<ol>
+<li><p>一个<code>Thread</code>可以有多个<code>ThreadLocal</code>变量</p>
+</li>
+<li><p><strong>不同<code>Thread</code>可以通过一个<code>ThreadLocal</code>变量分别保存不同的变量而互不影响</strong>。</p>
+</li>
+<li><p>如果不同的<code>Thread</code>使用的<code>ThreadLocal</code>变量保存的是<strong>同一个引用类型的对象</strong>（假设为<code>obj</code>），无论这些<code>Thread</code>使用的是同一个<code>ThreadLocal</code>对象还是完全不同的<code>ThreadLocal</code>对象，只要<code>obj</code>指向的对象改变，其余线程中的<code>ThreadLocal</code>对象也会访问到<code>obj</code>的最新值。</p>
+</li>
+</ol>
+<h2>使用与解析</h2>
+<p>当我们新建一个<code>ThreadLocal</code>并为之赋值时</p>
+<pre><code class="language-java">// 方式 1.
+ThreadLocal threadLocal = new ThreadLocal();
+threadLocal.set(&quot;value&quot;);
+//方式 2.
+ThreadLocal threadLocal2 = new ThreadLocal(){
+            @Override
+            protected Object initialValue() {
+                return &quot;initial value&quot;;
+            }
+        };
+</code></pre>
+<p>这个时候就会调用<code>set()</code>方法（方式 1）或者<code>setInitialValue()</code>方法（方式 2）。</p>
+<pre><code class="language-java">    public void set(T value) {
+        Thread t = Thread.currentThread();
+        ThreadLocalMap map = getMap(t);//注意这里获取到是线程本身的 threadLocals 对象
+        if (map != null)
+            map.set(this, value);//ThreadLocal 对象只是在 Thread 所属的 threadLocals 中充当一个 key，
+            //所以即使在其他线程执行 threadLocal.set(value);
+            //也只是更新该线程本身的 threadLocal 对应的 value，而不会影响其他线程分毫！！！（好精巧的设计）
+        else
+            createMap(t, value);
+    }
+
+    private T setInitialValue() {
+        T value = initialValue();
+        Thread t = Thread.currentThread();
+        ThreadLocalMap map = getMap(t);
+        if (map != null)
+            map.set(this, value);
+        else
+            createMap(t, value);
+        return value;
+    }
+
+    ThreadLocalMap getMap(Thread t) {
+        return t.threadLocals;
+    }
+
+    void createMap(Thread t, T firstValue) {
+        t.threadLocals = new ThreadLocalMap(this, firstValue);
+    }
+</code></pre>
+<p>可以看到这两个方法到最后都相当于调用了<code>Thread</code>对象的<code>threadLocals</code>的<code>set(ThreadLocal&lt;?&gt; key, Object value)</code>方法，这个方法最终以<code>ThreadLocal</code>对象为 KEY，将数据保存到了<code>Thread</code>对象自己的<code>threadLocals</code>中。</p>
+<pre><code class="language-java">private Entry[] table;
+
+private void set(ThreadLocal&lt;?&gt; key, Object value) {
+    Entry[] tab = table;
+    //其他逻辑...
+    tab[i] = new Entry(key, value);
+}
+</code></pre>
+<p>所以即使是<strong>同一个<code>ThreadLocal</code>对象，在不同的线程中进行<code>set/get/remove</code>都只是更新了本线程中<code>ThreadLocal</code>对象对应的值</strong>。</p>
+<pre><code class="language-java">        //MainThread
+        final ThreadLocal threadLocal = new ThreadLocal();
+        threadLocal.set(&quot;THREAD-Main-&quot;+Thread.currentThread().getName());
+        System.out.println(&quot;THREAD-Main-BEFORE:&quot;+threadLocal.get());//THREAD-Main-BEFORE：THREAD-Main-main
+
+        new Thread(new Runnable() {
+            public void run() {
+                threadLocal.set(&quot;THREAD-1-&quot;+Thread.currentThread().getName());
+                System.out.println(&quot;THREAD-1:&quot;+threadLocal.get());//THREAD-1：THREAD-1-Thread-0
+            }
+        }).start();
+
+
+        new Thread(new Runnable() {
+            public void run() {
+                System.out.println(&quot;THREAD-2:&quot;+threadLocal.get());//THREAD-2：null
+                //本线程中 threadLocal 没有赋值，所以为 null
+            }
+        }).start();
+
+        //MainThread
+        System.out.println(&quot;THREAD-Main-AFTER:&quot;+threadLocal.get());//THREAD-Main-AFTER：THREAD-Main-main
+        //其他线程对 threadLocal 对象的操作不会影响本线程
+        //但是如果 threadLocal 保存的是一个引用类型的对象，并且这个对象在其他线程被更改，那么本线程获取到的也会是变更后的值
+    }
+</code></pre>
+<h2>内存泄漏</h2>
+<p>在<code>ThreadLocal.ThreadLocalMap</code>中，最终用来保存<code>ThreadLocal</code>以及对应值的是一个<code>Entry</code>数组：</p>
+<pre><code class="language-java">static class Entry extends WeakReference&lt;ThreadLocal&lt;?&gt;&gt; {
+            /** The value associated with this ThreadLocal. */
+            Object value;
+
+            Entry(ThreadLocal&lt;?&gt; k, Object v) {
+                super(k);//对 ThreadLocal 对象的弱引用
+                value = v;
+            }
+        }
+</code></pre>
+<p>从上面的代码可以看到，<code>Entry</code>对<code>ThreadLocal</code>是<strong>弱引用</strong>，按照“强软弱虚”引用的等级来划分，每次 GC 的时候，如果这个<code>ThreadLocal</code>对象没有被引用，就会被回收掉，这时如果该<code>Thread</code>还在运行，那么<code>threadLocals</code>中保存的<code>ThreadLocal&lt;?&gt; k</code>已经被回收了，但是<code>Object v</code>对象仍然保存在<code>threadLocals</code>中但是没有办法再访问到，造成内存泄漏。</p>
+<p>解决方法参考：</p>
+<blockquote>
+<p>使用<code>ThreadLocal</code>时会发生内存泄漏的前提条件：</p>
+<p>①<code>ThreadLocal</code>引用被设置为<code>null</code>，且后面没有<code>set，get,remove</code>操作。</p>
+<p>② 线程一直运行，不停止。（线程池）</p>
+<p>③ 触发了垃圾回收。（Minor GC 或 Full GC）</p>
+<p>我们看到<code>ThreadLocal</code>出现内存泄漏条件还是很苛刻的，所以我们只要破坏其中一个条件就可以避免内存泄漏，单但为了更好的避免这种情况的发生我们使用<code>ThreadLocal</code>时遵守以下两个小原则：</p>
+<p>①<code>ThreadLocal</code>申明为<code>private static final</code>。 <code>Private</code>与<code>final </code>尽可能不让他人修改变更引用， <code>Static </code>表示为类属性，只有在程序结束才会被回收。</p>
+<p>②<code>ThreadLocal</code>使用后务必调用<code>remove</code>方法。最简单有效的方法是使用后将其移除。</p>
+<p>版权声明：本文为 CSDN 博主「pony-zi」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。原文链接：<a href="https://blog.csdn.net/zzg1229059735/article/details/82715741">https://blog.csdn.net/zzg1229059735/article/details/82715741</a></p>
+</blockquote>
+<h2>总结</h2>
+<p>现在我们知道了，所谓的<em>通过<code>ThreadLocal</code>实现线程本地变量与其他线程隔离</em>，是在创建<code>ThreadLocal</code>的时候，<strong>保存的就是属于当前线程的独立的变量，并且之后的修改也不会（无法）修改到其他线程中对应的值</strong>，但如果<code>ThreadLocal</code>本身保存的都是同一个对象，则这个对象在所有的线程中还是共享的。</p>
+<h2>参考资料</h2>
+<p><a href="https://www.cnblogs.com/whoislcj/p/5811989.html">Android 线程管理之 ThreadLocal 理解及应用场景</a></p>
+<p><a href="https://blog.csdn.net/shenyo/article/details/80391818">ThreadLocal 深入分析（Jdk 1.8）</a></p>
+
+            </div>
+
+            <!-- 3. Tags -->
+            <div class="tags">
+                
+            </div>
+
+            <!-- 4. Email Comment -->
+            <div class="comment-section">
+                <p class="comment-text">Any thoughts? Feel free to discuss via email.</p>
+                <button 
+                    class="btn btn-email" 
+                    onclick="sendEmailComment('Java 笔记之 ThreadLocal', '/blog/en/posts/9a8e41a8.html')"
+                    data-email-subject="Comment on article"
+                    data-email-hello="Hi!"
+                    data-email-intro="I read your article and here are my thoughts:"
+                    data-email-fallback="Cannot open email client. Copy email address?"
+                >
+                    <i class="far fa-envelope"></i> Email Comment
+                </button>
+            </div>
+        </article>
+        
+        <!-- 5. Prev/Next Navigation -->
+        <nav class="post-nav">
+            
+            <a href="/blog/en/posts/875283bd.html" class="post-nav-item post-nav-prev">
+                <span class="post-nav-label">← Previous</span>
+                <span class="post-nav-title">Java 笔记之匿名内部类和 final</span>
+            </a>
+            
+            
+            <a href="/blog/en/posts/ff927bd4.html" class="post-nav-item post-nav-next">
+                <span class="post-nav-label">Next →</span>
+                <span class="post-nav-title">Java 笔记之 HashMap 保存数据</span>
+            </a>
+            
+        </nav>
+    </div>
+
+    <!-- TOC Mobile Button -->
+    <button id="toc-mobile-btn" class="toc-mobile-btn" title="Table of Contents">
+        <i class="fas fa-list-ul"></i>
+    </button>
+
+    <!-- TOC Mobile Bottom Sheet -->
+    <div id="toc-bottomsheet" class="toc-bottomsheet">
+        <div class="toc-bottomsheet-overlay"></div>
+        <div class="toc-bottomsheet-content">
+            <div class="toc-bottomsheet-header">
+                <span>Table of Contents</span>
+                <button class="toc-bottomsheet-close"><i class="fas fa-times"></i></button>
+            </div>
+            <nav class="toc-bottomsheet-nav" id="toc-bottomsheet-nav">
+                <!-- TOC items will be generated by JavaScript -->
+            </nav>
+        </div>
+    </div>
+    
+    </main>
+
+    
+    <footer>
+        <div class="container">
+            <div class="footer-author">
+                <span>&copy; 2016-2025 </span>
+                <a href="https://github.com/jixiaoyong" target="_blank" rel="noopener noreferrer" title="GitHub">
+                    <i class="fab fa-github"></i>
+                    JI,XIAOYONG
+                </a>
+            </div>
+            <div>
+                <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer" class="footer-link">
+                    <i class="fab fa-creative-commons"></i> BY-NC-SA 4.0
+                </a>
+            </div>
+        </div>
+    </footer>
+    
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" title="Back to Top">
+        <i class="fas fa-rocket"></i>
+    </button>
+
+    <!-- Scripts: Staticfile CDN -->
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/dart.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/kotlin.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/gradle.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/groovy.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/yaml.min.js"></script>
+    <script>
+        // MathJax Configuration - Enable $...$ inline math
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\(', '\)']],
+                displayMath: [['$$', '$$'], ['\[', '\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+                ignoreHtmlClass: 'mathjax_ignore'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.staticfile.net/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+    <script src="/blog/scripts/client.js"></script>
+</body>
+</html>

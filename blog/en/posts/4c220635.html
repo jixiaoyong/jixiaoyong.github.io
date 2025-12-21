@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flutter UI 绘制与 InheritedWidget 解析 - JI,XIAOYONG's Blog</title>
+    <!-- Fonts: Use System Fonts + Merriweather/Fira via Staticfile if available or fallback -->
+    <!-- Prioritize system fonts for speed in China -->
+    <link rel="preconnect" href="https://fonts.loli.net">
+    <link rel="preconnect" href="https://gstatic.loli.net" crossorigin>
+    <link href="https://fonts.loli.net/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=Inter:wght@300;400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Icons: Staticfile CDN -->
+    <link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/blog/styles/main.css">
+    <link rel="stylesheet" href="/blog/styles/containers.css">
+
+    <!-- Highlight.js Theme (Staticfile does not have all themes, checking common ones) -->
+    <!-- Using cdnjs.cloudflare.com as fallback if staticfile misses specific themes, but staticfile usually has them -->
+    <link rel="stylesheet" href="https://cdn.staticfile.net/highlight.js/11.7.0/styles/github.min.css" id="hljs-theme">
+
+    <script>
+        // Check local storage for theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        // Language detection - simplistic redirect if on root
+        const userLang = navigator.language || navigator.userLanguage;
+        const basePath = '/blog';
+        if (window.location.pathname === basePath + '/' && userLang.startsWith('en')) {
+           window.location.href = basePath + '/en/';
+        }
+    </script>
+</head>
+<body>
+
+    
+    <header>
+        <div class="container">
+            <a href="/blog/en/" class="logo">
+                <img src="https://jixiaoyong.github.io/images/user_avatar.webp" alt="JI,XIAOYONG" class="logo-avatar">
+                JI,XIAOYONG
+            </a>
+            
+            <!-- Desktop Nav -->
+            <nav class="desktop-nav">
+                <ul>
+                    
+        <li><a href="/blog/en/"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="/blog/en/about.html"><i class="fas fa-user"></i> About</a></li>
+    
+                    <li><a href="#" onclick="switchView('search')" title="Search"><i class="fas fa-search"></i></a></li>
+                    <li><button onclick="switchLanguage()" class="theme-toggle" title="Language"><i class="fas fa-language"></i><span style="font-size:0.7rem;vertical-align:super;">En</span></button></li>
+                    <li><button onclick="toggleTheme()" class="theme-toggle" title="Theme"><i id="theme-icon" class="fas fa-adjust"></i></button></li>
+                </ul>
+            </nav>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-btn btn" onclick="toggleMobileMenu()">
+                <i id="menu-icon" class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Container (Hidden by default) -->
+        <div id="mobile-menu" class="mobile-menu hidden">
+            <ul>
+                <li><a href="/blog/en/"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/blog/en/about.html"><i class="fas fa-user"></i> About</a></li>
+                <li><a href="#" onclick="switchView('search')"><i class="fas fa-search"></i> Search</a></li>
+                <li>
+                    <button class="btn theme-toggle-mobile" onclick="switchLanguage()">
+                        <i class="fas fa-language"></i> Language: 中文
+                    </button>
+                </li>
+                <li>
+                    <button class="btn theme-toggle-mobile" onclick="toggleTheme()">
+                        <i class="fas fa-palette"></i> Theme: <span id="theme-text-mobile">Auto</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </header>
+    
+
+    <!-- Search Overlay -->
+    <div id="search-overlay" class="search-overlay hidden">
+        <button class="close-search" onclick="closeSearch()">&times;</button>
+        <div class="search-box">
+            <input type="text" id="search-input" class="search-input" placeholder="Search..." autocomplete="off">
+        </div>
+        <div id="search-results" class="search-results"></div>
+    </div>
+
+    <main class="container">
+        
+    <div id="article" class="view active article-with-toc" style="display: block;">
+        <!-- TOC Sidebar (Desktop) -->
+        <aside class="toc-sidebar" id="toc-sidebar">
+            <div class="toc-header">Table of Contents</div>
+            <nav class="toc-nav" id="toc-nav">
+                <!-- TOC items will be generated by JavaScript -->
+            </nav>
+        </aside>
+
+        <article class="blog-post">
+            <!-- 1. Header: Title & Meta -->
+            <div class="article-header-info">
+                <h1 class="article-title">Flutter UI 绘制与 InheritedWidget 解析</h1>
+                <div class="post-meta mathjax_ignore">
+                    <span class="author">JI,XIAOYONG</span>
+                    <span class="meta-separator">•</span>
+                    <span class="publish-date mathjax_ignore">Published on 2022-05-15</span>
+                    <span class="publish-date mathjax_ignore">(Updated on 2023-12-30)</span>
+                    
+                </div>
+            </div>
+
+            <!-- 2. Content -->
+            <div class="article-content">
+                <h2>Flutter UI 绘制与 InheritedWidget 解析</h2>
+<p>Flutter 的<code>Widget</code>分为<code>StatefulWidget</code>和<code>StatelessWidget</code> ，二者都继承自<code>Widget</code>。</p>
+<p>此外还有一种用来传输数据的<code>Widget</code>——<code>InheritedWidget</code>，与上述两者不太一样的是，他的继承关系是：<code>InheritedWidget</code>→<code>ProxyWidget</code> →<code>Widget</code> 。</p>
+<p>Flutter 的渲染流程如图：</p>
+<p><img src="https://jixiaoyong.github.io/images/flutter_widget_element_renderobject_relationship.png" alt="flutter_widget_element_renderobject_relationship"></p>
+<p>可以简单理解为， <code>Widget</code>是配置信息，<code>Element</code>代表在树中详细的位置，而<code>RenderObject</code>则是实际渲染的对象。</p>
+<p><code>StatelessWidget</code>和<code>StatefulWidget</code>在创建之后就不会再变化，而<code>StatefulWidget</code>因为有<code>State</code>，所以可以在<code>State</code>调用<code>setState()</code>方法之后，重新执行<code>State</code>的<code>build()</code>方法，从而更新界面。</p>
+<p>如果<code>Widget</code>是<code>const</code>的，那么他就不会被<code>rebuild</code>。</p>
+<h2>Widget Rebuild 的过程</h2>
+<p>以 StatefulWidget 为例：</p>
+<p><img src="https://jixiaoyong.github.io/images/flutter_render_flow_chart.png" alt="flutter_render_flow_chart"></p>
+<ol>
+<li><p>调用<code>setState()</code>方法，会调用对应的<code>Element</code>的<code>markNeedsBuild()</code> 方法，通过<code>BuildOwner</code>的<code>scheduleBuildFor(Element element)</code> 方法将当前<code>Element</code>标记为<code>dirty</code>，以便在下次屏幕刷新时安排<code>rebuilt</code> 。</p>
+</li>
+<li><p>下一帧屏幕刷新，调用<code>BuildOwner</code>的<code>buildScope(Element context, [ VoidCallback? callback ])</code> 方法。这个方法会遍历<code>_dirtyElements</code> 中所有<code>dirty</code>的<code>element</code>执行<code>element.rebuild();</code> 方法，在其内部调用了<code>Element</code>的<code>performRebuild()</code> 方法。</p>
+</li>
+<li><p><code>Element</code>的<code>performRebuild()</code> 方法因各个<code>Element</code>的实现而异：</p>
+<ol>
+<li><p><code>StatelessElement</code> 、<code>InheritedElement</code>：与父类<code>ComponentElement</code> 保持一致</p>
+</li>
+<li><p><code>StatefulElement</code> ：判断有需要时调用<code>state.didChangeDependencies();</code> ，其余与父类<code>ComponentElement</code> 保持一致</p>
+</li>
+</ol>
+</li>
+</ol>
+<p>而<code>ComponentElement</code> 的<code>performRebuild()</code> 主要做了 2 件事：
+（1）<code>built = build();</code> ；（2）<code>_child = updateChild(_child, built, slot);</code></p>
+<p>在这其中<code>build()</code>：</p>
+<ol>
+<li><code>StatelessElement</code>:<code>build() =&gt; widget.build(this);</code></li>
+<li><code>StatefulElement</code> : <code>build() =&gt; state.build(this);</code></li>
+<li><code>InheritedElement</code> :<code>build() =&gt; widget.child;</code></li>
+</ol>
+<p><code>updateChild</code> 会判断以下几种情况：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>newWidget == null</th>
+<th>newWidget != null</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>child == null</td>
+<td>return null</td>
+<td>return new Element</td>
+</tr>
+<tr>
+<td>child != null</td>
+<td>remove old child, return null</td>
+<td>Old child updated if possible, returns child or new Element</td>
+</tr>
+</tbody></table>
+<p>其中，<code>old child updated</code> 的时候调用的是<code>child.update(newWidget);</code> 方法会触发<code>Widget</code>的<code>rebuild()</code> 。</p>
+<p>这样就完成了一次 Rebuild。</p>
+<h2>InheritedWidget 的 Rebuild 过程</h2>
+<p><code>InheritedWidget</code>是持有状态的<code>Widget</code>，他的子<code>Widget</code>可以通过他来获取这些状态。</p>
+<p>一般来说，<code>InheritedWidget</code>持有的状态是<code>final</code>的，如果要更新状态，就需要在其外部包裹一个<code>StatefulWidget</code>，通过<code>StatefulWidget</code>的<code>State.setState()</code>来触发<code>InheritedWidget</code>重建（实际上<code>InheritedElement</code>没有重新创建），从而更新那些依赖了<code>InheritedWidget</code>的子<code>Widget</code>。</p>
+<p>下图是一个被<code>StatefulWidget</code>包裹的<code>InheritedWidget</code>在<code>setSate(){}</code>方法执行后的流程图：</p>
+<p><img src="https://jixiaoyong.github.io/images/flutter_render_flow_chart_with_inheritedwidget.png" alt="flutter_render_flow_chart_with_inheritedwidget"></p>
+<p>当外层<code>StatefulWidget</code>的<code>Element</code>执行到<code>updateChild(child,build,solt);</code>会调用<code>InheritedElement</code>的<code>update()</code> 方法。</p>
+<p>这个方法内部会调用<code>updated(oldWidget)</code> 方法，在内部通过<code>notifyClients(oldWidget);</code> 方法，通知原先的<code>InheritedElement</code>的<code>_dependents</code> ，将其标记为<code>dirty</code>，准备<code>rebuild</code>。</p>
+<p>在此之后，<code>update()</code>方法还会将当前<code>Element</code>标记为<code>dirty</code>，通过调用<code>rebuild();</code> 执行<code>performRebuild();</code></p>
+<p>在<code>performRebuild()</code>方法中：</p>
+<ul>
+<li><code>built = build();</code> 中的<code>build</code>方法：<code>build() =&gt; widget.child;</code> 实际上取了<code>widget</code>的<code>child</code>。</li>
+<li>然后执行<code>_child = updateChild(_child, built, slot);</code> 这个过程与普通<code>Widget</code>一致。</li>
+</ul>
+<p>需要注意的是，<code>updateChild</code> 中，如果子<code>Widget</code>不是<code>const</code> （或者被<code>InheritedWidget</code>外层的<code>widget</code>/<code>state</code>之类的持有）就会被认为<code>built!=_child</code> 从而导致<code>InheritedWidget</code>的子<code>Widget</code>重建。导致的结果就是：虽然<code>InheritedWidget</code>的确只标记了那些依赖了他的<code>Widget</code>，但是由于直接子<code>Widget</code>要重建，所以还是所有的<code>非const Widget</code>都重建了。</p>
+<h3>InheritedWidget 的获取方式</h3>
+<ul>
+<li><code>T? dependOnInheritedWidgetOfExactType&lt;T extends InheritedWidget&gt;({ Object? aspect });</code> 获取指定类型的<code>InheritedWidget</code>，并且将自己注册到此<code>Widget</code>，以便当该<code>Widget</code>变化的时候，自己也能<code>rebuilt</code> 。复杂度<code>O(1)</code> 。</li>
+<li><code>T? findAncestorWidgetOfExactType&lt;T extends Widget&gt;();</code> 只获取指定类型的<code>Widget</code> ，包括<code>InheritedWidget</code> ，仅获取该<code>Widget</code>执行一些操作，通常用在<code>interaction event handlers</code> 之类中。复杂度<code>(O(N)</code> 。</li>
+</ul>
+<h3>代码示例</h3>
+<p>根据上述理论，创建一个<code>InheritedWidget</code>来传递数据：</p>
+<p>1、<code>AppColor.dart</code> 一个持有<code>color</code> 的<code>InheritedWidget</code>。</p>
+<pre><code class="language-dart">class AppColor extends InheritedWidget {
+  final Color color;
+
+  final Widget child;
+
+  Function(Color)? onColorChanged;
+
+  AppColor({
+    required this.color,
+    required this.child,
+    this.onColorChanged,
+  }) : super(child: child);
+
+  @override
+  bool updateShouldNotify(covariant AppColor oldWidget) =&gt;
+      color != oldWidget.color;
+
+  static AppColor? of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType&lt;AppColor&gt;();
+  }
+}
+</code></pre>
+<p>2、定义一些类，使用或未使用到<code>InheritedWidget</code>：</p>
+<pre><code class="language-dart">class NoName extends StatelessWidget {
+  const NoName({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    print(&quot;NoName build ${this.hashCode}&quot;);
+    return Column(
+      children: [
+        Column(
+          children: [
+            // 这里 AppColor 的_dependents 会加入 ColorfulContainer(dependencies: [AppColor])
+            // 因为他用了 context.dependOnInheritedWidgetOfExactType&lt;AppColor&gt;();
+            // 会将自己注册到 AppColor
+            ColorfulContainer(),
+            ChangeStateButton(),
+            Text(&quot;This Text Should Not Rebuild&quot;),
+          ],
+        )
+      ],
+    );
+  }
+}
+
+class ColorfulContainer extends StatelessWidget {
+  ColorfulContainer({Key? key}) : super(key: key);
+
+  Widget build(BuildContext context) {
+    var appColor = AppColor.of(context);
+    print(
+        &quot;_ColorfulContainerState appColor?.color:${appColor?.color} appColor:${appColor.hashCode}&quot;);
+
+    return Container(
+      color: appColor?.color,
+      height: 100,
+      child: Text(&quot;hello color ${appColor?.color}&quot;),
+    );
+  }
+}
+
+class ChangeStateButton extends StatefulWidget {
+  @override
+  State&lt;ChangeStateButton&gt; createState() =&gt; _ChangeStateButtonState();
+}
+
+class _ChangeStateButtonState extends State&lt;ChangeStateButton&gt; {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialButton(
+      onPressed: () {
+        // 注意下面这个方法，只是查找到 InheritedWidget 的引用，并没有注册依赖
+        // 所以当 InheritedWidget 变化的时候并不会触发此控件重建
+        // 因为每次 onColorChanged 时 AppColor 都会重建，所以需要在这里获取最新的
+        var appColor = context.findAncestorWidgetOfExactType&lt;AppColor&gt;();
+        print(
+            &quot;_ChangeStateButtonState appColor?.color:${appColor?.color} appColor:${appColor.hashCode}&quot;);
+
+        var color = appColor?.color;
+        var newColor = color == Colors.teal ? Colors.blueAccent : Colors.teal;
+        appColor?.onColorChanged?.call(newColor);
+        print(
+            &quot;_ChangeStateButtonState onPressed appColor?.color:${appColor?.color} appColor:${appColor.hashCode}&quot;);
+      },
+      child: Text(&quot;Change State Button, Shlould NOT Rebuild&quot;),
+    );
+  }
+}
+</code></pre>
+<p>3、接下来实现一种基础的使用<code>InheritedWidget</code>的方法，这种方法会在<code>InheritedWidget</code>更新的时候，rebuilt <code>InheritedWidget</code>下面的所有子类，无论他们是否使用到了<code>InheritedWidget</code>（原因是上面说到的 Flutter rebuild 的机制导致的，实际上<code>InheritedWidget</code>本身只标记了<code>ColorfulContainer</code>为<code>dirty</code>）。</p>
+<pre><code class="language-dart">class AlwaysRebuildWidget extends StatefulWidget {
+  final Color color;
+
+  AlwaysRebuildWidget({Key? key, required this.color}) : super(key: key);
+
+  @override
+  State&lt;AlwaysRebuildWidget&gt; createState() =&gt; _AlwaysRebuildWidgetState();
+}
+
+class _AlwaysRebuildWidgetState extends State&lt;AlwaysRebuildWidget&gt; {
+  late Color _color;
+  var child = NoName();
+
+  @override
+  void initState() {
+    super.initState();
+    _color = widget.color;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // 这种写法，AppColor 的_dependents 也只有 1 个。ColorfulContainer(dependencies: [AppColor])
+    // 所以每次 setState 引起 AlwaysRebuildWidget 重新绘制，引起 AppColor 重新创建，本应该会重建 ColorfulContainer
+    // 但是因为 build 方法重新执行了一次，所以 AppColor 和整个 NoName 都被重建，
+    print(&quot;AlwaysRebuildWidget build${widget.hashCode}&quot;);
+
+    return AppColor(
+        color: _color,
+        onColorChanged: (color) {
+          setState(() {
+            _color = color;
+          });
+        },
+        // 这种写法，AppColor 在 updateChild 的时候会判断 widget.child 与_child.widget 的 NoName 不一致
+        // （这是因为，AppColor 在 notifyClients 的时候修改了 NoName 的 child 之一 ColorfulContainer 为 dirty）
+        // 从而会更新 NoName，导致 NoName 下面所有的子 Widget 全部重新绘制
+         child: NoName());
+    // 按照上面分析的逻辑，在这里加上 const，那么依旧用的是之前的 NoName，就不会 repaint 整个的 NoName 了
+    // child: const NoName());
+  }
+}
+</code></pre>
+<p>4、接下来实现一种使用<code>InheritedWidget</code>的方法，当<code>InheritedWidget</code>更新的时候，只会更新那些在<code>InheritedWidget</code>这里注册依赖了的<code>Widget</code>。</p>
+<pre><code class="language-dart">class SelectiveRebuildWidget extends StatefulWidget {
+  final Widget child;
+
+  final Color color;
+
+  SelectiveRebuildWidget({Key? key, required this.child, required this.color})
+      : super(key: key) {}
+
+  @override
+  State&lt;SelectiveRebuildWidget&gt; createState() =&gt; _SelectiveRebuildWidgetState();
+}
+
+class _SelectiveRebuildWidgetState extends State&lt;SelectiveRebuildWidget&gt; {
+  late Color _color;
+
+  @override
+  void initState() {
+    super.initState();
+    _color = widget.color;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print(
+        &quot;SelectiveRebuildWidget build${widget.child.hashCode}  ${widget.hashCode}&quot;);
+    return AppColor(
+      color: _color,
+      onColorChanged: (color) {
+        setState(() {
+          _color = color;
+        });
+      },
+      // 这里的 AppColor 的_dependents 只有 1 个。ColorfulContainer(dependencies: [AppColor])
+      // 因为 setState 不会重新创建 SelectiveRebuildWidget，所以 widget.child 也没有被重新
+      // 创建（但是重新绘制了，导致 AppColor 也重新绘制）
+      // 所以 AppColor 的 child 还是之前的，按照 InheritedWidget 的规则，只有 ColorfulContainer 重新绘制了
+      child: widget.child,
+    );
+  }
+}
+</code></pre>
+<h2>参考资料</h2>
+<p><a href="https://petercoding.com/flutter/2021/07/04/using-inherited-widget-in-flutter/">Using Inherited Widget In Flutter</a></p>
+<p><a href="https://www.cnblogs.com/lxlx1798/p/11190230.html?share_token=1bd95081-524b-4a3b-af65-686ab5c88ce4">【Flutter 学习】之 Widget 数据共享之 InheritedWidget 梁飞宇</a></p>
+<p><a href="https://stackoverflow.com/questions/54494398/inheritedwidget-confusion">InheritedWidget confusion</a></p>
+<p><a href="https://medium.com/flutter/managing-flutter-application-state-with-inheritedwidgets-1140452befe1">Managing Flutter Application State With InheritedWidgets</a></p>
+<p><a href="https://stackoverflow.com/questions/53492705/does-using-const-in-the-widget-tree-improve-performance">Does using const in the widget tree improve performance?</a></p>
+<p><a href="https://api.flutter-io.cn/flutter/widgets/StatefulWidget-class.html">StatefulWidget</a></p>
+
+            </div>
+
+            <!-- 3. Tags -->
+            <div class="tags">
+                
+            </div>
+
+            <!-- 4. Email Comment -->
+            <div class="comment-section">
+                <p class="comment-text">Any thoughts? Feel free to discuss via email.</p>
+                <button 
+                    class="btn btn-email" 
+                    onclick="sendEmailComment('Flutter UI 绘制与 InheritedWidget 解析', '/blog/en/posts/4c220635.html')"
+                    data-email-subject="Comment on article"
+                    data-email-hello="Hi!"
+                    data-email-intro="I read your article and here are my thoughts:"
+                    data-email-fallback="Cannot open email client. Copy email address?"
+                >
+                    <i class="far fa-envelope"></i> Email Comment
+                </button>
+            </div>
+        </article>
+        
+        <!-- 5. Prev/Next Navigation -->
+        <nav class="post-nav">
+            
+            <a href="/blog/en/posts/a951661c.html" class="post-nav-item post-nav-prev">
+                <span class="post-nav-label">← Previous</span>
+                <span class="post-nav-title">Dart Isolate 源码分析</span>
+            </a>
+            
+            
+            <a href="/blog/en/posts/767a594.html" class="post-nav-item post-nav-next">
+                <span class="post-nav-label">Next →</span>
+                <span class="post-nav-title">Flutter Expanded VS Flexible</span>
+            </a>
+            
+        </nav>
+    </div>
+
+    <!-- TOC Mobile Button -->
+    <button id="toc-mobile-btn" class="toc-mobile-btn" title="Table of Contents">
+        <i class="fas fa-list-ul"></i>
+    </button>
+
+    <!-- TOC Mobile Bottom Sheet -->
+    <div id="toc-bottomsheet" class="toc-bottomsheet">
+        <div class="toc-bottomsheet-overlay"></div>
+        <div class="toc-bottomsheet-content">
+            <div class="toc-bottomsheet-header">
+                <span>Table of Contents</span>
+                <button class="toc-bottomsheet-close"><i class="fas fa-times"></i></button>
+            </div>
+            <nav class="toc-bottomsheet-nav" id="toc-bottomsheet-nav">
+                <!-- TOC items will be generated by JavaScript -->
+            </nav>
+        </div>
+    </div>
+    
+    </main>
+
+    
+    <footer>
+        <div class="container">
+            <div class="footer-author">
+                <span>&copy; 2016-2025 </span>
+                <a href="https://github.com/jixiaoyong" target="_blank" rel="noopener noreferrer" title="GitHub">
+                    <i class="fab fa-github"></i>
+                    JI,XIAOYONG
+                </a>
+            </div>
+            <div>
+                <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer" class="footer-link">
+                    <i class="fab fa-creative-commons"></i> BY-NC-SA 4.0
+                </a>
+            </div>
+        </div>
+    </footer>
+    
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" title="Back to Top">
+        <i class="fas fa-rocket"></i>
+    </button>
+
+    <!-- Scripts: Staticfile CDN -->
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/dart.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/kotlin.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/gradle.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/groovy.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/yaml.min.js"></script>
+    <script>
+        // MathJax Configuration - Enable $...$ inline math
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\(', '\)']],
+                displayMath: [['$$', '$$'], ['\[', '\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+                ignoreHtmlClass: 'mathjax_ignore'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.staticfile.net/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+    <script src="/blog/scripts/client.js"></script>
+</body>
+</html>

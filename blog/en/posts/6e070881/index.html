@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python 爬取 gityuan 所有文章列表 - JI,XIAOYONG's Blog</title>
+    <!-- Fonts: Use System Fonts + Merriweather/Fira via Staticfile if available or fallback -->
+    <!-- Prioritize system fonts for speed in China -->
+    <link rel="preconnect" href="https://fonts.loli.net">
+    <link rel="preconnect" href="https://gstatic.loli.net" crossorigin>
+    <link href="https://fonts.loli.net/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=Inter:wght@300;400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Icons: Staticfile CDN -->
+    <link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/blog/styles/main.css">
+    <link rel="stylesheet" href="/blog/styles/containers.css">
+
+    <!-- Highlight.js Theme (Staticfile does not have all themes, checking common ones) -->
+    <!-- Using cdnjs.cloudflare.com as fallback if staticfile misses specific themes, but staticfile usually has them -->
+    <link rel="stylesheet" href="https://cdn.staticfile.net/highlight.js/11.7.0/styles/github.min.css" id="hljs-theme">
+
+    <script>
+        // Check local storage for theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        // Language detection - simplistic redirect if on root
+        const userLang = navigator.language || navigator.userLanguage;
+        const basePath = '/blog';
+        if (window.location.pathname === basePath + '/' && userLang.startsWith('en')) {
+           window.location.href = basePath + '/en/';
+        }
+    </script>
+</head>
+<body>
+
+    
+    <header>
+        <div class="container">
+            <a href="/blog/en/" class="logo">
+                <img src="https://jixiaoyong.github.io/images/user_avatar.webp" alt="JI,XIAOYONG" class="logo-avatar">
+                JI,XIAOYONG
+            </a>
+            
+            <!-- Desktop Nav -->
+            <nav class="desktop-nav">
+                <ul>
+                    
+        <li><a href="/blog/en/"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="/blog/en/about.html"><i class="fas fa-user"></i> About</a></li>
+    
+                    <li><a href="#" onclick="switchView('search')" title="Search"><i class="fas fa-search"></i></a></li>
+                    <li><button onclick="switchLanguage()" class="theme-toggle" title="Language"><i class="fas fa-language"></i><span style="font-size:0.7rem;vertical-align:super;">En</span></button></li>
+                    <li><button onclick="toggleTheme()" class="theme-toggle" title="Theme"><i id="theme-icon" class="fas fa-adjust"></i></button></li>
+                </ul>
+            </nav>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-btn btn" onclick="toggleMobileMenu()">
+                <i id="menu-icon" class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Container (Hidden by default) -->
+        <div id="mobile-menu" class="mobile-menu hidden">
+            <ul>
+                <li><a href="/blog/en/"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/blog/en/about.html"><i class="fas fa-user"></i> About</a></li>
+                <li><a href="#" onclick="switchView('search')"><i class="fas fa-search"></i> Search</a></li>
+                <li>
+                    <button class="btn theme-toggle-mobile" onclick="switchLanguage()">
+                        <i class="fas fa-language"></i> Language: 中文
+                    </button>
+                </li>
+                <li>
+                    <button class="btn theme-toggle-mobile" onclick="toggleTheme()">
+                        <i class="fas fa-palette"></i> Theme: <span id="theme-text-mobile">Auto</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </header>
+    
+
+    <!-- Search Overlay -->
+    <div id="search-overlay" class="search-overlay hidden">
+        <button class="close-search" onclick="closeSearch()">&times;</button>
+        <div class="search-box">
+            <input type="text" id="search-input" class="search-input" placeholder="Search..." autocomplete="off">
+        </div>
+        <div id="search-results" class="search-results"></div>
+    </div>
+
+    <main class="container">
+        
+    <div id="article" class="view active article-with-toc" style="display: block;">
+        <!-- TOC Sidebar (Desktop) -->
+        <aside class="toc-sidebar" id="toc-sidebar">
+            <div class="toc-header">Table of Contents</div>
+            <nav class="toc-nav" id="toc-nav">
+                <!-- TOC items will be generated by JavaScript -->
+            </nav>
+        </aside>
+
+        <article class="blog-post">
+            <!-- 1. Header: Title & Meta -->
+            <div class="article-header-info">
+                <h1 class="article-title">Python 爬取 gityuan 所有文章列表</h1>
+                <div class="post-meta mathjax_ignore">
+                    <span class="author">JI,XIAOYONG</span>
+                    <span class="meta-separator">•</span>
+                    <span class="publish-date mathjax_ignore">Published on 2018-01-28</span>
+                    <span class="publish-date mathjax_ignore">(Updated on 2023-12-30)</span>
+                    
+                </div>
+            </div>
+
+            <!-- 2. Content -->
+            <div class="article-content">
+                <h2>简介</h2>
+<p>更新内容：</p>
+<ul>
+<li>爬取 gityuan.com 网站所有文章列表并输出 json</li>
+<li>汇总信息输出 config.json 为后面的客户端做准备</li>
+</ul>
+<p>更新文件：</p>
+<ul>
+<li>spider_main.py</li>
+<li>html_output.py</li>
+<li><strong>gityuan_urls.py</strong></li>
+<li><strong>html_downloader.py</strong></li>
+</ul>
+<h2>代码</h2>
+<ul>
+<li><strong>spider_main.py</strong></li>
+</ul>
+<p>作为入口类，主要增加了初始化所有 URL，以及便利这些 URL 的功能。</p>
+<pre><code class="language-python">sp = SpiderMain()
+
+gityuan = gityuan_urls.GitYuanUrls()
+
+gityuan_urls = gityuan.get_urls(17)
+
+
+file_name = &#39;gityuan_page_&#39;
+
+sp.craw(gityuan_urls,file_name)
+</code></pre>
+<p>其<code>craw()</code>方法修改如下：</p>
+<pre><code class="language-python">from time import sleep
+
+def craw(self, root_urls, file_name):
+
+        #将所有有效链接全部加入
+        self.urls.add_new_urls(root_urls)
+
+        i = 0
+
+        #循环遍历这些链接
+        while self.urls.has_next():
+
+            i = i + 1
+
+            new_url = self.urls.get_new_url()
+
+            html_cont = self.downloader.download(new_url)
+
+            new_url, new_data = self.parser.parse(new_url, html_cont)
+
+            self.output.collect_data(new_data)
+
+            new_file_name = file_name + (&#39;%d.json&#39;%i)
+
+            self.output.output_html(new_file_name)
+
+            #等待 3s，防止太频繁访问被识别
+            sleep(3)
+
+        #结束遍历，输出汇总信息
+        self.output.end(file_name,root_urls[0],i)
+</code></pre>
+<ul>
+<li><strong>html_output.py</strong></li>
+</ul>
+<p>主要改动如下：</p>
+<ol>
+<li><code>output_html(self,file_name)</code>方法增加一个<code>file_name</code>的参数，并在内部调用<code>self.mkdir()</code>方法生成 output 目录，方便同时输出多个文档</li>
+<li><code>mkdir()</code>方法，创建文件</li>
+<li><code>end(self,file_name_start, url, num)</code>方法，输出汇总文档，代码如下</li>
+</ol>
+<pre><code class="language-python">
+    def end(self,file_name_start, url, num):
+
+        self.mkdir()
+
+        file_name = self.output_dir + &#39;config.json&#39;
+
+        file_out = open(file_name,&#39;w&#39;)
+
+        current_time = time.time()
+
+        config_str = (&#39;{&quot;url&quot;:&quot;%s&quot;,&quot;total&quot;:&quot;%d&quot;,&quot;update_time&quot;:&quot;%d&quot;,&quot;file_name&quot;:&quot;%s&quot;}&#39; % (url,num,current_time,file_name_start))
+
+        file_out.write(config_str)
+</code></pre>
+<ul>
+<li><strong>gityuan_urls.py</strong></li>
+</ul>
+<p>主要代码如下，通过循环遍历获取所有文章列表信息</p>
+<pre><code class="language-python">class GitYuanUrls(object):
+    &quot;&quot;&quot;docstring for GitYuanUrls&quot;&quot;&quot;
+    def get_urls(self, num):
+
+        urls = []
+
+        urls.append(&#39;http://www.gityuan.com&#39;)
+
+        for x in xrange(1,num):
+            url_ = (&#39;http://www.gityuan.com/page%d/&#39;%x)
+            urls.append(url_)
+
+        return urls
+</code></pre>
+<ul>
+<li><strong>html_downloader.py</strong></li>
+</ul>
+<p>就在本文编辑的过程中，爬虫被识别，并且限制访问文件数量，所以对下载功能做了简单的伪装、增加超时处理。</p>
+<pre><code class="language-python">def download2(self, url):
+        #升级版
+
+        if url is None:
+            return None
+
+        #伪装为浏览器
+        req_header = {&#39;User-Agent&#39;:&#39;Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36&#39;}
+
+        try:
+            request = urllib2.Request(url,None,req_header)
+
+            response = urllib2.urlopen(request,None,300)
+
+            return response.read()
+        except socket.timeout as e:
+            #超时处理
+            print(type(e))
+
+        return None
+</code></pre>
+<h2>结语</h2>
+<p>当前爬虫主体功能以及实现，可以爬取 gityuan.com 所有有效文章列表，可以满足客户端需求。但仍然存在以下问题：</p>
+<ol>
+<li>没有伪装，爬虫<strong>很容易</strong>被识别并被拒绝服务（<del>就在刚刚写下这句话的时候，就发生了被限制访问，真*乌鸦嘴</del>）。</li>
+<li>由于原网站特性，其置顶文章每页都有，会导致部分数据重复。</li>
+<li>未爬取具体文章内容。</li>
+</ol>
+<blockquote>
+<p><strong>说明</strong></p>
+<p>本文只为学术研究，其中涉及到的第三方网站及其所有资源均属原主所有。向 gityuan 大神致敬，欢迎访问其<a href="http://gityuan.com/">blog</a>。</p>
+</blockquote>
+<h2>源码</h2>
+<p><a href="https://github.com/jixiaoyong/AndroidNote/tree/master/code/2018-1-26/gityuan_spider">github 链接</a></p>
+<p><code>tag</code>为<code>gityuan_spider1.5</code></p>
+
+            </div>
+
+            <!-- 3. Tags -->
+            <div class="tags">
+                
+            </div>
+
+            <!-- 4. Email Comment -->
+            <div class="comment-section">
+                <p class="comment-text">Any thoughts? Feel free to discuss via email.</p>
+                <button 
+                    class="btn btn-email" 
+                    onclick="sendEmailComment('Python 爬取 gityuan 所有文章列表', '/blog/en/posts/6e070881.html')"
+                    data-email-subject="Comment on article"
+                    data-email-hello="Hi!"
+                    data-email-intro="I read your article and here are my thoughts:"
+                    data-email-fallback="Cannot open email client. Copy email address?"
+                >
+                    <i class="far fa-envelope"></i> Email Comment
+                </button>
+            </div>
+        </article>
+        
+        <!-- 5. Prev/Next Navigation -->
+        <nav class="post-nav">
+            
+            <a href="/blog/en/posts/af2aa19e.html" class="post-nav-item post-nav-prev">
+                <span class="post-nav-label">← Previous</span>
+                <span class="post-nav-title">Python 自动化部署文章</span>
+            </a>
+            
+            
+            <a href="/blog/en/posts/9c0ccf0d.html" class="post-nav-item post-nav-next">
+                <span class="post-nav-label">Next →</span>
+                <span class="post-nav-title">Python 爬虫爬取 gityuan.com 数据并输出 json</span>
+            </a>
+            
+        </nav>
+    </div>
+
+    <!-- TOC Mobile Button -->
+    <button id="toc-mobile-btn" class="toc-mobile-btn" title="Table of Contents">
+        <i class="fas fa-list-ul"></i>
+    </button>
+
+    <!-- TOC Mobile Bottom Sheet -->
+    <div id="toc-bottomsheet" class="toc-bottomsheet">
+        <div class="toc-bottomsheet-overlay"></div>
+        <div class="toc-bottomsheet-content">
+            <div class="toc-bottomsheet-header">
+                <span>Table of Contents</span>
+                <button class="toc-bottomsheet-close"><i class="fas fa-times"></i></button>
+            </div>
+            <nav class="toc-bottomsheet-nav" id="toc-bottomsheet-nav">
+                <!-- TOC items will be generated by JavaScript -->
+            </nav>
+        </div>
+    </div>
+    
+    </main>
+
+    
+    <footer>
+        <div class="container">
+            <div class="footer-author">
+                <span>&copy; 2016-2025 </span>
+                <a href="https://github.com/jixiaoyong" target="_blank" rel="noopener noreferrer" title="GitHub">
+                    <i class="fab fa-github"></i>
+                    JI,XIAOYONG
+                </a>
+            </div>
+            <div>
+                <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer" class="footer-link">
+                    <i class="fab fa-creative-commons"></i> BY-NC-SA 4.0
+                </a>
+            </div>
+        </div>
+    </footer>
+    
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" title="Back to Top">
+        <i class="fas fa-rocket"></i>
+    </button>
+
+    <!-- Scripts: Staticfile CDN -->
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/dart.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/kotlin.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/gradle.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/groovy.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/yaml.min.js"></script>
+    <script>
+        // MathJax Configuration - Enable $...$ inline math
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\(', '\)']],
+                displayMath: [['$$', '$$'], ['\[', '\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+                ignoreHtmlClass: 'mathjax_ignore'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.staticfile.net/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+    <script src="/blog/scripts/client.js"></script>
+</body>
+</html>

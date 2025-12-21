@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>利用 travis 通过 Hexo 在 Github 上自动部署 Markdown 文档 - JI,XIAOYONG's Blog</title>
+    <!-- Fonts: Use System Fonts + Merriweather/Fira via Staticfile if available or fallback -->
+    <!-- Prioritize system fonts for speed in China -->
+    <link rel="preconnect" href="https://fonts.loli.net">
+    <link rel="preconnect" href="https://gstatic.loli.net" crossorigin>
+    <link href="https://fonts.loli.net/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=Inter:wght@300;400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Icons: Staticfile CDN -->
+    <link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/blog/styles/main.css">
+    <link rel="stylesheet" href="/blog/styles/containers.css">
+
+    <!-- Highlight.js Theme (Staticfile does not have all themes, checking common ones) -->
+    <!-- Using cdnjs.cloudflare.com as fallback if staticfile misses specific themes, but staticfile usually has them -->
+    <link rel="stylesheet" href="https://cdn.staticfile.net/highlight.js/11.7.0/styles/github.min.css" id="hljs-theme">
+
+    <script>
+        // Check local storage for theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        // Language detection - simplistic redirect if on root
+        const userLang = navigator.language || navigator.userLanguage;
+        const basePath = '/blog';
+        if (window.location.pathname === basePath + '/' && userLang.startsWith('en')) {
+           window.location.href = basePath + '/en/';
+        }
+    </script>
+</head>
+<body>
+
+    
+    <header>
+        <div class="container">
+            <a href="/blog/en/" class="logo">
+                <img src="https://jixiaoyong.github.io/images/user_avatar.webp" alt="JI,XIAOYONG" class="logo-avatar">
+                JI,XIAOYONG
+            </a>
+            
+            <!-- Desktop Nav -->
+            <nav class="desktop-nav">
+                <ul>
+                    
+        <li><a href="/blog/en/"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="/blog/en/about.html"><i class="fas fa-user"></i> About</a></li>
+    
+                    <li><a href="#" onclick="switchView('search')" title="Search"><i class="fas fa-search"></i></a></li>
+                    <li><button onclick="switchLanguage()" class="theme-toggle" title="Language"><i class="fas fa-language"></i><span style="font-size:0.7rem;vertical-align:super;">En</span></button></li>
+                    <li><button onclick="toggleTheme()" class="theme-toggle" title="Theme"><i id="theme-icon" class="fas fa-adjust"></i></button></li>
+                </ul>
+            </nav>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-btn btn" onclick="toggleMobileMenu()">
+                <i id="menu-icon" class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Container (Hidden by default) -->
+        <div id="mobile-menu" class="mobile-menu hidden">
+            <ul>
+                <li><a href="/blog/en/"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/blog/en/about.html"><i class="fas fa-user"></i> About</a></li>
+                <li><a href="#" onclick="switchView('search')"><i class="fas fa-search"></i> Search</a></li>
+                <li>
+                    <button class="btn theme-toggle-mobile" onclick="switchLanguage()">
+                        <i class="fas fa-language"></i> Language: 中文
+                    </button>
+                </li>
+                <li>
+                    <button class="btn theme-toggle-mobile" onclick="toggleTheme()">
+                        <i class="fas fa-palette"></i> Theme: <span id="theme-text-mobile">Auto</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </header>
+    
+
+    <!-- Search Overlay -->
+    <div id="search-overlay" class="search-overlay hidden">
+        <button class="close-search" onclick="closeSearch()">&times;</button>
+        <div class="search-box">
+            <input type="text" id="search-input" class="search-input" placeholder="Search..." autocomplete="off">
+        </div>
+        <div id="search-results" class="search-results"></div>
+    </div>
+
+    <main class="container">
+        
+    <div id="article" class="view active article-with-toc" style="display: block;">
+        <!-- TOC Sidebar (Desktop) -->
+        <aside class="toc-sidebar" id="toc-sidebar">
+            <div class="toc-header">Table of Contents</div>
+            <nav class="toc-nav" id="toc-nav">
+                <!-- TOC items will be generated by JavaScript -->
+            </nav>
+        </aside>
+
+        <article class="blog-post">
+            <!-- 1. Header: Title & Meta -->
+            <div class="article-header-info">
+                <h1 class="article-title">利用 travis 通过 Hexo 在 Github 上自动部署 Markdown 文档</h1>
+                <div class="post-meta mathjax_ignore">
+                    <span class="author">JI,XIAOYONG</span>
+                    <span class="meta-separator">•</span>
+                    <span class="publish-date mathjax_ignore">Published on 2018-12-20</span>
+                    <span class="publish-date mathjax_ignore">(Updated on 2023-12-30)</span>
+                    
+                </div>
+            </div>
+
+            <!-- 2. Content -->
+            <div class="article-content">
+                <h2>前言</h2>
+<blockquote>
+<p>本文介绍了一个只需要更新 Markdown 文档到 Github，即可实时更新博客内容的方法。</p>
+<p>本文参考<a href="https://juejin.im/post/5a1fa30c6fb9a045263b5d2a">这篇文章</a> 实现，并根据我的需求更改了部分内容，以实现<strong>部署多个 hexo 工程到同一 Github 项目不同目录下</strong>。</p>
+</blockquote>
+<p>Github 为我们提供了<a href="https://pages.github.com/">Github Pages</a> 方便我们建立简单的网页来介绍项目，很多时候我们用他来搭建静态博客。</p>
+<p>通过<a href="https://hexo.io/">Hexo</a>可以将我们写的<code>Markdown文档</code>格式化为<code>静态网页</code>，再将其部署到 Github 上面对应的<code>user_name.github.io</code>上面，就可以拥有一个在线的静态博客。</p>
+<p>但是受 Hexo 的限制，每次更新博客内容都需要在更新完 Markdown 文档后，都需要再次重新创建对应的静态网页、将更新提交到 Github。这样的步骤繁琐且没有意义，而且更换电脑后这些环境都需要重新设置一次。</p>
+<p>通过<a href="https://www.travis-ci.org">travis</a>提供的免费 CI 技术，可以让云服务器代替我们实现 Hexo 创建以及同步 Github 等步骤，每次更新博客时<strong>只需要将写好的 Markdown 文档推送到 Github 项目对应目录中，等待一会儿就可以看到更新后的博客了</strong>。</p>
+<p>具体搭建过程可以参考<a href="https://juejin.im/post/5a1fa30c6fb9a045263b5d2a">这篇文章</a> 本文只讲述实现<strong>部署多个 hexo 工程到同一 Github 项目不同目录下</strong>需要注意的地方：。</p>
+<blockquote>
+<p><strong>懒——是第一生产力</strong></p>
+</blockquote>
+<h2>具体差异</h2>
+<h3>hexo 分支的结构</h3>
+<p>因为有多个 hexo 项目，所以在 github 项目的 hexo 分支下，对不同的 hexo 项目分别新建文件夹存放。</p>
+<pre><code class="language-shell">-- your_name.github.io //github项目，切换到hexo分支
+  --hexo_project1 //本地hexo项目1的所有文件
+  --hexo_project2 //本地hexo项目2的所有文件
+</code></pre>
+<h3>.travis.yml</h3>
+<p>重点修改<code>script:</code>和<code>after_script:</code>两部分：</p>
+<pre><code class="language-yaml">script:
+  # 1. 创建对应的静态博客内容
+  - cd blog # 第一个本地 hexo 项目
+  - hexo clean
+  - hexo generate
+  - cd ..
+  - cd imissyou # 第二个本地 hexo 项目
+  - hexo clean
+  - hexo generate
+  - cd ..
+
+after_script:
+  - git config user.name &quot;jixiaoyong&quot;
+  - git config user.email &quot;jixiaoyong1995@gmail.com&quot;
+  - cd ..
+  - mkdir publish
+  - cd publish
+  # 2. 在这里再拉取 master 分支的文件，并删除旧的博客内容
+  - git clone https://${GH_TOKEN}@github.com/jixiaoyong/jixiaoyong.github.io.git
+  - rm -rf ./jixiaoyong.github.io/blog/*
+  - rm -rf ./jixiaoyong.github.io/imissyou/*
+    # 3. 将第 1 步生成的静态博客内容添加到 master 分支，并同步到 github 上面
+  - cd ..
+  - cp -rf jixiaoyong.github.io/blog/public/* publish/jixiaoyong.github.io/blog/
+  - cp -rf jixiaoyong.github.io/imissyou/public/* publish/jixiaoyong.github.io/imissyou/
+  - cd publish/jixiaoyong.github.io/
+  - git add .
+  - git commit -m &quot;auto update by www.travis-ci.org&quot;
+  - git push
+</code></pre>
+<p>文档链接：<a href="https://github.com/jixiaoyong/jixiaoyong.github.io/blob/hexo_blog/.travis.yml">.travis.yml</a></p>
+<h2>更新博客内容</h2>
+<p>当以上内容都配置完成后，只要新建一个符合 hexo 要求的文档，并提交到 Github 对应项目的 hexo 分支中<code>source</code>目录，Travis 便会自动帮我们创建并更新静态网页。</p>
+<h2>参考文档</h2>
+<p><a href="https://juejin.im/post/5a1fa30c6fb9a045263b5d2a">Hexo 遇上 Travis-CI：可能是最通俗易懂的自动发布博客图文教程</a> （完全在该文档指导下完成，部分步骤有差异，感谢作者<a href="https://juejin.im/user/56efe6461ea493005565dafd">MichaelX</a> ）</p>
+
+            </div>
+
+            <!-- 3. Tags -->
+            <div class="tags">
+                
+            </div>
+
+            <!-- 4. Email Comment -->
+            <div class="comment-section">
+                <p class="comment-text">Any thoughts? Feel free to discuss via email.</p>
+                <button 
+                    class="btn btn-email" 
+                    onclick="sendEmailComment('利用 travis 通过 Hexo 在 Github 上自动部署 Markdown 文档', '/blog/en/posts/b00ac86a.html')"
+                    data-email-subject="Comment on article"
+                    data-email-hello="Hi!"
+                    data-email-intro="I read your article and here are my thoughts:"
+                    data-email-fallback="Cannot open email client. Copy email address?"
+                >
+                    <i class="far fa-envelope"></i> Email Comment
+                </button>
+            </div>
+        </article>
+        
+        <!-- 5. Prev/Next Navigation -->
+        <nav class="post-nav">
+            
+            <a href="/blog/en/posts/11c01876.html" class="post-nav-item post-nav-prev">
+                <span class="post-nav-label">← Previous</span>
+                <span class="post-nav-title">数据结构_红黑树</span>
+            </a>
+            
+            
+            <a href="/blog/en/posts/a2863875.html" class="post-nav-item post-nav-next">
+                <span class="post-nav-label">Next →</span>
+                <span class="post-nav-title">Android 运行时权限</span>
+            </a>
+            
+        </nav>
+    </div>
+
+    <!-- TOC Mobile Button -->
+    <button id="toc-mobile-btn" class="toc-mobile-btn" title="Table of Contents">
+        <i class="fas fa-list-ul"></i>
+    </button>
+
+    <!-- TOC Mobile Bottom Sheet -->
+    <div id="toc-bottomsheet" class="toc-bottomsheet">
+        <div class="toc-bottomsheet-overlay"></div>
+        <div class="toc-bottomsheet-content">
+            <div class="toc-bottomsheet-header">
+                <span>Table of Contents</span>
+                <button class="toc-bottomsheet-close"><i class="fas fa-times"></i></button>
+            </div>
+            <nav class="toc-bottomsheet-nav" id="toc-bottomsheet-nav">
+                <!-- TOC items will be generated by JavaScript -->
+            </nav>
+        </div>
+    </div>
+    
+    </main>
+
+    
+    <footer>
+        <div class="container">
+            <div class="footer-author">
+                <span>&copy; 2016-2025 </span>
+                <a href="https://github.com/jixiaoyong" target="_blank" rel="noopener noreferrer" title="GitHub">
+                    <i class="fab fa-github"></i>
+                    JI,XIAOYONG
+                </a>
+            </div>
+            <div>
+                <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer" class="footer-link">
+                    <i class="fab fa-creative-commons"></i> BY-NC-SA 4.0
+                </a>
+            </div>
+        </div>
+    </footer>
+    
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" title="Back to Top">
+        <i class="fas fa-rocket"></i>
+    </button>
+
+    <!-- Scripts: Staticfile CDN -->
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/dart.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/kotlin.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/gradle.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/groovy.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/yaml.min.js"></script>
+    <script>
+        // MathJax Configuration - Enable $...$ inline math
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\(', '\)']],
+                displayMath: [['$$', '$$'], ['\[', '\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+                ignoreHtmlClass: 'mathjax_ignore'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.staticfile.net/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+    <script src="/blog/scripts/client.js"></script>
+</body>
+</html>

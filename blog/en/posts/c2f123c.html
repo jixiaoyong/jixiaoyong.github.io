@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Android 中的 SpareArray 和 ArrayMap 实现分析 - JI,XIAOYONG's Blog</title>
+    <!-- Fonts: Use System Fonts + Merriweather/Fira via Staticfile if available or fallback -->
+    <!-- Prioritize system fonts for speed in China -->
+    <link rel="preconnect" href="https://fonts.loli.net">
+    <link rel="preconnect" href="https://gstatic.loli.net" crossorigin>
+    <link href="https://fonts.loli.net/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=Inter:wght@300;400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Icons: Staticfile CDN -->
+    <link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/blog/styles/main.css">
+    <link rel="stylesheet" href="/blog/styles/containers.css">
+
+    <!-- Highlight.js Theme (Staticfile does not have all themes, checking common ones) -->
+    <!-- Using cdnjs.cloudflare.com as fallback if staticfile misses specific themes, but staticfile usually has them -->
+    <link rel="stylesheet" href="https://cdn.staticfile.net/highlight.js/11.7.0/styles/github.min.css" id="hljs-theme">
+
+    <script>
+        // Check local storage for theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        // Language detection - simplistic redirect if on root
+        const userLang = navigator.language || navigator.userLanguage;
+        const basePath = '/blog';
+        if (window.location.pathname === basePath + '/' && userLang.startsWith('en')) {
+           window.location.href = basePath + '/en/';
+        }
+    </script>
+</head>
+<body>
+
+    
+    <header>
+        <div class="container">
+            <a href="/blog/en/" class="logo">
+                <img src="https://jixiaoyong.github.io/images/user_avatar.webp" alt="JI,XIAOYONG" class="logo-avatar">
+                JI,XIAOYONG
+            </a>
+            
+            <!-- Desktop Nav -->
+            <nav class="desktop-nav">
+                <ul>
+                    
+        <li><a href="/blog/en/"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="/blog/en/about.html"><i class="fas fa-user"></i> About</a></li>
+    
+                    <li><a href="#" onclick="switchView('search')" title="Search"><i class="fas fa-search"></i></a></li>
+                    <li><button onclick="switchLanguage()" class="theme-toggle" title="Language"><i class="fas fa-language"></i><span style="font-size:0.7rem;vertical-align:super;">En</span></button></li>
+                    <li><button onclick="toggleTheme()" class="theme-toggle" title="Theme"><i id="theme-icon" class="fas fa-adjust"></i></button></li>
+                </ul>
+            </nav>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-btn btn" onclick="toggleMobileMenu()">
+                <i id="menu-icon" class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Container (Hidden by default) -->
+        <div id="mobile-menu" class="mobile-menu hidden">
+            <ul>
+                <li><a href="/blog/en/"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/blog/en/about.html"><i class="fas fa-user"></i> About</a></li>
+                <li><a href="#" onclick="switchView('search')"><i class="fas fa-search"></i> Search</a></li>
+                <li>
+                    <button class="btn theme-toggle-mobile" onclick="switchLanguage()">
+                        <i class="fas fa-language"></i> Language: 中文
+                    </button>
+                </li>
+                <li>
+                    <button class="btn theme-toggle-mobile" onclick="toggleTheme()">
+                        <i class="fas fa-palette"></i> Theme: <span id="theme-text-mobile">Auto</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </header>
+    
+
+    <!-- Search Overlay -->
+    <div id="search-overlay" class="search-overlay hidden">
+        <button class="close-search" onclick="closeSearch()">&times;</button>
+        <div class="search-box">
+            <input type="text" id="search-input" class="search-input" placeholder="Search..." autocomplete="off">
+        </div>
+        <div id="search-results" class="search-results"></div>
+    </div>
+
+    <main class="container">
+        
+    <div id="article" class="view active article-with-toc" style="display: block;">
+        <!-- TOC Sidebar (Desktop) -->
+        <aside class="toc-sidebar" id="toc-sidebar">
+            <div class="toc-header">Table of Contents</div>
+            <nav class="toc-nav" id="toc-nav">
+                <!-- TOC items will be generated by JavaScript -->
+            </nav>
+        </aside>
+
+        <article class="blog-post">
+            <!-- 1. Header: Title & Meta -->
+            <div class="article-header-info">
+                <h1 class="article-title">Android 中的 SpareArray 和 ArrayMap 实现分析</h1>
+                <div class="post-meta mathjax_ignore">
+                    <span class="author">JI,XIAOYONG</span>
+                    <span class="meta-separator">•</span>
+                    <span class="publish-date mathjax_ignore">Published on 2019-12-22</span>
+                    <span class="publish-date mathjax_ignore">(Updated on 2023-12-30)</span>
+                    
+                </div>
+            </div>
+
+            <!-- 2. Content -->
+            <div class="article-content">
+                <p>日常开发中，常用的存储键值对的数据结构是<code>HashMap</code>，根据<a href="https://jixiaoyong.github.io/blog/posts/ff927bd4.html">Java 笔记之 HashMap 保存数据</a>和<a href="https://jixiaoyong.github.io/blog/posts/b0793c74.html">Java 笔记之计算 Java 对象的大小及其应用</a>可以知道，<code>HashMap</code>存储<strong>键值对</strong>会占用比较多的内存控件，而对于内存限制较大的 Android 平台来说，为了避免这种浪费，官方推荐我们使用<code>SpareArray</code>和<code>ArrayMap</code>，本文对这两个类的实现进行分析比较。</p>
+<p><strong><code>SpareArray</code>以及他的衍生类</strong>都是以<strong>基本类型</strong>为<code>key</code>，因为避免了<em>自动装箱</em>，并且<strong>用数组直接保存 key、value</strong>（而非像<code>HashMap</code>那样将其封装为<code>Node</code>对象后再保存），因而节省了内存。</p>
+<p><code>ArrayMap</code>则支持<strong>所有类型的 key</strong>，他是<strong>将<code>key</code>和<code>value</code>全部保存在一个数组中</strong>（<code>n</code>位为<code>key</code>，<code>n+1</code>位为<code>value</code>），避免了将其封装为<code>Node</code>对象带来的内存消耗。</p>
+<p><strong>当要保存的数据量比较小（小于几千个）的时候，如果 KEY 是基本类型，推荐使用<code>SparseArray</code>及其衍生类以节省内存，如果 KEY 是其他类型则使用<code>ArrayMap</code>;否则使用<code>HashMap</code>更加高效</strong>。</p>
+<h2>SpareArray</h2>
+<p><code>SpareArray</code>以及他的衍生类主要用于<strong>以<code>基本类型</code>为<code>key</code>保存非大量数据的场景</strong>。</p>
+<p>相比<code>HashMap</code>而言，他的优点主要在于<strong>没有对保存的数据二次封装</strong>，没有对基本类型的数据<strong>自动装箱</strong>，存储单个数据的成本小，也没有<code>hash</code>计算。</p>
+<p>但他在添加数据时需要扩展数组 (涉及到新建、复制数组，<code>gc()</code>等)，<del>在删除数据时需要缩减数组</del> (查看<code>gc()</code>等源码发现他的数组只会增加，不会缩减)，以及通过二分法查找索引都会消耗性能。</p>
+<blockquote>
+<p>为了避免每次删除时都需要缩减数组，<code>SpareArray</code>在删除数组时只会将其赋值为<code>DELETED</code>，在下次调用其<code>private void gc()</code>方法时丢弃掉这些数据</p>
+</blockquote>
+<p>先看一下<code>SpareArray</code>的结构：</p>
+<pre><code class="language-java">public class SparseArray&lt;E&gt; implements Cloneable {
+    private boolean mGarbage = false; //是否调用 gc() 方法
+
+    private int[] mKeys;//所有的 key
+    private Object[] mValues;//所有的 value
+    private int mSize;//所保存的数据个数
+}
+</code></pre>
+<h3>void put(int key, E value)</h3>
+<p>添加方法先用<strong>二分法</strong>查找<code>key</code>对应的位置：</p>
+<ul>
+<li>如果有，则直接覆盖</li>
+<li>如果没有，则<strong>取反</strong>得到应该<code>插入的位置</code>，并分别插入<code>key</code>和<code>value</code></li>
+</ul>
+<pre><code class="language-java">public void put(int key, E value) {
+  // 先用二分法查找 key 对应的索引，找到的话返回对应索引，
+  // 否则返回 key 应该插入的位置的取反值
+    int i = ContainerHelpers.binarySearch(mKeys, mSize, key);
+
+    if (i &gt;= 0) {
+      // 如果已存在值则直接覆盖
+        mValues[i] = value;
+    } else {
+      // 对二分法查找到的值再取反，得到 key 应该插入的位置
+        i = ~i;
+
+        if (i &lt; mSize &amp;&amp; mValues[i] == DELETED) {
+            mKeys[i] = key;
+            mValues[i] = value;
+            return;
+        }
+
+        if (mGarbage &amp;&amp; mSize &gt;= mKeys.length) {
+            gc();
+
+            // Search again because indices may have changed.
+            i = ~ContainerHelpers.binarySearch(mKeys, mSize, key);
+        }
+
+      // public static &lt;T&gt; T[] insert(T[] array, int currentSize, int index, T element)
+      // Inserts an element into the array at the specified index,
+      // growing the array if there is no more room.
+        mKeys = GrowingArrayUtils.insert(mKeys, mSize, i, key);
+        mValues = GrowingArrayUtils.insert(mValues, mSize, i, value);
+        mSize++;
+    }
+}
+</code></pre>
+<h3>E get(int key)</h3>
+<p>获取数据，先用<strong>二分法</strong>查找，如果找到就返回<code>对应的值</code>，否则返回<code>null</code>。</p>
+<pre><code class="language-java">public E get(int key) {
+        return get(key, null);
+}
+
+public E get(int key, E valueIfKeyNotFound) {
+    int i = ContainerHelpers.binarySearch(mKeys, mSize, key);
+
+    if (i &lt; 0 || mValues[i] == DELETED) {
+        return valueIfKeyNotFound;
+    } else {
+        return (E) mValues[i];
+    }
+}
+</code></pre>
+<h3>void remove(int key)</h3>
+<p>删除<code>key</code>以及<code>对应的数据</code>。</p>
+<p>同样先用<strong>二分法</strong>查找<code>对应位置</code>，有的话则标记为<code>DELETED</code>，<strong>等待下次<code>gc()</code>时丢弃</strong>。</p>
+<pre><code class="language-java">public void remove(int key) {
+        delete(key);
+}
+
+public void delete(int key) {
+    int i = ContainerHelpers.binarySearch(mKeys, mSize, key);
+
+    if (i &gt;= 0) {
+        if (mValues[i] != DELETED) {
+            mValues[i] = DELETED;
+            mGarbage = true;
+        }
+    }
+}
+</code></pre>
+<h3>gc()</h3>
+<p>在上文中我们看到，删除数据时，<code>mGarbage</code>被标记为<code>true</code>，这样当下一次进行<code>put/valueAt/append/size</code>等涉及到数组大小查询、改动等时，就出触发<code>gc()</code>以便整理数组结构。</p>
+<pre><code class="language-java">private void gc() {
+    // Log.e(&quot;SparseArray&quot;, &quot;gc start with &quot; + mSize);
+
+    int n = mSize;
+    int o = 0;
+    int[] keys = mKeys;
+    Object[] values = mValues;
+
+    for (int i = 0; i &lt; n; i++) {
+        Object val = values[i];
+
+      // 这里的操作只是将没有被删除的数据移动到了数组的前面
+      // 而保证了数组后面都是 DELETED 或 null，方便后续操作
+        if (val != DELETED) {
+            if (i != o) {
+                keys[o] = keys[i];
+                values[o] = val;
+                values[i] = null;
+            }
+
+            o++;
+        }
+    }
+
+    mGarbage = false;
+    mSize = o;
+}
+</code></pre>
+<h3>HashMap 与 SpareArray 及其衍生类对应关系</h3>
+<p>参考<a href="https://android.jlelse.eu/app-optimization-with-arraymap-sparsearray-in-android-c0b7de22541a">下图</a></p>
+<p><img src="https://jixiaoyong.github.io/images/20191222131219.png" alt=""></p>
+<h2>ArrayMap</h2>
+<p><code>ArrayMap</code>实现了<code>Map&lt;K, V&gt;</code>接口，他的 API 和<code>HashMap</code>相差无几，但是由于<strong>没有对数据再包装</strong>，<strong>动态调整数组的大小</strong>，一定范围内他比<code>HashMap</code>内存效率高。</p>
+<p>但是如果保存大量数据（超过千位）时，由于他需要<strong>二分法查找</strong>的影响会比<code>HashMap</code>慢很多。</p>
+<blockquote>
+<p><strong><code>ArrayMap</code>特殊之处在于将<code>key</code>，<code>value</code>保存到了同一个数组 mArray 中（n 位保存 key，n+1 位保存 value</strong>）。</p>
+</blockquote>
+<p>先看一下<code>ArrayMap</code>的结构：</p>
+<pre><code class="language-java">static Object[] mBaseCache;
+static int mBaseCacheSize;
+static Object[] mTwiceBaseCache;
+static int mTwiceBaseCacheSize;
+
+final boolean mIdentityHashCode;//是否强制使用 System.identityHashCode(key) 获取 key 的 HashCode
+//System.identityHashCode(key) 方法无论类是否重写了 hashCode() 方法，
+//都会调用 Object.identityHashCode(key) 来获取对象的 hashCode
+int[] mHashes;//存储所有 key 的 hash 值
+Object[] mArray;//存储 key 和 value，大小是 mHashes 的两倍
+//n 位保存 key，n+1 位保存 value
+int mSize;
+MapCollections&lt;K, V&gt; mCollections;
+</code></pre>
+<p>在使用时：</p>
+<ol>
+<li><p>计算<code>key</code>的<code>hash值</code>，</p>
+<pre><code class="language-java">hash = mIdentityHashCode ? System.identityHashCode(key) : key.hashCode();
+</code></pre>
+</li>
+<li><p>然后使用<code>indexOf()</code>在<code>mHashes</code>中进行二分法查找对应的<code>index</code></p>
+<pre><code class="language-java">index = indexOf(key, hash);
+</code></pre>
+<p><code>indexOf()</code>方法会先用<strong>二分法</strong>查找<code>hash</code>对应的<code>index</code>,如果<code>index&lt;0</code>则返回<code>index</code>；否则在对比<code>mArray</code>中对应位置<code>mArray[index&lt;&lt;1]</code>的<code>key</code>与要<code>查询的key</code>：</p>
+<ul>
+<li>两者一致：返回<code>index</code></li>
+<li>两者不一致：从<code>index</code>开始，<strong>先向后，再向前</strong>查询是否有相同的<code>key</code>,如果有返回<code>对应index</code></li>
+<li>以上都没有找到：<strong>对<code>mHashes</code>中<code>最后一个与key的hash一致的后一位index</code>取反</strong>，并返回</li>
+</ul>
+<pre><code class="language-java">int indexOf(Object key, int hash) {
+    final int N = mSize;
+
+    // Important fast case: if nothing is in here, nothing to look for.
+    if (N == 0) {
+        return ~0;
+    }
+
+    int index = binarySearchHashes(mHashes, N, hash);
+
+    // If the hash code wasn&#39;t found, then we have no entry for this key.
+    if (index &lt; 0) {
+        return index;
+    }
+
+    // If the key at the returned index matches, that&#39;s what we want.
+    if (key.equals(mArray[index&lt;&lt;1])) {
+        return index;
+    }
+
+    // Search for a matching key after the index.
+    int end;
+    for (end = index + 1; end &lt; N &amp;&amp; mHashes[end] == hash; end++) {
+        if (key.equals(mArray[end &lt;&lt; 1])) return end;
+    }
+
+    // Search for a matching key before the index.
+    for (int i = index - 1; i &gt;= 0 &amp;&amp; mHashes[i] == hash; i--) {
+        if (key.equals(mArray[i &lt;&lt; 1])) return i;
+    }
+
+    // Key not found -- return negative value indicating where a
+    // new entry for this key should go.  We use the end of the
+    // hash chain to reduce the number of array entries that will
+    // need to be copied when inserting.
+    return ~end;
+}
+</code></pre>
+</li>
+</ol>
+<h3>V put(K key, V value)</h3>
+<p>当添加<code>item</code>时，按照前述规则，先在<code>mArray</code>中查找<code>key</code>对应的<code>索引index</code>：</p>
+<ul>
+<li><p><code>index &gt;= 0</code> ：已经有键为<code>key</code>的数据，直接覆盖旧值并返回</p>
+</li>
+<li><p><code>index &lt; 0 </code>：没有键为<code>key</code>的数据，对数组进行扩容，并保存对应数据</p>
+<pre><code class="language-java">index = ~index;//上文 indexOf() 中计算得出的 key 应该添加的位置
+mHashes[index] = hash;
+mArray[index&lt;&lt;1] = key;
+mArray[(index&lt;&lt;1)+1] = value;
+</code></pre>
+</li>
+</ul>
+<h3>V get(Object key)</h3>
+<p><code>get()</code>方法就比较简单了，先查找<code>key</code>的索引，然后取出<code>对应的数据value</code>并返回即可：</p>
+<pre><code class="language-java">    public V get(Object key) {
+        final int index = indexOfKey(key);
+        return index &gt;= 0 ? (V)mArray[(index&lt;&lt;1)+1] : null;
+    }
+</code></pre>
+<h3>V remove(Object key)</h3>
+<p><code>remove()</code>方法也会先使用<code>indexOfKey()</code>计算<code>key的index</code>，然后删除<code>对应位置的数据</code>。</p>
+<p>此外，如果<code>mHashes.length &gt; (BASE_SIZE*2) &amp;&amp; mSize &lt; mHashes.length/3</code>的话，还会缩减<code>数组的大小</code>为<code>osize &gt; (BASE_SIZE*2) ? (osize + (osize&gt;&gt;1)) : (BASE_SIZE*2)</code>：</p>
+<pre><code class="language-java">public V removeAt(int index) {
+  //...其他代码
+  if(mHashes.length &gt; (BASE_SIZE*2) &amp;&amp; mSize &lt; mHashes.length/3){
+    //...其他代码
+    final int n = osize &gt; (BASE_SIZE*2) ? (osize + (osize&gt;&gt;1)) : (BASE_SIZE*2);
+    allocArrays(n);
+  }
+  //...其他代码
+}
+
+ private void allocArrays(final int size) {
+   //...其他代码
+   mHashes = new int[size];
+   mArray = new Object[size&lt;&lt;1];
+ }
+</code></pre>
+<h2>参考资料</h2>
+<p><a href="https://android.googlesource.com/platform/frameworks/base.git/+/master/core/java/com/android/internal/util/GrowingArrayUtils.java">GrowingArrayUtils.java 源码</a></p>
+<p><a href="https://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/util/SparseArray.java">SparseArray.java 源码</a></p>
+<p><a href="https://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/util/ArrayMap.java">ArrayMap.java 源码</a></p>
+<p><a href="https://android.jlelse.eu/app-optimization-with-arraymap-sparsearray-in-android-c0b7de22541a">App optimization with ArrayMap &amp; SparseArray in Android</a></p>
+<p><a href="https://jixiaoyong.github.io/blog/posts/ff927bd4.html">Java 笔记之 HashMap 保存数据</a></p>
+<p><a href="https://jixiaoyong.github.io/blog/posts/b0793c74.html">Java 笔记之计算 Java 对象的大小及其应用</a></p>
+<p><a href="https://extremej.itscoder.com/sparsearray_source_analyse/">SparseArray 的使用及实现原理</a></p>
+
+            </div>
+
+            <!-- 3. Tags -->
+            <div class="tags">
+                
+            </div>
+
+            <!-- 4. Email Comment -->
+            <div class="comment-section">
+                <p class="comment-text">Any thoughts? Feel free to discuss via email.</p>
+                <button 
+                    class="btn btn-email" 
+                    onclick="sendEmailComment('Android 中的 SpareArray 和 ArrayMap 实现分析', '/blog/en/posts/c2f123c.html')"
+                    data-email-subject="Comment on article"
+                    data-email-hello="Hi!"
+                    data-email-intro="I read your article and here are my thoughts:"
+                    data-email-fallback="Cannot open email client. Copy email address?"
+                >
+                    <i class="far fa-envelope"></i> Email Comment
+                </button>
+            </div>
+        </article>
+        
+        <!-- 5. Prev/Next Navigation -->
+        <nav class="post-nav">
+            
+            <a href="/blog/en/posts/fd5546ac.html" class="post-nav-item post-nav-prev">
+                <span class="post-nav-label">← Previous</span>
+                <span class="post-nav-title">Kotlin 学习笔记 3</span>
+            </a>
+            
+            
+            <a href="/blog/en/posts/b0793c74.html" class="post-nav-item post-nav-next">
+                <span class="post-nav-label">Next →</span>
+                <span class="post-nav-title">Java 笔记之计算 Java 对象的大小及其应用</span>
+            </a>
+            
+        </nav>
+    </div>
+
+    <!-- TOC Mobile Button -->
+    <button id="toc-mobile-btn" class="toc-mobile-btn" title="Table of Contents">
+        <i class="fas fa-list-ul"></i>
+    </button>
+
+    <!-- TOC Mobile Bottom Sheet -->
+    <div id="toc-bottomsheet" class="toc-bottomsheet">
+        <div class="toc-bottomsheet-overlay"></div>
+        <div class="toc-bottomsheet-content">
+            <div class="toc-bottomsheet-header">
+                <span>Table of Contents</span>
+                <button class="toc-bottomsheet-close"><i class="fas fa-times"></i></button>
+            </div>
+            <nav class="toc-bottomsheet-nav" id="toc-bottomsheet-nav">
+                <!-- TOC items will be generated by JavaScript -->
+            </nav>
+        </div>
+    </div>
+    
+    </main>
+
+    
+    <footer>
+        <div class="container">
+            <div class="footer-author">
+                <span>&copy; 2016-2025 </span>
+                <a href="https://github.com/jixiaoyong" target="_blank" rel="noopener noreferrer" title="GitHub">
+                    <i class="fab fa-github"></i>
+                    JI,XIAOYONG
+                </a>
+            </div>
+            <div>
+                <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer" class="footer-link">
+                    <i class="fab fa-creative-commons"></i> BY-NC-SA 4.0
+                </a>
+            </div>
+        </div>
+    </footer>
+    
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" title="Back to Top">
+        <i class="fas fa-rocket"></i>
+    </button>
+
+    <!-- Scripts: Staticfile CDN -->
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/dart.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/kotlin.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/gradle.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/groovy.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/yaml.min.js"></script>
+    <script>
+        // MathJax Configuration - Enable $...$ inline math
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\(', '\)']],
+                displayMath: [['$$', '$$'], ['\[', '\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+                ignoreHtmlClass: 'mathjax_ignore'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.staticfile.net/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+    <script src="/blog/scripts/client.js"></script>
+</body>
+</html>

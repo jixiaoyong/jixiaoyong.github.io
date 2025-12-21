@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lambda 表达式在 kotlin 中的应用 - JI,XIAOYONG's Blog</title>
+    <!-- Fonts: Use System Fonts + Merriweather/Fira via Staticfile if available or fallback -->
+    <!-- Prioritize system fonts for speed in China -->
+    <link rel="preconnect" href="https://fonts.loli.net">
+    <link rel="preconnect" href="https://gstatic.loli.net" crossorigin>
+    <link href="https://fonts.loli.net/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=Inter:wght@300;400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Icons: Staticfile CDN -->
+    <link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/blog/styles/main.css">
+    <link rel="stylesheet" href="/blog/styles/containers.css">
+
+    <!-- Highlight.js Theme (Staticfile does not have all themes, checking common ones) -->
+    <!-- Using cdnjs.cloudflare.com as fallback if staticfile misses specific themes, but staticfile usually has them -->
+    <link rel="stylesheet" href="https://cdn.staticfile.net/highlight.js/11.7.0/styles/github.min.css" id="hljs-theme">
+
+    <script>
+        // Check local storage for theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        // Language detection - simplistic redirect if on root
+        const userLang = navigator.language || navigator.userLanguage;
+        const basePath = '/blog';
+        if (window.location.pathname === basePath + '/' && userLang.startsWith('en')) {
+           window.location.href = basePath + '/en/';
+        }
+    </script>
+</head>
+<body>
+
+    
+    <header>
+        <div class="container">
+            <a href="/blog/en/" class="logo">
+                <img src="https://jixiaoyong.github.io/images/user_avatar.webp" alt="JI,XIAOYONG" class="logo-avatar">
+                JI,XIAOYONG
+            </a>
+            
+            <!-- Desktop Nav -->
+            <nav class="desktop-nav">
+                <ul>
+                    
+        <li><a href="/blog/en/"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="/blog/en/about.html"><i class="fas fa-user"></i> About</a></li>
+    
+                    <li><a href="#" onclick="switchView('search')" title="Search"><i class="fas fa-search"></i></a></li>
+                    <li><button onclick="switchLanguage()" class="theme-toggle" title="Language"><i class="fas fa-language"></i><span style="font-size:0.7rem;vertical-align:super;">En</span></button></li>
+                    <li><button onclick="toggleTheme()" class="theme-toggle" title="Theme"><i id="theme-icon" class="fas fa-adjust"></i></button></li>
+                </ul>
+            </nav>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-btn btn" onclick="toggleMobileMenu()">
+                <i id="menu-icon" class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Container (Hidden by default) -->
+        <div id="mobile-menu" class="mobile-menu hidden">
+            <ul>
+                <li><a href="/blog/en/"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/blog/en/about.html"><i class="fas fa-user"></i> About</a></li>
+                <li><a href="#" onclick="switchView('search')"><i class="fas fa-search"></i> Search</a></li>
+                <li>
+                    <button class="btn theme-toggle-mobile" onclick="switchLanguage()">
+                        <i class="fas fa-language"></i> Language: 中文
+                    </button>
+                </li>
+                <li>
+                    <button class="btn theme-toggle-mobile" onclick="toggleTheme()">
+                        <i class="fas fa-palette"></i> Theme: <span id="theme-text-mobile">Auto</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </header>
+    
+
+    <!-- Search Overlay -->
+    <div id="search-overlay" class="search-overlay hidden">
+        <button class="close-search" onclick="closeSearch()">&times;</button>
+        <div class="search-box">
+            <input type="text" id="search-input" class="search-input" placeholder="Search..." autocomplete="off">
+        </div>
+        <div id="search-results" class="search-results"></div>
+    </div>
+
+    <main class="container">
+        
+    <div id="article" class="view active article-with-toc" style="display: block;">
+        <!-- TOC Sidebar (Desktop) -->
+        <aside class="toc-sidebar" id="toc-sidebar">
+            <div class="toc-header">Table of Contents</div>
+            <nav class="toc-nav" id="toc-nav">
+                <!-- TOC items will be generated by JavaScript -->
+            </nav>
+        </aside>
+
+        <article class="blog-post">
+            <!-- 1. Header: Title & Meta -->
+            <div class="article-header-info">
+                <h1 class="article-title">Lambda 表达式在 kotlin 中的应用</h1>
+                <div class="post-meta mathjax_ignore">
+                    <span class="author">JI,XIAOYONG</span>
+                    <span class="meta-separator">•</span>
+                    <span class="publish-date mathjax_ignore">Published on 2018-02-09</span>
+                    <span class="publish-date mathjax_ignore">(Updated on 2023-12-30)</span>
+                    
+                </div>
+            </div>
+
+            <!-- 2. Content -->
+            <div class="article-content">
+                <h2>一个例子</h2>
+<p><strong>普通写法</strong>：</p>
+<ol>
+<li>定义一个接口 OnClickListener</li>
+</ol>
+<pre><code class="language-kotlin">interface ClickListener{
+    fun onClick(view: View)
+}
+</code></pre>
+<ol>
+<li>定义方法 SetOnClickListener</li>
+</ol>
+<pre><code class="language-kotlin">fun setOnCLickListener(listener: ClickListener){
+  this.listener = listener;
+}
+</code></pre>
+<p>定义的方法和 Java 中写法类似，在使用该方法时也类似：</p>
+<pre><code class="language-kotlin">var testInterface = TestInterface()
+
+testInterface.setOnCLickListener(object : TestInterface.ClickListener{
+        override fun onClick(view: View) {
+            TODO(&quot;not implemented&quot;) //To change body of created functions use File | Settings | File Templates.
+        }
+    })
+</code></pre>
+<p><strong>lambda 写法</strong>：</p>
+<p>定义只需要一步：</p>
+<pre><code class="language-kotlin">//在初始化的时初始化 listener
+class AClass(var listener : (uri:String) -&gt; Unit){...}
+
+//或者直接定义这个变量
+listener:((uri : String)-&gt; Unit)? = null
+
+//在需要用到方法时，listener 的方法，比如 onClickListener(){}
+listener.invoke(agrs)
+</code></pre>
+<p>使用起来也更加简洁：</p>
+<pre><code class="language-kotlin">var t = TestInterface{ uri: String -&gt; print(uri) }//获取对象的同时初始化 listener
+</code></pre>
+<blockquote>
+<p>方法最后一个参数是 lambda 表达式时，lambda 表达式的方法<code>{}</code>可以放到<code>()</code>的后面，如果只有这一个参数时，<code>()</code>也可以省略</p>
+</blockquote>
+<p>当方法只有一个参数时，可以省略参数，还用<code>it</code>代替：</p>
+<pre><code class="language-kotlin">testInterface.setNewOnClickListener { print(it) }
+</code></pre>
+<p>甚至更加简洁，如果要执行的方法和 listener 定义的方法返回值类型相同，可以直接引用该方法：</p>
+<pre><code class="language-kotlin">testInterface.setNewOnClickListener(::print)
+</code></pre>
+<h2>lambda</h2>
+<p>lambda 在 Java8 中引进，可以很好的替代匿名内部类，使代码更加简洁。</p>
+<p>lambda 表达式形式如下：</p>
+<pre><code class="language-kotlin">val sum = { x: Int, y: Int -&gt; x + y }
+</code></pre>
+<blockquote>
+<p>lambda 表达式总是被大括号括着，完整语法形式的参数声明放在大括号内，并有可选的类型标注，函数体跟在一个 <code>-&gt;</code> 符号之后。如果推断出的该 lambda 的返回类型不是 <code>Unit</code>，那么该 lambda 主体中的最后一个（或可能是单个）表达式会视为返回值。</p>
+<p>kotlincn.net <a href="http://www.kotlincn.net/docs/reference/lambdas.html#%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E5%92%8C-lambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F">高阶函数和 lambda 表达式</a></p>
+</blockquote>
+<p>使用 lambda 的形式如下<code>() -&gt; {}</code>,<code>()</code>内是参数，<code>{}</code>是函数具体的行为。</p>
+<pre><code class="language-java">//Java 8 方式：
+new Thread( () -&gt; System.out.println(&quot;In Java8, Lambda expression rocks !!&quot;) ).start();
+</code></pre>
+<p>这个例子来自 importNew.com,<a href="http://www.importnew.com/16436.html">Java8 lambda 表达式 10 个示例</a></p>
+<h2>小知识点</h2>
+<ul>
+<li>xx.map()</li>
+</ul>
+<p>凡是<strong>可迭代</strong>的数据都可以使用<code>map()</code>函数</p>
+<pre><code class="language-kotlin">var args: Array&lt;String&gt; = arrayOf()
+args.map {
+    print(it)
+}
+</code></pre>
+<p>还可以更简洁：</p>
+<pre><code class="language-kotlin">args.map(::print)
+//::print 表示引用该方法
+</code></pre>
+<ul>
+<li>xx.flatMap()</li>
+</ul>
+<p>返回<strong>可迭代</strong>的数组，可以和<code>xx.map()</code>一起使用</p>
+<pre><code class="language-kotlin">args.flatMap {
+    it.split(&quot; &quot;) //把字符串按照&quot; &quot;切割
+}.map{
+    print(&quot;${it.toUpperCase()}&quot;)
+}
+</code></pre>
+
+            </div>
+
+            <!-- 3. Tags -->
+            <div class="tags">
+                
+            </div>
+
+            <!-- 4. Email Comment -->
+            <div class="comment-section">
+                <p class="comment-text">Any thoughts? Feel free to discuss via email.</p>
+                <button 
+                    class="btn btn-email" 
+                    onclick="sendEmailComment('Lambda 表达式在 kotlin 中的应用', '/blog/en/posts/53875104.html')"
+                    data-email-subject="Comment on article"
+                    data-email-hello="Hi!"
+                    data-email-intro="I read your article and here are my thoughts:"
+                    data-email-fallback="Cannot open email client. Copy email address?"
+                >
+                    <i class="far fa-envelope"></i> Email Comment
+                </button>
+            </div>
+        </article>
+        
+        <!-- 5. Prev/Next Navigation -->
+        <nav class="post-nav">
+            
+            <a href="/blog/en/posts/135b2780.html" class="post-nav-item post-nav-prev">
+                <span class="post-nav-label">← Previous</span>
+                <span class="post-nav-title">Kotlin 学习笔记 1</span>
+            </a>
+            
+            
+            <a href="/blog/en/posts/b35fe0f7.html" class="post-nav-item post-nav-next">
+                <span class="post-nav-label">Next →</span>
+                <span class="post-nav-title">Android 中 WebView 使用的一些问题</span>
+            </a>
+            
+        </nav>
+    </div>
+
+    <!-- TOC Mobile Button -->
+    <button id="toc-mobile-btn" class="toc-mobile-btn" title="Table of Contents">
+        <i class="fas fa-list-ul"></i>
+    </button>
+
+    <!-- TOC Mobile Bottom Sheet -->
+    <div id="toc-bottomsheet" class="toc-bottomsheet">
+        <div class="toc-bottomsheet-overlay"></div>
+        <div class="toc-bottomsheet-content">
+            <div class="toc-bottomsheet-header">
+                <span>Table of Contents</span>
+                <button class="toc-bottomsheet-close"><i class="fas fa-times"></i></button>
+            </div>
+            <nav class="toc-bottomsheet-nav" id="toc-bottomsheet-nav">
+                <!-- TOC items will be generated by JavaScript -->
+            </nav>
+        </div>
+    </div>
+    
+    </main>
+
+    
+    <footer>
+        <div class="container">
+            <div class="footer-author">
+                <span>&copy; 2016-2025 </span>
+                <a href="https://github.com/jixiaoyong" target="_blank" rel="noopener noreferrer" title="GitHub">
+                    <i class="fab fa-github"></i>
+                    JI,XIAOYONG
+                </a>
+            </div>
+            <div>
+                <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer" class="footer-link">
+                    <i class="fab fa-creative-commons"></i> BY-NC-SA 4.0
+                </a>
+            </div>
+        </div>
+    </footer>
+    
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" title="Back to Top">
+        <i class="fas fa-rocket"></i>
+    </button>
+
+    <!-- Scripts: Staticfile CDN -->
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/dart.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/kotlin.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/gradle.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/groovy.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/yaml.min.js"></script>
+    <script>
+        // MathJax Configuration - Enable $...$ inline math
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\(', '\)']],
+                displayMath: [['$$', '$$'], ['\[', '\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+                ignoreHtmlClass: 'mathjax_ignore'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.staticfile.net/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+    <script src="/blog/scripts/client.js"></script>
+</body>
+</html>

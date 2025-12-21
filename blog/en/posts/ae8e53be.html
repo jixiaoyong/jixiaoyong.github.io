@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flutter 滑动分析之 NestedScrollView - JI,XIAOYONG's Blog</title>
+    <!-- Fonts: Use System Fonts + Merriweather/Fira via Staticfile if available or fallback -->
+    <!-- Prioritize system fonts for speed in China -->
+    <link rel="preconnect" href="https://fonts.loli.net">
+    <link rel="preconnect" href="https://gstatic.loli.net" crossorigin>
+    <link href="https://fonts.loli.net/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=Inter:wght@300;400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Icons: Staticfile CDN -->
+    <link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/blog/styles/main.css">
+    <link rel="stylesheet" href="/blog/styles/containers.css">
+
+    <!-- Highlight.js Theme (Staticfile does not have all themes, checking common ones) -->
+    <!-- Using cdnjs.cloudflare.com as fallback if staticfile misses specific themes, but staticfile usually has them -->
+    <link rel="stylesheet" href="https://cdn.staticfile.net/highlight.js/11.7.0/styles/github.min.css" id="hljs-theme">
+
+    <script>
+        // Check local storage for theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        // Language detection - simplistic redirect if on root
+        const userLang = navigator.language || navigator.userLanguage;
+        const basePath = '/blog';
+        if (window.location.pathname === basePath + '/' && userLang.startsWith('en')) {
+           window.location.href = basePath + '/en/';
+        }
+    </script>
+</head>
+<body>
+
+    
+    <header>
+        <div class="container">
+            <a href="/blog/en/" class="logo">
+                <img src="https://jixiaoyong.github.io/images/user_avatar.webp" alt="JI,XIAOYONG" class="logo-avatar">
+                JI,XIAOYONG
+            </a>
+            
+            <!-- Desktop Nav -->
+            <nav class="desktop-nav">
+                <ul>
+                    
+        <li><a href="/blog/en/"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="/blog/en/about.html"><i class="fas fa-user"></i> About</a></li>
+    
+                    <li><a href="#" onclick="switchView('search')" title="Search"><i class="fas fa-search"></i></a></li>
+                    <li><button onclick="switchLanguage()" class="theme-toggle" title="Language"><i class="fas fa-language"></i><span style="font-size:0.7rem;vertical-align:super;">En</span></button></li>
+                    <li><button onclick="toggleTheme()" class="theme-toggle" title="Theme"><i id="theme-icon" class="fas fa-adjust"></i></button></li>
+                </ul>
+            </nav>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-btn btn" onclick="toggleMobileMenu()">
+                <i id="menu-icon" class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Container (Hidden by default) -->
+        <div id="mobile-menu" class="mobile-menu hidden">
+            <ul>
+                <li><a href="/blog/en/"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/blog/en/about.html"><i class="fas fa-user"></i> About</a></li>
+                <li><a href="#" onclick="switchView('search')"><i class="fas fa-search"></i> Search</a></li>
+                <li>
+                    <button class="btn theme-toggle-mobile" onclick="switchLanguage()">
+                        <i class="fas fa-language"></i> Language: 中文
+                    </button>
+                </li>
+                <li>
+                    <button class="btn theme-toggle-mobile" onclick="toggleTheme()">
+                        <i class="fas fa-palette"></i> Theme: <span id="theme-text-mobile">Auto</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </header>
+    
+
+    <!-- Search Overlay -->
+    <div id="search-overlay" class="search-overlay hidden">
+        <button class="close-search" onclick="closeSearch()">&times;</button>
+        <div class="search-box">
+            <input type="text" id="search-input" class="search-input" placeholder="Search..." autocomplete="off">
+        </div>
+        <div id="search-results" class="search-results"></div>
+    </div>
+
+    <main class="container">
+        
+    <div id="article" class="view active article-with-toc" style="display: block;">
+        <!-- TOC Sidebar (Desktop) -->
+        <aside class="toc-sidebar" id="toc-sidebar">
+            <div class="toc-header">Table of Contents</div>
+            <nav class="toc-nav" id="toc-nav">
+                <!-- TOC items will be generated by JavaScript -->
+            </nav>
+        </aside>
+
+        <article class="blog-post">
+            <!-- 1. Header: Title & Meta -->
+            <div class="article-header-info">
+                <h1 class="article-title">Flutter 滑动分析之 NestedScrollView</h1>
+                <div class="post-meta mathjax_ignore">
+                    <span class="author">JI,XIAOYONG</span>
+                    <span class="meta-separator">•</span>
+                    <span class="publish-date mathjax_ignore">Published on 2022-07-19</span>
+                    <span class="publish-date mathjax_ignore">(Updated on 2023-12-30)</span>
+                    
+                </div>
+            </div>
+
+            <!-- 2. Content -->
+            <div class="article-content">
+                <p>Flutter 中的 scrollable widget 根据实现方式的不同，可以分为两大类：</p>
+<ul>
+<li>基于 RenderBox 的 box protocol 实现的，主要基于 Size 实现布局。常见的有<a href="https://jixiaoyong.github.io/blog/posts/d3bdcb53.html">SingleChildScrollView</a>。</li>
+<li>基于 RenderSliver 的 sliver protocol 实现的，主要基于 SliverGeometry 实现布局。比如 CustomScrollView 及其子类 ListView、GridView 等继承自<a href="https://jixiaoyong.github.io/blog/posts/60f8d92f.html">ScrollView</a>的 Widget，以及基于 CustomScrollView 的 NestedScrollView、基于 Viewport 等的 PageView、TabBarView 等直接对 SliverFillViewport 等进行封装的 Widget。</li>
+</ul>
+<p>上述所有的 scrollable widget 其底层逻辑依然是对 Scrollable 的封装，其内部处理了 ScrollController、ScrollPosition（viewport 的 offset）、ViewportBuilder（容纳滚动内容的容器）、ScrollPhysics（管理 scrollable view 的物理属性，比如是否可以滚动或弹性滚动等）、ScrollActivity（对外发出 ScrollNotification）、RawGestureDetector（手势识别）等等一系列与 scroll 有关的逻辑，从而使得其他 scrollable view 能够比较方便的实现 scroll 效果。</p>
+<p>本文只对 NestedScrollView 的源码实现做一简单分析：它是如何实现联动滚动效果，有什么优势和限制。</p>
+<p>官方对其定义是：“A scrolling view inside of which can be nested other scrolling views, with their scroll positions being intrinsically linked.”。</p>
+<p>顾名思义，NestedScrollView 是一个可以在<strong>内部嵌套其他 scrolling views 的滑动 View</strong>，按照所处位置的不同，使用<code>headerSliverBuilder</code>提供 header 部分的 scrolling views（限制只能是可以产生 RenderSliver 的 widget），而使用<code>body</code>提供在填充 header 之下所有区域的 widget（限制只能是产生 RenderBox 的 widget）。</p>
+<h2>用例</h2>
+<p>下面是一个 NestedScrollView 经典的使用方式：</p>
+<pre><code class="language-dart">  Widget build(BuildContext context) {
+    var _tabBar = TabBar(
+      isScrollable: true,
+      tabs: tabs
+          .map((e) =&gt; Tab(
+                child: Container(
+                  height: double.infinity,
+                  child: Center(child: Text(&quot;Tab$e&quot;)),
+                ),
+              ))
+          .toList(),
+    );
+    return Scaffold(
+      body: DefaultTabController(// 此处的 controller 是给 TabBar 和 TabBarView 使用的
+          length: tabs.length,
+          child: NestedScrollView(
+            headerSliverBuilder: (context, innerScroll) {
+              return [// 必须是能够产生 RenderSliver 的 Widget
+                SliverAppBar(
+                  pinned: true,
+                  toolbarHeight: 0,
+                  expandedHeight: 200,
+                  bottom: _tabBar,//在这里传入 TabBar
+                ),
+              ];
+            },
+            body: TabBarView(// body 必须是能产生 RenderBox 的 widget
+                children: tabs
+                    .map((e) =&gt; ListView(// 这里的列表滑动和 header 的滑动联动
+                          children: List.generate(
+                              100,
+                              (index) =&gt; SizedBox(
+                                  height: 80,
+                                  child: Text(&quot;Hello TabBarView $e   $index&quot;))),
+                        ))
+                    .toList()),
+          )),
+    );
+  }
+</code></pre>
+<p>在这个例子中，NestedScrollView 包括了 headerSliverBuilder 创建的 header 部分，以及 header 下面的 body 部分，二者的滑动效果联动在一起，好像是同一个 scrolling view。比如，当向上滑动 TabBarView 中列表时，会先向上滑动 header 内容，等到 header 无需再滑动才会向上滑动列表。而如果没有 NestedScrollView 的话，ListView 和 header 的滑动是独立的两个事件。</p>
+<h2>源码分析</h2>
+<p>NestedScrollView 本质上还是对 CustomScrollView（的子类_NestedScrollViewCustomScrollView）的进一步封装。</p>
+<p>它借助于_NestedScrollCoordinator 的<code>_outerController</code> 和<code>_innerController</code> 这两个分别传入_NestedScrollViewCustomScrollView（header 和 body 其实是他的 <code>slivers</code>，其最大滑动范围为 header 的 scrollExtent）和 body 中的 scrolling view（其最大滑动范围为内部滑动视图最大滑动范围之和）的 ScrollController，创建并应用_NestedScrollPosition；当用户滑动等事件发生，通过_NestedScrollViewCustomScrollView 的_NestedScrollPosition 接收外部所有的滑动事件全部归集到_NestedScrollCoordinator（比如 applyUserOffset 方法）统一处理，按照 ScrollPhysics 等分别修改 header 和 body 的 ScrollPosition，从而实现了这两处滑动事件的联动。</p>
+<p>所以，在分析 NestedScrollView 的时候，主要涉及到以下类：</p>
+<ul>
+<li><strong>NestedScrollViewState</strong>：是 NestedScrollView 真正执行逻辑的类，将_NestedScrollCoordinator、_NestedScrollViewCustomScrollView、ScrollController 等组装在一起，对外暴露操纵_NestedScrollCoordinator 的方法</li>
+<li>_NestedScrollViewCustomScrollView：继承自 CustomScrollView，主要作用是创建自定义的 NestedScrollViewViewport，后者又创建了 RenderNestedScrollViewViewport 主要用途是更新 SliverOverlapAbsorberHandle</li>
+<li><strong>_NestedScrollCoordinator</strong>：处理_NestedScrollPosition 转发过来的滑动事件，将其分发给 header（其实是容纳 header 和 body 的_NestedScrollViewCustomScrollView）和 body。</li>
+<li><strong>_NestedScrollController</strong>：给_NestedScrollCoordinator 的 inner 和 outer 的 ScrollController，内部创建_NestedScrollPosition。</li>
+<li><strong>_NestedScrollPosition</strong>：给_NestedScrollCoordinator 的 inner 和 outer 的 ScrollPosition，会将 animateTo、jumpTo、pointerScroll、updateCanDrag、hold、drag 等和滑动有关的事件转发给_NestedScrollCoordinator 统一处理。</li>
+<li>其余辅助类</li>
+</ul>
+<p>下面对这些类逐一分析：</p>
+<h3>NestedScrollViewState</h3>
+<p>NestedScrollView 是 StatefulWidget，其主要逻辑都在创建的 State——NestedScrollViewState 中。</p>
+<pre><code class="language-dart">class NestedScrollView extends StatefulWidget {
+
+  List&lt;Widget&gt; _buildSlivers(BuildContext context, ScrollController innerController, bool bodyIsScrolled) {
+    // _buildSlivers 的主轴尺寸为 header 的 scrollExtent+viewport 主轴尺寸，所以创建好的 viewport 滑动范围
+    // 为 header 的滑动 scrollExtent
+    return &lt;Widget&gt;[
+      ...headerSliverBuilder(context, bodyIsScrolled),// header 部分
+      SliverFillRemaining(//body 部分，其尺寸为所处的 viewport 的主轴尺寸
+        child: PrimaryScrollController(
+          controller: innerController,
+          child: body,// SliverFillRemaining 只能容纳可以产生 RenderBox 的 widget
+        ),
+      ),
+    ];
+  }
+
+  @override
+  NestedScrollViewState createState() =&gt; NestedScrollViewState();
+}
+</code></pre>
+<p>NestedScrollView._buildSlivers 方法将 headerSliverBuilder 创建的 header 和 body 放到一个列表中，会被 NestedScrollViewState 传入到自定义的 CustomScrollView——_NestedScrollViewCustomScrollView 中。</p>
+<p>需要注意 SliverFillRemaining 默认会创建_SliverFillRemainingWithScrollable，后者创建的 RenderObject 是_SliverFillRemainingWithScrollable。在 RenderSliverFillRemainingWithScrollable.performLayout 方法会使用他所处 viewport 主轴方向的尺寸作为自己的 scrollExtent。</p>
+<pre><code class="language-dart">  void performLayout() {
+    final SliverConstraints constraints = this.constraints;
+    final double extent = constraints.remainingPaintExtent - math.min(constraints.overlap, 0.0);
+
+    if (child != null)
+      child!.layout(constraints.asBoxConstraints(
+        minExtent: extent,
+        maxExtent: extent,
+      ));
+
+    final double paintedChildSize = calculatePaintOffset(constraints, from: 0.0, to: extent);
+    assert(paintedChildSize.isFinite);
+    assert(paintedChildSize &gt;= 0.0);
+    geometry = SliverGeometry(
+      scrollExtent: constraints.viewportMainAxisExtent,// 这里使用的是 viewport 的主轴尺寸
+      paintExtent: paintedChildSize,
+      maxPaintExtent: paintedChildSize,
+      hasVisualOverflow: extent &gt; constraints.remainingPaintExtent || constraints.scrollOffset &gt; 0.0,
+    );
+    if (child != null)
+      setChildParentData(child!, constraints, geometry!);
+  }
+</code></pre>
+<p>也就是说无论 inner scrolling view 的尺寸如何，它（下面称其为 body）占用的 scrollExtent 都是所处的 viewport 的主轴尺寸 mainAxisExtent；再加上 headerSliverBuilder 方法创建的 header，导致_NestedScrollViewCustomScrollView 所创建的 viewport 的最大可滑动范围_maxScrollExtent（其值等于 header+body 的 scrollExtent）一定大于 viewport 的主轴方向尺寸 mainAxisExtent，从而计算出_NestedScrollViewCustomScrollView 的 ScrollPosition 的最大滑动范围（maxScrollExtent）为：</p>
+<pre><code class="language-dart">_outScrollPosition.maxScrollExtent = viewport._maxScrollExtent - viewport.mainAxisExtent
+                = (body.scrollExtent + header.scrollExtent) - viewport.mainAxisExtent
+                = (viewport.mainAxisExtent + header.scrollExtent) - viewport.mainAxisExtent
+                = header.scrollExtent
+</code></pre>
+<p>所以，无论 NestedScrollView 的 body 内容尺寸如何，它为 header+body 分配的尺寸只比 viewport 的尺寸多出一个 header 的尺寸。这个也是 NestedScrollView 实现协调 header 和 body 滑动的基础。</p>
+<p>让我们再看一下 NestedScrollViewState 的实现：</p>
+<p>NestedScrollViewState 中一个重要的属性就是<code>_NestedScrollCoordinator? _coordinator</code>，它在<code>initState()</code>方法中初始化。</p>
+<pre><code class="language-dart">class NestedScrollViewState extends State&lt;NestedScrollView&gt; {
+
+  // inner 和 outer controller 都来自_coordinator
+  ScrollController get innerController =&gt; _coordinator!._innerController;
+  ScrollController get outerController =&gt; _coordinator!._outerController;
+
+  _NestedScrollCoordinator? _coordinator;
+
+  void initState() {
+    super.initState();
+    _coordinator = _NestedScrollCoordinator(
+      this,
+      widget.controller,// 注意这里传入了 widget 处获取的 controller
+      _handleHasScrolledBodyChanged,
+      widget.floatHeaderSlivers,
+    );
+  }
+
+}
+</code></pre>
+<p>能注意到，_NestedScrollCoordinator 中持有了 widget.controller，并且还会在 didChangeDependencies、didUpdateWidget 方法被调用时通过_NestedScrollCoordinator.setParent 方法更新，主要有两个作用：1. 获取 initialScrollOffset；2. 通过_outerPosition?.setParent 使得 widget.controller 可以监听 outerPosition 的变化。</p>
+<p>然后，在 NestedScrollViewState.build 方法中，会创建_NestedScrollViewCustomScrollView 对象：</p>
+<ul>
+<li><p>将_coordinator!._outerController 作为其 controller，这样会创建，_outerPosition，后者会将_NestedScrollViewCustomScrollView 的事件转发给_coordinator，这样其接管了外层的滑动事件；</p>
+</li>
+<li><p>此外在 NestedScrollView._buildSlivers 方法中创建的 header 和 body 作为_NestedScrollViewCustomScrollView 也就是 CustomScrollView 的 slivers。</p>
+<p>这也是创建 header 的<strong>NestedScrollView.headerSliverBuilder 只接受可以创建 RenderSliver 的 widget</strong>的原因。</p>
+</li>
+</ul>
+<pre><code class="language-dart">  @override
+  Widget build(BuildContext context) {
+    final ScrollPhysics scrollPhysics = widget.physics?.applyTo(const ClampingScrollPhysics())
+      ?? widget.scrollBehavior?.getScrollPhysics(context).applyTo(const ClampingScrollPhysics())
+      ?? const ClampingScrollPhysics();
+
+    return _InheritedNestedScrollView(
+      state: this,
+      child: Builder(
+        builder: (BuildContext context) {
+          _lastHasScrolledBody = _coordinator!.hasScrolledBody;
+          return _NestedScrollViewCustomScrollView(
+            dragStartBehavior: widget.dragStartBehavior,
+            scrollDirection: widget.scrollDirection,
+            reverse: widget.reverse,
+            physics: scrollPhysics,
+            scrollBehavior: widget.scrollBehavior ?? ScrollConfiguration.of(context).copyWith(scrollbars: false),
+            // 注意这里使用的从_coordinator 获取的_outerController
+            controller: _coordinator!._outerController,
+            // 这里将 header 和 body 传入 slivers，
+            // _NestedScrollViewCustomScrollView 创建的 viewport 是继承自
+            // Viewport 的 NestedScrollViewViewport，其只接受可以创建
+            // RenderSliver 的 widget
+            slivers: widget._buildSlivers(
+              context,
+              _coordinator!._innerController,
+              _lastHasScrolledBody!,
+            ),
+            handle: _absorberHandle,
+            clipBehavior: widget.clipBehavior,
+            restorationId: widget.restorationId,
+          );
+        },
+      ),
+    );
+  }
+</code></pre>
+<p>_NestedScrollViewCustomScrollView 继承自 CustomScrollView，主要作用是创建继承自 Viewport 的 NestedScrollViewViewport，而后者又主要负责创建和更新继承自 RenderViewport 的 RenderNestedScrollViewViewport——其在内部更新和维护 SliverOverlapAbsorberHandle。</p>
+<blockquote>
+<p><code>SliverOverlapAbsorberHandle</code>: Handle to provide to a <code>SliverOverlapAbsorber</code>, a <code>SliverOverlapInjector</code>, and an <code>NestedScrollViewViewport</code>, to shift overlap in a <code>NestedScrollView</code>.</p>
+</blockquote>
+<p>到目前位置，UI 展示部分的内容已经完成，我们的 NestedScrollView 可以将 header 和 body 显示在屏幕上面，但是如果要联动处理在 header 和 body 上面的滑动事件，还需要_NestedScrollCoordinator、_NestedScrollController 和_NestedScrollPosition 的配合。</p>
+<h3>_NestedScrollController</h3>
+<p>_NestedScrollController 继承自 ScrollController，其逻辑比较简单，主要添加了两项功能：</p>
+<h4>创建_NestedScrollPosition</h4>
+<p>创建_NestedScrollPosition 的逻辑比较简单，主要是将 coordinator 也一并传入。</p>
+<pre><code class="language-dart">  ScrollPosition createScrollPosition(
+    ScrollPhysics physics,
+    ScrollContext context,
+    ScrollPosition? oldPosition,
+  ) {
+    return _NestedScrollPosition(
+      coordinator: coordinator,
+      physics: physics,
+      context: context,
+      initialPixels: initialScrollOffset,
+      oldPosition: oldPosition,
+      debugLabel: debugLabel,
+    );
+  }
+</code></pre>
+<h4>在 ScrollPosition 变化时通知 coordinator</h4>
+<p>在 attach(ScrollPosition position) 中调用_scheduleUpdateShadow() 和_NestedScrollCoordinator 的 updateParent、updateCanDrag，对传入的 ScrollPosition 添加回调_scheduleUpdateShadow()。</p>
+<p>在 detach(ScrollPosition position) 中调用_scheduleUpdateShadow()，对传入的 ScrollPosition 移除回调_scheduleUpdateShadow()。</p>
+<p>而这个_scheduleUpdateShadow() 方法主要作用是异步执行 coordinator.updateShadow() 更新 NestedScrollView，实现滑动效果。</p>
+<pre><code class="language-dart">  void _scheduleUpdateShadow() {
+    // We do this asynchronously for attach() so that the new position has had
+    // time to be initialized, and we do it asynchronously for detach() and from
+    // the position change notifications because those happen synchronously
+    // during a frame, at a time where it&#39;s too late to call setState. Since the
+    // result is usually animated, the lag incurred is no big deal.
+    SchedulerBinding.instance.addPostFrameCallback(
+      (Duration timeStamp) {
+        coordinator.updateShadow();
+      },
+    );
+  }
+</code></pre>
+<h3>_NestedScrollPosition</h3>
+<p>在 inner scrolling widget 和 outer viewport 都使用_NestedScrollPosition，它追踪这些 viewport 使用的 offset，并且内部持有_NestedScrollCoordinator，所以此 class 上触发 activities 时，可以推迟或者影响 coordinator。</p>
+<pre><code class="language-dart">class _NestedScrollPosition extends ScrollPosition implements ScrollActivityDelegate {
+  final _NestedScrollCoordinator coordinator; // 协调 inner 和 outer 滑动事件
+  // 是在 NestedScrollView 中传给_NestedScrollViewCustomScrollView 的 ScrollController
+  ScrollController? _parent;
+
+  void setParent(ScrollController? value) {
+    _parent?.detach(this);
+    _parent = value;
+    _parent?.attach(this);// 将此 ScrollPosition 和_parent 绑定
+  }
+}
+</code></pre>
+<h4>setParent</h4>
+<p>_NestedScrollPosition.setParent 中，将自己和传入的 ScrollController 绑定在一起：</p>
+<ul>
+<li>将自身加入 ScrollController._positions</li>
+<li>ScrollController 监听自身变化时执行 notifyListeners 通知监听者</li>
+</ul>
+<h4>absorb</h4>
+<p>在 absorb 方法中将 activity 的 delegate 更新为当前 ScrollPosition：</p>
+<pre><code class="language-dart">  @override
+  void absorb(ScrollPosition other) {
+    super.absorb(other);
+    // 部分 activity 会使用此来操作 scroll view
+    activity!.updateDelegate(this);
+  }
+</code></pre>
+<h4>applyClampedDragUpdate</h4>
+<p>此方法返回的是没有使用的 delta，此方法不会主动创建 overscroll/underscroll，如果当前 ScrollPosition 在范围内，则不会发送 overscroll/underscroll；如果已经超出范围，则只会“减轻”这种情况，而不会“加重”。</p>
+<p>之所以不会 overscroll，是因为 min 和 max 的取值限定了他们的范围，以一个垂直方向向下布局的滑动列表为例：</p>
+<ul>
+<li><p>delat &lt; 0，即向上滑动，范围是 min：-double.infinity ~ max：0（overscroll 时）或者 maxScrollExtent 和 pixels 中最大值（只能滑到最大范围）。</p>
+<p>也就是说，向上滑动时，如果已经在顶部出现 overscroll（此时 pixels 应该为负值），那么最多滑动到 0（也就是恢复到初始位置），没有顶部 overscroll 时（此时 pixels 为正值，可能在 maxScrollExtent 范围内，也可能超出范围，即底部出现 overscroll），那么此时最多向上滑动 maxScrollExtent 和 pixels，也就是说要么不能超范围，要是超了范围，就不能再超了。</p>
+<p>而最小滑动范围为-double.infinity，无论 pixels 正负，当其 delta 为负时，其值都只会增大，取值-double.infinity 是为了将 pixels 包含在内。</p>
+</li>
+<li><p>delta &gt; 0，即向下滑动，范围是 min：minScrollExtent 和 pixels 最小值 ~ double.infinity。</p>
+<p>也就是说，向下滑动最小到初始位置，最大值不限定（因为此时可能 offset 已经由于某种原因超过 maxScrollExtent 了）。</p>
+</li>
+</ul>
+<pre><code class="language-dart">  // Returns the amount of delta that was not used.
+  // Positive delta means going down (exposing stuff above), negative delta
+  // going up (exposing stuff below).
+  double applyClampedDragUpdate(double delta) {
+    assert(delta != 0.0);
+    // If we are going towards the maxScrollExtent (negative scroll offset),
+    // then the furthest we can be in the minScrollExtent direction is negative
+    // infinity. For example, if we are already overscrolled, then scrolling to
+    // reduce the overscroll should not disallow the overscroll.
+    //
+    // If we are going towards the minScrollExtent (positive scroll offset),
+    // then the furthest we can be in the minScrollExtent direction is wherever
+    // we are now, if we are already overscrolled (in which case pixels is less
+    // than the minScrollExtent), or the minScrollExtent if we are not.
+    //
+    // In other words, we cannot, via applyClampedDragUpdate, _enter_ an
+    // overscroll situation.
+    //
+    // An overscroll situation might be nonetheless entered via several means.
+    // One is if the physics allow it, via applyFullDragUpdate (see below). An
+    // overscroll situation can also be forced, e.g. if the scroll position is
+    // artificially set using the scroll controller.
+
+    // delat &lt; 0，即向上滑动，范围是 min：-double.infinity ~ max：0
+    //（overscroll 时）或者 maxScrollExtent 和 pixels 中最大值（只能滑到最大范围）
+    // delta &gt; 0，即向下滑动，范围是 min：minScrollExtent 和 pixels 最小值 ~
+    // double.infinity（也就是说，向下滑动最小到初始位置，最大值不限定
+    // [因为此时可能 offset 已经由于某种原因超过 maxScrollExtent 了]）
+    final double min = delta &lt; 0.0
+      ? -double.infinity// 向上滑动
+      : math.min(minScrollExtent, pixels);// 向下滑动
+    // The logic for max is equivalent but on the other side.
+    // 这里的逻辑是，如果向下滑动，那么 max 为无限大；
+    // 如果向上滑动并且已经 overscroll 了，那么 max 是 0（即恢复初始位置），否则为 maxScrollExtent 即最大滑动范围
+    final double max = delta &gt; 0.0
+      ? double.infinity// 向下滑动
+      // If pixels &lt; 0.0, then we are currently in overscroll. The max should be
+      // 0.0, representing the end of the overscrolled portion.
+      // pixels 比 maxScrollExtent 大可能是由于 jumpTo 等情况，此时 max 为 pixels 表示不能继续滑动超出此值
+      : pixels &lt; 0.0 ? 0.0 : math.max(maxScrollExtent, pixels);// 向上滑动
+    final double oldPixels = pixels;
+    //newPixels 是可以应用到 ScrollPosition 的 pixels，其范围：
+    // 1. delta 为负，即向上滑动，pixels - delta = pixels + |delta| &gt; pixels，
+
+    // 1.1 当 pixels 小于 0 也就是存在 overscroll 时，其范围是 pixels + |delta|~0，
+    // 此时 overscroll 偏移量为 pixels + |delta|，newPixels 在 pixels + |delta|~0 之间，【不会再加深越界】
+    // 1.2 当 pixels 大于等于 0 也就是不存在 overscroll 时，其范围是 pixels + |delta|~maxScrollExtent
+    // 此时，newPixels 在 pixels + |delta|~maxScrollExtent 之间，最大为 maxScrollExtent【newPixels 不会越界】
+
+    // 2. delta 为正，即向下滑动，pixels - delta = pixels - |delta| &lt; pixels
+
+    // 2.1 当 pixels 小于 0 也就是存在 overscroll 时，pixels - delta = pixels - |delta| &lt; pixels，
+    // 其范围是（pixels 和 minScrollExtent 较小值）~double.infinity，也就是 delta 不会
+    // 被应用，newPixels 会等于 pixels，如果已经越界了，【不会再加深越界】
+    // 2.2 当 pixels 大于等于 0 也就是不存在 overscroll 时，其范围是 minScrollExtent~double.infinity，
+    // newPixels 会在 minScrollExtent 和 pixels 之间，【newPixels 的值不会越界】
+    final double newPixels = (pixels - delta).clamp(min, max);
+    final double clampedDelta = newPixels - pixels;// 对比 ScrollPosition 变化的值
+    // position 的 pixels 为 0 且向下滑动时这里 clampedDelta 为 0，不执行剩余步骤
+    if (clampedDelta == 0.0)
+      return delta;
+    // 返回超出界限的值 overscroll，如果为 0 表示可以任意超出界限，不为 0 表示不可以应用到
+    //ScrollPosition 上的值，根据 physics 而不同
+    final double overscroll = physics.applyBoundaryConditions(this, newPixels);
+    // 减去了 overscroll，所以这里 actualNewPixels 是真正可以应用的 pixels
+    final double actualNewPixels = newPixels - overscroll;
+    // offset 表示经过上述计算之后，ScrollPosition 实际将要产生的变化
+    final double offset = actualNewPixels - oldPixels;
+    if (offset != 0.0) {
+      // 根据 physics 的不同，这里 offset 可能会导致 ScrollPosition 内部视觉上出现越界现象，此时 overscroll 为 0，
+      // 或者没有越界内容，overscroll 为 0 或者应用了 delta 之后会出现的越界值
+      forcePixels(actualNewPixels);//更新 pixels
+      didUpdateScrollPositionBy(offset);// 发出 ScrollUpdateNotification 通知
+    }
+    // delta 为负时，offset 为正值；delta 为正值时，offset 为负值。总之 delta 绝对值减少了。
+    return delta + offset;
+  }
+</code></pre>
+<h4>applyFullDragUpdate</h4>
+<p>此方法在满足 overscroll 条件时，会应用 overscroll，并发出 OverscrollNotification 通知。</p>
+<pre><code class="language-dart">  double applyFullDragUpdate(double delta) {
+    assert(delta != 0.0);
+    final double oldPixels = pixels;
+    // Apply friction:
+    final double newPixels = pixels - physics.applyPhysicsToUserOffset(
+      this,
+      delta,
+    );
+    if (oldPixels == newPixels)// 应用 delta 之后没有变化，返回
+      return 0.0; // delta must have been so small we dropped it during floating point addition
+    // Check for overscroll:
+    // 按照 physics 的规则，如果可以 overscroll 则返回 0，下面的 actualNewPixels 会展示出越界的效果
+    // 否则返回不能消耗的 delta，会发出 overscroll 通知
+    final double overscroll = physics.applyBoundaryConditions(this, newPixels);
+    // 如果 physics 允许越界返回 overscroll 是 0，则这里 actualNewPixels 最终是越界的 pixels
+    final double actualNewPixels = newPixels - overscroll;
+    if (actualNewPixels != oldPixels) {
+      forcePixels(actualNewPixels);// 更新当前 ScrollPosition 的 pixels 值
+      didUpdateScrollPositionBy(actualNewPixels - oldPixels);
+    }
+    if (overscroll != 0.0) {
+      // 发出 overscroll 的 OverscrollNotification 通知，然后会有地方处理 overscroll
+      // 比如 Android 会触发在 ScrollableState.build 方法中的_configuration.buildOverscrollIndicator
+      // 对应的 ScrollBehavior.buildViewportChrome 创建蓝色波纹效果
+      didOverscrollBy(overscroll);
+      return overscroll;
+    }
+    return 0.0;
+  }
+</code></pre>
+<h4>applyClampedPointerSignalUpdate</h4>
+<p>applyClampedPointerSignalUpdate 方法返回未使用的 delta，不考虑 ScrollPhysics 的影响。</p>
+<h4>applyNewDimensions()</h4>
+<p>此方法是_outerScrollPosition 接管 body 滑动事件的关键，也是<strong>body 中 scrolling view 使用了自己的 ScrollController 之后 NestedScrollView 就无法协调 header 和 body 滑动</strong>的原因。</p>
+<p>在默认的 ScrollController 中，createScrollPosition() 方法创建的是 ScrollPositionWithSingleContext，当 content 或者 viewport 的尺寸变化之后会调用其 applyNewDimensions() 方法：</p>
+<pre><code class="language-dart">  // ScrollPositionWithSingleContext 类
+  void applyNewDimensions() {
+    super.applyNewDimensions();
+    // 此处的 context 一般是 ScrollableState
+    context.setCanDrag(physics.shouldAcceptUserOffset(this));
+  }
+</code></pre>
+<p>最后会调用 ScrollableState 的 setCanDrag 方法：</p>
+<pre><code class="language-dart">  // ScrollableState 类
+
+  // 识别用户手势的属性，用于 RawGestureDetector.gestures
+  Map&lt;Type, GestureRecognizerFactory&gt; _gestureRecognizers = const &lt;Type, GestureRecognizerFactory&gt;{};
+  @override
+  @protected
+  void setCanDrag(bool value) {
+    if (value == _lastCanDrag &amp;&amp; (!value || widget.axis == _lastAxisDirection))
+      return;
+    if (!value) {
+      _gestureRecognizers = const &lt;Type, GestureRecognizerFactory&gt;{};
+      // 其他方法
+    } else {
+      // 更新_gestureRecognizers 的方法
+    }
+  }
+</code></pre>
+<p>可见_gestureRecognizers 默认为空，只有主动调用 ScrollableState.setCanDrag(true) 之后滑动视图中的 Scrollable 才能识别手势并处理。</p>
+<p>而在_NesetedScrollPosition 的方法中，并没有调用，而是：</p>
+<pre><code class="language-dart">  // _NestedScrollPosition 类
+  @override
+  void applyNewDimensions() {
+    super.applyNewDimensions();
+    coordinator.updateCanDrag();
+  }
+
+  // _NestedScrollCoordinator 类
+  void updateCanDrag() {
+    if (!_outerPosition!.haveDimensions) return;
+    double maxInnerExtent = 0.0;
+    for (final _NestedScrollPosition position in _innerPositions) {
+      if (!position.haveDimensions) return;
+      maxInnerExtent = math.max(
+        maxInnerExtent,
+        position.maxScrollExtent - position.minScrollExtent,
+      );
+    }
+    // 注意这里只给_outerPosition 调用了 updateCanDrag 方法
+    _outerPosition!.updateCanDrag(maxInnerExtent);
+  }
+</code></pre>
+<p>从上述代码分析可知，如果使用默认的_NestedScrollController 创建的_NestedScrollPosition，最后只有_outerPosition 更新了_gestureRecognizers 可以识别手势，而使用_innerScrollPosition 的 body 内部的 scrolling view 无法识别手势。</p>
+<p>所以，当没有给 body 中的 scrolling view 主动设置 ScrollController 时，无论是在 header 还是 body 的手势事件都会由 ScrollPosition 来转发给_NestedScrollCoordinator 统一协调处理；而<strong>如果给 body 中的 scrolling view 主动设置 ScrollController</strong>，由于 ScrollController 默认创建的 ScrollPositionWithSingleContext 会按照实际情况更新_gestureRecognizers，<strong>从而当用户手势在 body 中 scrolling view 的范围时，手势事件会被其捕获并内部消耗，而非转发到_NestedScrollCoordinator 处理，所以就会使 NestedScrollView 失效</strong>。</p>
+<br>
+
+<p>此外还持有了_NestedScrollCoordinator，在 animateTo/jumpTo/pointerScroll/applyNewDimensions/hold/drag 等与滑动相关的方法被调用时执行_NestedScrollCoordinator 中对应的方法，这样就将 outer viewport 和 inner scrolling view 的滑动事件都归集到_NestedScrollCoordinator 统一处理。</p>
+<h3>_NestedScrollCoordinator</h3>
+<p>为了与_NestedScrollPosition 保持一致，方便接收其转发的事件，_NestedScrollCoordinator 也实现了 ScrollActivityDelegate 接口：</p>
+<pre><code class="language-dart">class _NestedScrollCoordinator implements ScrollActivityDelegate, ScrollHoldController {
+
+  final NestedScrollViewState _state;// 用于获取 NestedScrollView 的 ScrollController
+  ScrollController? _parent;// 用户传入的 NestedScrollView 的 ScrollController
+  final bool _floatHeaderSlivers;// header 是否悬浮，是的话向“下”滑动时会先将 header 滑动出来
+
+  // 分别应用于 outer（即_NestedScrollViewCustomScrollView）和 inner（即 body 中的
+  // scrolling view）的 ScrollController
+  late _NestedScrollController _outerController;
+  late _NestedScrollController _innerController;
+}
+</code></pre>
+<h4>beginActivity</h4>
+<p>beginActivity 用来对 outer 和 inner 应用 ScrollActivity，在 goIdle/goBallistic/animateTo/jumpTo/pointerScroll/drag/hold 等与滑动有关的方法中都有直接或间接的调用。</p>
+<p>其中 outer activity 是直接指定的，而 inner activity 则是根据 innerActivityGetter 和 inner position 动态计算。</p>
+<pre><code class="language-dart">  void beginActivity(ScrollActivity newOuterActivity, _NestedScrollActivityGetter innerActivityGetter) {
+    _outerPosition!.beginActivity(newOuterActivity);// outer 直接应用 ScrollActivity
+    bool scrolling = newOuterActivity.isScrolling;
+    for (final _NestedScrollPosition position in _innerPositions) {
+      // 依次遍历 inner scrolling view 计算对应的 newInnerActivity
+      final ScrollActivity newInnerActivity = innerActivityGetter(position);
+      position.beginActivity(newInnerActivity);
+      scrolling = scrolling &amp;&amp; newInnerActivity.isScrolling;
+    }
+    _currentDrag?.dispose();
+    _currentDrag = null;
+    if (!scrolling)
+      // 如果都没有滑动，就表示当前 NestedScrollView 停止
+      updateUserScrollDirection(ScrollDirection.idle);
+  }
+</code></pre>
+<p>此方法的一种使用方式如下：</p>
+<pre><code class="language-dart">  void goBallistic(double velocity) {
+    beginActivity(
+      createOuterBallisticScrollActivity(velocity),// 创建 outer activity
+      (_NestedScrollPosition position) {// 根据 position 创建 inner activity
+        return createInnerBallisticScrollActivity(
+          position,
+          velocity,
+        );
+      },
+    );
+  }
+</code></pre>
+<p>创建 outer scroll activity 的方法：</p>
+<pre><code class="language-dart">  ScrollActivity createOuterBallisticScrollActivity(double velocity) {
+    // This function creates a ballistic scroll for the outer scrollable.
+    //
+    // It assumes that the outer scrollable can&#39;t be overscrolled, and sets up a
+    // ballistic scroll over the combined space of the innerPositions and the
+    // outerPosition.
+
+    // First we must pick a representative inner position that we will care
+    // about. This is somewhat arbitrary. Ideally we&#39;d pick the one that is &quot;in
+    // the center&quot; but there isn&#39;t currently a good way to do that so we
+    // arbitrarily pick the one that is the furthest away from the infinity we
+    // are heading towards.
+    _NestedScrollPosition? innerPosition;
+    if (velocity != 0.0) {// 选择在正方向上离我们最远的 inner position
+      for (final _NestedScrollPosition position in _innerPositions) {
+        if (innerPosition != null) {
+          if (velocity &gt; 0.0) {
+            if (innerPosition.pixels &lt; position.pixels)
+              continue;
+          } else {
+            assert(velocity &lt; 0.0);
+            if (innerPosition.pixels &gt; position.pixels)
+              continue;
+          }
+        }
+        innerPosition = position;
+      }
+    }
+
+
+    if (innerPosition == null) {// 这里表示只有 outer 或者 velocity 为 0
+      // It&#39;s either just us or a velocity=0 situation.
+      return _outerPosition!.createBallisticScrollActivity(
+        _outerPosition!.physics.createBallisticSimulation(
+          _outerPosition!,
+          velocity,
+        ),
+        mode: _NestedBallisticScrollActivityMode.independent,
+      );
+    }
+
+    // 这里表示 NestedScrollView 中存在 inner 和 outer scrolling view，且 velocity 不为 0
+    // 在 innerPosition 和 outerPosition 组合的 space 之上设置 overscroll
+    final _NestedScrollMetrics metrics = _getMetrics(innerPosition, velocity);
+
+    return _outerPosition!.createBallisticScrollActivity(
+      _outerPosition!.physics.createBallisticSimulation(metrics, velocity),
+      mode: _NestedBallisticScrollActivityMode.outer,
+      metrics: metrics,
+    );
+  }
+</code></pre>
+<p>可见在计算 outer scroll activity 的时候，需判断 body 内是不是有 inner scrolling view：</p>
+<ul>
+<li>没有，按照正常创建 BallisticScrollActivity 的流程创建</li>
+<li>有，将 inner 的 space 也计入，然后以此计算 BallisticScrollActivity</li>
+</ul>
+<p>创建 inner scroll activity 的方法：</p>
+<pre><code class="language-dart">  ScrollActivity createInnerBallisticScrollActivity(_NestedScrollPosition position, double velocity) {
+    return position.createBallisticScrollActivity(
+      position.physics.createBallisticSimulation(
+        _getMetrics(position, velocity),
+        velocity,
+      ),
+      mode: _NestedBallisticScrollActivityMode.inner,
+    );
+  }
+</code></pre>
+<h4>applyUserOffset</h4>
+<p>applyUserOffset() 是_NestedScrollCoordinator 的重点，也是 NestedScrollView 能够实现协调 inner 和 outer 滑动事件的关键。</p>
+<p>在看 applyUserOffset() 方法之前，先看一下 drag() 方法，在此方法中创建 ScrollDragController 时 delegate 传入的是_NestedScrollCoordinator。</p>
+<p>当用户操作屏幕发生 drag 事件时，手势事件会被 ScrollableState 中的 RawGestureDetector 识别到：</p>
+<ul>
+<li>drag 开始时调用<code>_handleDragStart</code>，通过_NestedScrollPosition 转发调用<code>_NestedScrollCoordinator.drag</code>方法创建了<code>ScrollDragController drag</code></li>
+</ul>
+<pre><code class="language-dart">  // 此方法在 ScrollableState 中被 RawGestureDetector 通过
+  // ScrollableState._handleDragStart -&gt; _NestedScrollPosition.drag
+  // -&gt; _NestedScrollCoordinator.drag 链路调用
+  Drag drag(DragStartDetails details, VoidCallback dragCancelCallback) {
+    final ScrollDragController drag = ScrollDragController(
+      delegate: this,
+      details: details,
+      onDragCanceled: dragCancelCallback,
+    );
+    beginActivity(
+      DragScrollActivity(_outerPosition!, drag),
+      (_NestedScrollPosition position) =&gt; DragScrollActivity(position, drag),
+    );
+    assert(_currentDrag == null);
+    _currentDrag = drag;
+    return drag;
+  }
+</code></pre>
+<ul>
+<li>drag 开始时更新时<code>_handleDragUpdate</code>，内部调用<code>ScrollDragController.update</code>,在 update 方法内部执行了<code>delegate.applyUserOffset</code>，此处的<code>delegate</code>就是我们之前传入的_NestedScrollCoordinator</li>
+</ul>
+<p>根据上述分析，在用户滑动屏幕时，会执行<code>_NestedScrollCoordinator.applyUserOffset</code>方法：</p>
+<pre><code class="language-dart">  @override
+  void applyUserOffset(double delta) {
+    // 更新 scroll 方向
+    updateUserScrollDirection(
+      delta &gt; 0.0 ? ScrollDirection.forward : ScrollDirection.reverse,
+    );
+    assert(delta != 0.0);
+    if (_innerPositions.isEmpty) {
+      // 如果没有 inner（body 内部没有 scrolling view），就由 outer 完全处理滑动事件
+      _outerPosition!.applyFullDragUpdate(delta);
+    } else if (delta &lt; 0.0) {
+      // Dragging &quot;up&quot;
+      // 先恢复 inner overscroll，然后是 outer view，以便 header 内容尽快 scroll out
+      double outerDelta = delta;
+      for (final _NestedScrollPosition position in _innerPositions) {
+        if (position.pixels &lt; 0.0) { // This inner position is in overscroll.
+          // 先从 overscrolled 恢复并返回剩余没有使用的 delta
+          // 因为 delta 是负值，如果“消耗”掉了一部分，那么 potentialOuterDelta 会比 delta 大
+          final double potentialOuterDelta = position.applyClampedDragUpdate(delta);
+          // In case there are multiple positions in varying states of
+          // overscroll, the first to &#39;reach&#39; the outer view above takes
+          // precedence.此处 outerDelta 为剩余没有消耗的 delta
+          outerDelta = math.max(outerDelta, potentialOuterDelta);
+        }
+      }
+      if (outerDelta != 0.0) {
+        // 如果还有剩下的，让 outer view 消耗
+        // delta &lt; 0;所以如果 outer 有 underscroll 则会先恢复到 0 然后返回（现有限制下不会出现
+        // 此情况），否则最多可以向上滑动到 maxScrollExtent
+        final double innerDelta = _outerPosition!.applyClampedDragUpdate(
+          outerDelta,
+        );
+        if (innerDelta != 0.0) {
+          // 还有剩下的，让 inner 开始滑动
+          // 这里吧剩下的 innerDelta 完全给了 inner scroll position 的 applyFullDragUpdate 方法
+          // inner 会先向上滑动，如果 physics 支持 underscroll 会执行 underscroll，否则最多滑动
+          // 到 maxScrollExtent，然后发出 overscroll 的通知，让 Scrollable 绘制蓝色波纹（Android）
+          for (final _NestedScrollPosition position in _innerPositions)
+            position.applyFullDragUpdate(innerDelta);
+        }
+      }
+    } else {
+      // Dragging &quot;down&quot; - delta is positive
+      double innerDelta = delta;
+      // Apply delta to the outer header first if it is configured to float.
+      if (_floatHeaderSlivers)
+      // _floatHeaderSlivers 为 true，先让 outer 复现出来，最多向下滑动到 minScrollExtent
+        // 也就是恢复原位
+        innerDelta = _outerPosition!.applyClampedDragUpdate(delta);
+
+      if (innerDelta != 0.0) {
+        // Apply the innerDelta, if we have not floated in the outer scrollable,
+        // any leftover delta after this will be passed on to the outer
+        // scrollable by the outerDelta.
+        double outerDelta = 0.0; // it will go positive if it changes
+        final List&lt;double&gt; overscrolls = &lt;double&gt;[];
+        final List&lt;_NestedScrollPosition&gt; innerPositions = _innerPositions.toList();
+        // inner scrolling view 先消耗 delta
+        for (final _NestedScrollPosition position in innerPositions) {
+          // 向下滑动 inner scrolling view
+          // 如果 inner physics 不支持 overscroll，则执行完 innerDelta 之后，最多会返回未执行的 overscroll
+          // 如果支持，则会消耗完 innerDelta，这里的 overscroll 为 0
+          final double overscroll = position.applyClampedDragUpdate(innerDelta);
+          outerDelta = math.max(outerDelta, overscroll);
+          overscrolls.add(overscroll);// 保存没有被使用的 overscroll
+        }
+        if (outerDelta != 0.0)
+          // 在此处，即使设置了 outer 的 physics 为 BouncingScrollPhysics，因为当 ScrollPosition 的
+          // offset 为 0 时，applyClampedDragUpdate 不会主动从 0 变为负值，所以无法应用 underscroll 效果
+          // 此处 outerDelta-=overscroll 的结果是 outerDelta 是 outer 消耗的那一部分内容
+          outerDelta -= _outerPosition!.applyClampedDragUpdate(outerDelta);
+          // 这里 outerDelta 是剩下的 delta
+
+        // Now deal with any overscroll 最后交给 inner 处理 overscroll
+        for (int i = 0; i &lt; innerPositions.length; ++i) {
+          // 此处的 remainingDelta 是未执行的 overscroll 减去了 outer 消耗的内容
+          final double remainingDelta = overscrolls[i] - outerDelta;
+          if (remainingDelta &gt; 0.0)
+            // 如果还有剩下的 overscroll，与 physics 等结合计算之后，继续消耗（之前在
+            // applyClampedDragUpdate 无法消耗，在这里也消耗不了，不过可以发送 overscroll
+            // 的通知，让 Scrollable 知道之后做出蓝色波纹（Android 机型）等效果）
+            innerPositions[i].applyFullDragUpdate(remainingDelta);
+        }
+      }
+    }
+  }
+</code></pre>
+<p>分析为何 inner 有 scrolling view 时，NestedScrollView.physics 为 BouncingScrollPhysics() 不生效：</p>
+<p>从上述代码我们看到，可以产生 overscroll 效果的 applyFullDragUpdate 只有在 inner 中没有 scrolling view 的时候才会被_outerPosition 应用，其他两个场景都只有 inner position 应用。</p>
+<p>而其余场景中，_outerPosition 和 inner position 都应用的是 applyClampedDragUpdate 方法：</p>
+<ul>
+<li>向下滑动 delta 大于 0，代码会执行到<code>outerDelta -= _outerPosition!.applyClampedDragUpdate(outerDelta)</code>，因为此时限制了 applyClampedDragUpdate 中的 newPixels 范围为（当 ScrollPosition 的 pixels 等于 0 时）minScrollExtent~double.infinity，所以 clampedDelta = newPixels - pixels 等于 minScrollExtent（也就是 0），跳过剩余步骤直接返回了 delta。所以没有执行 BouncingScrollPhysics() 逻辑</li>
+<li>向上滑动 delta 小于 0，代码会执行<code>final double innerDelta = _outerPosition!.applyClampedDragUpdate(outerDelta,);</code>，在此方法中，如果有 overscroll 则会先恢复到 0，否则最多上划到 maxScrollExtent，所以也不会执行 BouncingScrollPhysics() 逻辑</li>
+</ul>
+<br>
+
+<p>通过上述步骤，NestedScrollView 将 header 和 body 的滚动事件进行组合、分发。</p>
+<h2>优劣对比</h2>
+<p>NestedScrollView 将 header 和 body 中可滑动 view（inner）的滑动事件组合起来：向上滑动时，先等达到 header 最大滑动范围之后，再将滑动分配给 inner 消耗；当向下滑动时，一般先恢复 inner 的 overscroll（如果_floatHeaderSlivers 为 true，会先尝试下滑 header），尝试将其恢复至 offset 为 0 的状态，再尝试将 header 向下滑动到初始位置，最后如果有 overscroll，会尝试应用到 inner 上面。</p>
+<p>CustomScrollView 也支持在同一个页面内嵌套多个滑动列表并关联（在其 slivers 中传入多个 SliverList,SliverGrid 等），但是 CustomScrollView 不支持普通的滑动 view，比如 ListView 等，这些滑动布局会内部消耗掉滑动事件，从而无法与 CustomScrollView 内其余 sliver 正常联动。</p>
+<h2>总结</h2>
+<p>NestedScrollView 内部通过 NestedScrollViewState.build() 创建继承自 CustomScrollView 的_NestedScrollViewCustomScrollView。</p>
+<p>通过 NestedScrollView._buildSlivers() 将 NestedScrollView.headerSliverBuilder 返回的 sliver 列表（下称 header）和被 SliverFillRemaining 包裹的 body 组合在一起，使得在_NestedScrollViewCustomScrollView 中创建的 viewport 的创建的_NestedScrollCoordinator.outerPosition 的_maxScrollExtent 为 NestedScrollView 的 header 的主轴尺寸，而_NestedScrollCoordinator._innerPositions 的_maxScrollExtent 则是与 body 实际内容一致。</p>
+<p>_NestedScrollViewCustomScrollView 的 ScrollController 是_NestedScrollCoordinator._outerController，其创建了_NestedScrollCoordinator.outerPosition，所以整个 NestedScrollView 的滑动事件都会通过_NestedScrollCoordinator._outerController 转到给_NestedScrollCoordinator.applyUserOffset 方法。</p>
+<p>在_NestedScrollCoordinator.applyUserOffset 方法中，根据滑动方向的不同，依次协调_NestedScrollCoordinator.outerPosition 和_NestedScrollCoordinator._innerPositions 处理用户 drag 等产生的 delta，修改这两个 ScrollPosition 的值，从而实现 header 和 body 的滑动联动。</p>
+<h2>参考资料</h2>
+<p><a href="https://api.flutter.dev/flutter/widgets/NestedScrollView-class.html">NestedScrollView_api.flutter.dev</a></p>
+
+            </div>
+
+            <!-- 3. Tags -->
+            <div class="tags">
+                
+            </div>
+
+            <!-- 4. Email Comment -->
+            <div class="comment-section">
+                <p class="comment-text">Any thoughts? Feel free to discuss via email.</p>
+                <button 
+                    class="btn btn-email" 
+                    onclick="sendEmailComment('Flutter 滑动分析之 NestedScrollView', '/blog/en/posts/ae8e53be.html')"
+                    data-email-subject="Comment on article"
+                    data-email-hello="Hi!"
+                    data-email-intro="I read your article and here are my thoughts:"
+                    data-email-fallback="Cannot open email client. Copy email address?"
+                >
+                    <i class="far fa-envelope"></i> Email Comment
+                </button>
+            </div>
+        </article>
+        
+        <!-- 5. Prev/Next Navigation -->
+        <nav class="post-nav">
+            
+            <a href="/blog/en/posts/1912667a.html" class="post-nav-item post-nav-prev">
+                <span class="post-nav-label">← Previous</span>
+                <span class="post-nav-title">Flutter 图片加载方案分析之 Image</span>
+            </a>
+            
+            
+            <a href="/blog/en/posts/60f8d92f.html" class="post-nav-item post-nav-next">
+                <span class="post-nav-label">Next →</span>
+                <span class="post-nav-title">Flutter 滑动分析之 Scrollview</span>
+            </a>
+            
+        </nav>
+    </div>
+
+    <!-- TOC Mobile Button -->
+    <button id="toc-mobile-btn" class="toc-mobile-btn" title="Table of Contents">
+        <i class="fas fa-list-ul"></i>
+    </button>
+
+    <!-- TOC Mobile Bottom Sheet -->
+    <div id="toc-bottomsheet" class="toc-bottomsheet">
+        <div class="toc-bottomsheet-overlay"></div>
+        <div class="toc-bottomsheet-content">
+            <div class="toc-bottomsheet-header">
+                <span>Table of Contents</span>
+                <button class="toc-bottomsheet-close"><i class="fas fa-times"></i></button>
+            </div>
+            <nav class="toc-bottomsheet-nav" id="toc-bottomsheet-nav">
+                <!-- TOC items will be generated by JavaScript -->
+            </nav>
+        </div>
+    </div>
+    
+    </main>
+
+    
+    <footer>
+        <div class="container">
+            <div class="footer-author">
+                <span>&copy; 2016-2025 </span>
+                <a href="https://github.com/jixiaoyong" target="_blank" rel="noopener noreferrer" title="GitHub">
+                    <i class="fab fa-github"></i>
+                    JI,XIAOYONG
+                </a>
+            </div>
+            <div>
+                <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer" class="footer-link">
+                    <i class="fab fa-creative-commons"></i> BY-NC-SA 4.0
+                </a>
+            </div>
+        </div>
+    </footer>
+    
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" title="Back to Top">
+        <i class="fas fa-rocket"></i>
+    </button>
+
+    <!-- Scripts: Staticfile CDN -->
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/dart.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/kotlin.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/gradle.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/groovy.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/yaml.min.js"></script>
+    <script>
+        // MathJax Configuration - Enable $...$ inline math
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\(', '\)']],
+                displayMath: [['$$', '$$'], ['\[', '\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+                ignoreHtmlClass: 'mathjax_ignore'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.staticfile.net/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+    <script src="/blog/scripts/client.js"></script>
+</body>
+</html>

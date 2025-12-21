@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JVM 类加载机制之 ClassLoader - JI,XIAOYONG's Blog</title>
+    <!-- Fonts: Use System Fonts + Merriweather/Fira via Staticfile if available or fallback -->
+    <!-- Prioritize system fonts for speed in China -->
+    <link rel="preconnect" href="https://fonts.loli.net">
+    <link rel="preconnect" href="https://gstatic.loli.net" crossorigin>
+    <link href="https://fonts.loli.net/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=Inter:wght@300;400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Icons: Staticfile CDN -->
+    <link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/blog/styles/main.css">
+    <link rel="stylesheet" href="/blog/styles/containers.css">
+
+    <!-- Highlight.js Theme (Staticfile does not have all themes, checking common ones) -->
+    <!-- Using cdnjs.cloudflare.com as fallback if staticfile misses specific themes, but staticfile usually has them -->
+    <link rel="stylesheet" href="https://cdn.staticfile.net/highlight.js/11.7.0/styles/github.min.css" id="hljs-theme">
+
+    <script>
+        // Check local storage for theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        // Language detection - simplistic redirect if on root
+        const userLang = navigator.language || navigator.userLanguage;
+        const basePath = '/blog';
+        if (window.location.pathname === basePath + '/' && userLang.startsWith('en')) {
+           window.location.href = basePath + '/en/';
+        }
+    </script>
+</head>
+<body>
+
+    
+    <header>
+        <div class="container">
+            <a href="/blog/en/" class="logo">
+                <img src="https://jixiaoyong.github.io/images/user_avatar.webp" alt="JI,XIAOYONG" class="logo-avatar">
+                JI,XIAOYONG
+            </a>
+            
+            <!-- Desktop Nav -->
+            <nav class="desktop-nav">
+                <ul>
+                    
+        <li><a href="/blog/en/"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="/blog/en/about.html"><i class="fas fa-user"></i> About</a></li>
+    
+                    <li><a href="#" onclick="switchView('search')" title="Search"><i class="fas fa-search"></i></a></li>
+                    <li><button onclick="switchLanguage()" class="theme-toggle" title="Language"><i class="fas fa-language"></i><span style="font-size:0.7rem;vertical-align:super;">En</span></button></li>
+                    <li><button onclick="toggleTheme()" class="theme-toggle" title="Theme"><i id="theme-icon" class="fas fa-adjust"></i></button></li>
+                </ul>
+            </nav>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-btn btn" onclick="toggleMobileMenu()">
+                <i id="menu-icon" class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Container (Hidden by default) -->
+        <div id="mobile-menu" class="mobile-menu hidden">
+            <ul>
+                <li><a href="/blog/en/"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/blog/en/about.html"><i class="fas fa-user"></i> About</a></li>
+                <li><a href="#" onclick="switchView('search')"><i class="fas fa-search"></i> Search</a></li>
+                <li>
+                    <button class="btn theme-toggle-mobile" onclick="switchLanguage()">
+                        <i class="fas fa-language"></i> Language: 中文
+                    </button>
+                </li>
+                <li>
+                    <button class="btn theme-toggle-mobile" onclick="toggleTheme()">
+                        <i class="fas fa-palette"></i> Theme: <span id="theme-text-mobile">Auto</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </header>
+    
+
+    <!-- Search Overlay -->
+    <div id="search-overlay" class="search-overlay hidden">
+        <button class="close-search" onclick="closeSearch()">&times;</button>
+        <div class="search-box">
+            <input type="text" id="search-input" class="search-input" placeholder="Search..." autocomplete="off">
+        </div>
+        <div id="search-results" class="search-results"></div>
+    </div>
+
+    <main class="container">
+        
+    <div id="article" class="view active article-with-toc" style="display: block;">
+        <!-- TOC Sidebar (Desktop) -->
+        <aside class="toc-sidebar" id="toc-sidebar">
+            <div class="toc-header">Table of Contents</div>
+            <nav class="toc-nav" id="toc-nav">
+                <!-- TOC items will be generated by JavaScript -->
+            </nav>
+        </aside>
+
+        <article class="blog-post">
+            <!-- 1. Header: Title & Meta -->
+            <div class="article-header-info">
+                <h1 class="article-title">JVM 类加载机制之 ClassLoader</h1>
+                <div class="post-meta mathjax_ignore">
+                    <span class="author">JI,XIAOYONG</span>
+                    <span class="meta-separator">•</span>
+                    <span class="publish-date mathjax_ignore">Published on 2018-04-15</span>
+                    <span class="publish-date mathjax_ignore">(Updated on 2023-12-30)</span>
+                    
+                </div>
+            </div>
+
+            <!-- 2. Content -->
+            <div class="article-content">
+                <blockquote>
+<p>本文为<a href="https://blog.csdn.net/briblue/article/details/54973413">《一看你就懂，超详细 java 中的 ClassLoader 详解 - CSDN 博客》</a>阅读笔记</p>
+</blockquote>
+<h2>简述</h2>
+<p>JVM 有三种类加载器：</p>
+<ol>
+<li><strong>BootStrap ClassLoader</strong> 启动类加载器，加载核心类库，主要加载核心类库，%JRE_HOME%\lib 下的 rt.jar、resources.jar、charsets.jar 和 class 等。</li>
+<li><strong>Extention ClassLoader</strong> 扩展类加载器，加载目录%JRE_HOME%\lib\ext 目录下的 jar 包和 class 文件。</li>
+<li><strong>App ClassLoader</strong> 应用程序加载器，加载当前应用的 classpath 的所有类。</li>
+</ol>
+<p>除以上三种外，还有用户自定义的类加载器。</p>
+<p>每个类由加载它的类加载器和类本身确定其唯一性。也就是说，类加载器不同，类肯定不同。</p>
+<h2>加载过程</h2>
+<p>在加载类时，通过**“双亲委托”<strong>机制，依次从</strong>1** -&gt; <strong>3</strong>向上查询，再从<strong>3</strong>-&gt;<strong>1</strong>依次返回结果：</p>
+<ol>
+<li>调用<code>findLoadedClass(className) </code>查询是否已经加载该类</li>
+<li>调用父加载器的<code>loadClass(className,false)</code>，若父加载器为空，则调用<code>BootStrap ClassLoader</code></li>
+<li>如果还是没有加载到该类，调用<code>findClass(className)</code></li>
+</ol>
+<p>这样子保证了每个类都是先经过最顶端的类加载器<code>BootStrap ClassLoader</code>，如果没有加载到再依次经过<code>Extention ClassLoader</code>、<code>App ClassLoader</code> 加载，确保如 String 等关键类不会被自定义的 ClassLoader 加载而导致异常。</p>
+<pre><code class="language-java">protected Class&lt;?&gt; loadClass(String name, boolean resolve)
+        throws ClassNotFoundException
+    {
+        synchronized (getClassLoadingLock(name)) {
+            // 首先，检测是否已经加载
+            Class&lt;?&gt; c = findLoadedClass(name);
+            if (c == null) {
+                long t0 = System.nanoTime();
+                try {
+                    if (parent != null) {
+                        //父加载器不为空则调用父加载器的 loadClass
+                        c = parent.loadClass(name, false);
+                    } else {
+                        //父加载器为空则调用 Bootstrap Classloader
+                        c = findBootstrapClassOrNull(name);
+                    }
+                } catch (ClassNotFoundException e) {
+                    // ClassNotFoundException thrown if class not found
+                    // from the non-null parent class loader
+                }
+
+                if (c == null) {
+                    // If still not found, then invoke findClass in order
+                    // to find the class.
+                    long t1 = System.nanoTime();
+                    //父加载器没有找到，则调用 findclass
+                    c = findClass(name);
+
+                    // this is the defining class loader; record the stats
+                    sun.misc.PerfCounter.getParentDelegationTime().addTime(t1 - t0);
+                    sun.misc.PerfCounter.getFindClassTime().addElapsedTimeFrom(t1);
+                    sun.misc.PerfCounter.getFindClasses().increment();
+                }
+            }
+            if (resolve) {
+                //调用 resolveClass()
+                resolveClass(c);
+            }
+            return c;
+        }
+    }
+</code></pre>
+<p><code>AppClassLoader</code>和<code>ExtClassLoader</code>都继承自<code>URLClassLoader</code></p>
+<p><code>AppClassLoader</code>的父加载器是<code>ExtClassLoader</code>，<code>ExtClassLoader</code>的父加载器为<code>null</code>，故而会调用<code>BootStrap ClassLoader</code></p>
+<p>ClassLoader 如果没有指定父加载器，则默认的父加载器为<code>AppClassLoader</code>，自定义 ClassLoader 也是如此。</p>
+<h2>自定义 ClassLoader</h2>
+<p>自定义 ClassLoader 一般步骤：</p>
+<ol>
+<li>继承自<code>ClassLoader</code></li>
+<li>重写<code>findClass()</code></li>
+<li>在<code>findClass()</code>方法中调用并返回<code>defineClass()</code></li>
+</ol>
+<pre><code class="language-kotlin">class MClasLoader:ClassLoader(){
+
+    override fun findClass(name: String?): Class&lt;*&gt; {
+
+        var sysDir = System.getProperty(&quot;user.dir&quot;)
+        var classPath = &quot;$sysDir/src/main/res/$name.class&quot;
+
+        var classFile = File(classPath)
+        //【注意】这里一次只读取一个字节，否则会报错 java.lang.ClassFormatError:
+        // Extra bytes at the end of class file TestClass
+        var bytes = ByteArray(1)
+        var fileInputStream = FileInputStream(classFile)
+        var len = -1
+        var byteBuffer = ByteOutputStream()
+        while (true) {
+
+            len = fileInputStream.read(bytes)
+            if (len &gt; 0) {
+                byteBuffer.write(bytes)
+            } else {
+                break
+            }
+        }
+        var byteArr = byteBuffer.toByteArray()
+        return defineClass(name,byteArr,0,byteArr.size)
+    }
+}
+
+fun main(args: Array&lt;String&gt;) {
+
+    var clazz = MClasLoader().loadClass(&quot;TestClass&quot;)
+    var say = clazz.getDeclaredMethod(&quot;say&quot;,String::class.java)
+    say.invoke(clazz.newInstance(),&quot;hello world&quot;)
+
+    print(MClasLoader().parent)
+}
+</code></pre>
+<p>而<code>defineClass()</code>则将一个字节数组转化为一个类的实例（Converts an array of bytes into an instance of class with an optional ProtectionDomain）</p>
+<h2>contextClassLoader</h2>
+<p>每个线程都有一个 ClassLoader：<code>contextClassLoader</code>，通过将其设置为自定义的 ClassLoader 可以在加载类的时候做一些特殊的事情。</p>
+<pre><code class="language-kotlin">    Thread.currentThread().contextClassLoader = MClasLoader()
+    var clazz = Class.forName(&quot;TestClass&quot;,
+            true, Thread.currentThread().contextClassLoader)
+    var say = clazz.getDeclaredMethod(&quot;say&quot;,String::class.java)
+    say.invoke(clazz.newInstance(),&quot;hello world&quot;)
+
+    println(Thread.currentThread().contextClassLoader )
+    println(Thread.currentThread().contextClassLoader.parent )
+</code></pre>
+<p>结果为：</p>
+<pre><code>hello world
+MClasLoader@1d44bcfa
+sun.misc.Launcher$AppClassLoader@18b4aac2
+</code></pre>
+
+            </div>
+
+            <!-- 3. Tags -->
+            <div class="tags">
+                
+            </div>
+
+            <!-- 4. Email Comment -->
+            <div class="comment-section">
+                <p class="comment-text">Any thoughts? Feel free to discuss via email.</p>
+                <button 
+                    class="btn btn-email" 
+                    onclick="sendEmailComment('JVM 类加载机制之 ClassLoader', '/blog/en/posts/b3994218.html')"
+                    data-email-subject="Comment on article"
+                    data-email-hello="Hi!"
+                    data-email-intro="I read your article and here are my thoughts:"
+                    data-email-fallback="Cannot open email client. Copy email address?"
+                >
+                    <i class="far fa-envelope"></i> Email Comment
+                </button>
+            </div>
+        </article>
+        
+        <!-- 5. Prev/Next Navigation -->
+        <nav class="post-nav">
+            
+            <a href="/blog/en/posts/7ee9086b.html" class="post-nav-item post-nav-prev">
+                <span class="post-nav-label">← Previous</span>
+                <span class="post-nav-title">AsyncTask 源码解析</span>
+            </a>
+            
+            
+            <a href="/blog/en/posts/8d60b485.html" class="post-nav-item post-nav-next">
+                <span class="post-nav-label">Next →</span>
+                <span class="post-nav-title">加载已安装应用、未安装 apk 中的资源</span>
+            </a>
+            
+        </nav>
+    </div>
+
+    <!-- TOC Mobile Button -->
+    <button id="toc-mobile-btn" class="toc-mobile-btn" title="Table of Contents">
+        <i class="fas fa-list-ul"></i>
+    </button>
+
+    <!-- TOC Mobile Bottom Sheet -->
+    <div id="toc-bottomsheet" class="toc-bottomsheet">
+        <div class="toc-bottomsheet-overlay"></div>
+        <div class="toc-bottomsheet-content">
+            <div class="toc-bottomsheet-header">
+                <span>Table of Contents</span>
+                <button class="toc-bottomsheet-close"><i class="fas fa-times"></i></button>
+            </div>
+            <nav class="toc-bottomsheet-nav" id="toc-bottomsheet-nav">
+                <!-- TOC items will be generated by JavaScript -->
+            </nav>
+        </div>
+    </div>
+    
+    </main>
+
+    
+    <footer>
+        <div class="container">
+            <div class="footer-author">
+                <span>&copy; 2016-2025 </span>
+                <a href="https://github.com/jixiaoyong" target="_blank" rel="noopener noreferrer" title="GitHub">
+                    <i class="fab fa-github"></i>
+                    JI,XIAOYONG
+                </a>
+            </div>
+            <div>
+                <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer" class="footer-link">
+                    <i class="fab fa-creative-commons"></i> BY-NC-SA 4.0
+                </a>
+            </div>
+        </div>
+    </footer>
+    
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" title="Back to Top">
+        <i class="fas fa-rocket"></i>
+    </button>
+
+    <!-- Scripts: Staticfile CDN -->
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/dart.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/kotlin.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/gradle.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/groovy.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/yaml.min.js"></script>
+    <script>
+        // MathJax Configuration - Enable $...$ inline math
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\(', '\)']],
+                displayMath: [['$$', '$$'], ['\[', '\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+                ignoreHtmlClass: 'mathjax_ignore'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.staticfile.net/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+    <script src="/blog/scripts/client.js"></script>
+</body>
+</html>

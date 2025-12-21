@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>加载已安装应用、未安装 apk 中的资源 - JI,XIAOYONG's Blog</title>
+    <!-- Fonts: Use System Fonts + Merriweather/Fira via Staticfile if available or fallback -->
+    <!-- Prioritize system fonts for speed in China -->
+    <link rel="preconnect" href="https://fonts.loli.net">
+    <link rel="preconnect" href="https://gstatic.loli.net" crossorigin>
+    <link href="https://fonts.loli.net/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=Inter:wght@300;400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Icons: Staticfile CDN -->
+    <link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/blog/styles/main.css">
+    <link rel="stylesheet" href="/blog/styles/containers.css">
+
+    <!-- Highlight.js Theme (Staticfile does not have all themes, checking common ones) -->
+    <!-- Using cdnjs.cloudflare.com as fallback if staticfile misses specific themes, but staticfile usually has them -->
+    <link rel="stylesheet" href="https://cdn.staticfile.net/highlight.js/11.7.0/styles/github.min.css" id="hljs-theme">
+
+    <script>
+        // Check local storage for theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        // Language detection - simplistic redirect if on root
+        const userLang = navigator.language || navigator.userLanguage;
+        const basePath = '/blog';
+        if (window.location.pathname === basePath + '/' && userLang.startsWith('en')) {
+           window.location.href = basePath + '/en/';
+        }
+    </script>
+</head>
+<body>
+
+    
+    <header>
+        <div class="container">
+            <a href="/blog/en/" class="logo">
+                <img src="https://jixiaoyong.github.io/images/user_avatar.webp" alt="JI,XIAOYONG" class="logo-avatar">
+                JI,XIAOYONG
+            </a>
+            
+            <!-- Desktop Nav -->
+            <nav class="desktop-nav">
+                <ul>
+                    
+        <li><a href="/blog/en/"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="/blog/en/about.html"><i class="fas fa-user"></i> About</a></li>
+    
+                    <li><a href="#" onclick="switchView('search')" title="Search"><i class="fas fa-search"></i></a></li>
+                    <li><button onclick="switchLanguage()" class="theme-toggle" title="Language"><i class="fas fa-language"></i><span style="font-size:0.7rem;vertical-align:super;">En</span></button></li>
+                    <li><button onclick="toggleTheme()" class="theme-toggle" title="Theme"><i id="theme-icon" class="fas fa-adjust"></i></button></li>
+                </ul>
+            </nav>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-btn btn" onclick="toggleMobileMenu()">
+                <i id="menu-icon" class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Container (Hidden by default) -->
+        <div id="mobile-menu" class="mobile-menu hidden">
+            <ul>
+                <li><a href="/blog/en/"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/blog/en/about.html"><i class="fas fa-user"></i> About</a></li>
+                <li><a href="#" onclick="switchView('search')"><i class="fas fa-search"></i> Search</a></li>
+                <li>
+                    <button class="btn theme-toggle-mobile" onclick="switchLanguage()">
+                        <i class="fas fa-language"></i> Language: 中文
+                    </button>
+                </li>
+                <li>
+                    <button class="btn theme-toggle-mobile" onclick="toggleTheme()">
+                        <i class="fas fa-palette"></i> Theme: <span id="theme-text-mobile">Auto</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </header>
+    
+
+    <!-- Search Overlay -->
+    <div id="search-overlay" class="search-overlay hidden">
+        <button class="close-search" onclick="closeSearch()">&times;</button>
+        <div class="search-box">
+            <input type="text" id="search-input" class="search-input" placeholder="Search..." autocomplete="off">
+        </div>
+        <div id="search-results" class="search-results"></div>
+    </div>
+
+    <main class="container">
+        
+    <div id="article" class="view active article-with-toc" style="display: block;">
+        <!-- TOC Sidebar (Desktop) -->
+        <aside class="toc-sidebar" id="toc-sidebar">
+            <div class="toc-header">Table of Contents</div>
+            <nav class="toc-nav" id="toc-nav">
+                <!-- TOC items will be generated by JavaScript -->
+            </nav>
+        </aside>
+
+        <article class="blog-post">
+            <!-- 1. Header: Title & Meta -->
+            <div class="article-header-info">
+                <h1 class="article-title">加载已安装应用、未安装 apk 中的资源</h1>
+                <div class="post-meta mathjax_ignore">
+                    <span class="author">JI,XIAOYONG</span>
+                    <span class="meta-separator">•</span>
+                    <span class="publish-date mathjax_ignore">Published on 2018-04-15</span>
+                    <span class="publish-date mathjax_ignore">(Updated on 2023-12-30)</span>
+                    
+                </div>
+            </div>
+
+            <!-- 2. Content -->
+            <div class="article-content">
+                <p>加载已安装应用、未安装 apk 中的资源，其思路主要是获取到对应的 ClassLoader/Context，通过 ClassLoader 加载 R.java 等类，再通过反射获取对应的资源 id 及资源。</p>
+<h2>加载已安装应用资源</h2>
+<h3>sharedUserId</h3>
+<p>在当前应用中加载已安装的其他应用资源，需要二者有相同的<code>sharedUserId</code>，这样 Android 系统为二者分配同一个 Linux 用户 ID，两个 App 可以相互访问代码、资源等。</p>
+<blockquote>
+<p>通过 Shared User id，拥有同一个 User id 的多个 APK 可以配置成运行在同一个进程中。所以默认就是可以互相访问任意数据。也可以配置成运行成不同的进程，同时可以访问其他 APK 的数据目录下的数据库和文件。就像访问本程序的数据一样。</p>
+<p><a href="https://blog.csdn.net/jiangwei0910410003/article/details/51316688">Android 逆向之旅---Android 中的 sharedUserId 属性详解 - CSDN 博客</a></p>
+</blockquote>
+<p>具体设置方法如下</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;manifest xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    package=&quot;cf.android666.dynamicloadapk&quot;
+    android:sharedUserId=&quot;cf.android666.dynamic&quot;&gt;
+&lt;/manifest&gt;
+</code></pre>
+<h3>筛选所有已安装应用信息</h3>
+<pre><code class="language-kotlin">private var packageBeanList: ArrayList&lt;PackageInfoBean&gt; = arrayListOf()
+private var packageInfoList: ArrayList&lt;PackageInfo&gt; = arrayListOf()
+
+var packageInfoList = packageManager.getInstalledPackages(PackageManager.GET_UNINSTALLED_PACKAGES) as ArrayList&lt;PackageInfo&gt;
+
+if (packageInfoList.isNotEmpty()) {
+    for (x in packageInfoList) {
+        if (x.sharedUserId != null
+            &amp;&amp; x.sharedUserId.equals(sharedUid)
+            &amp;&amp; !x.packageName.equals(packageName)) {
+            //sharedUserId 与当前 App 相同，且 packageName 和当前 App 不同的 App 信息，即插件 App
+            packageBeanList.add(PackageInfoBean(packageManager
+                                                .getApplicationLabel(x.applicationInfo).toString(), x.packageName))
+                }
+            }
+        }
+</code></pre>
+<h3>生成插件 App 的 Context</h3>
+<pre><code class="language-kotlin">activity.createPackageContext(&quot;cf.android666.pluginapp&quot;,
+        Context.CONTEXT_INCLUDE_CODE | Context.CONTEXT_IGNORE_SECURITY)
+</code></pre>
+<h3>通过 Context 反射获取插件 App 中的资源</h3>
+<pre><code class="language-kotlin">//获取 ClassLoader
+var pClassLoader = PathClassLoader(pluginContext.packageResourcePath
+                , ClassLoader.getSystemClassLoader())
+//反射获取该类及其资源
+var clazz = pluginContext.classLoader
+        .loadClass(pluginContext.packageName + &quot;.R\$mipmap&quot;)
+var abc = clazz.getField(s)
+var id = abc.getInt(R.mipmap::class.java)
+//调用插件 App 的 Context 获取其资源
+var bg = pluginContext.resources.getDrawable(id)
+</code></pre>
+<h2>加载未安装 Apk 内资源</h2>
+<h3>获取 apk 信息</h3>
+<pre><code class="language-kotlin">val sdPath = Environment.getExternalStorageDirectory().absolutePath
+val apkPath = &quot;$sdPath/plugin/plugin.apk&quot;
+var info = packageManager.getPackageArchiveInfo(apkPath, PackageManager.GET_ACTIVITIES)//获取未安装 apk 的 packageInfo
+</code></pre>
+<h3>获取 ClassLoader</h3>
+<pre><code class="language-kotlin">var file = getDir(&quot;dex&quot;, Context.MODE_PRIVATE)
+var dexClassLoader = DexClassLoader(apkPath, file.absolutePath, null, ClassLoader.getSystemClassLoader())
+</code></pre>
+<blockquote>
+<p>getDir() 调用了 Context 的 getDir()</p>
+<p>Retrieve, creating if needed, a new directory in which the application can place its own custom data files. You can use the returned File object to create and access files in this directory. Note that files created through a File object will only be accessible by your own application; you can only set the mode of the entire directory, not of individual files.</p>
+</blockquote>
+<h3>通过反射加载类，获取资源</h3>
+<pre><code class="language-kotlin">var drawableClazz = dexClassLoader.loadClass(&quot;cf.android666.pluginapp.R\$drawable&quot;)
+var onePng = drawableClazz.getDeclaredField(&quot;abc&quot;)
+var onId = onePng.getInt(R.id::class.java)//反射获取资源 id
+
+var resources = getUninstallApkResource()//resource 也是通过反射获取到
+var drawable = resources.getDrawable(onId)
+</code></pre>
+<p><code>AssetManager.addAssetPath()</code>方法是用来将 apk 等中的资源添加到<code>AssetManager</code>中，再通过其获取到<code>Resources对象</code>，这样就获取到未安装 apk 中的资源了。</p>
+<pre><code class="language-kotlin">fun getUninstallApkResource(): Resources {
+    var assetManager = AssetManager::class.java.newInstance()
+    var addAssetPath = assetManager.javaClass.getMethod(&quot;addAssetPath&quot;,String::class.java)
+    addAssetPath.invoke(assetManager, apkPath)//设置了 apkPath
+    return Resources(assetManager, resources.displayMetrics, resources.configuration)
+}
+</code></pre>
+<h2>参考资源</h2>
+<p><a href="https://www.cnblogs.com/lee0oo0/p/3665066.html">Android 之 Android apk 动态加载机制的研究（二）：资源加载和 activity 生命周期管理 - lee0oo0 - 博客园 </a></p>
+<p><a href="https://blog.csdn.net/jiangwei0910410003/article/details/51316688">Android 逆向之旅---Android 中的 sharedUserId 属性详解 - CSDN 博客</a></p>
+
+            </div>
+
+            <!-- 3. Tags -->
+            <div class="tags">
+                
+            </div>
+
+            <!-- 4. Email Comment -->
+            <div class="comment-section">
+                <p class="comment-text">Any thoughts? Feel free to discuss via email.</p>
+                <button 
+                    class="btn btn-email" 
+                    onclick="sendEmailComment('加载已安装应用、未安装 apk 中的资源', '/blog/en/posts/8d60b485.html')"
+                    data-email-subject="Comment on article"
+                    data-email-hello="Hi!"
+                    data-email-intro="I read your article and here are my thoughts:"
+                    data-email-fallback="Cannot open email client. Copy email address?"
+                >
+                    <i class="far fa-envelope"></i> Email Comment
+                </button>
+            </div>
+        </article>
+        
+        <!-- 5. Prev/Next Navigation -->
+        <nav class="post-nav">
+            
+            <a href="/blog/en/posts/b3994218.html" class="post-nav-item post-nav-prev">
+                <span class="post-nav-label">← Previous</span>
+                <span class="post-nav-title">JVM 类加载机制之 ClassLoader</span>
+            </a>
+            
+            
+            <a href="/blog/en/posts/5962504e.html" class="post-nav-item post-nav-next">
+                <span class="post-nav-label">Next →</span>
+                <span class="post-nav-title">Android 异步消息机制 Handler、Message、Looper</span>
+            </a>
+            
+        </nav>
+    </div>
+
+    <!-- TOC Mobile Button -->
+    <button id="toc-mobile-btn" class="toc-mobile-btn" title="Table of Contents">
+        <i class="fas fa-list-ul"></i>
+    </button>
+
+    <!-- TOC Mobile Bottom Sheet -->
+    <div id="toc-bottomsheet" class="toc-bottomsheet">
+        <div class="toc-bottomsheet-overlay"></div>
+        <div class="toc-bottomsheet-content">
+            <div class="toc-bottomsheet-header">
+                <span>Table of Contents</span>
+                <button class="toc-bottomsheet-close"><i class="fas fa-times"></i></button>
+            </div>
+            <nav class="toc-bottomsheet-nav" id="toc-bottomsheet-nav">
+                <!-- TOC items will be generated by JavaScript -->
+            </nav>
+        </div>
+    </div>
+    
+    </main>
+
+    
+    <footer>
+        <div class="container">
+            <div class="footer-author">
+                <span>&copy; 2016-2025 </span>
+                <a href="https://github.com/jixiaoyong" target="_blank" rel="noopener noreferrer" title="GitHub">
+                    <i class="fab fa-github"></i>
+                    JI,XIAOYONG
+                </a>
+            </div>
+            <div>
+                <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer" class="footer-link">
+                    <i class="fab fa-creative-commons"></i> BY-NC-SA 4.0
+                </a>
+            </div>
+        </div>
+    </footer>
+    
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" title="Back to Top">
+        <i class="fas fa-rocket"></i>
+    </button>
+
+    <!-- Scripts: Staticfile CDN -->
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/dart.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/kotlin.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/gradle.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/groovy.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/yaml.min.js"></script>
+    <script>
+        // MathJax Configuration - Enable $...$ inline math
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\(', '\)']],
+                displayMath: [['$$', '$$'], ['\[', '\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+                ignoreHtmlClass: 'mathjax_ignore'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.staticfile.net/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+    <script src="/blog/scripts/client.js"></script>
+</body>
+</html>

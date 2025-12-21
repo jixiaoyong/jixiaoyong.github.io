@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - JI,XIAOYONG's Blog</title>
+    <!-- Fonts: Use System Fonts + Merriweather/Fira via Staticfile if available or fallback -->
+    <!-- Prioritize system fonts for speed in China -->
+    <link rel="preconnect" href="https://fonts.loli.net">
+    <link rel="preconnect" href="https://gstatic.loli.net" crossorigin>
+    <link href="https://fonts.loli.net/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=Inter:wght@300;400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Icons: Staticfile CDN -->
+    <link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/blog/styles/main.css">
+    <link rel="stylesheet" href="/blog/styles/containers.css">
+
+    <!-- Highlight.js Theme (Staticfile does not have all themes, checking common ones) -->
+    <!-- Using cdnjs.cloudflare.com as fallback if staticfile misses specific themes, but staticfile usually has them -->
+    <link rel="stylesheet" href="https://cdn.staticfile.net/highlight.js/11.7.0/styles/github.min.css" id="hljs-theme">
+
+    <script>
+        // Check local storage for theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        // Language detection - simplistic redirect if on root
+        const userLang = navigator.language || navigator.userLanguage;
+        const basePath = '/blog';
+        if (window.location.pathname === basePath + '/' && userLang.startsWith('en')) {
+           window.location.href = basePath + '/en/';
+        }
+    </script>
+</head>
+<body>
+
+    
+    <header>
+        <div class="container">
+            <a href="/blog/en/" class="logo">
+                <img src="https://jixiaoyong.github.io/images/user_avatar.webp" alt="JI,XIAOYONG" class="logo-avatar">
+                JI,XIAOYONG
+            </a>
+            
+            <!-- Desktop Nav -->
+            <nav class="desktop-nav">
+                <ul>
+                    
+        <li><a href="/blog/en/"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="/blog/en/about.html"><i class="fas fa-user"></i> About</a></li>
+    
+                    <li><a href="#" onclick="switchView('search')" title="Search"><i class="fas fa-search"></i></a></li>
+                    <li><button onclick="switchLanguage()" class="theme-toggle" title="Language"><i class="fas fa-language"></i><span style="font-size:0.7rem;vertical-align:super;">En</span></button></li>
+                    <li><button onclick="toggleTheme()" class="theme-toggle" title="Theme"><i id="theme-icon" class="fas fa-adjust"></i></button></li>
+                </ul>
+            </nav>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-btn btn" onclick="toggleMobileMenu()">
+                <i id="menu-icon" class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Container (Hidden by default) -->
+        <div id="mobile-menu" class="mobile-menu hidden">
+            <ul>
+                <li><a href="/blog/en/"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/blog/en/about.html"><i class="fas fa-user"></i> About</a></li>
+                <li><a href="#" onclick="switchView('search')"><i class="fas fa-search"></i> Search</a></li>
+                <li>
+                    <button class="btn theme-toggle-mobile" onclick="switchLanguage()">
+                        <i class="fas fa-language"></i> Language: 中文
+                    </button>
+                </li>
+                <li>
+                    <button class="btn theme-toggle-mobile" onclick="toggleTheme()">
+                        <i class="fas fa-palette"></i> Theme: <span id="theme-text-mobile">Auto</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </header>
+    
+
+    <!-- Search Overlay -->
+    <div id="search-overlay" class="search-overlay hidden">
+        <button class="close-search" onclick="closeSearch()">&times;</button>
+        <div class="search-box">
+            <input type="text" id="search-input" class="search-input" placeholder="Search..." autocomplete="off">
+        </div>
+        <div id="search-results" class="search-results"></div>
+    </div>
+
+    <main class="container">
+        
+    <div id="about" class="view active" style="display:block">
+        
+        <div class="about-profile">
+            <img src="https://jixiaoyong.github.io/images/20191026161934.png" alt="Profile Banner" class="about-banner"/>
+            
+            <h1 class="about-title">
+                Hi 👋, I'm <a href="https://github.com/jixiaoyong" target="_blank" rel="noopener noreferrer" class="about-name">JI,XIAOYONG</a>
+                
+            </h1>
+            
+            <h3 class="about-subtitle">A developer.<br/>A man who love the world.</h3>
+            
+            <h3 class="about-section-title">Keep touch with me:</h3>
+            <p class="about-links">
+                <a href="mailto:jixiaoyong1995@gmail.com" target="_blank" rel="noopener noreferrer">
+                    <img src="https://img.shields.io/badge/gmail-jixiaoyong1995-31aa52?logo=Gmail" alt="Email"/>
+                </a>
+                <a href="https://jixiaoyong.github.io/" target="_blank" rel="noopener noreferrer">
+                    <img src="https://badgen.net/badge/%F0%9F%8C%90/jixiaoyong.github.io/cyan" alt="Website"/>
+                </a>
+                <a href="https://leetcode.com/jixiaoyong/" target="_blank" rel="noopener noreferrer">
+                    <img src="https://img.shields.io/badge/LeetCode-jixiaoyong-ffa725?logo=LeetCode" alt="LeetCode"/>
+                </a>
+                <img src="https://komarev.com/ghpvc/?username=jixiaoyong&label=Profile%20views&color=0e75b6&style=flat" alt="Profile views"/>
+            </p>
+            
+            <h3 class="about-section-title">Languages and Tools:</h3>
+            <p class="about-tools">
+                <img src="https://s3.bmp.ovh/imgs/2022/04/23/145404445e75d358.webp" alt="Flutter" class="tool-icon"/>
+                <img src="https://s3.bmp.ovh/imgs/2022/04/23/97ce58509314acd3.webp" alt="Android" class="tool-icon"/>
+                <img src="https://s3.bmp.ovh/imgs/2022/04/23/d26f3568e7f51be1.webp" alt="Dart" class="tool-icon"/>
+                <img src="https://s3.bmp.ovh/imgs/2022/04/23/00f2c6fdf1695763.webp" alt="Java" class="tool-icon"/>
+                <img src="https://s3.bmp.ovh/imgs/2022/04/23/5f6b77b74970f139.webp" alt="Kotlin" class="tool-icon"/>
+            </p>
+        </div>
+    
+        <article class="article-content about-page">
+            <p>Learning is a continuous process of exploration and accumulation, and more importantly, it requires organized summarization. I put my learning experiences and summaries here, mainly for myself to systematically consolidate the knowledge I&#39;ve learned, and also for future reference.</p>
+<h2>2025-12-21</h2>
+<p>As you can see, this is a blog hosted on GitHub. With the help of <a href="https://github.com/anthropics/claude-code">Antigravity</a>, I&#39;ve reimplemented a clean and elegant blog theme that focuses more on the content itself.</p>
+<p>Tech stack: TypeScript + pure static HTML/CSS/JS, no framework dependencies, extremely fast build speed.</p>
+<p>Thanks to the productivity revolution brought by the AI era, individual developers can quickly realize their ideas.</p>
+<h2>2023-04-06</h2>
+<p>As you can see, this is a blog hosted on GitHub, based on the hope theme of vuepress 2.0. Thanks to everyone who has contributed to the projects mentioned above - without them, this little site wouldn&#39;t exist.</p>
+<p>Before this, the blog used the NexT theme based on Hexo for about five or six years. When I was still a beginner in programming, it provided me with a decent blog. Thanks to all those friends.</p>
+<h2>2019-03-25</h2>
+<p>From now on, I&#39;ll try to avoid writing superficial articles and basic tutorials. While such articles have been very helpful during my learning process, there are already many more detailed and comprehensive articles online. There&#39;s really no need to spend time on these anymore. Going forward, I&#39;ll delve into source code and explore the implementation principles behind common usage, hoping to document my journey of improving technical abilities.</p>
+<h2>2018-02-27</h2>
+<p>During my learning journey, the internet has provided me with tremendous support and help. However, it&#39;s undeniable that there are many &quot;mutually referenced&quot; materials on the Chinese internet, which inevitably include a lot of unverified information that can be quite harmful.</p>
+<p>Today, I wasted an entire evening due to such issues. And this is just what I&#39;ve discovered with obvious errors - who knows how many others remain undetected.</p>
+<p>Unfortunately, before this, I also wrote many articles that lacked deep thinking and were simply &quot;borrowed.&quot; It&#39;s quite embarrassing. From now on, I will only write technical articles after I truly understand them, and every point must have corresponding references. I&#39;d rather write less than write carelessly. Previous articles will also need to be gradually corrected.</p>
+<p>Oops, I accidentally set a Flag. Please don&#39;t let me eat my words (￣ ε(#￣)☆╰╮(￣ ▽ ￣///).</p>
+<h2>TODO List</h2>
+<ul>
+<li>Choose the right direction</li>
+<li>Read extensively</li>
+<li>Think deeply</li>
+<li>Summarize promptly</li>
+<li>Output regularly</li>
+</ul>
+
+        </article>
+        
+        <div class="comment-section">
+            <p class="comment-prompt">Any thoughts? Feel free to discuss via email.</p>
+            <div class="comment-actions">
+                <a href="mailto:jixiaoyong1995@gmail.com?subject=About Page Feedback" class="btn btn-email">
+                    <i class="far fa-envelope"></i> Email Comment
+                </a>
+            </div>
+        </div>
+    
+    </div>
+    
+    </main>
+
+    
+    <footer>
+        <div class="container">
+            <div class="footer-author">
+                <span>&copy; 2016-2025 </span>
+                <a href="https://github.com/jixiaoyong" target="_blank" rel="noopener noreferrer" title="GitHub">
+                    <i class="fab fa-github"></i>
+                    JI,XIAOYONG
+                </a>
+            </div>
+            <div>
+                <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer" class="footer-link">
+                    <i class="fab fa-creative-commons"></i> BY-NC-SA 4.0
+                </a>
+            </div>
+        </div>
+    </footer>
+    
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" title="Back to Top">
+        <i class="fas fa-rocket"></i>
+    </button>
+
+    <!-- Scripts: Staticfile CDN -->
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/dart.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/kotlin.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/gradle.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/groovy.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/yaml.min.js"></script>
+    <script>
+        // MathJax Configuration - Enable $...$ inline math
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\(', '\)']],
+                displayMath: [['$$', '$$'], ['\[', '\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+                ignoreHtmlClass: 'mathjax_ignore'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.staticfile.net/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+    <script src="/blog/scripts/client.js"></script>
+</body>
+</html>

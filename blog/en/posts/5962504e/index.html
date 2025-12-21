@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Android 异步消息机制 Handler、Message、Looper - JI,XIAOYONG's Blog</title>
+    <!-- Fonts: Use System Fonts + Merriweather/Fira via Staticfile if available or fallback -->
+    <!-- Prioritize system fonts for speed in China -->
+    <link rel="preconnect" href="https://fonts.loli.net">
+    <link rel="preconnect" href="https://gstatic.loli.net" crossorigin>
+    <link href="https://fonts.loli.net/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=Inter:wght@300;400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Icons: Staticfile CDN -->
+    <link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/blog/styles/main.css">
+    <link rel="stylesheet" href="/blog/styles/containers.css">
+
+    <!-- Highlight.js Theme (Staticfile does not have all themes, checking common ones) -->
+    <!-- Using cdnjs.cloudflare.com as fallback if staticfile misses specific themes, but staticfile usually has them -->
+    <link rel="stylesheet" href="https://cdn.staticfile.net/highlight.js/11.7.0/styles/github.min.css" id="hljs-theme">
+
+    <script>
+        // Check local storage for theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        // Language detection - simplistic redirect if on root
+        const userLang = navigator.language || navigator.userLanguage;
+        const basePath = '/blog';
+        if (window.location.pathname === basePath + '/' && userLang.startsWith('en')) {
+           window.location.href = basePath + '/en/';
+        }
+    </script>
+</head>
+<body>
+
+    
+    <header>
+        <div class="container">
+            <a href="/blog/en/" class="logo">
+                <img src="https://jixiaoyong.github.io/images/user_avatar.webp" alt="JI,XIAOYONG" class="logo-avatar">
+                JI,XIAOYONG
+            </a>
+            
+            <!-- Desktop Nav -->
+            <nav class="desktop-nav">
+                <ul>
+                    
+        <li><a href="/blog/en/"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="/blog/en/about.html"><i class="fas fa-user"></i> About</a></li>
+    
+                    <li><a href="#" onclick="switchView('search')" title="Search"><i class="fas fa-search"></i></a></li>
+                    <li><button onclick="switchLanguage()" class="theme-toggle" title="Language"><i class="fas fa-language"></i><span style="font-size:0.7rem;vertical-align:super;">En</span></button></li>
+                    <li><button onclick="toggleTheme()" class="theme-toggle" title="Theme"><i id="theme-icon" class="fas fa-adjust"></i></button></li>
+                </ul>
+            </nav>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-btn btn" onclick="toggleMobileMenu()">
+                <i id="menu-icon" class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Container (Hidden by default) -->
+        <div id="mobile-menu" class="mobile-menu hidden">
+            <ul>
+                <li><a href="/blog/en/"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/blog/en/about.html"><i class="fas fa-user"></i> About</a></li>
+                <li><a href="#" onclick="switchView('search')"><i class="fas fa-search"></i> Search</a></li>
+                <li>
+                    <button class="btn theme-toggle-mobile" onclick="switchLanguage()">
+                        <i class="fas fa-language"></i> Language: 中文
+                    </button>
+                </li>
+                <li>
+                    <button class="btn theme-toggle-mobile" onclick="toggleTheme()">
+                        <i class="fas fa-palette"></i> Theme: <span id="theme-text-mobile">Auto</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </header>
+    
+
+    <!-- Search Overlay -->
+    <div id="search-overlay" class="search-overlay hidden">
+        <button class="close-search" onclick="closeSearch()">&times;</button>
+        <div class="search-box">
+            <input type="text" id="search-input" class="search-input" placeholder="Search..." autocomplete="off">
+        </div>
+        <div id="search-results" class="search-results"></div>
+    </div>
+
+    <main class="container">
+        
+    <div id="article" class="view active article-with-toc" style="display: block;">
+        <!-- TOC Sidebar (Desktop) -->
+        <aside class="toc-sidebar" id="toc-sidebar">
+            <div class="toc-header">Table of Contents</div>
+            <nav class="toc-nav" id="toc-nav">
+                <!-- TOC items will be generated by JavaScript -->
+            </nav>
+        </aside>
+
+        <article class="blog-post">
+            <!-- 1. Header: Title & Meta -->
+            <div class="article-header-info">
+                <h1 class="article-title">Android 异步消息机制 Handler、Message、Looper</h1>
+                <div class="post-meta mathjax_ignore">
+                    <span class="author">JI,XIAOYONG</span>
+                    <span class="meta-separator">•</span>
+                    <span class="publish-date mathjax_ignore">Published on 2018-04-01</span>
+                    <span class="publish-date mathjax_ignore">(Updated on 2023-12-30)</span>
+                    
+                </div>
+            </div>
+
+            <!-- 2. Content -->
+            <div class="article-content">
+                <blockquote>
+<p>此文为鸿洋博客阅读笔记，配合原文食用口味更佳。</p>
+<p><a href="https://blog.csdn.net/lmj623565791/article/details/38377229">Android 异步消息处理机制 让你深入理解 Looper、Handler、Message 三者关系 - CSDN 博客</a></p>
+</blockquote>
+<h2>导图</h2>
+<p><img src="https://jixiaoyong.github.io/images/20200429160005.png" alt="20200429160005"></p>
+<h2>过程分析</h2>
+<h3>Looper</h3>
+<h4><strong>Looper.perpare()</strong></h4>
+<p><code>Looper.perpare()</code>方法创建<code>Looper对象</code>（同时创建<code>MessageQueue对象</code>），并与当前线程关联保存在<code>sThreadLocal</code>中。</p>
+<pre><code class="language-java">public static final void prepare() {
+        if (sThreadLocal.get() != null) {
+            throw new RuntimeException(&quot;Only one Looper may be created per thread&quot;);
+        }
+        sThreadLocal.set(new Looper(true));
+}
+
+private Looper(boolean quitAllowed) {
+        mQueue = new MessageQueue(quitAllowed);
+        mRun = true;
+        mThread = Thread.currentThread();
+}
+</code></pre>
+<h4><strong>Looper.loop()</strong></h4>
+<p><code>Looper.loop()</code>方法获取保存的<code>Looper对象</code>并由此获取到<code>MessageQueue对象</code>。</p>
+<p>通过<code>for循环</code>，不停的通过<code>mQueue</code>获取到<code>msg</code>，并调用<code>msg.target.dispatchMessage(msg)</code>执行 msg 对应的处理方法。</p>
+<p>最后通过<code>msg.recycle()</code>回收使用完的 msg。</p>
+<pre><code class="language-java">public static void loop() {
+    final Looper me = myLooper();
+    ...
+    final MessageQueue queue = me.mQueue;
+    ...
+    for (;;) {
+        Message msg = queue.next(); // might block
+        ...
+        msg.target.dispatchMessage(msg);
+        ...
+        msg.recycle();
+    }
+  }
+</code></pre>
+<h4><strong>Looper.myLooper()</strong></h4>
+<p><code>myLooper()</code>内部调用<code>sThreadLocal</code>获取已有的<code>Looper对象</code></p>
+<pre><code>public static Looper myLooper() {
+    return sThreadLocal.get();
+}
+</code></pre>
+<p><strong>Android 的 Activity 默认在 UI 线程调用了 Looper 的<code>prepare()</code>和<code>loop()</code>方法</strong></p>
+<h3>Handler</h3>
+<h4>handler.sendMessage()</h4>
+<p>Handler 构造方法会获取到<code>mLooper</code>和<code>mQueue</code>以及<code>mCallback</code></p>
+<pre><code class="language-java"> mLooper = Looper.myLooper();
+ mQueue = mLooper.mQueue;
+ mCallback = callback;  // Handler() 中此值为 null
+</code></pre>
+<p><code>sendMessage()</code>方法最终会调用<code>sendMessageAtTime()</code>方法，在其内部调用<code>enqueueMessage()</code>方法，将 handler 赋予 msg.target，并将 msg 压入 mQueue 中</p>
+<pre><code class="language-java">//enqueueMessage 方法
+msg.target = this;
+queue.enqueueMessage(msg, uptimeMillis);//将 handler 发送的 msg 压入到当前线程的 Looper 持有的 MessageQueue 中
+</code></pre>
+<h4>handler.dispatchMessage()</h4>
+<p>Handler 的<code>dispatchMessage()</code>方法会在<code>Looper.loop()</code>中被调用</p>
+<pre><code class="language-java">public void dispatchMessage(Message msg) {
+        if (msg.callback != null) {  //msg 自带的回调方法
+            handleCallback(msg);
+        } else {
+            if (mCallback != null) {  //handler 指定的回调方法
+                if (mCallback.handleMessage(msg)) {
+                    return;
+                }
+            }
+            handleMessage(msg);  //handler 的 handleMessage() 方法
+        }
+    }
+</code></pre>
+<p>其中执行顺序是：<code>msg.callback</code> &gt; <code>mCallback</code> &gt; <code>handleMessage()</code></p>
+<h4>handler.post()</h4>
+<p><code>handler.post(new Runnable())</code>调用了<code>getPostMessage(r)</code>方法将 r 赋予 msg.callback</p>
+<pre><code class="language-java">public final boolean post(Runnable r)  {
+      return  sendMessageDelayed(getPostMessage(r), 0);
+   }
+
+private static Message getPostMessage(Runnable r) {
+      Message m = Message.obtain();
+      m.callback = r;
+      return m;
+  }
+</code></pre>
+<p>最后也是在<code>sendMessageDelayed方法</code>中调用<code>sendMessageAtTime()方法</code>将 msg 压入 MessageQueue 中</p>
+<pre><code class="language-java">public final boolean sendMessageDelayed(Message msg, long delayMillis)  {
+    ...
+    return sendMessageAtTime(msg, SystemClock.uptimeMillis() + delayMillis);
+}
+</code></pre>
+<h3>msg 的获取</h3>
+<ul>
+<li><code>Message.obtain();</code> 复用 MessageMessage 池中已有的对象，避免出现分配内存 <strong>推荐</strong></li>
+<li><code>new Message();</code></li>
+</ul>
+<h2>总结</h2>
+<p><strong>Looper</strong>在<code>prepare()</code>方法中创建<code>Looper及MessageQueue对象</code>并保存在<code>sThreadLocal</code>中，</p>
+<p>在<code>loop()</code>方法中通过<code>myLooper()</code>从<code>sThreadLocal</code>中取出<code>mLooper</code>，并由此获得<code>mQueue</code>，在 for 循环中通过<code>mQueue.next()</code>获取<code>msg</code>，用<code>msg.target.dispatchMessage()</code>方法回调<code>handler中的msg处理方法</code>。</p>
+<p><strong>Handler</strong>在<code>构造函数</code>中通过<code>Looper.myLooper()</code>获取到<code>当前线程的Looper和MessageQueue</code>；</p>
+<p><code>sendMessage()</code>方法最终通过<code>sendMessageAtTime()</code>调用<code>enqueueMessage()</code>方法<code>将msg压入到MessageQueue</code>中。</p>
+<p>至此将<em>Looper 和 Handler 通过 MessageQueue 联系在一起</em>，并共同参与处理 Message。</p>
+<p>此外<code>handler.post(runnable)</code>也是通过在<code>post()</code>内部调用<code>getPostMessage()</code>方法将<code>runnable赋予msg.callback</code>，并在<code>post()</code>中通过<code>sendMessageDelayed()</code>方法调用<code>sendMessageAtTime()方法</code>将<code>msg压入MessageQueue</code>中</p>
+
+            </div>
+
+            <!-- 3. Tags -->
+            <div class="tags">
+                
+            </div>
+
+            <!-- 4. Email Comment -->
+            <div class="comment-section">
+                <p class="comment-text">Any thoughts? Feel free to discuss via email.</p>
+                <button 
+                    class="btn btn-email" 
+                    onclick="sendEmailComment('Android 异步消息机制 Handler、Message、Looper', '/blog/en/posts/5962504e.html')"
+                    data-email-subject="Comment on article"
+                    data-email-hello="Hi!"
+                    data-email-intro="I read your article and here are my thoughts:"
+                    data-email-fallback="Cannot open email client. Copy email address?"
+                >
+                    <i class="far fa-envelope"></i> Email Comment
+                </button>
+            </div>
+        </article>
+        
+        <!-- 5. Prev/Next Navigation -->
+        <nav class="post-nav">
+            
+            <a href="/blog/en/posts/8d60b485.html" class="post-nav-item post-nav-prev">
+                <span class="post-nav-label">← Previous</span>
+                <span class="post-nav-title">加载已安装应用、未安装 apk 中的资源</span>
+            </a>
+            
+            
+            <a href="/blog/en/posts/a3a3dc4c.html" class="post-nav-item post-nav-next">
+                <span class="post-nav-label">Next →</span>
+                <span class="post-nav-title">Android 多渠道打包知识</span>
+            </a>
+            
+        </nav>
+    </div>
+
+    <!-- TOC Mobile Button -->
+    <button id="toc-mobile-btn" class="toc-mobile-btn" title="Table of Contents">
+        <i class="fas fa-list-ul"></i>
+    </button>
+
+    <!-- TOC Mobile Bottom Sheet -->
+    <div id="toc-bottomsheet" class="toc-bottomsheet">
+        <div class="toc-bottomsheet-overlay"></div>
+        <div class="toc-bottomsheet-content">
+            <div class="toc-bottomsheet-header">
+                <span>Table of Contents</span>
+                <button class="toc-bottomsheet-close"><i class="fas fa-times"></i></button>
+            </div>
+            <nav class="toc-bottomsheet-nav" id="toc-bottomsheet-nav">
+                <!-- TOC items will be generated by JavaScript -->
+            </nav>
+        </div>
+    </div>
+    
+    </main>
+
+    
+    <footer>
+        <div class="container">
+            <div class="footer-author">
+                <span>&copy; 2016-2025 </span>
+                <a href="https://github.com/jixiaoyong" target="_blank" rel="noopener noreferrer" title="GitHub">
+                    <i class="fab fa-github"></i>
+                    JI,XIAOYONG
+                </a>
+            </div>
+            <div>
+                <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer" class="footer-link">
+                    <i class="fab fa-creative-commons"></i> BY-NC-SA 4.0
+                </a>
+            </div>
+        </div>
+    </footer>
+    
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" title="Back to Top">
+        <i class="fas fa-rocket"></i>
+    </button>
+
+    <!-- Scripts: Staticfile CDN -->
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/dart.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/kotlin.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/gradle.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/groovy.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/yaml.min.js"></script>
+    <script>
+        // MathJax Configuration - Enable $...$ inline math
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\(', '\)']],
+                displayMath: [['$$', '$$'], ['\[', '\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+                ignoreHtmlClass: 'mathjax_ignore'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.staticfile.net/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+    <script src="/blog/scripts/client.js"></script>
+</body>
+</html>

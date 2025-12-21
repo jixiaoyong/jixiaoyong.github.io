@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flutter 动画分析之 CustomPaint - JI,XIAOYONG's Blog</title>
+    <!-- Fonts: Use System Fonts + Merriweather/Fira via Staticfile if available or fallback -->
+    <!-- Prioritize system fonts for speed in China -->
+    <link rel="preconnect" href="https://fonts.loli.net">
+    <link rel="preconnect" href="https://gstatic.loli.net" crossorigin>
+    <link href="https://fonts.loli.net/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=Inter:wght@300;400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Icons: Staticfile CDN -->
+    <link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/blog/styles/main.css">
+    <link rel="stylesheet" href="/blog/styles/containers.css">
+
+    <!-- Highlight.js Theme (Staticfile does not have all themes, checking common ones) -->
+    <!-- Using cdnjs.cloudflare.com as fallback if staticfile misses specific themes, but staticfile usually has them -->
+    <link rel="stylesheet" href="https://cdn.staticfile.net/highlight.js/11.7.0/styles/github.min.css" id="hljs-theme">
+
+    <script>
+        // Check local storage for theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        // Language detection - simplistic redirect if on root
+        const userLang = navigator.language || navigator.userLanguage;
+        const basePath = '/blog';
+        if (window.location.pathname === basePath + '/' && userLang.startsWith('en')) {
+           window.location.href = basePath + '/en/';
+        }
+    </script>
+</head>
+<body>
+
+    
+    <header>
+        <div class="container">
+            <a href="/blog/en/" class="logo">
+                <img src="https://jixiaoyong.github.io/images/user_avatar.webp" alt="JI,XIAOYONG" class="logo-avatar">
+                JI,XIAOYONG
+            </a>
+            
+            <!-- Desktop Nav -->
+            <nav class="desktop-nav">
+                <ul>
+                    
+        <li><a href="/blog/en/"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="/blog/en/about.html"><i class="fas fa-user"></i> About</a></li>
+    
+                    <li><a href="#" onclick="switchView('search')" title="Search"><i class="fas fa-search"></i></a></li>
+                    <li><button onclick="switchLanguage()" class="theme-toggle" title="Language"><i class="fas fa-language"></i><span style="font-size:0.7rem;vertical-align:super;">En</span></button></li>
+                    <li><button onclick="toggleTheme()" class="theme-toggle" title="Theme"><i id="theme-icon" class="fas fa-adjust"></i></button></li>
+                </ul>
+            </nav>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-btn btn" onclick="toggleMobileMenu()">
+                <i id="menu-icon" class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Container (Hidden by default) -->
+        <div id="mobile-menu" class="mobile-menu hidden">
+            <ul>
+                <li><a href="/blog/en/"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/blog/en/about.html"><i class="fas fa-user"></i> About</a></li>
+                <li><a href="#" onclick="switchView('search')"><i class="fas fa-search"></i> Search</a></li>
+                <li>
+                    <button class="btn theme-toggle-mobile" onclick="switchLanguage()">
+                        <i class="fas fa-language"></i> Language: 中文
+                    </button>
+                </li>
+                <li>
+                    <button class="btn theme-toggle-mobile" onclick="toggleTheme()">
+                        <i class="fas fa-palette"></i> Theme: <span id="theme-text-mobile">Auto</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </header>
+    
+
+    <!-- Search Overlay -->
+    <div id="search-overlay" class="search-overlay hidden">
+        <button class="close-search" onclick="closeSearch()">&times;</button>
+        <div class="search-box">
+            <input type="text" id="search-input" class="search-input" placeholder="Search..." autocomplete="off">
+        </div>
+        <div id="search-results" class="search-results"></div>
+    </div>
+
+    <main class="container">
+        
+    <div id="article" class="view active article-with-toc" style="display: block;">
+        <!-- TOC Sidebar (Desktop) -->
+        <aside class="toc-sidebar" id="toc-sidebar">
+            <div class="toc-header">Table of Contents</div>
+            <nav class="toc-nav" id="toc-nav">
+                <!-- TOC items will be generated by JavaScript -->
+            </nav>
+        </aside>
+
+        <article class="blog-post">
+            <!-- 1. Header: Title & Meta -->
+            <div class="article-header-info">
+                <h1 class="article-title">Flutter 动画分析之 CustomPaint</h1>
+                <div class="post-meta mathjax_ignore">
+                    <span class="author">JI,XIAOYONG</span>
+                    <span class="meta-separator">•</span>
+                    <span class="publish-date mathjax_ignore">Published on 2022-08-29</span>
+                    <span class="publish-date mathjax_ignore">(Updated on 2023-12-30)</span>
+                    
+                </div>
+            </div>
+
+            <!-- 2. Content -->
+            <div class="article-content">
+                <blockquote>
+<p>本文讨论的 Flutter 动画主要限定在：<em>随着每一帧的变化，修改 Flutter Widget 的大小、颜色、位置等属性，使之看起来从一种状态渐变为另外一种状态</em> 这一范围。</p>
+</blockquote>
+<p>根据之前的分析，关于 Flutter 中的 Widget 动画，大体可以分为三大类：</p>
+<ul>
+<li><p><strong>隐式动画</strong>，以 ImplicitlyAnimatedWidget 及其子类为代表。特点是当涉及到的属性变化后，这些 Widget 会 <em>自动渐变到新的属性</em>，使用者只能设置动画的 Duration、Tween、Curve 等，而无法主动终止、反向执行动画。</p>
+<p>涉及到的类主要有 TweenAnimationBuilder 以及一系列以 AnimatedFoo 命名的类。</p>
+</li>
+<li><p><strong>显式动画</strong>，以 AnimatedWidget 及其子类为代表，需要配合 AnimationController 使用。特点是 <em>当 AnimationController 的值变化时，Widget 中对应的属性也会随之变化</em>。</p>
+<p>涉及到的类主要有 AnimationBuilder/AnimatedWidget 以及一系列 FooTransition 命名的类。</p>
+</li>
+<li><p><strong>自定义动画</strong>，如果上述两种方式还无法满足需求，则可以使用 CustomPaint + CustomPainter + Listenable（比如 AnimationController）实现动画，特点是实现方式灵活，但同时也比上述两者难度高一些。</p>
+</li>
+</ul>
+<p>Flutter 中这些与动画有关的类如何选择，Flutter 官方给了一张图以供参考：</p>
+<p><img src="https://jixiaoyong.github.io/images/flutter/animate/flutter_animate_select.png" alt="如何实现 Flutter 中的动画"></p>
+<br/>
+
+<p>本文将着重分析<strong>使用 CustomPaint 实现自定义动画</strong>，涉及到的类以及他们的关系图如下：</p>
+<p><img src="https://jixiaoyong.github.io/images/flutter/paint/flutter_paint_class_struct.png" alt="CustomPaint 自定义动画"></p>
+<h2>源码分析</h2>
+<p>先来看一个使用 CustomPaint 实现的动画（动画的内容是一个反复变大又缩小的蓝色小球）：</p>
+<pre><code class="language-dart">// 1. 创建 AnimationController 用来触发 CustomPaint 绘制
+late final AnimationController _controller =
+      AnimationController(vsync: this, duration: const Duration(seconds: 5))
+        ..repeat(reverse: true);
+
+// 2. 创建自定义的 CustomPainter 类
+class _SampleCustomPainter extends CustomPainter {
+  // 注意这里给父类传入了 Listenable 类型的 repaint
+  _SampleCustomPainter(this.progress) : super(repaint: progress) {
+    _paint = ui.Paint()..color = Colors.blue;
+  }
+
+  Animation&lt;double&gt; progress;
+  late Paint _paint;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    // 在这里实现真正的绘制逻辑
+    var minSize = size.width &gt; size.height ? size.height : size.width;
+    var radius = minSize * (0.2 + 0.8 * progress.value) / 2;
+    canvas.drawCircle(size.center(Offset.zero), radius, _paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) =&gt; false;
+}
+
+// 3. 使用 CustomPaint 和 CustomPainter 等实现动画
+CustomPaint(
+    painter: _SampleCustomPainter(_controller),
+    size: const Size(100, 100),
+    )
+</code></pre>
+<p>上述代码是我们使用 CustomPaint 实现自定义动画的常见用法，接下来我们逐一分析上述涉及到的类的作用。</p>
+<h3>CustomPaint</h3>
+<blockquote>
+<p>A widget that provides a canvas on which to draw during the paint phase.</p>
+</blockquote>
+<p>CustomPaint 继承自 SingleChildRenderObjectWidget，其内部持有 CustomPainter 并将其传入创建 RenderCustomPaint 以获取 Canvas 用于绘制内容。</p>
+<pre><code class="language-dart">class CustomPaint extends SingleChildRenderObjectWidget {
+
+  const CustomPaint({
+    Key? key,
+    this.painter,// 绘制背景
+    this.foregroundPainter,// 绘制前景
+    this.size = Size.zero,// 优先取 child.Size，其为 null 才取这里的 size
+    this.isComplex = false,// 动画是否复杂到需要合成系统设置缓存
+    this.willChange = false,// 告诉光栅 raster 此 painting 是否会在下一帧变化
+    Widget? child,// 可选
+  }) : super(key: key, child: child);
+
+  RenderCustomPaint createRenderObject(BuildContext context) {...}
+}
+</code></pre>
+<p>可以看到 CustomPaint 内部并没有太多逻辑，控制 CustomPainter 绘制的主要逻辑都在 RenderCustomPaint 中。</p>
+<h3>RenderCustomPaint</h3>
+<blockquote>
+<p>Provides a canvas on which to draw during the paint phase.</p>
+</blockquote>
+<p>作为 RenderObject 的 RenderCustomPaint，负责实际计算 size、在 Flutter 框架 paint 阶段安排 painter、foregroundPainter 以及 child 的绘制。</p>
+<p>以 CustomPaint 传入的 CustomPainter? painter 为例，在 RenderCustomPaint 的构造方法中它被赋值给_painter，随后当 attach 到 RenderObject Tree 时，对 CustomPainter 添加了监听：</p>
+<pre><code class="language-dart">class RenderCustomPaint extends RenderProxyBox {
+
+  CustomPainter? get painter =&gt; _painter;
+
+  @override
+  void attach(PipelineOwner owner) {
+    super.attach(owner);
+    // 这里对 CustomPainter 添加监听，只要值变化就 markNeedsPaint
+    _painter?.addListener(markNeedsPaint);
+    _foregroundPainter?.addListener(markNeedsPaint);
+  }
+
+  @override
+  void detach() {
+    _painter?.removeListener(markNeedsPaint);
+    _foregroundPainter?.removeListener(markNeedsPaint);
+    super.detach();
+  }
+
+
+}
+</code></pre>
+<p>从上述代码可以看出，RenderCustomPaint 对 CustomPainter 添加监听，只要值变化就执行 markNeedsPaint；</p>
+<p>而如果是更新了 CustomPainter，则会执行 RenderCustomPainter.painter 方法，最终在_didUpdatePainter 方法中重写对新的 CustomPainter 添加监听以触发 markNeedsPaint：</p>
+<pre><code class="language-dart">set painter(CustomPainter? value) {
+    if (_painter == value)
+      return;
+    final CustomPainter? oldPainter = _painter;
+    _painter = value;
+    _didUpdatePainter(_painter, oldPainter);
+  }
+
+  void _didUpdatePainter(CustomPainter? newPainter, CustomPainter? oldPainter) {
+    // Check if we need to repaint.
+    if (newPainter == null) {
+      assert(oldPainter != null); // We should be called only for changes.
+      markNeedsPaint();
+    } else if (oldPainter == null ||
+        newPainter.runtimeType != oldPainter.runtimeType ||
+        newPainter.shouldRepaint(oldPainter)) {
+      markNeedsPaint();
+    }
+    if (attached) {
+      oldPainter?.removeListener(markNeedsPaint);
+      newPainter?.addListener(markNeedsPaint);
+    }
+
+    // Check if we need to rebuild semantics.
+    if (newPainter == null) {
+      assert(oldPainter != null); // We should be called only for changes.
+      if (attached)
+        markNeedsSemanticsUpdate();
+    } else if (oldPainter == null ||
+        newPainter.runtimeType != oldPainter.runtimeType ||
+        newPainter.shouldRebuildSemantics(oldPainter)) {
+      markNeedsSemanticsUpdate();
+    }
+  }
+</code></pre>
+<p>上述两种方法最终都会直接触发 paint 阶段（跳过了 build 和 layout 阶段），最终由 Flutter Framework 调用 RenderCustomPainter.paint 方法：</p>
+<pre><code class="language-dart">  @override
+  void paint(PaintingContext context, Offset offset) {
+    // 1. 先绘制背景
+    if (_painter != null) {
+      _paintWithPainter(context.canvas, offset, _painter!);
+      _setRasterCacheHints(context);
+    }
+    // 2. 再通过父类绘制 child
+    super.paint(context, offset);
+    // 3. 最后绘制前景
+    if (_foregroundPainter != null) {
+      _paintWithPainter(context.canvas, offset, _foregroundPainter!);
+      _setRasterCacheHints(context);
+    }
+  }
+
+  void _paintWithPainter(Canvas canvas, Offset offset, CustomPainter painter) {
+    late int debugPreviousCanvasSaveCount;
+    canvas.save();
+    if (offset != Offset.zero)
+      canvas.translate(offset.dx, offset.dy);
+    // 调用 CustomPainter.paint 方法绘制内容
+    painter.paint(canvas, size);
+    canvas.restore();
+  }
+</code></pre>
+<p>以上就是 RenderCustomPaint 使用 CustomPainter 实现绘制的过程，大体分为 3 部分：</p>
+<ul>
+<li>在 attach 方法中监听从 CustomPaint 传入的 CustomPainter，一旦其有变化就执行 markNeedsPaint 方法，引导 Flutter 框架重新绘制内容。</li>
+<li>如果中间通过 RenderCustomPainter.painter/foregroundPaint 更改 CustomPainter，则会重新监听以触发 markNeedsPaint。</li>
+<li>当 Flutter 框架执行重绘时，会通过 RenderCustomPaint.paint 方法最终调用 CustomPainter.paint 方法绘制内容。</li>
+</ul>
+<p>除此之外，RenderCustomPainter 还通过 computeMinIntrinsicWidth/computeMaxIntrinsicHeight 等方法计算合适的 Size，以及使用 hitTestChildren/hitTestSelf 等处理点击事件等等。</p>
+<h3>CustomPainter</h3>
+<blockquote>
+<p>The interface used by <em>CustomPaint</em> (in the widgets library) and <em>RenderCustomPaint</em> (in the rendering library).</p>
+</blockquote>
+<p>CustomPainter 提供 paint 方法让使用者使用 Canvas 绘制内容；继承自 Listenable，所以可以通过 addListener/removeListener 方法监听。</p>
+<pre><code class="language-dart">abstract class CustomPainter extends Listenable {
+  const CustomPainter({ Listenable? repaint }) : _repaint = repaint;
+
+  // 可以看到，如果 repaint 不为 null，则会监听其变化
+  final Listenable? _repaint;
+  void addListener(VoidCallback listener) =&gt; _repaint?.addListener(listener);
+  void removeListener(VoidCallback listener) =&gt; _repaint?.removeListener(listener);
+
+  // 点击事件以及语义等等，可以根据需要实现
+  bool? hitTest(Offset position) =&gt; null;
+  SemanticsBuilderCallback? get semanticsBuilder =&gt; null;
+  bool shouldRebuildSemantics(covariant CustomPainter oldDelegate) =&gt; shouldRepaint(oldDelegate);
+
+  // 子类必须实现的方法
+  bool shouldRepaint(covariant CustomPainter oldDelegate);
+  void paint(Canvas canvas, Size size);
+}
+</code></pre>
+<p>CustomPainter 有两种使用方式：</p>
+<ul>
+<li><p><strong>继承自 CustomPainter</strong>（推荐），可以传入 Listenable，这样 RenderCustomPaint 监听的便是这个 Listenable 对象。</p>
+</li>
+<li><p><strong>继承 Listenable 或其子类，并实现 CustomPainter 接口</strong>（<em>Dart 语言特性，会要求实现其所有方法属性</em>），这样监听的便是这个实现类对象本身。</p>
+</li>
+</ul>
+<p>当通知 listener 时会通过 RenderCustomPaint 执行 markNeedsPaint，触发 Flutter Framework 重新安排绘制，最终执行 CustomPainter.paint 方法重新绘制内容。</p>
+<p>无论哪种实现方式，都必须实现 shouldRepaint 和 paint 两个方法。</p>
+<ul>
+<li><p><code>bool shouldRepaint(covariant CustomPainter oldDelegate)</code> 每当新的 CustomPainter 提供给 RenderCustomPaint 时都会调用此方法，再判断是否调用 paint 方法。</p>
+<p>如果前后 CustomPainter 的信息不同影响到绘制，则应该返回 true；否则返回 false 则可能导致 paint 方法被省略。</p>
+<p>即使此方法返回 false，paint 也可能会被回调（Listenable 调用 listener 触发）；如果 size 变化等情况下会直接调用 paint 方法。</p>
+</li>
+<li><p><code>void paint(Canvas canvas, Size size)</code> 每当对象需要 paint 的时候都会调用。</p>
+<p>传入的 Canvas 的坐标系以左上角为原点，范围无限大，但 box 的大小为 size，绘制的内容应当在 size 范围内，否则可能有性能问题，可以在最开始使用 Canvas.clipRect 限制绘制范围。</p>
+</li>
+</ul>
+<h3>Canvas</h3>
+<blockquote>
+<p>An interface for recording graphical operations.</p>
+</blockquote>
+<p>当使用 PaintingContext.canvas 方法获取 Canvas 时，（如果 canvas 为 null）会创建 ui.PictureRecorder() 并以此创建 Canvas。</p>
+<pre><code class="language-dart">class PaintingContext extends ClipContext {
+  @override
+  Canvas get canvas {
+    if (_canvas == null)
+      _startRecording();
+    assert(_currentLayer != null);
+    return _canvas!;
+  }
+
+  void _startRecording() {
+    assert(!_isRecording);
+    _currentLayer = PictureLayer(estimatedBounds);
+    _recorder = ui.PictureRecorder();
+    _canvas = Canvas(_recorder!);
+    _containerLayer.append(_currentLayer!);
+  }
+}
+</code></pre>
+<blockquote>
+<p>PictureRecorder 使用 Canvas 记录图形操作的接口，在<code>PictureRecorder.endRecording</code>方法中使用其创建 Picture，后者被 SceneBuilder 用来在<code>SceneBuilder.build()</code>方法中创建 Scene。
+最终在<code>FlutterView.render</code>方法中，Scene 被 GPU 绘制在屏幕上。</p>
+</blockquote>
+<p>Canvas 有常用的方法：</p>
+<ul>
+<li><p><code>save()</code> 将当前的 transform 和 clip 等的复制保存在 save stack 上面，必须使用 <code>restore()</code>方法恢复</p>
+</li>
+<li><p><code>saveLayer()</code>，与 <code>save()</code>方法类似，但是执行以后，后续操作都是在一个新的 layer 上面进行，相当于一个独立的图层。</p>
+<p>可以通过 Paint.colorFilter、Paint.blendMode 等属性配置其与之前图层的叠加方式。
+<strong>比较耗性能</strong>，好处是可以对后续操作绘制的内容统一处理（<em>比如，单独画两个圆，然后抗锯齿会分别执行两次，可能会出现毛刺，而使用 saveLayer 后这两个圆相当于一个整体，使用抗锯齿效果会很好</em>）。</p>
+</li>
+<li><p><code>restore()</code>，pop 掉当前的 save stack，save 和 saveLayer 方法与此方法一一对应。saveLayer 创建的 layer 会和之前的 layer 合并。</p>
+</li>
+<li><p><code>translate/scale/rotate</code> 对画布进行平移、缩放、旋转操作</p>
+</li>
+<li><p><code>clipRect/clipRRect/clipPath</code> 裁剪画布的绘制范围</p>
+</li>
+<li><p><code>drawColor/drawLine/drawRRect/drawRect...</code> 等等绘制各种形状</p>
+<p>绘制文字应该使用 TextPainter，不推荐使用 drawParagraph</p>
+</li>
+<li><p><code>skew/transform</code> 倾斜/变换画布</p>
+</li>
+</ul>
+<h3>小结</h3>
+<p>到这里我们差不过分析了刚开始的 demo 涉及到的类，总结一下他们各自的角色：</p>
+<ul>
+<li><p>AnimationController 对象（也即 Listenable 对象），用来监听 Flutter Framework 的帧刷新，根据设定的时长、曲线等通知 listener，以达到控制动画的效果。</p>
+</li>
+<li><p>CustomPaint，作为 SingleChildRenderObjectWidget，主要作用是将 CustomPainter、Widget child 等各类参数传递给 RenderCustomPaint。</p>
+</li>
+<li><p>RenderCustomPainter，作为 RenderProxyBox，优先以 Widget child 的大小为准，会监听传入的 CustomPainter 对象，并在其变化时触发 Flutter Framework 安排重新绘制（跳过 build 和 layout 阶段，直接进入 paint 阶段）；</p>
+<p>当需要绘制时，会依次安排背景、child、前景的绘制。而这里的背景和前景都由传入的 CustomPainter 负责实际绘制。</p>
+</li>
+<li><p>CustomPainter，本身是 Listenable 的子类，可以被 RenderCustomPaint 监听，其 paint 方法实际负责绘制内容。</p>
+<p>使用是可以继承此类（推荐），也可以当做接口实现所有方法。</p>
+</li>
+<li><p>Canvas，Paint 则是负责实际绘制。</p>
+</li>
+</ul>
+<h2>总结</h2>
+<p>到本文为止，我们分析了 Flutter 动画实现的各种方式及其原理：</p>
+<p>Flutter Widget 动画，是<a href="https://jixiaoyong.github.io/blog/posts/6ec43bd8.html">AnimationController</a>通过 Ticker 监听 Flutter 屏幕刷新，然后根据<a href="https://jixiaoyong.github.io/blog/posts/820d6240.html">Tween/Curve</a>/Duration 等一系列参数计算出实时的值，Flutter 的 Widget 则根据这些值计算、修改对应属性从而实现动画效果。</p>
+<p>Flutter 内置的动画分为<a href="https://jixiaoyong.github.io/blog/posts/47c43abe.html">隐式动画和显式动画</a>两种，如果这些动画还无法满足需求，可以使用 CustomPaint 实现自定义动画（本文内容）。</p>
+<blockquote>
+<p>Flutter 中的<a href="https://jixiaoyong.github.io/blog/posts/62beedda.html">Hero 动画</a>便是使用显式动画中的 AnimationBuilder、Tween 等实现的。</p>
+</blockquote>
+<h2>参考资料</h2>
+<p><a href="https://api.flutter.dev/flutter/widgets/CustomPaint-class.html">CustomPaint api.flutter.dev</a></p>
+<p><a href="https://api.flutter.dev/flutter/dart-ui/Canvas-class.html">Canvas api.flutter.dev</a></p>
+<p><a href="https://stackoverflow.com/a/59650400/8389461">What is Canvas.save and Canvas.restore? stackoverflow.com</a></p>
+
+            </div>
+
+            <!-- 3. Tags -->
+            <div class="tags">
+                
+            </div>
+
+            <!-- 4. Email Comment -->
+            <div class="comment-section">
+                <p class="comment-text">Any thoughts? Feel free to discuss via email.</p>
+                <button 
+                    class="btn btn-email" 
+                    onclick="sendEmailComment('Flutter 动画分析之 CustomPaint', '/blog/en/posts/adf541c0.html')"
+                    data-email-subject="Comment on article"
+                    data-email-hello="Hi!"
+                    data-email-intro="I read your article and here are my thoughts:"
+                    data-email-fallback="Cannot open email client. Copy email address?"
+                >
+                    <i class="far fa-envelope"></i> Email Comment
+                </button>
+            </div>
+        </article>
+        
+        <!-- 5. Prev/Next Navigation -->
+        <nav class="post-nav">
+            
+            <a href="/blog/en/posts/6f46f598.html" class="post-nav-item post-nav-prev">
+                <span class="post-nav-label">← Previous</span>
+                <span class="post-nav-title">Android 架构模式一览</span>
+            </a>
+            
+            
+            <a href="/blog/en/posts/47c43abe.html" class="post-nav-item post-nav-next">
+                <span class="post-nav-label">Next →</span>
+                <span class="post-nav-title">Flutter 动画分析之 AnimatedWidget&ImplicitlyAnimatedWidget</span>
+            </a>
+            
+        </nav>
+    </div>
+
+    <!-- TOC Mobile Button -->
+    <button id="toc-mobile-btn" class="toc-mobile-btn" title="Table of Contents">
+        <i class="fas fa-list-ul"></i>
+    </button>
+
+    <!-- TOC Mobile Bottom Sheet -->
+    <div id="toc-bottomsheet" class="toc-bottomsheet">
+        <div class="toc-bottomsheet-overlay"></div>
+        <div class="toc-bottomsheet-content">
+            <div class="toc-bottomsheet-header">
+                <span>Table of Contents</span>
+                <button class="toc-bottomsheet-close"><i class="fas fa-times"></i></button>
+            </div>
+            <nav class="toc-bottomsheet-nav" id="toc-bottomsheet-nav">
+                <!-- TOC items will be generated by JavaScript -->
+            </nav>
+        </div>
+    </div>
+    
+    </main>
+
+    
+    <footer>
+        <div class="container">
+            <div class="footer-author">
+                <span>&copy; 2016-2025 </span>
+                <a href="https://github.com/jixiaoyong" target="_blank" rel="noopener noreferrer" title="GitHub">
+                    <i class="fab fa-github"></i>
+                    JI,XIAOYONG
+                </a>
+            </div>
+            <div>
+                <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer" class="footer-link">
+                    <i class="fab fa-creative-commons"></i> BY-NC-SA 4.0
+                </a>
+            </div>
+        </div>
+    </footer>
+    
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" title="Back to Top">
+        <i class="fas fa-rocket"></i>
+    </button>
+
+    <!-- Scripts: Staticfile CDN -->
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/dart.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/kotlin.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/gradle.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/groovy.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/yaml.min.js"></script>
+    <script>
+        // MathJax Configuration - Enable $...$ inline math
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\(', '\)']],
+                displayMath: [['$$', '$$'], ['\[', '\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+                ignoreHtmlClass: 'mathjax_ignore'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.staticfile.net/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+    <script src="/blog/scripts/client.js"></script>
+</body>
+</html>

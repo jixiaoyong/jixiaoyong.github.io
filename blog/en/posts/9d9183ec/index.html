@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java 笔记之序列化与反序列化：Serializable、Externalizable 和 Parcelable - JI,XIAOYONG's Blog</title>
+    <!-- Fonts: Use System Fonts + Merriweather/Fira via Staticfile if available or fallback -->
+    <!-- Prioritize system fonts for speed in China -->
+    <link rel="preconnect" href="https://fonts.loli.net">
+    <link rel="preconnect" href="https://gstatic.loli.net" crossorigin>
+    <link href="https://fonts.loli.net/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=Inter:wght@300;400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Icons: Staticfile CDN -->
+    <link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/blog/styles/main.css">
+    <link rel="stylesheet" href="/blog/styles/containers.css">
+
+    <!-- Highlight.js Theme (Staticfile does not have all themes, checking common ones) -->
+    <!-- Using cdnjs.cloudflare.com as fallback if staticfile misses specific themes, but staticfile usually has them -->
+    <link rel="stylesheet" href="https://cdn.staticfile.net/highlight.js/11.7.0/styles/github.min.css" id="hljs-theme">
+
+    <script>
+        // Check local storage for theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        // Language detection - simplistic redirect if on root
+        const userLang = navigator.language || navigator.userLanguage;
+        const basePath = '/blog';
+        if (window.location.pathname === basePath + '/' && userLang.startsWith('en')) {
+           window.location.href = basePath + '/en/';
+        }
+    </script>
+</head>
+<body>
+
+    
+    <header>
+        <div class="container">
+            <a href="/blog/en/" class="logo">
+                <img src="https://jixiaoyong.github.io/images/user_avatar.webp" alt="JI,XIAOYONG" class="logo-avatar">
+                JI,XIAOYONG
+            </a>
+            
+            <!-- Desktop Nav -->
+            <nav class="desktop-nav">
+                <ul>
+                    
+        <li><a href="/blog/en/"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="/blog/en/about.html"><i class="fas fa-user"></i> About</a></li>
+    
+                    <li><a href="#" onclick="switchView('search')" title="Search"><i class="fas fa-search"></i></a></li>
+                    <li><button onclick="switchLanguage()" class="theme-toggle" title="Language"><i class="fas fa-language"></i><span style="font-size:0.7rem;vertical-align:super;">En</span></button></li>
+                    <li><button onclick="toggleTheme()" class="theme-toggle" title="Theme"><i id="theme-icon" class="fas fa-adjust"></i></button></li>
+                </ul>
+            </nav>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-btn btn" onclick="toggleMobileMenu()">
+                <i id="menu-icon" class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Container (Hidden by default) -->
+        <div id="mobile-menu" class="mobile-menu hidden">
+            <ul>
+                <li><a href="/blog/en/"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/blog/en/about.html"><i class="fas fa-user"></i> About</a></li>
+                <li><a href="#" onclick="switchView('search')"><i class="fas fa-search"></i> Search</a></li>
+                <li>
+                    <button class="btn theme-toggle-mobile" onclick="switchLanguage()">
+                        <i class="fas fa-language"></i> Language: 中文
+                    </button>
+                </li>
+                <li>
+                    <button class="btn theme-toggle-mobile" onclick="toggleTheme()">
+                        <i class="fas fa-palette"></i> Theme: <span id="theme-text-mobile">Auto</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </header>
+    
+
+    <!-- Search Overlay -->
+    <div id="search-overlay" class="search-overlay hidden">
+        <button class="close-search" onclick="closeSearch()">&times;</button>
+        <div class="search-box">
+            <input type="text" id="search-input" class="search-input" placeholder="Search..." autocomplete="off">
+        </div>
+        <div id="search-results" class="search-results"></div>
+    </div>
+
+    <main class="container">
+        
+    <div id="article" class="view active article-with-toc" style="display: block;">
+        <!-- TOC Sidebar (Desktop) -->
+        <aside class="toc-sidebar" id="toc-sidebar">
+            <div class="toc-header">Table of Contents</div>
+            <nav class="toc-nav" id="toc-nav">
+                <!-- TOC items will be generated by JavaScript -->
+            </nav>
+        </aside>
+
+        <article class="blog-post">
+            <!-- 1. Header: Title & Meta -->
+            <div class="article-header-info">
+                <h1 class="article-title">Java 笔记之序列化与反序列化：Serializable、Externalizable 和 Parcelable</h1>
+                <div class="post-meta mathjax_ignore">
+                    <span class="author">JI,XIAOYONG</span>
+                    <span class="meta-separator">•</span>
+                    <span class="publish-date mathjax_ignore">Published on 2019-12-24</span>
+                    <span class="publish-date mathjax_ignore">(Updated on 2023-12-30)</span>
+                    
+                </div>
+            </div>
+
+            <!-- 2. Content -->
+            <div class="article-content">
+                <img src="https://images.pexels.com/photos/2881229/pexels-photo-2881229.jpeg?cs=srgb&dl=white-and-blue-cables-2881229.jpg&fm=jpg" />
+
+<p>Photo by <a href="https://www.pexels.com/@pixabay?utm_content=attributionCopyText&utm_medium=referral&utm_source=pexels">Pixabay </a> from <a href="https://www.pexels.com/photo/close-up-of-telephone-booth-257736/?utm_content=attributionCopyText&utm_medium=referral&utm_source=pexels">Pexels</a></p>
+<p><strong>序列化</strong>：指将<code>Java对象</code>转化为<code>字节流</code>以便在网络、文件中保存、传输。</p>
+<p><strong>反序列化</strong>：指的是从<code>字节流</code>中恢复<code>Java对象</code>。</p>
+<p>本文主要讨论 Android 和 Java 中实现序列化的 4 种方式，并探讨一下其实现原理。</p>
+<p>Android &amp; Java 中实现序列化的方式有：</p>
+<ul>
+<li><code>android.os.Parcelable</code> Android 平台特有，需要自己实现具体细节，性能消耗小，只能在内存中存在</li>
+<li><code>java.io.Serializable</code> 实现简单，只需要实现<code>Serializable</code>接口即可，可以输出到文件、网络等</li>
+<li><code>java.io.Externalizable</code> 需要自己实现具体细节</li>
+<li><a href="https://github.com/twitter/Serial/blob/master/README-CHINESE.rst/"><code>Twitter Serial</code></a> Twitter 出品的高性能序列化方案，它力求帮助开发者实现高性能和高可控的序列化过程。（本文不详细介绍，可以参考<a href="https://www.jianshu.com/p/1b42608478c0">这篇文章</a>）</li>
+</ul>
+<h2>Serializable</h2>
+<p><code>Serializable</code>接口没有任何方法，只是一个标记——表示这个类可以用来<code>序列化/反序列化</code>（由<code>ObjectOutputStream/ObjectInputStream</code>实现具体细节）。</p>
+<p>一个类没有实现<code>Serializable接口</code>，或者包含没有<code>实现Serializable接口的变量</code>，则会序列化失败<code>NotSerializableException</code>。</p>
+<h3>serialVersionUID</h3>
+<p>使用<code>serialVersionUID</code>标记当前<code>Serializable</code>的版本。</p>
+<p>如果没有指定，系统会自动用对象的<code>hashCode()</code>指定<code>serialVersionUID</code>，该值会在类发生改变时变化，从而导致反序列化失败。</p>
+<p>而如果<code>serialVersionUID</code>一致，即使类结构有变化，也会反序列化（给新增的变量默认值），所以最好赋予一个默认的值。</p>
+<pre><code class="language-java">//可以手动指定，也可以随机数，只要保持一致即可，如果不一致则会使反序列化失败
+ANY-ACCESS-MODIFIER static final long serialVersionUID = 1L;
+</code></pre>
+<h3>readResolve()</h3>
+<p>如果<code>class</code>实现了<code>readResolve()</code>方法，会在反序列化时用到并返回这里提供的对象（反序列化得到的对象会被丢弃）。</p>
+<pre><code class="language-java">// 1. 反序列化
+SerializableClass serializableClass = (SerializableClass) objectInputStream.readObject();
+// 2.readObject() 内部调用了 readObject0(false):
+private Object readObject0(boolean unshared) throws IOException {
+        // ...
+
+        try {
+            switch (tc) {
+                // 这里匹配了 TC_NULL,TC_REFERENCE,TC_CLASS,TC_CLASSDESC,
+                // TC_PROXYCLASSDESC,TC_STRING,TC_LONGSTRING,TC_ARRAY,TC_ENUM
+                // TC_EXCEPTION,TC_BLOCKDATA,TC_BLOCKDATALONG,TC_ENDBLOCKDATA 等等类型
+
+                case TC_OBJECT://如果是 OBECJT 类型，就调用下面的方法👇
+                    return checkResolve(readOrdinaryObject(unshared));
+                // ...
+                default:
+                    throw new StreamCorruptedException(
+                        String.format(&quot;invalid type code: %02X&quot;, tc));
+            }
+        } finally {
+            depth--;
+            bin.setBlockDataMode(oldMode);
+        }
+    }
+// 3. 在这里会检测是否存在 readResolve() 方法，有的话就返回从 readResolve() 获取的对象
+private Object readOrdinaryObject(boolean unshared)
+        throws IOException
+    {
+        // ...
+        Object obj;
+        // ...
+        // 看这里，如果 hasReadResolveMethod() 为真则执行 invokeReadResolve() 并返回其结果
+        if (obj != null &amp;&amp;
+            handles.lookupException(passHandle) == null &amp;&amp;
+            desc.hasReadResolveMethod())
+        {
+            Object rep = desc.invokeReadResolve(obj);
+            if (unshared &amp;&amp; rep.getClass().isArray()) {
+                rep = cloneArray(rep);
+            }
+            if (rep != obj) {
+                // Filter the replacement object
+                if (rep != null) {
+                    if (rep.getClass().isArray()) {
+                        filterCheck(rep.getClass(), Array.getLength(rep));
+                    } else {
+                        filterCheck(rep.getClass(), -1);
+                    }
+                }
+                handles.setObject(passHandle, obj = rep);
+            }
+        }
+
+        return obj;
+    }
+// Invokes the readResolve method of the represented serializable class and returns the result.
+    Object invokeReadResolve(Object obj) throws IOException, UnsupportedOperationException{}
+</code></pre>
+<p>通过这个特性我们可以确保在反序列化的时候也能实现<strong>单例</strong>：</p>
+<pre><code>private Object readResolve() throws ObjectStreamException {
+    return this;//返回单例本身，而非新建的对象
+}
+</code></pre>
+<p>但是根据下面的说法，要实现可以序列化的单例最简单安全的，还是使用枚举：</p>
+<blockquote>
+<p><strong>事实上，如果依赖 readResolve 进行实例控制，带有对象引用类型的所有实例域则都必须声明为 transient 的</strong>。否则，利用<code>readResolve()</code>方法实现的单例也会遭受到攻击。</p>
+<p>实现可序列化最简单安全的方式是采用枚举的形式，应该尽可能采用这种方式。如果采用<code>readResolve</code>实现的话，要确保该类的所有实例域都为<code>基本类型</code>，或者是<code>transient</code>的。</p>
+<p><a href="https://cl0610.github.io/effective-java-learning/%E7%AC%AC%E5%8D%81%E7%AB%A0%20%E5%BA%8F%E5%88%97%E5%8C%96/77.%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%EF%BC%8C%E6%9E%9A%E4%B8%BE%E7%B1%BB%E5%9E%8B%E4%BC%98%E5%85%88%E4%BA%8EreadResolve.html">77.单例模式，枚举类型优先于 readResolve</a></p>
+</blockquote>
+<h3>自定义序列化过程</h3>
+<p>如果想要自己处理序列化的过程，可以实现下面的方法：</p>
+<pre><code class="language-java">private void writeObject(java.io.ObjectOutputStream out) throws IOException
+private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException;
+private void readObjectNoData() throws ObjectStreamException;
+</code></pre>
+<p>其中，可以使用下面的方法实现<code>读/写</code><strong>该类自身的属性</strong>（<code>All non-static and non-transient fields of the current class, include private</code>），然后在调用诸如<code>out.writeObject(string);</code>等方法<strong>保存其他变量</strong>。</p>
+<blockquote>
+<p>The method does not need to concern itself with the state belonging to its superclasses or subclasses.</p>
+</blockquote>
+<pre><code class="language-java">in.defaultReadObject();
+out.defaultWriteObject();
+</code></pre>
+<p><code>readObjectNoData</code>方法主要用在序列化流和我们要反序列化的类不一致时初始化一些必要的状态。</p>
+<blockquote>
+<p>这种情况可能出现在接收方使用了一个与发送方不同版本的类。接收方的版本多扩展了一些字段，而发送方的版本没有这些字段。还有一种可能就是序列化流被篡改了。这时，无论是恶意的流还是不完整的流，都可以用 <code>readObjectNoData</code> 方法来将序列化得到的对象初始化到正确的状态。
+作者：福尔马林
+链接：<a href="https://juejin.im/post/5d7206c5f265da03ab427181">https://juejin.im/post/5d7206c5f265da03ab427181</a></p>
+</blockquote>
+<p>此外，还可以使用<code>ObjectOutputStream</code>的<code>putFields()</code>和<code>ObjectInputStream</code>的<code>readFields()</code>写入/读取变量。使用这种方法可以<em>加密/解密</em>部分变量，或者在序列化的时候<em>只处理部分变量</em>。</p>
+<p>具体使用方法见如下：</p>
+<blockquote>
+<p><strong>注意</strong>：<code>putFields()/readFields()</code>方法分别不能与<code>defaultWriteObject/defaultReadObject</code>一起使用；</p>
+<p><code>putFields.put()</code>之后必须调用<code>out.writeFields()</code>方法</p>
+<p>并且，没有在<code>putFields()</code>中加入的数据，在<code>readObject</code>中只能获取到该类型的默认值</p>
+</blockquote>
+<pre><code class="language-java">//这段示例代码来自 https://www.ibm.com/developerworks/cn/java/j-lo-serial/index.html
+    private void writeObject(ObjectOutputStream out) {
+       try {
+           PutField putFields = out.putFields();
+           System.out.println(&quot;原密码：&quot; + password);
+           password = &quot;encryption&quot;;//模拟加密
+           putFields.put(&quot;password&quot;, password);
+           System.out.println(&quot;加密后的密码：&quot; + password);
+           out.writeFields();// putFields.put() 之后必须调用本方法
+       } catch (IOException e) {
+           e.printStackTrace();
+       }
+   }
+
+   private void readObject(ObjectInputStream in) {
+       try {
+           GetField readFields = in.readFields();
+           Object object = readFields.get(&quot;password&quot;, &quot;&quot;);
+           System.out.println(&quot;要解密的字符串：&quot; + object.toString());
+           password = &quot;pass&quot;;//模拟解密，需要获得本地的密钥
+       } catch (IOException e) {
+           e.printStackTrace();
+       } catch (ClassNotFoundException e) {
+           e.printStackTrace();
+       }
+
+   }
+// 执行反序列化结果：
+// 原密码：pass
+// 加密后的密码：encryption
+// 要解密的字符串：encryption
+// 最后反序列化后的 password 为 pass
+</code></pre>
+<h3>父类未继承 Serializable 的类的序列化</h3>
+<p>如果一个类实现了序列化，但他的父类没有实现序列化，那么父类<strong>必须要有一个公开的无参构造函数</strong>，否则反序列化时会出错。</p>
+<p>此时反序列化时，父类的变量值（<code>public, protected, and (if accessible) package fields</code>）都会是<strong>默认的值</strong>或者是在<strong>父类无参构造函数中初始化的值</strong>（即使这些值在子类对象中已经被修改了）。</p>
+<p>要想使得这些值也可以支持序列化，可以通过<code>writeObject/readObject</code>自己处理这些值的序列化。</p>
+<p>反之，如果一个类实现了<code>Serializable</code>接口，那么他的子类也自动支持序列化与反序列化。</p>
+<h3>实现</h3>
+<p>下面是使用<code>Serializable</code>实现序列化与反序列化的简单示例：</p>
+<pre><code class="language-java">/**
+ * author: jixiaoyong
+ * email: jixiaoyong1995@gmail.com
+ * website: https://jixiaoyong.github.io
+ * date: 12/24/19
+ * description: 演示序列化功能
+ */
+class SerializableClass implements Serializable {
+    private int anInt = 10;
+    public long aLong = 100L;
+    public transient String aTransient = &quot;transient filed cannot be serialized&quot;;
+    public static String A_STATIC_FILED = &quot;static filed belong to class not object, cannot be serialized&quot;;
+
+  public static void main(String[] args) {
+        SerializableClass clazz = new SerializableClass();
+
+        File file = new File(&quot;ObjectOutputFile&quot;);
+        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(file));
+             ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file))) {
+
+            //write object to byte sequences
+            objectOutputStream.writeObject(clazz);
+
+            //chang the object filed
+            clazz.aLong = 666L;
+            // A_STATIC_FILED belong to the class, so you can see it has the value read form
+            // the JVM rather the object you serialized before when you deserializes it.
+            SerializableClass.A_STATIC_FILED = &quot;Change the static filed!&quot;;
+
+            SerializableClass serializableClass = (SerializableClass) objectInputStream.readObject();
+            System.out.println(serializableClass);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public String toString() {
+        return &quot;SerializableClass{&quot; +
+                &quot;anInt=&quot; + anInt +
+                &quot;, aLong=&quot; + aLong +
+                &quot;, aTransient=&#39;&quot; + aTransient + &#39;\&#39;&#39; +
+                &quot;, A_STATIC_FILED=&#39;&quot; + A_STATIC_FILED + &#39;\&#39;&#39; +
+                &#39;}&#39;;
+    }
+}
+// output:
+// SerializableClass{anInt=10, aLong=100, aTransient=&#39;null&#39;, A_STATIC_FILED=&#39;Change the static filed!&#39;}
+</code></pre>
+<h3>多次序列化同一个对象</h3>
+<p>返序列化读取的过程在<code>readResolve()</code>方法一节已经涉及到了，我们在看一下保存的部分，这里会有一个有意思的现象：</p>
+<blockquote>
+<p>Java 序列化机制为了节省磁盘空间，具有特定的存储规则，当写入文件的为同一对象时，并不会再将对象的内容进行存储，而只是再次存储一份引用。</p>
+<p><a href="https://www.ibm.com/developerworks/cn/java/j-lo-serial/index.html">https://www.ibm.com/developerworks/cn/java/j-lo-serial/index.html</a></p>
+</blockquote>
+<p>这会导致一个问题：当使用同一个<code>ObjectOutputStream对象</code>序列化<code>同一个序列化对象</code>时，即使在第一次序列化并保存后修改了这个对象的部分属性，当再次序列化时保存的<strong>只是前一个对象的引用</strong>——也就是说将完全相同一个对象保存了两次，<strong>第二次做的修改在序列化的时候并没有保存</strong>。</p>
+<p>我们写个简单的 DEMO 验证一下：</p>
+<pre><code class="language-java">private static void readAndwriteObject2(SerializableClass clazz) {
+        File file = new File(&quot;ObjectOutputFile&quot; + System.currentTimeMillis());
+        try (
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(file));
+                ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file))
+        ) {
+
+            // 第一次序列化
+            objectOutputStream.writeObject(clazz);
+            objectOutputStream.flush();
+
+            clazz.aLong = 9344L;//在这里修改了部分属性
+
+            // 第二次序列化
+            objectOutputStream.writeObject(clazz);
+            objectOutputStream.flush();
+
+           // 反序列化，读取之前序列化的两个对象
+            SerializableClass serializableClass = (SerializableClass) objectInputStream.readObject();
+            System.out.println(serializableClass);
+            SerializableClass serializableClass1 = (SerializableClass) objectInputStream.readObject();
+            System.out.println(serializableClass1);
+
+            System.out.println(&quot;serializableClass == serializableClass1: &quot; + (serializableClass == serializableClass1));
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+// output
+// SerializableClass{anInt=10, aLong=100, aaLong=100, aTransient=&#39;null&#39;, A_STATIC_FILED=&#39;static filed belong to class not object, cannot be serialized&#39;}
+// SerializableClass{anInt=10, aLong=100, aaLong=100, aTransient=&#39;null&#39;, A_STATIC_FILED=&#39;static filed belong to class not object, cannot be serialized&#39;}
+// serializableClass == serializableClass1: true //可以看到两次获取的是完全相同的对象
+</code></pre>
+<p>这是为什么呢，我们可以在源码中看到原因：</p>
+<pre><code class="language-java">// 序列化时，我们会调用 ObjectOutputStream 的 writeObject 方法
+public final void writeObject(Object obj) throws IOException {
+        if (enableOverride) {
+            writeObjectOverride(obj);
+            return;
+        }
+        try {
+            writeObject0(obj, false);//注意这里，第二个参数 unshared 是 false
+        } catch (IOException ex) {
+            if (depth == 0) {
+                writeFatalException(ex);
+            }
+            throw ex;
+        }
+    }
+
+/** obj -&gt; wire handle map */
+private final HandleTable handles;
+
+private void writeObject0(Object obj, boolean unshared)throws IOException{
+        // ...
+            if ((obj = subs.lookup(obj)) == null) {
+                writeNull();
+                return;
+            } else if (!unshared &amp;&amp; (h = handles.lookup(obj)) != -1) {
+              // 可以看到这里，如果 unshared 为 false 的话，
+              // 就会去找这个对象是否已经被序列化过了，是的话就直接写入引用，
+              // 而不是再次序列化
+                writeHandle(h);
+                return;
+            } else if (obj instanceof Class) {
+                writeClass((Class) obj, unshared);
+                return;
+            } else if (obj instanceof ObjectStreamClass) {
+                writeClassDesc((ObjectStreamClass) obj, unshared);
+                return;
+            }
+        }
+}
+
+    /**
+     * Writes given object handle to stream.
+     */
+    private void writeHandle(int handle) throws IOException {
+        bout.writeByte(TC_REFERENCE);
+        bout.writeInt(baseWireHandle + handle);
+    }
+</code></pre>
+<p>为了避免这种情况，在保存同一个对象时要注意使用不同的<code>ObjectOutputStream</code>对象，或者可以使用<code>writeUnshared</code>方法。</p>
+<pre><code class="language-java">// Writes an &quot;unshared&quot; object to the ObjectOutputStream.
+public void writeUnshared(Object obj) throws IOException {
+    try {
+        writeObject0(obj, true);
+    } catch (IOException ex) {
+        if (depth == 0) {
+            writeFatalException(ex);
+        }
+        throw ex;
+    }
+}
+</code></pre>
+<h3>优缺点</h3>
+<ul>
+<li>简单，只需要实现接口</li>
+<li>序列化的字节流可以在文件、网络中传递，可以持久化保存</li>
+<li>性能差，序列化过程大量使用反射和临时变量</li>
+</ul>
+<h2>Externalizable</h2>
+<p><code>Externalizable</code>继承自<code>Serializable</code>。</p>
+<p>用户需要通过<code>writeExternal(ObjectOutput out)</code>和<code>readExternal(ObjectInput in)</code>实现序列化与反序列化的细节，并且需要一个明确实现的<code>public no-arg constructor</code></p>
+<h3>实现</h3>
+<pre><code class="language-java">class NewClass implements Externalizable {
+    public int anInt = 0;
+    public String string = &quot;string&quot;;
+    public static Long aLong = 10L;
+    public transient float aFloat = 10F;
+
+    public NewClass(){}
+
+    @Override
+    public void writeExternal(ObjectOutput out) throws IOException {
+        out.writeInt(anInt);
+        out.writeObject(string);
+        out.writeLong(aLong);
+        out.writeFloat(aFloat);
+    }
+
+    @Override
+    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+        anInt = in.readInt();
+        string = (String) in.readObject();
+        aLong = in.readLong();
+        aFloat = in.readFloat();
+    }
+
+    @Override
+    public String toString() {
+        return &quot;NewClass{&quot; +
+                &quot;anInt=&quot; + anInt +
+                &quot;, string=&#39;&quot; + string + &#39;\&#39;&#39; +
+                &quot;, aFloat=&quot; + aFloat +
+                &quot;, aLong=&quot; + aLong +
+                &#39;}&#39;;
+    }
+}
+</code></pre>
+<h3>原理</h3>
+<p>看源码可以知道，如果检测到当前对象是<code>Externalizable</code>时，就会去调用该对象的<code>writeExternal方法</code>。</p>
+<pre><code class="language-java">public interface Externalizable extends java.io.Serializable
+
+// writeObject0 方法中：
+            if (obj instanceof String) {
+                writeString((String) obj, unshared);
+            } else if (cl.isArray()) {
+                writeArray(obj, desc, unshared);
+            } else if (obj instanceof Enum) {
+                writeEnum((Enum&lt;?&gt;) obj, desc, unshared);
+            } else if (obj instanceof Serializable) {
+                writeOrdinaryObject(obj, desc, unshared);//如果是 Serializable 就执行这个
+            }
+// writeOrdinaryObject 方法中：
+            if (desc.isExternalizable() &amp;&amp; !desc.isProxy()) {
+                writeExternalData((Externalizable) obj);//如果是 Externalizable 就执行这个
+            } else {
+                writeSerialData(obj, desc);
+            }
+// writeExternalData 方法中
+// Writes externalizable data of given object by invoking its writeExternal() method.
+            if (protocol == PROTOCOL_VERSION_1) {
+                obj.writeExternal(this);
+            } else {
+                bout.setBlockDataMode(true);
+                obj.writeExternal(this);
+                bout.setBlockDataMode(false);
+                bout.writeByte(TC_ENDBLOCKDATA);
+            }
+</code></pre>
+<h3>优缺点</h3>
+<ul>
+<li>比<code>Serializable</code>麻烦，序列化与反序列化都需要用户自己实现</li>
+<li>灵活，可以自定义要参与到序列化与反序列化的变量</li>
+</ul>
+<h2>Parcelable</h2>
+<p><code>Parcelable</code>是 Android 为了解决<code>Serializable</code>性能问题而推出的，主要用在 Android 的<code>Intent</code>或<code>线程间通信</code>中。</p>
+<p><code>Parcelable</code>通过<code>Parcel</code>传输到<code>IBinder</code>中，从而实现跨进程传输。</p>
+<blockquote>
+<p>对于<code>kotlin</code>语言来说，Android Studio 自动生成的<code>Parcelable</code>代码不会处理 val 变量（因为这些变量不会变化）</p>
+<p>此外，<code>Parcelable</code>在反序列化时，调用<code>parcel.readParcelable(classLoader)</code>传入的是<code>ClassLoader</code>。</p>
+</blockquote>
+<h3>实现</h3>
+<p>下面是一个<code>Parcelable</code>的实现：</p>
+<pre><code class="language-kotlin">class AParcelable() : Parcelable {
+
+    var i = 10
+
+    // 从 Parcel 中恢复数据，必须按照写入的顺序读取
+    constructor(parcel: Parcel) : this() {
+        i = parcel.readInt()
+    }
+
+    // 将变量写入到 Parcel 中，必须与读取的顺序对应
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeInt(i)
+    }
+
+    // 文件描述，一般默认为 0
+    // 如果这个对象的 writeToParcel 方法的输出中有特殊的对象则传递对应的描述代码
+    // 如：如果包含一个文件描述符 FileDescriptor，就要返回 CONTENTS_FILE_DESCRIPTOR
+    //  https://developer.android.google.cn/reference/android/os/Parcelable.html#CONTENTS_FILE_DESCRIPTOR
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    // 必须有这个变量，用来从 Parcel 中创建 Parcelable 类
+    // 在 JAVA 中是 public static final Creator&lt;Book&gt; CREATOR = new Creator&lt;Book&gt;() {...}
+    companion object CREATOR : Parcelable.Creator&lt;AParcelable&gt; {
+        override fun createFromParcel(parcel: Parcel): AParcelable {
+            return AParcelable(parcel)
+        }
+
+        // Create a new array of the Parcelable class.
+        // Returns an array of the Parcelable class, with every entry
+        // initialized to null.
+        override fun newArray(size: Int): Array&lt;AParcelable?&gt; {
+            return arrayOfNulls(size)
+        }
+    }
+
+}
+</code></pre>
+<h3>原理</h3>
+<p>原理参考这篇文章<a href="https://www.kancloud.cn/xcy396/android_tech/1296524">Parcelable 源码分析</a></p>
+<h3>优缺点</h3>
+<ul>
+<li>性能好，<code>Parcelable</code>接口比<code>Serializable</code>接口效率更高，性能方面高出 10 多倍 [^Parcelable 源码分析]:</li>
+<li>较复杂，需要自己实现对象的序列化内容</li>
+</ul>
+<h2>总结</h2>
+<p>一般需要持久化保存数据或在网络间传输时推荐使用<code>Serializable</code>或者<code>Externalizable</code>。</p>
+<p>在 Android 中<code>Activity</code>之间等传递对象，以及跨进程传递对象等时使用<code>Parcelable</code>以节省性能。</p>
+<h2>参考资料</h2>
+<p><a href="http://darryrzhong.xyz/2019/09/15/Android%E4%B9%8B%E5%BA%8F%E5%88%97%E5%8C%96%E8%AF%A6%E8%A7%A3/">Android 之序列化详解</a></p>
+<p><a href="https://www.ibm.com/developerworks/cn/java/j-lo-serial/index.html">Java 序列化的高级认识</a></p>
+<p><a href="https://juejin.im/post/5d7206c5f265da03ab427181#heading-0">【原创】（译）Java 序列化魔法方法及使用示例</a></p>
+<p><a href="https://www.javacodegeeks.com/2019/08/serialization-everything-java-serialization-explained.html">What is Serialization? Everything You Need to Know About Java Serialization Explained With Example</a></p>
+<p><a href="https://juejin.im/post/5ce3cdc8e51d45777b1a3cdf#heading-0">java 序列化，看这篇就够了</a></p>
+<p><a href="https://blog.csdn.net/qq_16628781/article/details/70049623">Java 之 Serializable/Externalizable 序列化和反序列化</a></p>
+<p><a href="https://cl0610.github.io/effective-java-learning/%E7%AC%AC%E5%8D%81%E7%AB%A0%20%E5%BA%8F%E5%88%97%E5%8C%96/77.%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%EF%BC%8C%E6%9E%9A%E4%B8%BE%E7%B1%BB%E5%9E%8B%E4%BC%98%E5%85%88%E4%BA%8EreadResolve.html">77.单例模式，枚举类型优先于 readResolve</a></p>
+<p>Pareclable 实现原理：<a href="https://juejin.im/post/5a3b24ab6fb9a04515440bd7">Parcelable 最强解析</a></p>
+<p>Parcelable 使用：<a href="https://www.jianshu.com/p/32a2ec8f35ae">详细介绍 Android 中 Parcelable 的原理和使用方法</a></p>
+<p><a href="https://www.kancloud.cn/xcy396/android_tech/1296524">Parcelable 源码分析</a></p>
+
+            </div>
+
+            <!-- 3. Tags -->
+            <div class="tags">
+                
+            </div>
+
+            <!-- 4. Email Comment -->
+            <div class="comment-section">
+                <p class="comment-text">Any thoughts? Feel free to discuss via email.</p>
+                <button 
+                    class="btn btn-email" 
+                    onclick="sendEmailComment('Java 笔记之序列化与反序列化：Serializable、Externalizable 和 Parcelable', '/blog/en/posts/9d9183ec.html')"
+                    data-email-subject="Comment on article"
+                    data-email-hello="Hi!"
+                    data-email-intro="I read your article and here are my thoughts:"
+                    data-email-fallback="Cannot open email client. Copy email address?"
+                >
+                    <i class="far fa-envelope"></i> Email Comment
+                </button>
+            </div>
+        </article>
+        
+        <!-- 5. Prev/Next Navigation -->
+        <nav class="post-nav">
+            
+            <a href="/blog/en/posts/7e97a976.html" class="post-nav-item post-nav-prev">
+                <span class="post-nav-label">← Previous</span>
+                <span class="post-nav-title">Android 笔记之跨进程通信</span>
+            </a>
+            
+            
+            <a href="/blog/en/posts/fd5546ac.html" class="post-nav-item post-nav-next">
+                <span class="post-nav-label">Next →</span>
+                <span class="post-nav-title">Kotlin 学习笔记 3</span>
+            </a>
+            
+        </nav>
+    </div>
+
+    <!-- TOC Mobile Button -->
+    <button id="toc-mobile-btn" class="toc-mobile-btn" title="Table of Contents">
+        <i class="fas fa-list-ul"></i>
+    </button>
+
+    <!-- TOC Mobile Bottom Sheet -->
+    <div id="toc-bottomsheet" class="toc-bottomsheet">
+        <div class="toc-bottomsheet-overlay"></div>
+        <div class="toc-bottomsheet-content">
+            <div class="toc-bottomsheet-header">
+                <span>Table of Contents</span>
+                <button class="toc-bottomsheet-close"><i class="fas fa-times"></i></button>
+            </div>
+            <nav class="toc-bottomsheet-nav" id="toc-bottomsheet-nav">
+                <!-- TOC items will be generated by JavaScript -->
+            </nav>
+        </div>
+    </div>
+    
+    </main>
+
+    
+    <footer>
+        <div class="container">
+            <div class="footer-author">
+                <span>&copy; 2016-2025 </span>
+                <a href="https://github.com/jixiaoyong" target="_blank" rel="noopener noreferrer" title="GitHub">
+                    <i class="fab fa-github"></i>
+                    JI,XIAOYONG
+                </a>
+            </div>
+            <div>
+                <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer" class="footer-link">
+                    <i class="fab fa-creative-commons"></i> BY-NC-SA 4.0
+                </a>
+            </div>
+        </div>
+    </footer>
+    
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" title="Back to Top">
+        <i class="fas fa-rocket"></i>
+    </button>
+
+    <!-- Scripts: Staticfile CDN -->
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/dart.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/kotlin.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/gradle.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/groovy.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/yaml.min.js"></script>
+    <script>
+        // MathJax Configuration - Enable $...$ inline math
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\(', '\)']],
+                displayMath: [['$$', '$$'], ['\[', '\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+                ignoreHtmlClass: 'mathjax_ignore'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.staticfile.net/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+    <script src="/blog/scripts/client.js"></script>
+</body>
+</html>

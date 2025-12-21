@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Android 中的 Messenger 源码详解 - JI,XIAOYONG's Blog</title>
+    <!-- Fonts: Use System Fonts + Merriweather/Fira via Staticfile if available or fallback -->
+    <!-- Prioritize system fonts for speed in China -->
+    <link rel="preconnect" href="https://fonts.loli.net">
+    <link rel="preconnect" href="https://gstatic.loli.net" crossorigin>
+    <link href="https://fonts.loli.net/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=Inter:wght@300;400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Icons: Staticfile CDN -->
+    <link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/blog/styles/main.css">
+    <link rel="stylesheet" href="/blog/styles/containers.css">
+
+    <!-- Highlight.js Theme (Staticfile does not have all themes, checking common ones) -->
+    <!-- Using cdnjs.cloudflare.com as fallback if staticfile misses specific themes, but staticfile usually has them -->
+    <link rel="stylesheet" href="https://cdn.staticfile.net/highlight.js/11.7.0/styles/github.min.css" id="hljs-theme">
+
+    <script>
+        // Check local storage for theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        // Language detection - simplistic redirect if on root
+        const userLang = navigator.language || navigator.userLanguage;
+        const basePath = '/blog';
+        if (window.location.pathname === basePath + '/' && userLang.startsWith('en')) {
+           window.location.href = basePath + '/en/';
+        }
+    </script>
+</head>
+<body>
+
+    
+    <header>
+        <div class="container">
+            <a href="/blog/en/" class="logo">
+                <img src="https://jixiaoyong.github.io/images/user_avatar.webp" alt="JI,XIAOYONG" class="logo-avatar">
+                JI,XIAOYONG
+            </a>
+            
+            <!-- Desktop Nav -->
+            <nav class="desktop-nav">
+                <ul>
+                    
+        <li><a href="/blog/en/"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="/blog/en/about.html"><i class="fas fa-user"></i> About</a></li>
+    
+                    <li><a href="#" onclick="switchView('search')" title="Search"><i class="fas fa-search"></i></a></li>
+                    <li><button onclick="switchLanguage()" class="theme-toggle" title="Language"><i class="fas fa-language"></i><span style="font-size:0.7rem;vertical-align:super;">En</span></button></li>
+                    <li><button onclick="toggleTheme()" class="theme-toggle" title="Theme"><i id="theme-icon" class="fas fa-adjust"></i></button></li>
+                </ul>
+            </nav>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-btn btn" onclick="toggleMobileMenu()">
+                <i id="menu-icon" class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Container (Hidden by default) -->
+        <div id="mobile-menu" class="mobile-menu hidden">
+            <ul>
+                <li><a href="/blog/en/"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/blog/en/about.html"><i class="fas fa-user"></i> About</a></li>
+                <li><a href="#" onclick="switchView('search')"><i class="fas fa-search"></i> Search</a></li>
+                <li>
+                    <button class="btn theme-toggle-mobile" onclick="switchLanguage()">
+                        <i class="fas fa-language"></i> Language: 中文
+                    </button>
+                </li>
+                <li>
+                    <button class="btn theme-toggle-mobile" onclick="toggleTheme()">
+                        <i class="fas fa-palette"></i> Theme: <span id="theme-text-mobile">Auto</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </header>
+    
+
+    <!-- Search Overlay -->
+    <div id="search-overlay" class="search-overlay hidden">
+        <button class="close-search" onclick="closeSearch()">&times;</button>
+        <div class="search-box">
+            <input type="text" id="search-input" class="search-input" placeholder="Search..." autocomplete="off">
+        </div>
+        <div id="search-results" class="search-results"></div>
+    </div>
+
+    <main class="container">
+        
+    <div id="article" class="view active article-with-toc" style="display: block;">
+        <!-- TOC Sidebar (Desktop) -->
+        <aside class="toc-sidebar" id="toc-sidebar">
+            <div class="toc-header">Table of Contents</div>
+            <nav class="toc-nav" id="toc-nav">
+                <!-- TOC items will be generated by JavaScript -->
+            </nav>
+        </aside>
+
+        <article class="blog-post">
+            <!-- 1. Header: Title & Meta -->
+            <div class="article-header-info">
+                <h1 class="article-title">Android 中的 Messenger 源码详解</h1>
+                <div class="post-meta mathjax_ignore">
+                    <span class="author">JI,XIAOYONG</span>
+                    <span class="meta-separator">•</span>
+                    <span class="publish-date mathjax_ignore">Published on 2019-03-21</span>
+                    <span class="publish-date mathjax_ignore">(Updated on 2024-06-05)</span>
+                    
+                </div>
+            </div>
+
+            <!-- 2. Content -->
+            <div class="article-content">
+                <h2>前言</h2>
+<p>Messenger 是 Android 中用于 IPC 的方式之一，使用 Handler 发送有序消息队列，底层是通过 AIDL 调用 Binder 实现。</p>
+<p>Messenger 只用于服务端和客户端串行的传递消息，如果大量并发或者跨进程调用服务端的方法，就需要考虑 AIDL 而非 Messenger。</p>
+<p>Messenger 的使用可以参考<a href="https://jixiaoyong.github.io/blog/posts/ad4c562c/">这篇文章</a>,本文主要探索一下 Messenger 源码实现。</p>
+<p>主要使用到的文件：</p>
+<p><a href="http://androidxref.com/9.0.0_r3/xref/frameworks/base/core/java/android/os/IMessenger.aidl">IMessenger.aidl</a></p>
+<p><a href="http://androidxref.com/9.0.0_r3/xref/frameworks/base/core/java/android/os/Messenger.java">Messenger.java</a></p>
+<p><a href="http://androidxref.com/9.0.0_r3/xref/frameworks/base/core/java/android/os/Handler.java">Handler.java</a></p>
+<h2>解析</h2>
+<p>一个典型的 Messenger 服务如下所示：</p>
+<pre><code class="language-kotlin">class MessengerService : Service() {
+
+    private val messenger = Messenger(MessengerHandler())
+
+    override fun onBind(intent: Intent?): IBinder? {
+        return messenger.binder
+    }
+
+    //可以从客户端的得到的 Messenger 中取出该 Handler，并实现客户端-&gt;服务端通信
+    class MessengerHandler : Handler() {
+        override fun handleMessage(msg: Message?) {
+            super.handleMessage(msg)
+            //客户端的 Messenger，用于服务端-&gt;客户端通信，可选
+            val client = msg?.replyTo
+            client?.send(Message.obtain(null, 2, 1, 2))
+        }
+    }
+}
+</code></pre>
+<p>我们可以看到使用 Handler 创建一个 Messenger，进入到源码看一下：</p>
+<pre><code class="language-java">private final IMessenger mTarget;
+public Messenger(Handler target) {
+    mTarget = target.getIMessenger();
+}
+</code></pre>
+<p>我们看到，在这里创建了一个新的与给定的 Handler 绑定在一起的 Messenger，再看看<code>getIMessenger()</code>方法：</p>
+<pre><code class="language-java">final IMessenger getIMessenger() {
+    synchronized (mQueue) {
+        if (mMessenger != null) {
+            return mMessenger;
+        }
+        mMessenger = new MessengerImpl();
+        return mMessenger;
+    }
+}
+private final class MessengerImpl extends IMessenger.Stub {
+    public void send(Message msg) {
+        msg.sendingUid = Binder.getCallingUid();
+        Handler.this.sendMessage(msg);//使用 Handler 发送消息
+    }
+}
+</code></pre>
+<p>这里我们可以看到<code>getIMessenger()</code>方法会创建一个 MessengerImpl 对象，而这个对象</p>
+<p>实现了<code>send()</code>方法，也证实了我们之前的一个观点——Messenger 底层是使用 Handler 发送消息。</p>
+<p>同时，看到 <code>MessengerImpl</code> 继承的 <code>IMessenger.Stub</code> 类我们可以联想到这里应该有一个 AIDL 实现：</p>
+<pre><code class="language-java">// /frameworks/base/core/java/android/os/IMessenger.aidl
+package android.os;
+
+import android.os.Message;
+
+/** @hide */
+oneway interface IMessenger {
+    void send(in Message msg);
+}
+</code></pre>
+<blockquote>
+<p><code>oneway</code> 关键字用于修改远程调用的行为。使用该关键字时，远程调用不会阻塞；它只是发送事务数据并立即返回。接口的实现最终接收此调用时，是以正常远程调用形式将其作为来自 <code>Binder</code> 线程池的常规调用进行接收。如果 <code>oneway</code> 用于本地调用，则不会有任何影响，调用仍是同步调用</p>
+<p><a href="https://developer.android.google.cn/guide/components/aidl?hl=zh-cn">https://developer.android.google.cn/guide/components/aidl?hl=zh-cn</a></p>
+</blockquote>
+<p>这也就解释了在服务的<code>onBind(intent: Intent?)</code>方法中，我们可以直接使用<code>messenger.binder</code>获取到 Binder 对象的原因。</p>
+<p>再看看 Messenger 客户端的实现：</p>
+<pre><code class="language-kotlin">private lateinit var messenger: Messenger//服务端的 Messenger
+private val replyMessenger: Messenger = Messenger(ReplyHandler())//客户端的 Messenger，用于服务端-&gt;客户端通信，可选
+private val mServiceConnection = object : ServiceConnection {
+    override fun onServiceDisconnected(name: ComponentName?) {
+
+    }
+
+    override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+        messenger = Messenger(service)//注意这里的构造方法传入的是 IBinder 对象
+        val message = Message.obtain(null, 1)
+        message.replyTo = replyMessenger
+        val data = Bundle()
+        data.putString(&quot;msg&quot;, &quot;Hello World&quot;)
+        try {
+            messenger.send(message)//使用服务端的 Messenger 向服务端发送消息
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+}
+</code></pre>
+<p>可以注意到在客户端通过<code>Messenger(IBinder target)</code>取得服务端的 Messenger，而这里的 IBinder 对象则是通过服务端的 Messenger 的<code>getBinder()</code>获取的：</p>
+<pre><code class="language-java">public Messenger(IBinder target) {
+    mTarget = IMessenger.Stub.asInterface(target);
+}
+</code></pre>
+<p><code>Stub.asInterface()</code>方法我们在<a href="http://jixiaoyong.github.io/blog/posts/88d0bcd1/">之前的文章</a>中介绍过，他会根据客户端和服务端是否在同一进程而决定返回 Stub 实例还是 Proxy 类实例以实现跨进程通信。</p>
+<p>而通过比较 <code>Messenger(IBinder target)</code>和<code>Messenger(Handler target)</code>两个构造方法我们也可以知道，两个方法都只是用来初始化了<code>IMessenger mTarget</code>对象，这也就解释了在服务端和客户端可以通过两个不同的构造方法获取到有同样功能的 Messenger。</p>
+<h2>参考资料</h2>
+<p>《Android 开发艺术探索》</p>
+<p><a href="https://developer.android.google.cn/guide/components/aidl?hl=zh-cn">Android 接口定义语言 (AIDL)</a></p>
+
+            </div>
+
+            <!-- 3. Tags -->
+            <div class="tags">
+                <a href="/en/?tag=android" class="tag">#android</a><a href="/en/?tag=%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90" class="tag">#源码解析</a>
+            </div>
+
+            <!-- 4. Email Comment -->
+            <div class="comment-section">
+                <p class="comment-text">Any thoughts? Feel free to discuss via email.</p>
+                <button 
+                    class="btn btn-email" 
+                    onclick="sendEmailComment('Android 中的 Messenger 源码详解', '/blog/en/posts/b0dc2559.html')"
+                    data-email-subject="Comment on article"
+                    data-email-hello="Hi!"
+                    data-email-intro="I read your article and here are my thoughts:"
+                    data-email-fallback="Cannot open email client. Copy email address?"
+                >
+                    <i class="far fa-envelope"></i> Email Comment
+                </button>
+            </div>
+        </article>
+        
+        <!-- 5. Prev/Next Navigation -->
+        <nav class="post-nav">
+            
+            <a href="/blog/en/posts/1b0362b.html" class="post-nav-item post-nav-prev">
+                <span class="post-nav-label">← Previous</span>
+                <span class="post-nav-title">Android 中 View 相关知识</span>
+            </a>
+            
+            
+            <a href="/blog/en/posts/2270057c.html" class="post-nav-item post-nav-next">
+                <span class="post-nav-label">Next →</span>
+                <span class="post-nav-title">Android 中 AIDL 相关知识</span>
+            </a>
+            
+        </nav>
+    </div>
+
+    <!-- TOC Mobile Button -->
+    <button id="toc-mobile-btn" class="toc-mobile-btn" title="Table of Contents">
+        <i class="fas fa-list-ul"></i>
+    </button>
+
+    <!-- TOC Mobile Bottom Sheet -->
+    <div id="toc-bottomsheet" class="toc-bottomsheet">
+        <div class="toc-bottomsheet-overlay"></div>
+        <div class="toc-bottomsheet-content">
+            <div class="toc-bottomsheet-header">
+                <span>Table of Contents</span>
+                <button class="toc-bottomsheet-close"><i class="fas fa-times"></i></button>
+            </div>
+            <nav class="toc-bottomsheet-nav" id="toc-bottomsheet-nav">
+                <!-- TOC items will be generated by JavaScript -->
+            </nav>
+        </div>
+    </div>
+    
+    </main>
+
+    
+    <footer>
+        <div class="container">
+            <div class="footer-author">
+                <span>&copy; 2016-2025 </span>
+                <a href="https://github.com/jixiaoyong" target="_blank" rel="noopener noreferrer" title="GitHub">
+                    <i class="fab fa-github"></i>
+                    JI,XIAOYONG
+                </a>
+            </div>
+            <div>
+                <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer" class="footer-link">
+                    <i class="fab fa-creative-commons"></i> BY-NC-SA 4.0
+                </a>
+            </div>
+        </div>
+    </footer>
+    
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" title="Back to Top">
+        <i class="fas fa-rocket"></i>
+    </button>
+
+    <!-- Scripts: Staticfile CDN -->
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/dart.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/kotlin.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/gradle.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/groovy.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/yaml.min.js"></script>
+    <script>
+        // MathJax Configuration - Enable $...$ inline math
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\(', '\)']],
+                displayMath: [['$$', '$$'], ['\[', '\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+                ignoreHtmlClass: 'mathjax_ignore'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.staticfile.net/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+    <script src="/blog/scripts/client.js"></script>
+</body>
+</html>

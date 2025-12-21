@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JI,XIAOYONG's Blog - JI,XIAOYONG's Blog</title>
+    <!-- Fonts: Use System Fonts + Merriweather/Fira via Staticfile if available or fallback -->
+    <!-- Prioritize system fonts for speed in China -->
+    <link rel="preconnect" href="https://fonts.loli.net">
+    <link rel="preconnect" href="https://gstatic.loli.net" crossorigin>
+    <link href="https://fonts.loli.net/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=Inter:wght@300;400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Icons: Staticfile CDN -->
+    <link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/blog/styles/main.css">
+    <link rel="stylesheet" href="/blog/styles/containers.css">
+
+    <!-- Highlight.js Theme (Staticfile does not have all themes, checking common ones) -->
+    <!-- Using cdnjs.cloudflare.com as fallback if staticfile misses specific themes, but staticfile usually has them -->
+    <link rel="stylesheet" href="https://cdn.staticfile.net/highlight.js/11.7.0/styles/github.min.css" id="hljs-theme">
+
+    <script>
+        // Check local storage for theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        // Language detection - simplistic redirect if on root
+        const userLang = navigator.language || navigator.userLanguage;
+        const basePath = '/blog';
+        if (window.location.pathname === basePath + '/' && userLang.startsWith('en')) {
+           window.location.href = basePath + '/en/';
+        }
+    </script>
+</head>
+<body>
+
+    
+    <header>
+        <div class="container">
+            <a href="/blog/en/" class="logo">
+                <img src="https://jixiaoyong.github.io/images/user_avatar.webp" alt="JI,XIAOYONG" class="logo-avatar">
+                JI,XIAOYONG
+            </a>
+            
+            <!-- Desktop Nav -->
+            <nav class="desktop-nav">
+                <ul>
+                    
+        <li><a href="/blog/en/"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="/blog/en/about.html"><i class="fas fa-user"></i> About</a></li>
+    
+                    <li><a href="#" onclick="switchView('search')" title="Search"><i class="fas fa-search"></i></a></li>
+                    <li><button onclick="switchLanguage()" class="theme-toggle" title="Language"><i class="fas fa-language"></i><span style="font-size:0.7rem;vertical-align:super;">En</span></button></li>
+                    <li><button onclick="toggleTheme()" class="theme-toggle" title="Theme"><i id="theme-icon" class="fas fa-adjust"></i></button></li>
+                </ul>
+            </nav>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-btn btn" onclick="toggleMobileMenu()">
+                <i id="menu-icon" class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Container (Hidden by default) -->
+        <div id="mobile-menu" class="mobile-menu hidden">
+            <ul>
+                <li><a href="/blog/en/"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/blog/en/about.html"><i class="fas fa-user"></i> About</a></li>
+                <li><a href="#" onclick="switchView('search')"><i class="fas fa-search"></i> Search</a></li>
+                <li>
+                    <button class="btn theme-toggle-mobile" onclick="switchLanguage()">
+                        <i class="fas fa-language"></i> Language: 中文
+                    </button>
+                </li>
+                <li>
+                    <button class="btn theme-toggle-mobile" onclick="toggleTheme()">
+                        <i class="fas fa-palette"></i> Theme: <span id="theme-text-mobile">Auto</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </header>
+    
+
+    <!-- Search Overlay -->
+    <div id="search-overlay" class="search-overlay hidden">
+        <button class="close-search" onclick="closeSearch()">&times;</button>
+        <div class="search-box">
+            <input type="text" id="search-input" class="search-input" placeholder="Search..." autocomplete="off">
+        </div>
+        <div id="search-results" class="search-results"></div>
+    </div>
+
+    <main class="container">
+        
+            <div id="home" class="view active" data-total-posts="106" data-posts-per-page="20">
+                
+    <div class="post-list">
+        
+        <div class="post-item">
+            <div class="post-header">
+                <h2><a href="/blog/en/posts/42a9077b.html">Signals.dart使用介绍</a></h2>
+                <span class="post-date">2025-10-14</span>
+            </div>
+            <div class="post-excerpt">
+                <p>本文旨在为 Dart 和 Flutter 开发者提供 Signals.dart 框架的全面介绍。Signals.dart 借鉴了现代前端响应式系统（如 SolidJS 或 Vue 3）的核心理念，提供了一种基于 Pull-Based（拉取式） 架构的、高效且极简的状态管理方案。 文档重点阐述了框架的...</p>
+            </div>
+            <div class="post-tags">
+                <a href="/?tag=Signals" class="tag">#Signals</a><a href="/?tag=flutter" class="tag">#flutter</a>
+            </div>
+        </div>
+        
+        <div class="post-item">
+            <div class="post-header">
+                <h2><a href="/blog/en/posts/d89b1d83.html">Android Flutter 插件第三方 aar 库依赖方式对比分析</a></h2>
+                <span class="post-date">2025-09-29</span>
+            </div>
+            <div class="post-excerpt">
+                <p>背景说明 在开发 Flutter 插件时，我们经常需要集成第三方 Android 库。然而，将本地 AAR 文件直接添加到 Flutter 插件模块中，是无法自动将 AAR 的依赖关系和内容正确传递给宿主 App 的。 尤其需要注意的是： AGP 7.0+ 的明确限制：Android Gradle...</p>
+            </div>
+            <div class="post-tags">
+                
+            </div>
+        </div>
+        
+        <div class="post-item">
+            <div class="post-header">
+                <h2><a href="/blog/en/posts/d7356eaa.html">Git Merge+Revert 与 Reset+Cherry-pick 对比</a></h2>
+                <span class="post-date">2025-05-17</span>
+            </div>
+            <div class="post-excerpt">
+                <p>日常使用 git 开发管理分支非常方便，但是偶尔也会出现一些问题，比如这次就遇到了回滚合并导致后续合并丢失部分内容这样的情况，本文介绍一下如何处理这种情况，分析事故原因。 Merge+Revert 方案在复杂合并和回滚时容易引入副作用，可能导致部分内容被意外撤销；而 Reset+Cherry-pic...</p>
+            </div>
+            <div class="post-tags">
+                <a href="/?tag=git" class="tag">#git</a>
+            </div>
+        </div>
+        
+        <div class="post-item">
+            <div class="post-header">
+                <h2><a href="/blog/en/posts/6f46f598.html">Android 架构模式一览</a></h2>
+                <span class="post-date">2023-12-15</span>
+            </div>
+            <div class="post-excerpt">
+                <p>Android 的架构依次有： MVC MVP MVVM MVI Clean Architecture 上述架构循序渐进，当前主流设计模式是 MVVM，MVI 和 Clean Architecture，这三者的着重点各有不同，可以根据项目规模大小递进选择。 MVC MVC，Model-View-Co...</p>
+            </div>
+            <div class="post-tags">
+                
+            </div>
+        </div>
+        
+        <div class="post-item">
+            <div class="post-header">
+                <h2><a href="/blog/en/posts/adf541c0.html">Flutter 动画分析之 CustomPaint</a></h2>
+                <span class="post-date">2022-08-29</span>
+            </div>
+            <div class="post-excerpt">
+                <p>本文讨论的 Flutter 动画主要限定在：随着每一帧的变化，修改 Flutter Widget 的大小、颜色、位置等属性，使之看起来从一种状态渐变为另外一种状态 这一范围。 根据之前的分析，关于 Flutter 中的 Widget 动画，大体可以分为三大类： 隐式动画，以 ImplicitlyAn...</p>
+            </div>
+            <div class="post-tags">
+                
+            </div>
+        </div>
+        
+        <div class="post-item">
+            <div class="post-header">
+                <h2><a href="/blog/en/posts/47c43abe.html">Flutter 动画分析之 AnimatedWidget&ImplicitlyAnimatedWidget</a></h2>
+                <span class="post-date">2022-08-22</span>
+            </div>
+            <div class="post-excerpt">
+                <p>本文讨论的 Flutter 动画主要限定在：随着每一帧的变化，修改 Flutter Widget 的大小、颜色、位置等属性，使之看起来从一种状态渐变为另外一种状态 这一范围。 在之前的文章中，我们将 Flutter 中动画的实现分为 底层实现 和 封装好的 Widget 两大部分，目前已经分析了底层...</p>
+            </div>
+            <div class="post-tags">
+                
+            </div>
+        </div>
+        
+        <div class="post-item">
+            <div class="post-header">
+                <h2><a href="/blog/en/posts/6ec43bd8.html">Flutter 动画分析之 AnimationController</a></h2>
+                <span class="post-date">2022-08-21</span>
+            </div>
+            <div class="post-excerpt">
+                <p>本文讨论的 Flutter 动画主要限定在：随着每一帧的变化，修改 Flutter Widget 的大小、颜色、位置等属性，使之看起来从一种状态渐变为另外一种状态 这一范围。 Flutter 中关于动画的类有很多，为了便于分析，将其分为两大类： Flutter 框架底层实现动画的各个类，比如 Ani...</p>
+            </div>
+            <div class="post-tags">
+                
+            </div>
+        </div>
+        
+        <div class="post-item">
+            <div class="post-header">
+                <h2><a href="/blog/en/posts/820d6240.html">Flutter 动画分析之 Tween&Curve</a></h2>
+                <span class="post-date">2022-08-21</span>
+            </div>
+            <div class="post-excerpt">
+                <p>在上篇文章中，我们分析了 Flutter 中主要由AnimationController控制动画的开始、结束，但是默认情况下其只能产生线性变化的 double 类型的 value，如果想随时间变化，让 Widget 产生 Size、Offset 等属性的变化，亦或者控制这些值变化的速度快慢，这时候就...</p>
+            </div>
+            <div class="post-tags">
+                
+            </div>
+        </div>
+        
+        <div class="post-item">
+            <div class="post-header">
+                <h2><a href="/blog/en/posts/62beedda.html">Flutter 动画分析之 Hero</a></h2>
+                <span class="post-date">2022-08-14</span>
+            </div>
+            <div class="post-excerpt">
+                <p>Flutter 中的 Hero 动画是指可以在切换页面时自动跨页面实现 Widget 放大缩小、位移的动画，在用户看起来好像是当前页面的 Widget“飞”入到另外一个页面，底层基于 Overlay 实现。 本文对其原理和应用做一简单分析，主要是对官方介绍的理解与分析，感兴趣的可以直接阅读官方文档。...</p>
+            </div>
+            <div class="post-tags">
+                
+            </div>
+        </div>
+        
+        <div class="post-item">
+            <div class="post-header">
+                <h2><a href="/blog/en/posts/727d7800.html">Flutter 图片加载方案分析之 power_image</a></h2>
+                <span class="post-date">2022-08-02</span>
+            </div>
+            <div class="post-excerpt">
+                <p>Flutter 默认提供了Image用于从网络、文件等加载图片，并且使用ImageCache统一管理图片缓存，但有时候并不能满足使用需求（比如网络图片没有磁盘缓存，导致每次 ImageCache 清除缓存之后又要从网络下载），所以又出现了fluttercachednetworkimage、exten...</p>
+            </div>
+            <div class="post-tags">
+                
+            </div>
+        </div>
+        
+        <div class="post-item">
+            <div class="post-header">
+                <h2><a href="/blog/en/posts/23ac516a.html">Flutter 图片加载方案分析之 extended_image</a></h2>
+                <span class="post-date">2022-08-01</span>
+            </div>
+            <div class="post-excerpt">
+                <p>Flutter 默认提供了Image用于从网络、文件等加载图片，并且使用ImageCache统一管理图片缓存，但有时候并不能满足使用需求（比如网络图片没有磁盘缓存，导致每次 ImageCache 清除缓存之后又要从网络下载），所以又出现了fluttercachednetworkimage、exten...</p>
+            </div>
+            <div class="post-tags">
+                
+            </div>
+        </div>
+        
+        <div class="post-item">
+            <div class="post-header">
+                <h2><a href="/blog/en/posts/1912667a.html">Flutter 图片加载方案分析之 Image</a></h2>
+                <span class="post-date">2022-07-27</span>
+            </div>
+            <div class="post-excerpt">
+                <p>Flutter 默认提供了Image用于从网络、文件等加载图片，并且使用ImageCache统一管理图片缓存，但有时候并不能满足使用需求（比如网络图片没有磁盘缓存，导致每次 ImageCache 清除缓存之后又要从网络下载），所以又出现了fluttercachednetworkimage、exten...</p>
+            </div>
+            <div class="post-tags">
+                
+            </div>
+        </div>
+        
+        <div class="post-item">
+            <div class="post-header">
+                <h2><a href="/blog/en/posts/ae8e53be.html">Flutter 滑动分析之 NestedScrollView</a></h2>
+                <span class="post-date">2022-07-19</span>
+            </div>
+            <div class="post-excerpt">
+                <p>Flutter 中的 scrollable widget 根据实现方式的不同，可以分为两大类： 基于 RenderBox 的 box protocol 实现的，主要基于 Size 实现布局。常见的有SingleChildScrollView。 基于 RenderSliver 的 sliver pro...</p>
+            </div>
+            <div class="post-tags">
+                
+            </div>
+        </div>
+        
+        <div class="post-item">
+            <div class="post-header">
+                <h2><a href="/blog/en/posts/60f8d92f.html">Flutter 滑动分析之 Scrollview</a></h2>
+                <span class="post-date">2022-07-16</span>
+            </div>
+            <div class="post-excerpt">
+                <p>Flutter 中的 scrollable widget 根据实现方式的不同，可以分为两大类： 基于 RenderBox 的 box protocol 实现的，主要基于 Size 实现布局。常见的有 SingleChildScrollView。 基于 RenderSliver 的 sliver pr...</p>
+            </div>
+            <div class="post-tags">
+                
+            </div>
+        </div>
+        
+        <div class="post-item">
+            <div class="post-header">
+                <h2><a href="/blog/en/posts/d3bdcb53.html">Flutter 滑动分析之 SingleChildScrollView</a></h2>
+                <span class="post-date">2022-07-15</span>
+            </div>
+            <div class="post-excerpt">
+                <p>Flutter 中的 scrollable widget 根据实现方式的不同，可以分为两大类： 基于 RenderBox 的 box protocol 实现的，主要基于 Size 实现布局。常见的有 SingleChildScrollView。 基于 RenderSliver 的 sliver pr...</p>
+            </div>
+            <div class="post-tags">
+                
+            </div>
+        </div>
+        
+        <div class="post-item">
+            <div class="post-header">
+                <h2><a href="/blog/en/posts/4cbcfe72.html">Flutter APP 绘制过程简析</a></h2>
+                <span class="post-date">2022-06-25</span>
+            </div>
+            <div class="post-excerpt">
+                <p>本文基于 Flutter 3.0 Flutter App 基于 Dart 语言编写，提供了一套简单易用的 API，可以让开发者在 Flutter 中快速开发出一个精美的 APP。那么在 Flutter 中是如何绘制一个 APP 呢，runApp 是怎么将我们编写的 Widget 等添加到手机上的呢？...</p>
+            </div>
+            <div class="post-tags">
+                
+            </div>
+        </div>
+        
+        <div class="post-item">
+            <div class="post-header">
+                <h2><a href="/blog/en/posts/db62c118.html">Dart event loop</a></h2>
+                <span class="post-date">2022-06-11</span>
+            </div>
+            <div class="post-excerpt">
+                <p>本文基于 Dart 2.17 Dart App 中所有的代码都在一个 isolate 中运行（各个 isolate 之间的代码运行时是隔离的），一个 isolate 有自己的 heap，维持有一个消息队列 eventloop，处理两种消息： 1. 执行用户点击、屏幕刷新、绘制，一般的 Future、...</p>
+            </div>
+            <div class="post-tags">
+                
+            </div>
+        </div>
+        
+        <div class="post-item">
+            <div class="post-header">
+                <h2><a href="/blog/en/posts/3db5282.html">Dart 读取文件过程分析</a></h2>
+                <span class="post-date">2022-06-02</span>
+            </div>
+            <div class="post-excerpt">
+                <p>Dart 读取文件时，先在 Dart 代码创建 File 引用，通过与跨通信（先通过 IO Service 而发送请求到 native 端，等到 native 执行完操作之后再回调结果）从而实现对文件的读写。 实现一个简单的读取文件的代码如下： 整个过程如下： 过程分析 Dart 端发起文件读写请求...</p>
+            </div>
+            <div class="post-tags">
+                
+            </div>
+        </div>
+        
+        <div class="post-item">
+            <div class="post-header">
+                <h2><a href="/blog/en/posts/550e5790.html">Dart VM</a></h2>
+                <span class="post-date">2022-06-02</span>
+            </div>
+            <div class="post-excerpt">
+                <p>本文是对 Dart 官方 VM 的介绍的总结摘要，推荐直接阅读官方原文。 Dart VM is a collection of components for executing Dart code natively. Notably, it includes the following: Runti...</p>
+            </div>
+            <div class="post-tags">
+                
+            </div>
+        </div>
+        
+        <div class="post-item">
+            <div class="post-header">
+                <h2><a href="/blog/en/posts/a951661c.html">Dart Isolate 源码分析</a></h2>
+                <span class="post-date">2022-05-28</span>
+            </div>
+            <div class="post-excerpt">
+                <p>Isolate 💡 本文基于 Dart 2.17.1 Isolate, an isolated Dart execution context. All Dart code runs in an isolate, and code can access classes and values only...</p>
+            </div>
+            <div class="post-tags">
+                
+            </div>
+        </div>
+        
+    </div>
+    
+                
+                <div class="load-more-container">
+                    <div class="load-more-spinner" style="display: none;">
+                        <i class="fas fa-spinner fa-spin"></i>
+                    </div>
+                    <div class="load-more-end" style="display: none;"></div>
+                </div>
+                
+            </div>
+        
+    </main>
+
+    
+    <footer>
+        <div class="container">
+            <div class="footer-author">
+                <span>&copy; 2016-2025 </span>
+                <a href="https://github.com/jixiaoyong" target="_blank" rel="noopener noreferrer" title="GitHub">
+                    <i class="fab fa-github"></i>
+                    JI,XIAOYONG
+                </a>
+            </div>
+            <div>
+                <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer" class="footer-link">
+                    <i class="fab fa-creative-commons"></i> BY-NC-SA 4.0
+                </a>
+            </div>
+        </div>
+    </footer>
+    
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" title="Back to Top">
+        <i class="fas fa-rocket"></i>
+    </button>
+
+    <!-- Scripts: Staticfile CDN -->
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/dart.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/kotlin.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/gradle.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/groovy.min.js"></script>
+    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/yaml.min.js"></script>
+    <script>
+        // MathJax Configuration - Enable $...$ inline math
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\(', '\)']],
+                displayMath: [['$$', '$$'], ['\[', '\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+                ignoreHtmlClass: 'mathjax_ignore'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.staticfile.net/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+    <script src="/blog/scripts/client.js"></script>
+</body>
+</html>
