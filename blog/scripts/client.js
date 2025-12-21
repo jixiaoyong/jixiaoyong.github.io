@@ -112,22 +112,41 @@ window.toggleAiPopup = toggleAiPopup;
 
 // Language Switcher
 const switchLanguage = () => {
-    const path = window.location.pathname;
-    const isEnglish = path.startsWith('/en');
+    const basePath = window.basePath || '';
+    const fullPath = window.location.pathname;
     
-    let newPath;
+    // Remove basePath to get relative path (e.g. "/blog/en/about" -> "/en/about")
+    // Ensure we handle cases where basePath might be empty or "/"
+    let relativePath = fullPath;
+    if (basePath && fullPath.startsWith(basePath)) {
+        relativePath = fullPath.substring(basePath.length);
+    }
+    
+    // Check if starts with /en or /en/
+    const isEnglish = relativePath === '/en' || relativePath.startsWith('/en/');
+    
+    let newRelativePath;
     if (isEnglish) {
-        // Switch to Chinese: remove /en prefix
+        // Switch to Chinese: remove /en or /en/ prefix
+        // /en -> /
         // /en/ -> /
-        // /en/posts/abc.html -> /posts/abc.html
-        newPath = path.replace(/^\/en/, '') || '/';
+        // /en/about.html -> /about.html
+        if (relativePath === '/en') newRelativePath = '/';
+        else newRelativePath = relativePath.replace(/^\/en\//, '/');
     } else {
         // Switch to English: add /en prefix
         // / -> /en/
-        // /posts/abc.html -> /en/posts/abc.html
-        newPath = '/en' + (path === '/' ? '/' : path);
+        // /about.html -> /en/about.html
+        if (relativePath === '/' || relativePath === '') newRelativePath = '/en/';
+        else newRelativePath = '/en' + relativePath;
     }
-    window.location.href = newPath;
+    
+    // Add basePath back
+    // Ensure no double slashes if basePath ends with / (though usually it shouldn't)
+    // Common case: basePath='/blog', newRel='/en/' -> '/blog/en/'
+    const finalPath = (basePath + newRelativePath).replace(/\/+/g, '/');
+    
+    window.location.href = finalPath;
 };
 
 // Mobile Menu

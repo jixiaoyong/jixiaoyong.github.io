@@ -11,11 +11,11 @@
     <link href="https://fonts.loli.net/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=Inter:wght@300;400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     
     <!-- Icons: Staticfile CDN -->
-    <link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.4.0/css/all.min.css" onerror="this.href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="/blog/styles/main.css">
-    <link rel="stylesheet" href="/blog/styles/containers.css">
+    <link rel="stylesheet" href="/blog/styles/main.css?v=1766340864335">
+    <link rel="stylesheet" href="/blog/styles/containers.css?v=1766340864335">
 
     <!-- Highlight.js Theme (Staticfile does not have all themes, checking common ones) -->
     <!-- Using cdnjs.cloudflare.com as fallback if staticfile misses specific themes, but staticfile usually has them -->
@@ -27,7 +27,8 @@
         document.documentElement.setAttribute('data-theme', savedTheme);
         // Language detection - simplistic redirect if on root
         const userLang = navigator.language || navigator.userLanguage;
-        const basePath = '/blog';
+        window.basePath = '/blog';
+        const basePath = window.basePath;
         if (window.location.pathname === basePath + '/' && userLang.startsWith('en')) {
            window.location.href = basePath + '/en/';
         }
@@ -145,7 +146,7 @@
 <p>During my learning journey, the internet has provided me with tremendous support and help. However, it&#39;s undeniable that there are many &quot;mutually referenced&quot; materials on the Chinese internet, which inevitably include a lot of unverified information that can be quite harmful.</p>
 <p>Today, I wasted an entire evening due to such issues. And this is just what I&#39;ve discovered with obvious errors - who knows how many others remain undetected.</p>
 <p>Unfortunately, before this, I also wrote many articles that lacked deep thinking and were simply &quot;borrowed.&quot; It&#39;s quite embarrassing. From now on, I will only write technical articles after I truly understand them, and every point must have corresponding references. I&#39;d rather write less than write carelessly. Previous articles will also need to be gradually corrected.</p>
-<p>Oops, I accidentally set a Flag. Please don&#39;t let me eat my words (￣ ε(#￣)☆╰╮(￣ ▽ ￣///).</p>
+<p><span class="mathjax_ignore">Oops, I accidentally set a Flag. Please don&#39;t let me eat my words (￣ ε(#￣)☆╰╮(￣ ▽ ￣///).</span></p>
 <h2>TODO List</h2>
 <ul>
 <li>Choose the right direction</li>
@@ -216,6 +217,6 @@
         };
     </script>
     <script id="MathJax-script" async src="https://cdn.staticfile.net/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
-    <script src="/blog/scripts/client.js"></script>
+    <script src="/blog/scripts/client.js?v=1766340864335"></script>
 </body>
 </html>

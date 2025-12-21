@@ -11,11 +11,11 @@
     <link href="https://fonts.loli.net/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=Inter:wght@300;400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     
     <!-- Icons: Staticfile CDN -->
-    <link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.4.0/css/all.min.css" onerror="this.href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="/blog/styles/main.css">
-    <link rel="stylesheet" href="/blog/styles/containers.css">
+    <link rel="stylesheet" href="/blog/styles/main.css?v=1766340864089">
+    <link rel="stylesheet" href="/blog/styles/containers.css?v=1766340864089">
 
     <!-- Highlight.js Theme (Staticfile does not have all themes, checking common ones) -->
     <!-- Using cdnjs.cloudflare.com as fallback if staticfile misses specific themes, but staticfile usually has them -->
@@ -27,7 +27,8 @@
         document.documentElement.setAttribute('data-theme', savedTheme);
         // Language detection - simplistic redirect if on root
         const userLang = navigator.language || navigator.userLanguage;
-        const basePath = '/blog';
+        window.basePath = '/blog';
+        const basePath = window.basePath;
         if (window.location.pathname === basePath + '/' && userLang.startsWith('en')) {
            window.location.href = basePath + '/en/';
         }
@@ -145,7 +146,7 @@
 <p>在我学习的过程中，互联网给了我莫大的支持与帮助。但不可否认的是，中文互联网存在着很多&quot;相互借鉴&quot;的资料，其中不可避免有很多未经查实的资料，其危害不小。</p>
 <p>今天就因为这种问题，白白耽搁了一晚上的时间。而这还是我已经发现的有明显谬论的地方，其他没有发现的更是不知几多。</p>
 <p>很遗憾在此之前，我自己也写过不少这样欠缺思考，直接&quot;拿来主义&quot;的文章，真是惭愧。今日起，技术类文章务必自己理解了，理顺了才写，务必每个观点都有对应的参考依据。宁可少写，也不能乱写瞎写。之前的文章，也要慢慢的修正。</p>
-<p>哎呀，一不小心立了个 Flag，千万不要打脸 (￣ ε(#￣)☆╰╮(￣ ▽ ￣///)。</p>
+<p><span class="mathjax_ignore">哎呀，一不小心立了个 Flag，千万不要打脸 (￣ ε(#￣)☆╰╮(￣ ▽ ￣///)。</span></p>
 <h2>TODO List</h2>
 <ul>
 <li>选好方向</li>
@@ -216,6 +217,6 @@
         };
     </script>
     <script id="MathJax-script" async src="https://cdn.staticfile.net/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
-    <script src="/blog/scripts/client.js"></script>
+    <script src="/blog/scripts/client.js?v=1766340864089"></script>
 </body>
 </html>

@@ -166,6 +166,17 @@ button.theme-toggle:hover i, button.mobile-menu-btn:hover i {
     color: var(--accent-yellow);
 }
 
+/* Ensure icons are visible in dark mode */
+[data-theme="dark"] button.theme-toggle, 
+[data-theme="dark"] button.mobile-menu-btn, 
+[data-theme="dark"] button.close-search {
+    color: #ffffff;
+}
+
+[data-theme="dark"] nav a {
+    color: #e5e7eb;
+}
+
 /* Main Content Area */
 main {
     padding: 3rem 0;

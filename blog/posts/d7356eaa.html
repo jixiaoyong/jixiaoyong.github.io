@@ -11,11 +11,11 @@
     <link href="https://fonts.loli.net/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=Inter:wght@300;400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     
     <!-- Icons: Staticfile CDN -->
-    <link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.4.0/css/all.min.css" onerror="this.href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="/blog/styles/main.css">
-    <link rel="stylesheet" href="/blog/styles/containers.css">
+    <link rel="stylesheet" href="/blog/styles/main.css?v=1766340863893">
+    <link rel="stylesheet" href="/blog/styles/containers.css?v=1766340863893">
 
     <!-- Highlight.js Theme (Staticfile does not have all themes, checking common ones) -->
     <!-- Using cdnjs.cloudflare.com as fallback if staticfile misses specific themes, but staticfile usually has them -->
@@ -27,7 +27,8 @@
         document.documentElement.setAttribute('data-theme', savedTheme);
         // Language detection - simplistic redirect if on root
         const userLang = navigator.language || navigator.userLanguage;
-        const basePath = '/blog';
+        window.basePath = '/blog';
+        const basePath = window.basePath;
         if (window.location.pathname === basePath + '/' && userLang.startsWith('en')) {
            window.location.href = basePath + '/en/';
         }
@@ -184,7 +185,7 @@
 <hr>
 <p><a href="https://jixiaoyong.github.io/statics/git_revert_cherrypick_compare.html">点击在线查看清楚的对比</a></p>
 
-<details class="demo-container" id="normal-demo-git-revert-vs-cherrypick-1-kw0tre" data-collapse="50vh" open>
+<details class="demo-container" id="normal-demo-git-revert-vs-cherrypick-1-zh4hno" data-collapse="50vh" open>
   <summary class="demo-header">
     <span class="demo-title">上述操作的图形化演示</span>
     <span class="demo-toggle-icon">
@@ -195,106 +196,106 @@
   </summary>
   <div class="demo-body">
     
-    <style>#normal-demo-git-revert-vs-cherrypick-1-kw0tre {
+    <style>#normal-demo-git-revert-vs-cherrypick-1-zh4hno {
     font-family: sans-serif;
     margin: 0;
     padding: 0 8px;
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre .main-content {
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno .main-content {
     max-width: 1200px;
     margin: 0 auto;
     border-radius: 12px;
     padding: 24px 12px 40px 12px;
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre h1 {
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno h1 {
     text-align: center;
     margin-bottom: 16px;
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre .compare-table {
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno .compare-table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0 18px;
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre .compare-table th, #normal-demo-git-revert-vs-cherrypick-1-kw0tre .compare-table td {
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno .compare-table th, #normal-demo-git-revert-vs-cherrypick-1-zh4hno .compare-table td {
     vertical-align: top;
     padding: 0 12px;
     width: 50%;
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre .compare-table th {
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno .compare-table th {
     font-size: 1.1em;
     color: #2196f3;
     text-align: center;
     padding-bottom: 8px;
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre .stage-title-scheme1 {
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno .stage-title-scheme1 {
     font-weight: bold;
     font-size: 1.1em;
     margin-bottom: 6px;
     color: #1976d2;
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre .stage-title-scheme2 {
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno .stage-title-scheme2 {
     font-weight: bold;
     font-size: 1.1em;
     margin-bottom: 6px;
     color: #388e3c;
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre .stage-block {
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno .stage-block {
     border-radius: 8px;
     padding: 12px 10px 10px 10px;
     margin-bottom: 0;
     border: 1px solid var(--border-color, #e3e8ee);
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre .diff {
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno .diff {
     border: 2px solid #ff9800;
     border-radius: 8px;
     padding: 10px 10px 8px 10px;
     margin-top: 8px;
     margin-bottom: 0;
     color: #b26a00;
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre .final-result {
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno .final-result {
     border: 2px solid #2196f3;
     border-radius: 8px;
     padding: 12px 10px 10px 10px;
     margin-top: 8px;
     margin-bottom: 0;
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre .commit-node {
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno .commit-node {
     display: inline-block;
     padding: 3px 8px;
     border-radius: 5px;
     margin-right: 6px;
     font-size: 0.98em;
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre .branch-a-node {
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno .branch-a-node {
     background: #2196f3;
     color: #fff;
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre .branch-b-node {
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno .branch-b-node {
     background: #4caf50;
     color: #fff;
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre .branch-c-node {
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno .branch-c-node {
     background: #ff9800;
     color: #fff;
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre .merged-node-from-c {
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno .merged-node-from-c {
     background: #ff9800;
     color: #fff;
     border: 1.5px solid #ff9800;
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre .merged-node-from-b {
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno .merged-node-from-b {
     background: #4caf50;
     color: #fff;
     border: 1.5px solid #4caf50;
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre .cherry-picked-commit {
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno .cherry-picked-commit {
     border: 2px solid #ef5350;
     color: #c62828;
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre .revert {
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno .revert {
     border: 2px solid #ffb300;
     color: #b26a00;
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre .strike {
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno .strike {
     text-decoration: line-through;
     opacity: 0.5;
     border: 2px dashed #888 !important;
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre .stage-desc {
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno .stage-desc {
     color: #888;
     font-size: 0.97em;
     margin-bottom: 6px;
   }
 
-  @media (max-width: 900px) {#normal-demo-git-revert-vs-cherrypick-1-kw0tre .compare-table th, #normal-demo-git-revert-vs-cherrypick-1-kw0tre .compare-table td {
+  @media (max-width: 900px) {#normal-demo-git-revert-vs-cherrypick-1-zh4hno .compare-table th, #normal-demo-git-revert-vs-cherrypick-1-zh4hno .compare-table td {
       display: block;
       width: 100%;
-    }#normal-demo-git-revert-vs-cherrypick-1-kw0tre .compare-table tr {
+    }#normal-demo-git-revert-vs-cherrypick-1-zh4hno .compare-table tr {
       display: block;
       margin-bottom: 32px;
     }
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre /* Styles for collapsible sections */
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno /* Styles for collapsible sections */
   .collapsible-header {
     cursor: pointer;
     padding: 16px 12px;
@@ -306,9 +307,9 @@
     margin-top: 20px;
     border-radius: 8px;
     transition: opacity 0.3s ease;
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre .collapsible-header:hover {
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno .collapsible-header:hover {
     opacity: 0.8;
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre .collapsible-content {
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno .collapsible-content {
     padding: 16px 12px;
     max-height: 0;
     overflow: hidden;
@@ -318,10 +319,10 @@
     border-bottom: 1px solid var(--border-color, #ddd);
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre .collapsible-content.active {
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno .collapsible-content.active {
     max-height: 5000px;
     /* Adjust based on expected content height */
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre /* Styles from git_log.html and git_log_chreey_pick.html */
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno /* Styles from git_log.html and git_log_chreey_pick.html */
   .branch-container {
     margin-bottom: 5px;
     padding: 6px 0;
@@ -329,59 +330,59 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 2px;
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre .branch-label {
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno .branch-label {
     border: 1px solid var(--border-color, #ddd);
     padding: 5px 10px;
     margin-bottom: 2px;
     display: inline-block;
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre /* .commit-node style is already defined */
-  /* .branch-a-node, #normal-demo-git-revert-vs-cherrypick-1-kw0tre .branch-b-node, #normal-demo-git-revert-vs-cherrypick-1-kw0tre .branch-c-node styles are already defined */
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno /* .commit-node style is already defined */
+  /* .branch-a-node, #normal-demo-git-revert-vs-cherrypick-1-zh4hno .branch-b-node, #normal-demo-git-revert-vs-cherrypick-1-zh4hno .branch-c-node styles are already defined */
 
   .merged-node-from-c {
     background-color: #ff9800;
     /* Orange - indicating from c */
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre .merged-node-from-b {
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno .merged-node-from-b {
     background-color: #4caf50;
     /* Green - indicating from b */
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre .revert {
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno .revert {
     background-color: #ffe0b2;
     border: 1px solid #ffb300;
     color: black;
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre .cherry-picked-commit {
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno .cherry-picked-commit {
     background-color: #ffebee;
     border: 1px solid #ef9a9a;
     color: black;
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre .branch-commits {
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno .branch-commits {
     display: flex;
     align-items: center;
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre .arrow {
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno .arrow {
     margin-right: 10px;
     font-size: 1.2em;
     color: #777;
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre .final-a {
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno .final-a {
     background-color: #fce4ec;
     border: 1px solid #f48fb1;
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre .strike {
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno .strike {
     text-decoration: line-through;
     color: gray;
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre .strike.branch-a-node, #normal-demo-git-revert-vs-cherrypick-1-kw0tre .strike.branch-b-node, #normal-demo-git-revert-vs-cherrypick-1-kw0tre .strike.branch-c-node, #normal-demo-git-revert-vs-cherrypick-1-kw0tre .strike.merged-node-from-c, #normal-demo-git-revert-vs-cherrypick-1-kw0tre .strike.merged-node-from-b {
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno .strike.branch-a-node, #normal-demo-git-revert-vs-cherrypick-1-zh4hno .strike.branch-b-node, #normal-demo-git-revert-vs-cherrypick-1-zh4hno .strike.branch-c-node, #normal-demo-git-revert-vs-cherrypick-1-zh4hno .strike.merged-node-from-c, #normal-demo-git-revert-vs-cherrypick-1-zh4hno .strike.merged-node-from-b {
     opacity: 0.5;
     text-decoration: line-through;
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre .step-description {
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno .step-description {
     margin-top: 10px;
     padding-left: 20px;
     font-size: 0.9em;
     color: #555;
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre .temp-branch-label {
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno .temp-branch-label {
     border: 1px solid #26c6da;
     padding: 5px 10px;
     margin-bottom: 2px;
     display: inline-block;
     color: #00838f;
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre /* Existing styles for collapsible sections */
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno /* Existing styles for collapsible sections */
   .collapsible-header {
     padding: 16px 12px;
-  }#normal-demo-git-revert-vs-cherrypick-1-kw0tre .collapsible-content.active {
+  }#normal-demo-git-revert-vs-cherrypick-1-zh4hno .collapsible-content.active {
     max-height: 5000px;
     /* Adjust based on expected content height */
   }
@@ -641,7 +642,7 @@
   </div>
 </details>
 
-<details class="demo-container" id="normal-demo-git-revert-vs-cherrypick-2-sfc0wd" data-collapse="50vh" open>
+<details class="demo-container" id="normal-demo-git-revert-vs-cherrypick-2-0ri6fm" data-collapse="50vh" open>
   <summary class="demo-header">
     <span class="demo-title">Merge + Revert 详细步骤</span>
     <span class="demo-toggle-icon">
@@ -652,8 +653,8 @@
   </summary>
   <div class="demo-body">
     
-    <style>#normal-demo-git-revert-vs-cherrypick-2-sfc0wd {font-family:sans-serif;margin:0;padding:0 8px}#normal-demo-git-revert-vs-cherrypick-2-sfc0wd .main-content {max-width:1200px;margin:0 auto;border-radius:12px;padding:24px 12px 40px 12px}#normal-demo-git-revert-vs-cherrypick-2-sfc0wd h1 {text-align:center;margin-bottom:16px}#normal-demo-git-revert-vs-cherrypick-2-sfc0wd .compare-table {width:100%;border-collapse:separate;border-spacing:0 18px}#normal-demo-git-revert-vs-cherrypick-2-sfc0wd .compare-table th, #normal-demo-git-revert-vs-cherrypick-2-sfc0wd .compare-table td {vertical-align:top;padding:0 12px;width:50%}#normal-demo-git-revert-vs-cherrypick-2-sfc0wd .compare-table th {font-size:1.1em;color:#2196f3;text-align:center;padding-bottom:8px}#normal-demo-git-revert-vs-cherrypick-2-sfc0wd .stage-title-scheme1 {font-weight:bold;font-size:1.1em;margin-bottom:6px;color:#1976d2}#normal-demo-git-revert-vs-cherrypick-2-sfc0wd .stage-title-scheme2 {font-weight:bold;font-size:1.1em;margin-bottom:6px;color:#388e3c}#normal-demo-git-revert-vs-cherrypick-2-sfc0wd .stage-block {border-radius:8px;padding:12px 10px 10px 10px;margin-bottom:0;border:1px solid var(--border-color,#e3e8ee)}#normal-demo-git-revert-vs-cherrypick-2-sfc0wd .diff {border:2px solid #ff9800;border-radius:8px;padding:10px 10px 8px 10px;margin-top:8px;margin-bottom:0;color:#b26a00}#normal-demo-git-revert-vs-cherrypick-2-sfc0wd .final-result {border:2px solid #2196f3;border-radius:8px;padding:12px 10px 10px 10px;margin-top:8px;margin-bottom:0}#normal-demo-git-revert-vs-cherrypick-2-sfc0wd .commit-node {display:inline-block;padding:3px 8px;border-radius:5px;margin-right:6px;font-size:0.98em}#normal-demo-git-revert-vs-cherrypick-2-sfc0wd .branch-a-node {background:#2196f3;color:#fff}#normal-demo-git-revert-vs-cherrypick-2-sfc0wd .branch-b-node {background:#4caf50;color:#fff}#normal-demo-git-revert-vs-cherrypick-2-sfc0wd .branch-c-node {background:#ff9800;color:#fff}#normal-demo-git-revert-vs-cherrypick-2-sfc0wd .merged-node-from-c {background:#ff9800;color:#fff;border:1.5px solid #ff9800}#normal-demo-git-revert-vs-cherrypick-2-sfc0wd .merged-node-from-b {background:#4caf50;color:#fff;border:1.5px solid #4caf50}#normal-demo-git-revert-vs-cherrypick-2-sfc0wd .cherry-picked-commit {border:2px solid #ef5350;color:#c62828}#normal-demo-git-revert-vs-cherrypick-2-sfc0wd .revert {border:2px solid #ffb300;color:#b26a00}#normal-demo-git-revert-vs-cherrypick-2-sfc0wd .strike {text-decoration:line-through;opacity:0.5;border:2px dashed #888 !important}#normal-demo-git-revert-vs-cherrypick-2-sfc0wd .stage-desc {font-size:0.97em;margin-bottom:6px}
-  @media (max-width:900px){#normal-demo-git-revert-vs-cherrypick-2-sfc0wd .compare-table th, #normal-demo-git-revert-vs-cherrypick-2-sfc0wd .compare-table td {display:block;width:100%}#normal-demo-git-revert-vs-cherrypick-2-sfc0wd .compare-table tr {display:block;margin-bottom:32px}}#normal-demo-git-revert-vs-cherrypick-2-sfc0wd .collapsible-header {cursor:pointer;padding:16px 12px;width:100%;border:1px solid var(--border-color,#ddd);text-align:left;outline:none;font-size:1.1em;margin-top:20px;border-radius:8px;transition:opacity 0.3s ease}#normal-demo-git-revert-vs-cherrypick-2-sfc0wd .collapsible-header:hover {opacity:0.8}#normal-demo-git-revert-vs-cherrypick-2-sfc0wd .collapsible-content {padding:16px 12px;max-height:0;overflow:hidden;transition:max-height 0.2s ease-out;border-left:1px solid var(--border-color,#ddd);border-right:1px solid var(--border-color,#ddd);border-bottom:1px solid var(--border-color,#ddd);border-bottom-left-radius:8px;border-bottom-right-radius:8px}#normal-demo-git-revert-vs-cherrypick-2-sfc0wd .collapsible-content.active {max-height:5000px}#normal-demo-git-revert-vs-cherrypick-2-sfc0wd .branch-container {margin-bottom:5px;padding:6px 0;display:flex;flex-direction:column;align-items:flex-start;gap:2px}#normal-demo-git-revert-vs-cherrypick-2-sfc0wd .branch-label {border:1px solid var(--border-color,#ddd);padding:5px 10px;margin-bottom:2px;display:inline-block}#normal-demo-git-revert-vs-cherrypick-2-sfc0wd .branch-commits {display:flex;align-items:center}#normal-demo-git-revert-vs-cherrypick-2-sfc0wd .arrow {margin-right:10px;font-size:1.2em}#normal-demo-git-revert-vs-cherrypick-2-sfc0wd .final-a {border:1px solid #f48fb1}#normal-demo-git-revert-vs-cherrypick-2-sfc0wd .strike.branch-a-node, #normal-demo-git-revert-vs-cherrypick-2-sfc0wd .strike.branch-b-node, #normal-demo-git-revert-vs-cherrypick-2-sfc0wd .strike.branch-c-node, #normal-demo-git-revert-vs-cherrypick-2-sfc0wd .strike.merged-node-from-c, #normal-demo-git-revert-vs-cherrypick-2-sfc0wd .strike.merged-node-from-b {opacity:0.5;text-decoration:line-through}#normal-demo-git-revert-vs-cherrypick-2-sfc0wd .step-description {margin-top:10px;padding-left:20px;font-size:0.9em}#normal-demo-git-revert-vs-cherrypick-2-sfc0wd .temp-branch-label {border:1px solid #26c6da;padding:5px 10px;margin-bottom:2px;display:inline-block;color:#00838f}
+    <style>#normal-demo-git-revert-vs-cherrypick-2-0ri6fm {font-family:sans-serif;margin:0;padding:0 8px}#normal-demo-git-revert-vs-cherrypick-2-0ri6fm .main-content {max-width:1200px;margin:0 auto;border-radius:12px;padding:24px 12px 40px 12px}#normal-demo-git-revert-vs-cherrypick-2-0ri6fm h1 {text-align:center;margin-bottom:16px}#normal-demo-git-revert-vs-cherrypick-2-0ri6fm .compare-table {width:100%;border-collapse:separate;border-spacing:0 18px}#normal-demo-git-revert-vs-cherrypick-2-0ri6fm .compare-table th, #normal-demo-git-revert-vs-cherrypick-2-0ri6fm .compare-table td {vertical-align:top;padding:0 12px;width:50%}#normal-demo-git-revert-vs-cherrypick-2-0ri6fm .compare-table th {font-size:1.1em;color:#2196f3;text-align:center;padding-bottom:8px}#normal-demo-git-revert-vs-cherrypick-2-0ri6fm .stage-title-scheme1 {font-weight:bold;font-size:1.1em;margin-bottom:6px;color:#1976d2}#normal-demo-git-revert-vs-cherrypick-2-0ri6fm .stage-title-scheme2 {font-weight:bold;font-size:1.1em;margin-bottom:6px;color:#388e3c}#normal-demo-git-revert-vs-cherrypick-2-0ri6fm .stage-block {border-radius:8px;padding:12px 10px 10px 10px;margin-bottom:0;border:1px solid var(--border-color,#e3e8ee)}#normal-demo-git-revert-vs-cherrypick-2-0ri6fm .diff {border:2px solid #ff9800;border-radius:8px;padding:10px 10px 8px 10px;margin-top:8px;margin-bottom:0;color:#b26a00}#normal-demo-git-revert-vs-cherrypick-2-0ri6fm .final-result {border:2px solid #2196f3;border-radius:8px;padding:12px 10px 10px 10px;margin-top:8px;margin-bottom:0}#normal-demo-git-revert-vs-cherrypick-2-0ri6fm .commit-node {display:inline-block;padding:3px 8px;border-radius:5px;margin-right:6px;font-size:0.98em}#normal-demo-git-revert-vs-cherrypick-2-0ri6fm .branch-a-node {background:#2196f3;color:#fff}#normal-demo-git-revert-vs-cherrypick-2-0ri6fm .branch-b-node {background:#4caf50;color:#fff}#normal-demo-git-revert-vs-cherrypick-2-0ri6fm .branch-c-node {background:#ff9800;color:#fff}#normal-demo-git-revert-vs-cherrypick-2-0ri6fm .merged-node-from-c {background:#ff9800;color:#fff;border:1.5px solid #ff9800}#normal-demo-git-revert-vs-cherrypick-2-0ri6fm .merged-node-from-b {background:#4caf50;color:#fff;border:1.5px solid #4caf50}#normal-demo-git-revert-vs-cherrypick-2-0ri6fm .cherry-picked-commit {border:2px solid #ef5350;color:#c62828}#normal-demo-git-revert-vs-cherrypick-2-0ri6fm .revert {border:2px solid #ffb300;color:#b26a00}#normal-demo-git-revert-vs-cherrypick-2-0ri6fm .strike {text-decoration:line-through;opacity:0.5;border:2px dashed #888 !important}#normal-demo-git-revert-vs-cherrypick-2-0ri6fm .stage-desc {font-size:0.97em;margin-bottom:6px}
+  @media (max-width:900px){#normal-demo-git-revert-vs-cherrypick-2-0ri6fm .compare-table th, #normal-demo-git-revert-vs-cherrypick-2-0ri6fm .compare-table td {display:block;width:100%}#normal-demo-git-revert-vs-cherrypick-2-0ri6fm .compare-table tr {display:block;margin-bottom:32px}}#normal-demo-git-revert-vs-cherrypick-2-0ri6fm .collapsible-header {cursor:pointer;padding:16px 12px;width:100%;border:1px solid var(--border-color,#ddd);text-align:left;outline:none;font-size:1.1em;margin-top:20px;border-radius:8px;transition:opacity 0.3s ease}#normal-demo-git-revert-vs-cherrypick-2-0ri6fm .collapsible-header:hover {opacity:0.8}#normal-demo-git-revert-vs-cherrypick-2-0ri6fm .collapsible-content {padding:16px 12px;max-height:0;overflow:hidden;transition:max-height 0.2s ease-out;border-left:1px solid var(--border-color,#ddd);border-right:1px solid var(--border-color,#ddd);border-bottom:1px solid var(--border-color,#ddd);border-bottom-left-radius:8px;border-bottom-right-radius:8px}#normal-demo-git-revert-vs-cherrypick-2-0ri6fm .collapsible-content.active {max-height:5000px}#normal-demo-git-revert-vs-cherrypick-2-0ri6fm .branch-container {margin-bottom:5px;padding:6px 0;display:flex;flex-direction:column;align-items:flex-start;gap:2px}#normal-demo-git-revert-vs-cherrypick-2-0ri6fm .branch-label {border:1px solid var(--border-color,#ddd);padding:5px 10px;margin-bottom:2px;display:inline-block}#normal-demo-git-revert-vs-cherrypick-2-0ri6fm .branch-commits {display:flex;align-items:center}#normal-demo-git-revert-vs-cherrypick-2-0ri6fm .arrow {margin-right:10px;font-size:1.2em}#normal-demo-git-revert-vs-cherrypick-2-0ri6fm .final-a {border:1px solid #f48fb1}#normal-demo-git-revert-vs-cherrypick-2-0ri6fm .strike.branch-a-node, #normal-demo-git-revert-vs-cherrypick-2-0ri6fm .strike.branch-b-node, #normal-demo-git-revert-vs-cherrypick-2-0ri6fm .strike.branch-c-node, #normal-demo-git-revert-vs-cherrypick-2-0ri6fm .strike.merged-node-from-c, #normal-demo-git-revert-vs-cherrypick-2-0ri6fm .strike.merged-node-from-b {opacity:0.5;text-decoration:line-through}#normal-demo-git-revert-vs-cherrypick-2-0ri6fm .step-description {margin-top:10px;padding-left:20px;font-size:0.9em}#normal-demo-git-revert-vs-cherrypick-2-0ri6fm .temp-branch-label {border:1px solid #26c6da;padding:5px 10px;margin-bottom:2px;display:inline-block;color:#00838f}
 </style>
 <!-- Detailed Steps Section -->
 <div>
@@ -931,7 +932,7 @@
   </div>
 </details>
 
-<details class="demo-container" id="normal-demo-git-revert-vs-cherrypick-3-24ody1" data-collapse="50vh" open>
+<details class="demo-container" id="normal-demo-git-revert-vs-cherrypick-3-34f5bc" data-collapse="50vh" open>
   <summary class="demo-header">
     <span class="demo-title">Reset + Cherry-pick 详细步骤</span>
     <span class="demo-toggle-icon">
@@ -942,7 +943,7 @@
   </summary>
   <div class="demo-body">
     
-    <style>#normal-demo-git-revert-vs-cherrypick-3-24ody1 {font-family:sans-serif;margin:0;padding:0 8px}#normal-demo-git-revert-vs-cherrypick-3-24ody1 .main-content {max-width:1200px;margin:0 auto;border-radius:12px;padding:24px 12px 40px 12px}#normal-demo-git-revert-vs-cherrypick-3-24ody1 h1 {text-align:center;margin-bottom:16px}#normal-demo-git-revert-vs-cherrypick-3-24ody1 .compare-table {width:100%;border-collapse:separate;border-spacing:0 18px}#normal-demo-git-revert-vs-cherrypick-3-24ody1 .compare-table th, #normal-demo-git-revert-vs-cherrypick-3-24ody1 .compare-table td {vertical-align:top;padding:0 12px;width:50%}#normal-demo-git-revert-vs-cherrypick-3-24ody1 .compare-table th {font-size:1.1em;color:#2196f3;text-align:center;padding-bottom:8px}#normal-demo-git-revert-vs-cherrypick-3-24ody1 .stage-title-scheme1 {font-weight:bold;font-size:1.1em;margin-bottom:6px;color:#1976d2}#normal-demo-git-revert-vs-cherrypick-3-24ody1 .stage-title-scheme2 {font-weight:bold;font-size:1.1em;margin-bottom:6px;color:#388e3c}#normal-demo-git-revert-vs-cherrypick-3-24ody1 .stage-block {border-radius:8px;padding:12px 10px 10px 10px;margin-bottom:0;border:1px solid var(--border-color,#e3e8ee)}#normal-demo-git-revert-vs-cherrypick-3-24ody1 .diff {border:2px solid #ff9800;border-radius:8px;padding:10px 10px 8px 10px;margin-top:8px;margin-bottom:0;color:#b26a00}#normal-demo-git-revert-vs-cherrypick-3-24ody1 .final-result {border:2px solid #2196f3;border-radius:8px;padding:12px 10px 10px 10px;margin-top:8px;margin-bottom:0}#normal-demo-git-revert-vs-cherrypick-3-24ody1 .commit-node {display:inline-block;padding:3px 8px;border-radius:5px;margin-right:6px;font-size:0.98em}#normal-demo-git-revert-vs-cherrypick-3-24ody1 .branch-a-node {background:#2196f3;color:#fff}#normal-demo-git-revert-vs-cherrypick-3-24ody1 .branch-b-node {background:#4caf50;color:#fff}#normal-demo-git-revert-vs-cherrypick-3-24ody1 .branch-c-node {background:#ff9800;color:#fff}#normal-demo-git-revert-vs-cherrypick-3-24ody1 .merged-node-from-c {background:#ff9800;color:#fff;border:1.5px solid #ff9800}#normal-demo-git-revert-vs-cherrypick-3-24ody1 .merged-node-from-b {background:#4caf50;color:#fff;border:1.5px solid #4caf50}#normal-demo-git-revert-vs-cherrypick-3-24ody1 .cherry-picked-commit {border:2px solid #ef5350;color:#c62828}#normal-demo-git-revert-vs-cherrypick-3-24ody1 .revert {border:2px solid #ffb300;color:#b26a00}#normal-demo-git-revert-vs-cherrypick-3-24ody1 .strike {text-decoration:line-through;opacity:0.5;border:2px dashed #888 !important}#normal-demo-git-revert-vs-cherrypick-3-24ody1 .stage-desc {font-size:0.97em;margin-bottom:6px}@media (max-width:900px){#normal-demo-git-revert-vs-cherrypick-3-24ody1 .compare-table th, #normal-demo-git-revert-vs-cherrypick-3-24ody1 .compare-table td {display:block;width:100%}#normal-demo-git-revert-vs-cherrypick-3-24ody1 .compare-table tr {display:block;margin-bottom:32px}}#normal-demo-git-revert-vs-cherrypick-3-24ody1 .collapsible-header {cursor:pointer;padding:16px 12px;width:100%;border:1px solid var(--border-color,#ddd);text-align:left;outline:none;font-size:1.1em;margin-top:20px;border-radius:8px;transition:opacity 0.3s ease}#normal-demo-git-revert-vs-cherrypick-3-24ody1 .collapsible-header:hover {opacity:0.8}#normal-demo-git-revert-vs-cherrypick-3-24ody1 .collapsible-content {padding:16px 12px;max-height:0;overflow:hidden;transition:max-height 0.2s ease-out;border-left:1px solid var(--border-color,#ddd);border-right:1px solid var(--border-color,#ddd);border-bottom:1px solid var(--border-color,#ddd);border-bottom-left-radius:8px;border-bottom-right-radius:8px}#normal-demo-git-revert-vs-cherrypick-3-24ody1 .collapsible-content.active {max-height:5000px}#normal-demo-git-revert-vs-cherrypick-3-24ody1 .branch-container {margin-bottom:5px;padding:6px 0;display:flex;flex-direction:column;align-items:flex-start;gap:2px}#normal-demo-git-revert-vs-cherrypick-3-24ody1 .branch-label {border:1px solid var(--border-color,#ddd);padding:5px 10px;margin-bottom:2px;display:inline-block}#normal-demo-git-revert-vs-cherrypick-3-24ody1 .branch-commits {display:flex;align-items:center}#normal-demo-git-revert-vs-cherrypick-3-24ody1 .arrow {margin-right:10px;font-size:1.2em}#normal-demo-git-revert-vs-cherrypick-3-24ody1 .final-a {border:1px solid #f48fb1}#normal-demo-git-revert-vs-cherrypick-3-24ody1 .strike.branch-a-node, #normal-demo-git-revert-vs-cherrypick-3-24ody1 .strike.branch-b-node, #normal-demo-git-revert-vs-cherrypick-3-24ody1 .strike.branch-c-node, #normal-demo-git-revert-vs-cherrypick-3-24ody1 .strike.merged-node-from-c, #normal-demo-git-revert-vs-cherrypick-3-24ody1 .strike.merged-node-from-b {opacity:0.5;text-decoration:line-through}#normal-demo-git-revert-vs-cherrypick-3-24ody1 .step-description {margin-top:10px;padding-left:20px;font-size:0.9em}#normal-demo-git-revert-vs-cherrypick-3-24ody1 .temp-branch-label {border:1px solid #26c6da;padding:5px 10px;margin-bottom:2px;display:inline-block;color:#00838f}</style>
+    <style>#normal-demo-git-revert-vs-cherrypick-3-34f5bc {font-family:sans-serif;margin:0;padding:0 8px}#normal-demo-git-revert-vs-cherrypick-3-34f5bc .main-content {max-width:1200px;margin:0 auto;border-radius:12px;padding:24px 12px 40px 12px}#normal-demo-git-revert-vs-cherrypick-3-34f5bc h1 {text-align:center;margin-bottom:16px}#normal-demo-git-revert-vs-cherrypick-3-34f5bc .compare-table {width:100%;border-collapse:separate;border-spacing:0 18px}#normal-demo-git-revert-vs-cherrypick-3-34f5bc .compare-table th, #normal-demo-git-revert-vs-cherrypick-3-34f5bc .compare-table td {vertical-align:top;padding:0 12px;width:50%}#normal-demo-git-revert-vs-cherrypick-3-34f5bc .compare-table th {font-size:1.1em;color:#2196f3;text-align:center;padding-bottom:8px}#normal-demo-git-revert-vs-cherrypick-3-34f5bc .stage-title-scheme1 {font-weight:bold;font-size:1.1em;margin-bottom:6px;color:#1976d2}#normal-demo-git-revert-vs-cherrypick-3-34f5bc .stage-title-scheme2 {font-weight:bold;font-size:1.1em;margin-bottom:6px;color:#388e3c}#normal-demo-git-revert-vs-cherrypick-3-34f5bc .stage-block {border-radius:8px;padding:12px 10px 10px 10px;margin-bottom:0;border:1px solid var(--border-color,#e3e8ee)}#normal-demo-git-revert-vs-cherrypick-3-34f5bc .diff {border:2px solid #ff9800;border-radius:8px;padding:10px 10px 8px 10px;margin-top:8px;margin-bottom:0;color:#b26a00}#normal-demo-git-revert-vs-cherrypick-3-34f5bc .final-result {border:2px solid #2196f3;border-radius:8px;padding:12px 10px 10px 10px;margin-top:8px;margin-bottom:0}#normal-demo-git-revert-vs-cherrypick-3-34f5bc .commit-node {display:inline-block;padding:3px 8px;border-radius:5px;margin-right:6px;font-size:0.98em}#normal-demo-git-revert-vs-cherrypick-3-34f5bc .branch-a-node {background:#2196f3;color:#fff}#normal-demo-git-revert-vs-cherrypick-3-34f5bc .branch-b-node {background:#4caf50;color:#fff}#normal-demo-git-revert-vs-cherrypick-3-34f5bc .branch-c-node {background:#ff9800;color:#fff}#normal-demo-git-revert-vs-cherrypick-3-34f5bc .merged-node-from-c {background:#ff9800;color:#fff;border:1.5px solid #ff9800}#normal-demo-git-revert-vs-cherrypick-3-34f5bc .merged-node-from-b {background:#4caf50;color:#fff;border:1.5px solid #4caf50}#normal-demo-git-revert-vs-cherrypick-3-34f5bc .cherry-picked-commit {border:2px solid #ef5350;color:#c62828}#normal-demo-git-revert-vs-cherrypick-3-34f5bc .revert {border:2px solid #ffb300;color:#b26a00}#normal-demo-git-revert-vs-cherrypick-3-34f5bc .strike {text-decoration:line-through;opacity:0.5;border:2px dashed #888 !important}#normal-demo-git-revert-vs-cherrypick-3-34f5bc .stage-desc {font-size:0.97em;margin-bottom:6px}@media (max-width:900px){#normal-demo-git-revert-vs-cherrypick-3-34f5bc .compare-table th, #normal-demo-git-revert-vs-cherrypick-3-34f5bc .compare-table td {display:block;width:100%}#normal-demo-git-revert-vs-cherrypick-3-34f5bc .compare-table tr {display:block;margin-bottom:32px}}#normal-demo-git-revert-vs-cherrypick-3-34f5bc .collapsible-header {cursor:pointer;padding:16px 12px;width:100%;border:1px solid var(--border-color,#ddd);text-align:left;outline:none;font-size:1.1em;margin-top:20px;border-radius:8px;transition:opacity 0.3s ease}#normal-demo-git-revert-vs-cherrypick-3-34f5bc .collapsible-header:hover {opacity:0.8}#normal-demo-git-revert-vs-cherrypick-3-34f5bc .collapsible-content {padding:16px 12px;max-height:0;overflow:hidden;transition:max-height 0.2s ease-out;border-left:1px solid var(--border-color,#ddd);border-right:1px solid var(--border-color,#ddd);border-bottom:1px solid var(--border-color,#ddd);border-bottom-left-radius:8px;border-bottom-right-radius:8px}#normal-demo-git-revert-vs-cherrypick-3-34f5bc .collapsible-content.active {max-height:5000px}#normal-demo-git-revert-vs-cherrypick-3-34f5bc .branch-container {margin-bottom:5px;padding:6px 0;display:flex;flex-direction:column;align-items:flex-start;gap:2px}#normal-demo-git-revert-vs-cherrypick-3-34f5bc .branch-label {border:1px solid var(--border-color,#ddd);padding:5px 10px;margin-bottom:2px;display:inline-block}#normal-demo-git-revert-vs-cherrypick-3-34f5bc .branch-commits {display:flex;align-items:center}#normal-demo-git-revert-vs-cherrypick-3-34f5bc .arrow {margin-right:10px;font-size:1.2em}#normal-demo-git-revert-vs-cherrypick-3-34f5bc .final-a {border:1px solid #f48fb1}#normal-demo-git-revert-vs-cherrypick-3-34f5bc .strike.branch-a-node, #normal-demo-git-revert-vs-cherrypick-3-34f5bc .strike.branch-b-node, #normal-demo-git-revert-vs-cherrypick-3-34f5bc .strike.branch-c-node, #normal-demo-git-revert-vs-cherrypick-3-34f5bc .strike.merged-node-from-c, #normal-demo-git-revert-vs-cherrypick-3-34f5bc .strike.merged-node-from-b {opacity:0.5;text-decoration:line-through}#normal-demo-git-revert-vs-cherrypick-3-34f5bc .step-description {margin-top:10px;padding-left:20px;font-size:0.9em}#normal-demo-git-revert-vs-cherrypick-3-34f5bc .temp-branch-label {border:1px solid #26c6da;padding:5px 10px;margin-bottom:2px;display:inline-block;color:#00838f}</style>
         <div >
             <!-- Content from git_log_chreey_pick.html body -->
             <div id="stage1-reset-graphic" class="branch-container">
@@ -1308,6 +1309,6 @@
         };
     </script>
     <script id="MathJax-script" async src="https://cdn.staticfile.net/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
-    <script src="/blog/scripts/client.js"></script>
+    <script src="/blog/scripts/client.js?v=1766340863893"></script>
 </body>
 </html>

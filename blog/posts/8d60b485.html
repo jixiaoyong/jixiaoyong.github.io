@@ -11,11 +11,11 @@
     <link href="https://fonts.loli.net/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=Inter:wght@300;400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     
     <!-- Icons: Staticfile CDN -->
-    <link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.4.0/css/all.min.css" onerror="this.href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="/blog/styles/main.css">
-    <link rel="stylesheet" href="/blog/styles/containers.css">
+    <link rel="stylesheet" href="/blog/styles/main.css?v=1766340864038">
+    <link rel="stylesheet" href="/blog/styles/containers.css?v=1766340864038">
 
     <!-- Highlight.js Theme (Staticfile does not have all themes, checking common ones) -->
     <!-- Using cdnjs.cloudflare.com as fallback if staticfile misses specific themes, but staticfile usually has them -->
@@ -27,7 +27,8 @@
         document.documentElement.setAttribute('data-theme', savedTheme);
         // Language detection - simplistic redirect if on root
         const userLang = navigator.language || navigator.userLanguage;
-        const basePath = '/blog';
+        window.basePath = '/blog';
+        const basePath = window.basePath;
         if (window.location.pathname === basePath + '/' && userLang.startsWith('en')) {
            window.location.href = basePath + '/en/';
         }
@@ -308,6 +309,6 @@ var drawable = resources.getDrawable(onId)
         };
     </script>
     <script id="MathJax-script" async src="https://cdn.staticfile.net/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
-    <script src="/blog/scripts/client.js"></script>
+    <script src="/blog/scripts/client.js?v=1766340864038"></script>
 </body>
 </html>
