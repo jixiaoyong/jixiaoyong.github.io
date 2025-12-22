@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About - JI,XIAOYONG's Blog</title>
+    
     <!-- Fonts: Async loading with smart CDN switching (SJTUG for China, Google for international) -->
     <!-- Font CSS will be loaded by JavaScript after page content loads -->
     
@@ -11,8 +12,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="/blog/styles/main.css?v=1766376211423">
-    <link rel="stylesheet" href="/blog/styles/containers.css?v=1766376211423">
+    <link rel="stylesheet" href="/blog/styles/main.css?v=1766377145495">
+    <link rel="stylesheet" href="/blog/styles/containers.css?v=1766377145495">
 
     <!-- Highlight.js Theme: Cloudflare CDN (safe source) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" id="hljs-theme">
@@ -24,19 +25,20 @@
             const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             const effective = saved === 'auto' ? (systemPrefersDark ? 'dark' : 'light') : saved;
             document.documentElement.setAttribute('data-theme', effective);
-            // Store for use by client.js
             window.__EFFECTIVE_THEME__ = effective;
-            window.__SAVED_THEME__ = saved;
         })();
-        // Language detection - simplistic redirect if on root
-        (function() {
-            const userLang = navigator.language || navigator.userLanguage;
-            window.basePath = '/blog';
-            const basePath = window.basePath;
-            if (window.location.pathname === basePath + '/' && userLang.startsWith('en')) {
-               window.location.href = basePath + '/en/';
-            }
-        })();
+
+        // Inject i18n data for client-side switching
+        window.basePath = '/blog';
+        window.__I18N_DATA__ = {
+            zh: {"common":{"search":"搜索","backToList":"返回列表","language":"语言","theme":{"title":"主题","auto":"跟随系统","light":"浅色","dark":"深色"},"nav":{"home":"首页","about":"关于"},"searchNoResults":"未找到相关文章","backToTop":"返回顶部"},"article":{"publishedOn":"发布于","updatedOn":"更新于","author":"作者","prevPost":"上一篇","nextPost":"下一篇","notByAi":{"tooltip":"本文是人类纯手工实现，没有 AI 参与 (Handcrafted by humans, no AI involved)","aiLevel":"AI 协作度：","warning":"⚠️ 本文部分或全部内容由 AI 辅助生成，请注意甄别。","tag1":"AI 辅助 20%","tag2":"AI 辅助 40%","tag3":"AI 协作 60%","tag4":"AI 生成 80%","tag5":"AI 生成 100%","desc1":"本文由人类主导创作，AI 提供少量辅助","desc2":"本文由人机协作完成，AI 参与了部分内容","desc3":"本文由人机协作完成，核心观点来自作者","desc4":"本文主要由 AI 生成，作者进行了审校","desc5":"本文完全由 AI 生成，请读者自行甄别"},"emailComment":{"title":"有想法？欢迎通过邮件讨论。","button":"发送邮件评论","subject":"关于文章的评论","bodyHello":"你好！","bodyIntro":"我阅读了你的文章，以下是我的想法：","copyFallback":"无法打开邮件客户端，是否复制邮箱地址？"}},"about":{"greeting":"你好 👋，我是","subtitle":"一名开发者。<br/>一个热爱世界的人。","contactTitle":"与我联系：","toolsTitle":"语言和工具："},"footer":{"copyright":"版权所有 © {0} {1}"},"notFound":{"title":"页面未找到","message":"抱歉！您访问的页面不存在或已被移动。","suggestion":"您可以尝试："}},
+            en: {"common":{"search":"Search","backToList":"Back to List","language":"Language","theme":{"title":"Theme","auto":"Auto","light":"Light","dark":"Dark"},"nav":{"home":"Home","about":"About"},"searchNoResults":"No results found","backToTop":"Back to Top"},"article":{"publishedOn":"Published on","updatedOn":"Updated on","author":"By","prevPost":"Previous","nextPost":"Next","notByAi":{"tooltip":"Handcrafted by humans, no AI involved","aiLevel":"AI Collaboration: ","warning":"⚠️ This article contains content generated or assisted by AI. Please verify critical information.","tag1":"20% AI Assisted","tag2":"40% AI Assisted","tag3":"60% AI Collaborated","tag4":"80% AI Generated","tag5":"100% AI Generated","desc1":"Human-led creation with minor AI assistance","desc2":"Human-AI collaboration for partial content","desc3":"Human-AI collaboration, core ideas from author","desc4":"Primarily AI-generated, reviewed by author","desc5":"Entirely AI-generated, please verify independently"},"emailComment":{"title":"Any thoughts? Feel free to discuss via email.","button":"Email Comment","subject":"Comment on article","bodyHello":"Hi!","bodyIntro":"I read your article and here are my thoughts:","copyFallback":"Cannot open email client. Copy email address?"}},"about":{"greeting":"Hi 👋, I'm","subtitle":"A developer.<br/>A man who love the world.","contactTitle":"Keep touch with me:","toolsTitle":"Languages and Tools:"},"footer":{"copyright":"Copyright © {0} {1}"},"notFound":{"title":"Page Not Found","message":"Oops! The page you're looking for doesn't exist or has been moved.","suggestion":"Maybe try one of these:"}}
+        };
+        // Initial language preference
+        const savedLang = localStorage.getItem('preferred_lang');
+        if (!savedLang && navigator.language.startsWith('en')) {
+            localStorage.setItem('preferred_lang', 'en');
+        }
     </script>
 </head>
 <body>
@@ -53,12 +55,17 @@
             <nav class="desktop-nav">
                 <ul>
                     
-        <li><a href="/blog/"><i class="fas fa-home"></i> 首页</a></li>
-        <li><a href="/blog/about.html"><i class="fas fa-user"></i> 关于</a></li>
+        <li><a href="/blog/" data-i18n="common.nav.home"><i class="fas fa-home"></i> 首页</a></li>
+        <li><a href="/blog/about.html" data-i18n="common.nav.about"><i class="fas fa-user"></i> 关于</a></li>
     
-                    <li><a href="#" onclick="switchView('search')" title="搜索"><i class="fas fa-search"></i></a></li>
-                    <li><button onclick="switchLanguage()" class="theme-toggle" title="语言"><i class="fas fa-language"></i><span style="font-size:0.7rem;vertical-align:super;">中</span></button></li>
-                    <li><button onclick="toggleTheme()" class="theme-toggle" title="主题"><i id="theme-icon" class="fas fa-adjust"></i></button></li>
+                    <li><a href="#" onclick="switchView('search')" data-i18n="common.search" data-i18n-attr="title" title="搜索"><i class="fas fa-search"></i></a></li>
+                    <li>
+                        <button onclick="switchLanguage()" class="theme-toggle" data-i18n="common.language" data-i18n-attr="title" title="语言">
+                            <i class="fas fa-language"></i>
+                            <span id="lang-text-desktop" style="font-size:0.7rem;vertical-align:super;">中</span>
+                        </button>
+                    </li>
+                    <li><button onclick="toggleTheme()" class="theme-toggle" data-i18n="common.theme.title" data-i18n-attr="title" title="主题"><i id="theme-icon" class="fas fa-adjust"></i></button></li>
                 </ul>
             </nav>
 
@@ -71,17 +78,17 @@
         <!-- Mobile Menu Container (Hidden by default) -->
         <div id="mobile-menu" class="mobile-menu hidden">
             <ul>
-                <li><a href="/blog/"><i class="fas fa-home"></i> 首页</a></li>
-                <li><a href="/blog/about.html"><i class="fas fa-user"></i> 关于</a></li>
-                <li><a href="#" onclick="switchView('search')"><i class="fas fa-search"></i> 搜索</a></li>
+                <li><a href="/blog/" data-i18n="common.nav.home"><i class="fas fa-home"></i> 首页</a></li>
+                <li><a href="/blog/about.html" data-i18n="common.nav.about"><i class="fas fa-user"></i> 关于</a></li>
+                <li><a href="#" onclick="switchView('search')" data-i18n="common.search"><i class="fas fa-search"></i> 搜索</a></li>
                 <li>
                     <button class="btn theme-toggle-mobile" onclick="switchLanguage()">
-                        <i class="fas fa-language"></i> 语言: English
+                        <i class="fas fa-language"></i> <span data-i18n="common.language">语言</span>: <span id="lang-text-mobile">English</span>
                     </button>
                 </li>
                 <li>
                     <button class="btn theme-toggle-mobile" onclick="toggleTheme()">
-                        <i class="fas fa-palette"></i> 主题: <span id="theme-text-mobile">跟随系统</span>
+                        <i class="fas fa-palette"></i> <span data-i18n="common.theme.title">主题</span>: <span id="theme-text-mobile" data-i18n="common.theme.auto">跟随系统</span>
                     </button>
                 </li>
             </ul>
@@ -93,7 +100,9 @@
     <div id="search-overlay" class="search-overlay hidden">
         <button class="close-search" onclick="closeSearch()">&times;</button>
         <div class="search-box">
-            <input type="text" id="search-input" class="search-input" placeholder="搜索..." autocomplete="off">
+            <input type="text" id="search-input" 
+                   data-i18n="common.search" data-i18n-attr="placeholder"
+                   placeholder="搜索..." autocomplete="off">
         </div>
         <div id="search-results" class="search-results"></div>
     </div>
@@ -106,37 +115,23 @@
             <img src="https://jixiaoyong.github.io/images/20191026161934.png" alt="Profile Banner" class="about-banner"/>
             
             <h1 class="about-title">
-                你好 👋，我是 <a href="https://github.com/jixiaoyong" target="_blank" rel="noopener noreferrer" class="about-name">JI,XIAOYONG</a>
-                
+                <span data-i18n="about.greeting">你好 👋，我是</span> 
+                <a href="https://github.com/jixiaoyong" target="_blank" rel="noopener noreferrer" class="about-name">JI,XIAOYONG</a>
             </h1>
             
-            <h3 class="about-subtitle">一名开发者。<br/>一个热爱世界的人。</h3>
+            <h3 class="about-subtitle" data-i18n="about.subtitle" data-i18n-html="true">一名开发者。<br/>一个热爱世界的人。</h3>
             
-            <h3 class="about-section-title">与我联系：</h3>
+            <h3 class="about-section-title" data-i18n="about.contactTitle">与我联系：</h3>
             <p class="about-links">
                 <a href="mailto:jixiaoyong1995@gmail.com" target="_blank" rel="noopener noreferrer">
                     <img src="https://img.shields.io/badge/gmail-jixiaoyong1995-31aa52?logo=Gmail" alt="Email"/>
                 </a>
-                <a href="https://jixiaoyong.github.io/" target="_blank" rel="noopener noreferrer">
-                    <img src="https://badgen.net/badge/%F0%9F%8C%90/jixiaoyong.github.io/cyan" alt="Website"/>
-                </a>
-                <a href="https://leetcode.com/jixiaoyong/" target="_blank" rel="noopener noreferrer">
-                    <img src="https://img.shields.io/badge/LeetCode-jixiaoyong-ffa725?logo=LeetCode" alt="LeetCode"/>
-                </a>
-                <img src="https://komarev.com/ghpvc/?username=jixiaoyong&label=Profile%20views&color=0e75b6&style=flat" alt="Profile views"/>
-            </p>
-            
-            <h3 class="about-section-title">语言和工具：</h3>
-            <p class="about-tools">
-                <img src="https://s3.bmp.ovh/imgs/2022/04/23/145404445e75d358.webp" alt="Flutter" class="tool-icon"/>
-                <img src="https://s3.bmp.ovh/imgs/2022/04/23/97ce58509314acd3.webp" alt="Android" class="tool-icon"/>
-                <img src="https://s3.bmp.ovh/imgs/2022/04/23/d26f3568e7f51be1.webp" alt="Dart" class="tool-icon"/>
-                <img src="https://s3.bmp.ovh/imgs/2022/04/23/00f2c6fdf1695763.webp" alt="Java" class="tool-icon"/>
-                <img src="https://s3.bmp.ovh/imgs/2022/04/23/5f6b77b74970f139.webp" alt="Kotlin" class="tool-icon"/>
+                <!-- ... other links ... -->
             </p>
         </div>
     
-        <article class="article-content about-page">
+        
+        <article class="article-content about-page i18n-content" data-lang="zh" style="display: block">
             <p>学习的过程需要不断的探索、累积，更需要有条理的总结，我会把平时学习的心得体会、经验总结放到这里，主要是为了自己能够在学习的过程中有计划的总结学习到的知识，同时也方便之后查阅。</p>
 <h2>2025-12-21</h2>
 <p>如你所见，这是一个托管在 GitHub 上面的博客。在 <a href="https://github.com/anthropics/claude-code">Antigravity</a> 的帮助下，我重新实现了一个简洁大方的博客主题，更加专注于内容本身。</p>
@@ -162,15 +157,33 @@
 </ul>
 
         </article>
-        
-        <div class="comment-section">
-            <p class="comment-prompt">有想法？欢迎通过邮件讨论。</p>
-            <div class="comment-actions">
-                <a href="mailto:jixiaoyong1995@gmail.com?subject=About Page Feedback" class="btn btn-email">
-                    <i class="far fa-envelope"></i> 发送邮件评论
-                </a>
-            </div>
-        </div>
+    
+        <article class="article-content about-page i18n-content" data-lang="en" style="display: none">
+            <p>Learning is a continuous process of exploration and accumulation, and more importantly, it requires organized summarization. I put my learning experiences and summaries here, mainly for myself to systematically consolidate the knowledge I&#39;ve learned, and also for future reference.</p>
+<h2>2025-12-21</h2>
+<p>As you can see, this is a blog hosted on GitHub. With the help of <a href="https://github.com/anthropics/claude-code">Antigravity</a>, I&#39;ve reimplemented a clean and elegant blog theme that focuses more on the content itself.</p>
+<p>Tech stack: TypeScript + pure static HTML/CSS/JS, no framework dependencies, extremely fast build speed.</p>
+<p>Thanks to the productivity revolution brought by the AI era, individual developers can quickly realize their ideas.</p>
+<h2>2023-04-06</h2>
+<p>As you can see, this is a blog hosted on GitHub, based on the hope theme of vuepress 2.0. Thanks to everyone who has contributed to the projects mentioned above - without them, this little site wouldn&#39;t exist.</p>
+<p>Before this, the blog used the NexT theme based on Hexo for about five or six years. When I was still a beginner in programming, it provided me with a decent blog. Thanks to all those friends.</p>
+<h2>2019-03-25</h2>
+<p>From now on, I&#39;ll try to avoid writing superficial articles and basic tutorials. While such articles have been very helpful during my learning process, there are already many more detailed and comprehensive articles online. There&#39;s really no need to spend time on these anymore. Going forward, I&#39;ll delve into source code and explore the implementation principles behind common usage, hoping to document my journey of improving technical abilities.</p>
+<h2>2018-02-27</h2>
+<p>During my learning journey, the internet has provided me with tremendous support and help. However, it&#39;s undeniable that there are many &quot;mutually referenced&quot; materials on the Chinese internet, which inevitably include a lot of unverified information that can be quite harmful.</p>
+<p>Today, I wasted an entire evening due to such issues. And this is just what I&#39;ve discovered with obvious errors - who knows how many others remain undetected.</p>
+<p>Unfortunately, before this, I also wrote many articles that lacked deep thinking and were simply &quot;borrowed.&quot; It&#39;s quite embarrassing. From now on, I will only write technical articles after I truly understand them, and every point must have corresponding references. I&#39;d rather write less than write carelessly. Previous articles will also need to be gradually corrected.</p>
+<p><span class="mathjax_ignore">Oops, I accidentally set a Flag. Please don&#39;t let me eat my words (￣ ε(#￣)☆╰╮(￣ ▽ ￣///).</span></p>
+<h2>TODO List</h2>
+<ul>
+<li>Choose the right direction</li>
+<li>Read extensively</li>
+<li>Think deeply</li>
+<li>Summarize promptly</li>
+<li>Output regularly</li>
+</ul>
+
+        </article>
     
     </div>
     
@@ -196,7 +209,9 @@
     
 
     <!-- Back to Top Button -->
-    <button id="back-to-top" class="back-to-top" title="返回顶部">
+    <button id="back-to-top" class="back-to-top" 
+            data-i18n="common.backToTop" data-i18n-attr="title"
+            title="返回顶部">
         <i class="fas fa-rocket"></i>
     </button>
 
@@ -222,6 +237,6 @@
         };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script src="/blog/scripts/client.js?v=1766376211423"></script>
+    <script src="/blog/scripts/client.js?v=1766377145495"></script>
 </body>
 </html>

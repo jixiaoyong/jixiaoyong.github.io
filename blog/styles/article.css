@@ -167,6 +167,57 @@
     margin-bottom: 2rem;
 }
 
+/* Translation Banner */
+.translation-banner {
+    display: none;
+    margin: 1.5rem 0;
+    padding: 0.8rem 1.2rem;
+    background: var(--bg-secondary);
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    font-size: 0.95rem;
+    color: var(--text-primary);
+}
+
+.translation-banner.visible {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.translation-banner .btn-simple {
+    padding: 0.4rem 0.8rem;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+}
+
+.translation-banner .btn-simple:hover {
+    border-color: var(--accent-yellow);
+    background: var(--bg-secondary);
+}
+
+@media (max-width: 640px) {
+    .translation-banner.visible {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    .translation-banner .btn-simple {
+        width: 100%;
+        text-align: center;
+    }
+}
+
 .article-header-info .post-meta {
     display: flex;
     flex-wrap: wrap;

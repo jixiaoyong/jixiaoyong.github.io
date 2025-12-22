@@ -118,21 +118,179 @@ const THEMES = ['light', 'dark', 'auto'];
 const getSystemTheme = () => window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 
 const applyTheme = (theme) => {
-    const effectiveTheme = theme === 'auto' ? getSystemTheme() : theme;
-    document.documentElement.setAttribute('data-theme', effectiveTheme);
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const effective = theme === 'auto' ? (systemPrefersDark ? 'dark' : 'light') : theme;
 
-    // Update Highlight.js
-    const hljsThemeLink = document.getElementById('hljs-theme');
-    if (hljsThemeLink) {
-        hljsThemeLink.href = effectiveTheme === 'dark'
+    document.documentElement.setAttribute('data-theme', effective);
+
+    // Update Highlight.js theme
+    const hljsTheme = document.getElementById('hljs-theme');
+    if (hljsTheme) {
+        hljsTheme.href = effective === 'dark'
             ? 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css'
             : 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css';
     }
 
-    // Update Icons/Text
-    updateThemeUI(theme);
+    // Update icons and text
+    const icon = document.getElementById('theme-icon');
+    if (icon) {
+        icon.className = effective === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+    }
+
+    // Update mobile menu theme text using i18n
+    const textMobile = document.getElementById('theme-text-mobile');
+    if (textMobile) {
+        const i18n = I18nManager.getI18n();
+        textMobile.textContent = i18n.common.theme[theme] || theme;
+    }
 };
 
+/**
+ * I18n Manager to handle global language state and UI updates
+ */
+const I18nManager = {
+    getLang() {
+        return localStorage.getItem('preferred_lang') || 'zh';
+    },
+
+    getI18n() {
+        const lang = this.getLang();
+        return window.__I18N_DATA__[lang] || window.__I18N_DATA__['zh'];
+    },
+
+    setLang(lang) {
+        localStorage.setItem('preferred_lang', lang);
+        this.updateUI();
+        // Custom event for other components to listen to
+        window.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang } }));
+    },
+
+    updateUI() {
+        const i18n = this.getI18n();
+        const lang = this.getLang();
+
+        // Update all elements with data-i18n
+        // Update standard data-i18n elements
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.dataset.i18n;
+            const keys = key.split('.');
+            let val = i18n;
+            for (const k of keys) {
+                val = val ? val[k] : null;
+            }
+
+            if (val) {
+                const attr = el.dataset.i18nAttr;
+                const isHtml = el.dataset.i18nHtml === 'true';
+
+                if (attr) {
+                    el.setAttribute(attr, attr === 'placeholder' ? val + '...' : val);
+                } else if (isHtml) {
+                    el.innerHTML = val;
+                } else {
+                    // Preserve icons if they exist
+                    const icon = el.querySelector('i');
+                    if (icon) {
+                        el.innerHTML = '';
+                        el.appendChild(icon);
+                        el.appendChild(document.createTextNode(' ' + val));
+                    } else {
+                        el.textContent = val;
+                    }
+                }
+            }
+        });
+
+        // Update i18n-content containers (e.g. About page markdown)
+        document.querySelectorAll('.i18n-content').forEach(el => {
+            el.style.display = el.dataset.lang === lang ? 'block' : 'none';
+        });
+        // Update Language Switcher Text
+        const langTextDesktop = document.getElementById('lang-text-desktop');
+        if (langTextDesktop) langTextDesktop.textContent = lang === 'en' ? 'En' : '中';
+
+        const langTextMobile = document.getElementById('lang-text-mobile');
+        if (langTextMobile) langTextMobile.textContent = lang === 'en' ? '中文' : 'English';
+
+        // Update Homepage Posts if present
+        this.updateHomePosts(lang);
+
+        // Update Detail Page Hints if present
+        this.updateDetailHints(lang);
+
+        // Update Theme Text (since it depends on current i18n)
+        const currentTheme = localStorage.getItem('theme') || 'auto';
+        applyTheme(currentTheme);
+    },
+
+    updateHomePosts(lang) {
+        document.querySelectorAll('.post-item').forEach(item => {
+            const title = item.getAttribute(`data-i18n-${lang}-title`);
+            const excerpt = item.getAttribute(`data-i18n-${lang}-excerpt`);
+            const path = item.getAttribute(`data-i18n-${lang}-path`);
+
+            if (title) {
+                const titleEl = item.querySelector('h2 a');
+                if (titleEl) titleEl.textContent = title;
+                const coverLink = item.querySelector('.post-cover a');
+                if (coverLink) coverLink.href = path;
+                if (titleEl) titleEl.href = path;
+            }
+            if (excerpt) {
+                const excerptEl = item.querySelector('.post-excerpt p');
+                if (excerptEl) excerptEl.textContent = excerpt;
+            }
+        });
+    },
+
+    updateDetailHints(lang) {
+        const article = document.querySelector('article');
+        if (!article) return;
+
+        const currentArticleLang = document.documentElement.lang || 'zh';
+        const container = document.getElementById('translation-hint-container') || this.createHintContainer(article);
+
+        if (lang === currentArticleLang) {
+            container.classList.remove('visible');
+            return;
+        }
+
+        container.classList.add('visible');
+        const hasTranslation = !!article.getAttribute(`data-has-translation-${lang}`);
+        const translationPath = article.getAttribute(`data-translation-path-${lang}`);
+
+        if (hasTranslation) {
+            container.innerHTML = `
+                <div class="translation-banner visible">
+                    <span class="banner-text">${lang === 'en' ? 'An English translation is available.' : '本文提供中文翻译版本。'}</span>
+                    <a href="${translationPath}" class="btn-simple">
+                        ${lang === 'en' ? 'Switch to English' : '切换到中文版'}
+                    </a>
+                </div>
+            `;
+        } else {
+            container.innerHTML = `
+                <div class="translation-banner visible">
+                    <span class="banner-text">${lang === 'en' ? 'This article is only available in Chinese.' : '抱歉，本文目前仅提供英文版本。'}</span>
+                    <button class="btn-simple" onclick="loadGoogleTranslate()">
+                        ${lang === 'en' ? 'Translate with Google' : '使用 Google 翻译'}
+                    </button>
+                </div>
+            `;
+        }
+    },
+
+    createHintContainer(article) {
+        const container = document.createElement('div');
+        container.id = 'translation-hint-container';
+        container.className = 'translation-banner';
+        article.prepend(container);
+        return container;
+    }
+};
+
+// The original updateThemeUI function is now largely replaced by applyTheme and I18nManager.updateUI
+// Keeping it for now, but it might be removed if no other parts of the code explicitly call it.
 const updateThemeUI = (theme) => {
     const icon = document.getElementById('theme-icon');
     const textMobile = document.getElementById('theme-text-mobile');
@@ -226,41 +384,84 @@ window.toggleAiPopup = toggleAiPopup;
 
 // Language Switcher
 const switchLanguage = () => {
-    const basePath = window.basePath || '';
-    const fullPath = window.location.pathname;
-
-    // Remove basePath to get relative path (e.g. "/blog/en/about" -> "/en/about")
-    // Ensure we handle cases where basePath might be empty or "/"
-    let relativePath = fullPath;
-    if (basePath && fullPath.startsWith(basePath)) {
-        relativePath = fullPath.substring(basePath.length);
+    // Close mobile menu if open
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+        toggleMobileMenu();
     }
 
-    // Check if starts with /en or /en/
-    const isEnglish = relativePath === '/en' || relativePath.startsWith('/en/');
+    const currentLang = I18nManager.getLang();
+    const newLang = currentLang === 'zh' ? 'en' : 'zh';
 
-    let newRelativePath;
-    if (isEnglish) {
-        // Switch to Chinese: remove /en or /en/ prefix
-        // /en -> /
-        // /en/ -> /
-        // /en/about.html -> /about.html
-        if (relativePath === '/en') newRelativePath = '/';
-        else newRelativePath = relativePath.replace(/^\/en\//, '/');
-    } else {
-        // Switch to English: add /en prefix
-        // / -> /en/
-        // /about.html -> /en/about.html
-        if (relativePath === '/' || relativePath === '') newRelativePath = '/en/';
-        else newRelativePath = '/en' + relativePath;
+    // Check if we should redirect (on detail page with direct translation)
+    const article = document.querySelector('article');
+    if (article) {
+        const translationPath = article.getAttribute(`data-translation-path-${newLang}`);
+        if (translationPath) {
+            // Save preference before redirecting
+            localStorage.setItem('preferred_lang', newLang);
+            window.location.href = translationPath;
+            return;
+        }
     }
 
-    // Add basePath back
-    // Ensure no double slashes if basePath ends with / (though usually it shouldn't)
-    // Common case: basePath='/blog', newRel='/en/' -> '/blog/en/'
-    const finalPath = (basePath + newRelativePath).replace(/\/+/g, '/');
+    // Otherwise just toggle UI
+    I18nManager.setLang(newLang);
+};
 
-    window.location.href = finalPath;
+/**
+ * Google Translate Integration
+ */
+let googleTranslateLoaded = false;
+window.loadGoogleTranslate = () => {
+    if (googleTranslateLoaded) return;
+
+    const i18n = I18nManager.getI18n();
+    const toastMsg = i18n.common.emailFallback || 'Network error'; // Fallback for error toast
+
+    // Show loading spinner or something?
+    const btn = document.querySelector('.translation-hint button');
+    if (btn) btn.disabled = true;
+
+    const script = document.createElement('script');
+    script.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+    script.onerror = () => {
+        showToast(I18nManager.getLang() === 'en'
+            ? "Google Translate is unavailable. Please check your network context."
+            : "无法访问 Google 翻译，请检查网络环境。");
+        if (btn) btn.disabled = false;
+    };
+
+    window.googleTranslateElementInit = () => {
+        new google.translate.TranslateElement({
+            pageLanguage: 'zh-CN',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: true
+        }, 'google_translate_element');
+        googleTranslateLoaded = true;
+    };
+
+    // Need a container for the widget
+    const article = document.querySelector('article');
+    if (article) {
+        const widgetContainer = document.createElement('div');
+        widgetContainer.id = 'google_translate_element';
+        widgetContainer.style.marginBottom = '20px';
+        document.getElementById('translation-hint-container').appendChild(widgetContainer);
+    }
+
+    document.head.appendChild(script);
+};
+
+const showToast = (message) => {
+    const toast = document.createElement('div');
+    toast.className = 'toast show';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
 };
 
 // Mobile Menu
@@ -277,7 +478,10 @@ const toggleMobileMenu = () => {
 
 // Init
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Restore Theme
+    // 1. Initial I18n Update
+    I18nManager.updateUI();
+
+    // 2. Restore Theme
     const savedTheme = localStorage.getItem('theme') || 'auto';
     applyTheme(savedTheme);
 
@@ -343,22 +547,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            const results = searchIndex.filter(post =>
-                post.title.toLowerCase().includes(query) ||
-                (post.tags && post.tags.some(t => t.toLowerCase().includes(query)))
-            ).slice(0, 10); // Limit results
+            const results = searchIndex.filter(post => {
+                const lang = I18nManager.getLang();
+                const trans = post.translations[lang] || post.translations['zh'];
+                return trans.title.toLowerCase().includes(query) ||
+                    (post.tags && post.tags.some(t => t.toLowerCase().includes(query)));
+            }).slice(0, 10);
 
             if (results.length === 0) {
-                resultsDiv.innerHTML = '<div style="color:var(--text-secondary);text-align:center;">No results found</div>';
+                resultsDiv.innerHTML = `<div style="color:var(--text-secondary);text-align:center;">${I18nManager.getI18n().common.searchNoResults || 'No results found'}</div>`;
                 return;
             }
 
-            resultsDiv.innerHTML = results.map(post => `
-                <a href="${post.path}" class="search-result-item" onclick="closeSearch()">
-                    <div class="search-result-title">${post.title}</div>
-                    <div class="search-result-excerpt">${post.excerpt}...</div>
+            resultsDiv.innerHTML = results.map(post => {
+                const lang = I18nManager.getLang();
+                const trans = post.translations[lang] || post.translations['zh'];
+                return `
+                <a href="${trans.path}" class="search-result-item" onclick="closeSearch()">
+                    <div class="search-result-title">${trans.title}</div>
+                    <div class="search-result-excerpt">${trans.excerpt}</div>
                 </a>
-            `).join('');
+            `}).join('');
         });
 
         // Close on Esc
@@ -445,23 +654,33 @@ document.addEventListener('DOMContentLoaded', () => {
                 ? post.tags.map(tag => `<a href="?tag=${encodeURIComponent(tag)}" class="tag">#${tag}</a>`).join('')
                 : '';
 
+            const dataAttrs = Object.entries(post.translations)
+                .map(([lang, t]) => `
+                    data-i18n-${lang}-title="${t.title.replace(/"/g, '&quot;')}"
+                    data-i18n-${lang}-excerpt="${t.excerpt.replace(/"/g, '&quot;')}"
+                    data-i18n-${lang}-path="${t.path}"
+                `).join(' ');
+
+            // Default to Chinese or first translation
+            const t = post.translations[I18nManager.getLang()] || post.translations['zh'] || Object.values(post.translations)[0];
+
             if (post.coverImage) {
                 return `
-                    <div class="post-item has-cover">
+                    <div class="post-item has-cover" ${dataAttrs}>
                         <div class="post-header-row">
                             <div class="post-cover">
-                                <a href="${post.path}">
-                                    <img src="${post.coverImage}" alt="${post.title}" loading="lazy"/>
+                                <a href="${t.path}">
+                                    <img src="${post.coverImage}" alt="${t.title}" loading="lazy"/>
                                 </a>
                             </div>
                             <div class="post-header">
-                                <h2><a href="${post.path}">${post.title}</a></h2>
+                                <h2><a href="${t.path}">${t.title}</a></h2>
                                 <span class="post-date">${post.date}</span>
                             </div>
                         </div>
                         <div class="post-body">
                             <div class="post-excerpt">
-                                <p>${post.excerpt}...</p>
+                                <p>${t.excerpt}</p>
                             </div>
                             <div class="post-tags">
                                 ${tagsHtml}
@@ -471,13 +690,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
             } else {
                 return `
-                    <div class="post-item">
+                    <div class="post-item" ${dataAttrs}>
                         <div class="post-header">
-                            <h2><a href="${post.path}">${post.title}</a></h2>
+                            <h2><a href="${t.path}">${t.title}</a></h2>
                             <span class="post-date">${post.date}</span>
                         </div>
                         <div class="post-excerpt">
-                            <p>${post.excerpt}...</p>
+                            <p>${t.excerpt}</p>
                         </div>
                         <div class="post-tags">
                             ${tagsHtml}
@@ -495,27 +714,27 @@ document.addEventListener('DOMContentLoaded', () => {
             if (loadMoreSpinner) loadMoreSpinner.style.display = 'flex';
 
             try {
-                // Lazy load search.json
+                // Lazy load search.json (unified)
                 if (!allPostsData) {
                     const basePath = window.basePath || '';
-                    const searchJsonPath = isEnglish ? basePath + '/en/search.json' : basePath + '/search.json';
-                    const res = await fetch(searchJsonPath);
+                    const res = await fetch(basePath + '/search.json');
                     allPostsData = await res.json();
                 }
 
                 // Get next batch
                 const nextBatch = allPostsData.slice(loadedPosts, loadedPosts + postsPerPage);
 
-                // Render posts
-                const fragment = document.createDocumentFragment();
                 nextBatch.forEach(post => {
                     const temp = document.createElement('div');
                     temp.innerHTML = createPostItemHtml(post);
-                    fragment.appendChild(temp.firstElementChild);
+                    const child = temp.firstElementChild;
+                    if (child) postList.appendChild(child);
                 });
 
-                postList.appendChild(fragment);
                 loadedPosts += nextBatch.length;
+
+                // Re-apply translations for new elements
+                I18nManager.updateUI();
 
                 // Check if all loaded
                 if (loadedPosts >= totalPosts) {

@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="zh" data-theme="light">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>之前发布的几个 App - JI,XIAOYONG's Blog</title>
+    <title>Blog Under Attack: Troubleshooting and Fixing a CDN Supply Chain Poisoning Incident - JI,XIAOYONG's Blog</title>
     
-    <link rel="canonical" href="/blog/blog/posts/1a589649.html">
-    <link rel="alternate" hreflang="zh" href="/blog/blog/posts/1a589649.html">
-    <link rel="alternate" hreflang="x-default" href="/blog/blog/posts/1a589649.html">
+    <link rel="canonical" href="/blog/blog/posts/en/6f412ead.html">
+    <link rel="alternate" hreflang="zh" href="/blog/blog/posts/6f412ead.html">
+    <link rel="alternate" hreflang="en" href="/blog/blog/posts/en/6f412ead.html">
+    <link rel="alternate" hreflang="x-default" href="/blog/blog/posts/en/6f412ead.html">
     
     <!-- Fonts: Async loading with smart CDN switching (SJTUG for China, Google for international) -->
     <!-- Font CSS will be loaded by JavaScript after page content loads -->
@@ -16,8 +17,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="/blog/styles/main.css?v=1766377145473">
-    <link rel="stylesheet" href="/blog/styles/containers.css?v=1766377145473">
+    <link rel="stylesheet" href="/blog/styles/main.css?v=1766377145259">
+    <link rel="stylesheet" href="/blog/styles/containers.css?v=1766377145259">
 
     <!-- Highlight.js Theme: Cloudflare CDN (safe source) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" id="hljs-theme">
@@ -59,17 +60,17 @@
             <nav class="desktop-nav">
                 <ul>
                     
-        <li><a href="/blog/" data-i18n="common.nav.home"><i class="fas fa-home"></i> 首页</a></li>
-        <li><a href="/blog/about.html" data-i18n="common.nav.about"><i class="fas fa-user"></i> 关于</a></li>
+        <li><a href="/blog/" data-i18n="common.nav.home"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="/blog/about.html" data-i18n="common.nav.about"><i class="fas fa-user"></i> About</a></li>
     
-                    <li><a href="#" onclick="switchView('search')" data-i18n="common.search" data-i18n-attr="title" title="搜索"><i class="fas fa-search"></i></a></li>
+                    <li><a href="#" onclick="switchView('search')" data-i18n="common.search" data-i18n-attr="title" title="Search"><i class="fas fa-search"></i></a></li>
                     <li>
-                        <button onclick="switchLanguage()" class="theme-toggle" data-i18n="common.language" data-i18n-attr="title" title="语言">
+                        <button onclick="switchLanguage()" class="theme-toggle" data-i18n="common.language" data-i18n-attr="title" title="Language">
                             <i class="fas fa-language"></i>
-                            <span id="lang-text-desktop" style="font-size:0.7rem;vertical-align:super;">中</span>
+                            <span id="lang-text-desktop" style="font-size:0.7rem;vertical-align:super;">En</span>
                         </button>
                     </li>
-                    <li><button onclick="toggleTheme()" class="theme-toggle" data-i18n="common.theme.title" data-i18n-attr="title" title="主题"><i id="theme-icon" class="fas fa-adjust"></i></button></li>
+                    <li><button onclick="toggleTheme()" class="theme-toggle" data-i18n="common.theme.title" data-i18n-attr="title" title="Theme"><i id="theme-icon" class="fas fa-adjust"></i></button></li>
                 </ul>
             </nav>
 
@@ -82,17 +83,17 @@
         <!-- Mobile Menu Container (Hidden by default) -->
         <div id="mobile-menu" class="mobile-menu hidden">
             <ul>
-                <li><a href="/blog/" data-i18n="common.nav.home"><i class="fas fa-home"></i> 首页</a></li>
-                <li><a href="/blog/about.html" data-i18n="common.nav.about"><i class="fas fa-user"></i> 关于</a></li>
-                <li><a href="#" onclick="switchView('search')" data-i18n="common.search"><i class="fas fa-search"></i> 搜索</a></li>
+                <li><a href="/blog/" data-i18n="common.nav.home"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/blog/about.html" data-i18n="common.nav.about"><i class="fas fa-user"></i> About</a></li>
+                <li><a href="#" onclick="switchView('search')" data-i18n="common.search"><i class="fas fa-search"></i> Search</a></li>
                 <li>
                     <button class="btn theme-toggle-mobile" onclick="switchLanguage()">
-                        <i class="fas fa-language"></i> <span data-i18n="common.language">语言</span>: <span id="lang-text-mobile">English</span>
+                        <i class="fas fa-language"></i> <span data-i18n="common.language">Language</span>: <span id="lang-text-mobile">中文</span>
                     </button>
                 </li>
                 <li>
                     <button class="btn theme-toggle-mobile" onclick="toggleTheme()">
-                        <i class="fas fa-palette"></i> <span data-i18n="common.theme.title">主题</span>: <span id="theme-text-mobile" data-i18n="common.theme.auto">跟随系统</span>
+                        <i class="fas fa-palette"></i> <span data-i18n="common.theme.title">Theme</span>: <span id="theme-text-mobile" data-i18n="common.theme.auto">Auto</span>
                     </button>
                 </li>
             </ul>
@@ -106,7 +107,7 @@
         <div class="search-box">
             <input type="text" id="search-input" 
                    data-i18n="common.search" data-i18n-attr="placeholder"
-                   placeholder="搜索..." autocomplete="off">
+                   placeholder="Search..." autocomplete="off">
         </div>
         <div id="search-results" class="search-results"></div>
     </div>
@@ -116,88 +117,182 @@
     <div id="article" class="view active article-with-toc" style="display: block;">
         <!-- TOC Sidebar (Desktop) -->
         <aside class="toc-sidebar" id="toc-sidebar">
-            <div class="toc-header">目录</div>
+            <div class="toc-header">Table of Contents</div>
             <nav class="toc-nav" id="toc-nav">
                 <!-- TOC items will be generated by JavaScript -->
             </nav>
         </aside>
 
-        <article class="blog-post" data-has-translation-zh="true" data-translation-path-zh="/blog/posts/1a589649.html">
+        <article class="blog-post" data-has-translation-zh="true" data-translation-path-zh="/blog/posts/6f412ead.html" data-has-translation-en="true" data-translation-path-en="/blog/posts/en/6f412ead.html">
             <!-- 1. Header: Title & Meta -->
             <div class="article-header-info">
-                <h1 class="article-title">之前发布的几个 App</h1>
+                <h1 class="article-title">Blog Under Attack: Troubleshooting and Fixing a CDN Supply Chain Poisoning Incident</h1>
                 <div class="post-meta mathjax_ignore">
                     <span class="author">JI,XIAOYONG</span>
                     <span class="meta-separator">•</span>
-                    <span class="publish-date mathjax_ignore">发布于 2018-01-08</span>
-                    <span class="publish-date mathjax_ignore">(更新于 2023-12-30)</span>
+                    <span class="publish-date mathjax_ignore">Published on 2025-12-22</span>
+                    
                     
                 </div>
             </div>
 
             <!-- 2. Content -->
             <div class="article-content">
-                <p>在之前学习 android 的过程中，跟着教程做了几个 app，虽然随着使用的 api 的失效，大多数应用如今已经不能正常使用了，但是作为初入编程的一点点小纪念，还是为他们写一个索引文章，至少能够晚一些消寂于这广阔的数据海洋中。</p>
-<h2><a href="http://jixiaoyong.github.io/jixiaoyong.github.io/blog/backup/blog_2016To2017/2016/05/NiceNews/">NiceNews</a></h2>
-<p>Posted on 2016-05-30</p>
-<p>NieceNews 我制作的第二款 APP，一个实时新闻软件。</p>
-<p><img src="http://jixiaoyong.github.io/jixiaoyong.github.io/blog/backup/blog_2016To2017/2016/05/NiceNews/images/icon.png" alt="NiceNews"></p>
-<h2><a href="http://jixiaoyong.github.io/jixiaoyong.github.io/blog/backup/blog_2016To2017/2016/07/IWeather/">IWeather</a></h2>
-<p>Posted on 2016-07-16</p>
-<p>IWeather，我的第三个 Android 应用，一个天气预报 APP。</p>
-<p><img src="http://jixiaoyong.github.io/blog/backup/blog_2016To2017/2016/07/IWeather/images/1.png" alt="IWeather"></p>
-<h2><a href="http://jixiaoyong.github.io/jixiaoyong.github.io/blog/backup/blog_2016To2017/2016/07/2048/">2048</a></h2>
-<p>Posted on 2016-07-21</p>
-<p>2048，我的第四个 Android 应用，同时也是我的第一款游戏 APP。</p>
-<p><img src="http://jixiaoyong.github.io/blogbackup/blog_2016To2017/2016/07/2048/images/1.png" alt="2048"></p>
-<h2><a href="http://jixiaoyong.github.io/jixiaoyong.github.io/blog/backup/blog_2016To2017/2016/07/I%E7%9C%8B%E7%9F%A5%E4%B9%8E/">I 看知乎</a></h2>
-<p>Posted on 2016-07-24 |</p>
-<p>i 看知乎，我的第五个 Android 应用。</p>
-<p><img src="http://jixiaoyong.github.io/blog/backup/blog_2016To2017/2016/07/I%E7%9C%8B%E7%9F%A5%E4%B9%8E/images/1.png" alt="logo"></p>
-<p>学习的过程需要不断的重复，更需要有条理的总结，我会把平时学习的心得体会，经验，以及无聊时瞎琢磨得出来的稀奇古怪的想法放到这里，主要是为了自己能够在学习的过程中有计划的总结学习到的知识，同时也方便之后查阅。</p>
+                <p>Recently, I discovered that my blog was <strong>automatically redirecting to third-party scam websites</strong> when browsed on mobile devices. After troubleshooting, I found that the CDN used by the blog was a victim of a supply chain poisoning attack. This article documents the entire investigation and repair process.</p>
+<h2>Symptoms</h2>
+<ul>
+<li>When browsing the blog on a mobile phone, the page automatically redirects to a scam website.</li>
+<li>Mainly affects mobile users.</li>
+<li>Occasional redirects also occur on PC.</li>
+</ul>
+<h2>Root Cause</h2>
+<h3>cdn.staticfile.net Supply Chain Attack</h3>
+<p>After investigation, it was found that <code>cdn.staticfile.net</code>, used by this blog, <strong>suffered a supply chain attack in 2024</strong>. This was a large-scale attack related to the Polyfill.io incident.</p>
+<p>Attackers gained control of the CDN source and injected malicious code into JavaScript files, redirecting users (especially mobile users) to scam sites.</p>
+<p>Affected CDNs include:</p>
+<ul>
+<li><code>cdn.staticfile.net</code> ❌</li>
+<li><code>bootcdn.net</code> ❌</li>
+<li><code>polyfill.io</code> ❌</li>
+<li>Several other domestic Chinese CDNs</li>
+</ul>
+<h3>Affected Resources in this Blog</h3>
+<table>
+<thead>
+<tr>
+<th>Resource</th>
+<th>Original CDN</th>
+<th>Risk Level</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Highlight.js</td>
+<td>cdn.staticfile.net</td>
+<td>⚠️ High</td>
+</tr>
+<tr>
+<td>Font Awesome</td>
+<td>cdn.staticfile.net</td>
+<td>⚠️ High</td>
+</tr>
+<tr>
+<td>MathJax</td>
+<td>cdn.staticfile.net</td>
+<td>⚠️ High</td>
+</tr>
+<tr>
+<td>Google Fonts</td>
+<td>fonts.loli.net</td>
+<td>⚠️ Medium</td>
+</tr>
+</tbody></table>
+<h2>Repair Solution</h2>
+<h3>1. Replace the Poisoned CDN</h3>
+<p>Replaced all instances of <code>cdn.staticfile.net</code> with secure and reliable CDNs:</p>
+<pre><code class="language-diff">- https://cdn.staticfile.net/highlight.js/11.7.0/highlight.min.js
++ https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js
+
+- https://cdn.staticfile.net/font-awesome/6.4.0/css/all.min.css
++ https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css
+
+- https://cdn.staticfile.net/mathjax/3.2.2/es5/tex-mml-chtml.js
++ https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+</code></pre>
+<h3>2. Smart Font CDN Switching</h3>
+<p>To balance the experience for both domestic (China) and international users, I implemented a smart font CDN switcher:</p>
+<table>
+<thead>
+<tr>
+<th>User</th>
+<th>CDN</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Domestic (China)</td>
+<td>google-fonts.mirrors.sjtug.sjtu.edu.cn</td>
+</tr>
+<tr>
+<td>International</td>
+<td>fonts.googleapis.com</td>
+</tr>
+</tbody></table>
+<p><strong>Implementation Logic</strong>:</p>
+<ol>
+<li>Check <code>localStorage</code> cache (7-day validity).</li>
+<li>If no cache, prioritize trying the domestic SJTUG mirror.</li>
+<li>If loading fails, automatically roll back to Google Fonts.</li>
+<li>On the last day, silently refresh the cache in the background.</li>
+</ol>
+<h2>Other Optimizations</h2>
+<p>During the investigation, I also fixed the following issues:</p>
+<h3>Dark Mode Flickering (FOUC)</h3>
+<p><strong>Problem</strong>: When switching pages, a white background would flash before turning dark.</p>
+<p><strong>Cause</strong>: <code>localStorage.getItem(&#39;theme&#39;)</code> might return <code>&#39;auto&#39;</code>, but the CSS only recognized <code>&#39;light&#39;</code>/<code>&#39;dark&#39;</code>.</p>
+<p><strong>Fix</strong>: Immediately calculate the effective theme value in the <code>&lt;head&gt;</code>:</p>
+<pre><code class="language-javascript">const saved = localStorage.getItem(&quot;theme&quot;) || &quot;auto&quot;;
+const systemPrefersDark = window.matchMedia(
+  &quot;(prefers-color-scheme: dark)&quot;
+).matches;
+const effective =
+  saved === &quot;auto&quot; ? (systemPrefersDark ? &quot;dark&quot; : &quot;light&quot;) : saved;
+document.documentElement.setAttribute(&quot;data-theme&quot;, effective);
+</code></pre>
+<h3>Homepage Infinite Scroll Failure</h3>
+<p><strong>Problem</strong>: Scrolling to the bottom failed to load more articles.</p>
+<p><strong>Cause</strong>: The <code>search.json</code> path was missing the <code>/blog</code> prefix, resulting in a 404 on GitHub Pages.</p>
+<p><strong>Fix</strong>:</p>
+<pre><code class="language-diff">- fetch(&#39;/search.json&#39;)
++ fetch(basePath + &#39;/search.json&#39;)  // basePath = &#39;/blog&#39;
+</code></pre>
+<h3>Mobile Hover Persistence</h3>
+<p><strong>Problem</strong>: On mobile, the TOC and menu highlights wouldn&#39;t disappear after being touched.</p>
+<p><strong>Cause</strong>: The <code>:hover</code> state persists on touchscreens.</p>
+<p><strong>Fix</strong>: Use <code>@media (hover: hover)</code> to only apply hover effects on devices that support mouse hovering.</p>
+<h2>Lessons Learned</h2>
+<ol>
+<li><strong>Don&#39;t blindly use domestic (Chinese) CDNs</strong>: Many so-called &quot;acceleration&quot; mirrors have questionable security.</li>
+<li><strong>Regularly check third-party dependencies</strong>: Especially CDNs and npm packages.</li>
+<li><strong>Prioritize official CDNs</strong>: Such as <code>cdnjs.cloudflare.com</code> or <code>cdn.jsdelivr.net</code>.</li>
+<li><strong>Test on mobile devices</strong>: Supply chain attacks often specifically target mobile users.</li>
+</ol>
 
             </div>
 
             <!-- 3. Tags -->
             <div class="tags">
-                
+                <a href="/blog/?tag=%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97" class="tag">#更新日志</a><a href="/blog/?tag=%E5%AE%89%E5%85%A8" class="tag">#安全</a>
             </div>
 
             <!-- 4. Email Comment -->
             <div class="comment-section">
-                <p class="comment-text">有想法？欢迎通过邮件讨论。</p>
+                <p class="comment-text">Any thoughts? Feel free to discuss via email.</p>
                 <button 
                     class="btn btn-email" 
-                    onclick="sendEmailComment('之前发布的几个 App', '/blog/posts/1a589649.html')"
-                    data-email-subject="关于文章的评论"
-                    data-email-hello="你好！"
-                    data-email-intro="我阅读了你的文章，以下是我的想法："
-                    data-email-fallback="无法打开邮件客户端，是否复制邮箱地址？"
+                    onclick="sendEmailComment('Blog Under Attack: Troubleshooting and Fixing a CDN Supply Chain Poisoning Incident', '/blog/posts/en/6f412ead.html')"
+                    data-email-subject="Comment on article"
+                    data-email-hello="Hi!"
+                    data-email-intro="I read your article and here are my thoughts:"
+                    data-email-fallback="Cannot open email client. Copy email address?"
                 >
-                    <i class="far fa-envelope"></i> 发送邮件评论
+                    <i class="far fa-envelope"></i> Email Comment
                 </button>
             </div>
         </article>
         
         <!-- 5. Prev/Next Navigation -->
         <nav class="post-nav">
+            <span class="post-nav-item post-nav-prev disabled"></span>
             
-            <a href="/blog/posts/ad4c562c.html" class="post-nav-item post-nav-prev">
-                <span class="post-nav-label">← 上一篇</span>
-                <span class="post-nav-title">AndroidService 相关知识</span>
-            </a>
-            
-            
-            <a href="/blog/posts/3b69424a.html" class="post-nav-item post-nav-next">
-                <span class="post-nav-label">下一篇 →</span>
-                <span class="post-nav-title">Android 控件组</span>
+            <a href="/blog/posts/42a9077b.html" class="post-nav-item post-nav-next">
+                <span class="post-nav-label">Next →</span>
+                <span class="post-nav-title">Signals.dart使用介绍</span>
             </a>
             
         </nav>
     </div>
 
     <!-- TOC Mobile Button -->
-    <button id="toc-mobile-btn" class="toc-mobile-btn" title="目录">
+    <button id="toc-mobile-btn" class="toc-mobile-btn" title="Table of Contents">
         <i class="fas fa-list-ul"></i>
     </button>
 
@@ -206,7 +301,7 @@
         <div class="toc-bottomsheet-overlay"></div>
         <div class="toc-bottomsheet-content">
             <div class="toc-bottomsheet-header">
-                <span>目录</span>
+                <span>Table of Contents</span>
                 <button class="toc-bottomsheet-close"><i class="fas fa-times"></i></button>
             </div>
             <nav class="toc-bottomsheet-nav" id="toc-bottomsheet-nav">
@@ -239,7 +334,7 @@
     <!-- Back to Top Button -->
     <button id="back-to-top" class="back-to-top" 
             data-i18n="common.backToTop" data-i18n-attr="title"
-            title="返回顶部">
+            title="Back to Top">
         <i class="fas fa-rocket"></i>
     </button>
 
@@ -265,6 +360,6 @@
         };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script src="/blog/scripts/client.js?v=1766377145473"></script>
+    <script src="/blog/scripts/client.js?v=1766377145259"></script>
 </body>
 </html>
