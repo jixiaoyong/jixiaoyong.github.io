@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>博客遭遇 CDN 供应链投毒攻击：排查与修复全记录 - JI,XIAOYONG's Blog</title>
+    <!-- Fonts: Async loading with smart CDN switching (SJTUG for China, Google for international) -->
+    <!-- Font CSS will be loaded by JavaScript after page content loads -->
+    
+    <!-- Icons: Cloudflare CDN (safe source) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/blog/styles/main.css?v=1766376211139">
+    <link rel="stylesheet" href="/blog/styles/containers.css?v=1766376211139">
+
+    <!-- Highlight.js Theme: Cloudflare CDN (safe source) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" id="hljs-theme">
+
+    <script>
+        // Immediately compute and apply correct theme to prevent FOUC (Flash of Unstyled Content)
+        (function() {
+            const saved = localStorage.getItem('theme') || 'auto';
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const effective = saved === 'auto' ? (systemPrefersDark ? 'dark' : 'light') : saved;
+            document.documentElement.setAttribute('data-theme', effective);
+            // Store for use by client.js
+            window.__EFFECTIVE_THEME__ = effective;
+            window.__SAVED_THEME__ = saved;
+        })();
+        // Language detection - simplistic redirect if on root
+        (function() {
+            const userLang = navigator.language || navigator.userLanguage;
+            window.basePath = '/blog';
+            const basePath = window.basePath;
+            if (window.location.pathname === basePath + '/' && userLang.startsWith('en')) {
+               window.location.href = basePath + '/en/';
+            }
+        })();
+    </script>
+</head>
+<body>
+
+    
+    <header>
+        <div class="container">
+            <a href="/blog/" class="logo">
+                <img src="https://jixiaoyong.github.io/images/user_avatar.webp" alt="JI,XIAOYONG" class="logo-avatar">
+                JI,XIAOYONG
+            </a>
+            
+            <!-- Desktop Nav -->
+            <nav class="desktop-nav">
+                <ul>
+                    
+        <li><a href="/blog/"><i class="fas fa-home"></i> 首页</a></li>
+        <li><a href="/blog/about.html"><i class="fas fa-user"></i> 关于</a></li>
+    
+                    <li><a href="#" onclick="switchView('search')" title="搜索"><i class="fas fa-search"></i></a></li>
+                    <li><button onclick="switchLanguage()" class="theme-toggle" title="语言"><i class="fas fa-language"></i><span style="font-size:0.7rem;vertical-align:super;">中</span></button></li>
+                    <li><button onclick="toggleTheme()" class="theme-toggle" title="主题"><i id="theme-icon" class="fas fa-adjust"></i></button></li>
+                </ul>
+            </nav>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-btn btn" onclick="toggleMobileMenu()">
+                <i id="menu-icon" class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Container (Hidden by default) -->
+        <div id="mobile-menu" class="mobile-menu hidden">
+            <ul>
+                <li><a href="/blog/"><i class="fas fa-home"></i> 首页</a></li>
+                <li><a href="/blog/about.html"><i class="fas fa-user"></i> 关于</a></li>
+                <li><a href="#" onclick="switchView('search')"><i class="fas fa-search"></i> 搜索</a></li>
+                <li>
+                    <button class="btn theme-toggle-mobile" onclick="switchLanguage()">
+                        <i class="fas fa-language"></i> 语言: English
+                    </button>
+                </li>
+                <li>
+                    <button class="btn theme-toggle-mobile" onclick="toggleTheme()">
+                        <i class="fas fa-palette"></i> 主题: <span id="theme-text-mobile">跟随系统</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </header>
+    
+
+    <!-- Search Overlay -->
+    <div id="search-overlay" class="search-overlay hidden">
+        <button class="close-search" onclick="closeSearch()">&times;</button>
+        <div class="search-box">
+            <input type="text" id="search-input" class="search-input" placeholder="搜索..." autocomplete="off">
+        </div>
+        <div id="search-results" class="search-results"></div>
+    </div>
+
+    <main class="container">
+        
+    <div id="article" class="view active article-with-toc" style="display: block;">
+        <!-- TOC Sidebar (Desktop) -->
+        <aside class="toc-sidebar" id="toc-sidebar">
+            <div class="toc-header">目录</div>
+            <nav class="toc-nav" id="toc-nav">
+                <!-- TOC items will be generated by JavaScript -->
+            </nav>
+        </aside>
+
+        <article class="blog-post">
+            <!-- 1. Header: Title & Meta -->
+            <div class="article-header-info">
+                <h1 class="article-title">博客遭遇 CDN 供应链投毒攻击：排查与修复全记录</h1>
+                <div class="post-meta mathjax_ignore">
+                    <span class="author">JI,XIAOYONG</span>
+                    <span class="meta-separator">•</span>
+                    <span class="publish-date mathjax_ignore">发布于 2025-12-22</span>
+                    
+                    
+                    <span class="meta-separator">•</span>
+                    <span class="ai-tag-wrapper">
+                        <span class="ai-tag level-4" onclick="toggleAiPopup(event)">
+                            <i class="fas fa-robot"></i>
+                            AI 生成 80%
+                        </span>
+                        <div class="ai-popup" id="aiPopup">
+                            <div class="ai-popup-header level-4">
+                                <i class="fas fa-robot"></i>AI 协作度：80%
+                            </div>
+                            <div class="ai-progress-bar">
+                                <div class="ai-progress-fill level-4"></div>
+                            </div>
+                            <div class="ai-popup-desc">
+                                <i class="fas fa-info-circle"></i>
+                                <span>本文主要由 AI 生成，作者进行了审校</span>
+                            </div>
+                        </div>
+                    </span>
+                    
+                </div>
+            </div>
+
+            <!-- 2. Content -->
+            <div class="article-content">
+                <p>最近发现博客在手机上浏览时会<strong>自动跳转到第三方诈骗网站</strong>，经过排查发现是使用的 CDN 遭受了供应链投毒攻击。本文记录整个排查和修复过程。</p>
+<h2>问题现象</h2>
+<ul>
+<li>手机浏览博客时，页面会自动跳转到诈骗网站</li>
+<li>主要影响移动端用户</li>
+<li>PC 端偶尔也会出现跳转</li>
+</ul>
+<h2>问题根因</h2>
+<h3>cdn.staticfile.net 供应链攻击</h3>
+<p>经过排查，发现博客使用的 <code>cdn.staticfile.net</code> 在 <strong>2024 年遭受供应链攻击</strong>，这是一起与 Polyfill.io 相关的大规模攻击事件。</p>
+<p>攻击者通过控制 CDN 源，在 JavaScript 文件中注入恶意代码，将用户（特别是移动端用户）重定向到诈骗网站。</p>
+<p>受影响的 CDN 包括：</p>
+<ul>
+<li><code>cdn.staticfile.net</code> ❌</li>
+<li><code>bootcdn.net</code> ❌</li>
+<li><code>polyfill.io</code> ❌</li>
+<li>其他多个国内 CDN</li>
+</ul>
+<h3>本博客受影响的资源</h3>
+<table>
+<thead>
+<tr>
+<th>资源</th>
+<th>原 CDN</th>
+<th>风险</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Highlight.js</td>
+<td>cdn.staticfile.net</td>
+<td>⚠️ 高危</td>
+</tr>
+<tr>
+<td>Font Awesome</td>
+<td>cdn.staticfile.net</td>
+<td>⚠️ 高危</td>
+</tr>
+<tr>
+<td>MathJax</td>
+<td>cdn.staticfile.net</td>
+<td>⚠️ 高危</td>
+</tr>
+<tr>
+<td>Google Fonts</td>
+<td>fonts.loli.net</td>
+<td>⚠️ 中危</td>
+</tr>
+</tbody></table>
+<h2>修复方案</h2>
+<h3>1. 替换被投毒的 CDN</h3>
+<p>将所有 <code>cdn.staticfile.net</code> 替换为安全可靠的 CDN：</p>
+<pre><code class="language-diff">- https://cdn.staticfile.net/highlight.js/11.7.0/highlight.min.js
++ https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js
+
+- https://cdn.staticfile.net/font-awesome/6.4.0/css/all.min.css
++ https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css
+
+- https://cdn.staticfile.net/mathjax/3.2.2/es5/tex-mml-chtml.js
++ https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+</code></pre>
+<h3>2. 智能字体 CDN 切换</h3>
+<p>为了兼顾国内外用户，实现了智能字体 CDN 切换：</p>
+<table>
+<thead>
+<tr>
+<th>用户</th>
+<th>CDN</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>国内</td>
+<td>google-fonts.mirrors.sjtug.sjtu.edu.cn</td>
+</tr>
+<tr>
+<td>国外</td>
+<td>fonts.googleapis.com</td>
+</tr>
+</tbody></table>
+<p><strong>实现逻辑</strong>：</p>
+<ol>
+<li>检查 localStorage 缓存（7 天有效期）</li>
+<li>无缓存时优先尝试国内 SJTUG 镜像</li>
+<li>加载失败自动回退到 Google Fonts</li>
+<li>最后一天后台静默刷新缓存</li>
+</ol>
+<h2>其他优化</h2>
+<p>在排查过程中，顺便修复了以下问题：</p>
+<h3>暗色模式闪烁 (FOUC)</h3>
+<p><strong>问题</strong>：切换页面时先显示白色背景再变暗</p>
+<p><strong>原因</strong>：<code>localStorage.getItem(&#39;theme&#39;)</code> 可能返回 <code>&#39;auto&#39;</code>，但 CSS 只识别 <code>&#39;light&#39;</code>/<code>&#39;dark&#39;</code></p>
+<p><strong>修复</strong>：在 <code>&lt;head&gt;</code> 中立即计算有效主题值：</p>
+<pre><code class="language-javascript">const saved = localStorage.getItem(&quot;theme&quot;) || &quot;auto&quot;;
+const systemPrefersDark = window.matchMedia(
+  &quot;(prefers-color-scheme: dark)&quot;
+).matches;
+const effective =
+  saved === &quot;auto&quot; ? (systemPrefersDark ? &quot;dark&quot; : &quot;light&quot;) : saved;
+document.documentElement.setAttribute(&quot;data-theme&quot;, effective);
+</code></pre>
+<h3>首页无限滚动失效</h3>
+<p><strong>问题</strong>：滚动到底部无法加载更多文章</p>
+<p><strong>原因</strong>：<code>search.json</code> 路径缺少 <code>/blog</code> 前缀，在 GitHub Pages 上 404</p>
+<p><strong>修复</strong>：</p>
+<pre><code class="language-diff">- fetch(&#39;/search.json&#39;)
++ fetch(basePath + &#39;/search.json&#39;)  // basePath = &#39;/blog&#39;
+</code></pre>
+<h3>移动端 Hover 残留</h3>
+<p><strong>问题</strong>：移动端 TOC 和菜单触摸后高亮不消失</p>
+<p><strong>原因</strong>：触摸屏的 <code>:hover</code> 状态会持续保持</p>
+<p><strong>修复</strong>：使用 <code>@media (hover: hover)</code> 只在支持鼠标悬浮的设备上应用 hover 效果</p>
+<h2>经验教训</h2>
+<ol>
+<li><strong>不要盲目使用国内 CDN</strong>：很多所谓的&quot;加速&quot;镜像站安全性堪忧</li>
+<li><strong>定期检查第三方依赖</strong>：特别是 CDN 和 npm 包</li>
+<li><strong>优先使用官方 CDN</strong>：如 cdnjs.cloudflare.com、cdn.jsdelivr.net</li>
+<li><strong>移动端测试</strong>：供应链攻击往往只针对移动端用户</li>
+</ol>
+
+            </div>
+
+            <!-- 3. Tags -->
+            <div class="tags">
+                <a href="/?tag=%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97" class="tag">#更新日志</a><a href="/?tag=%E5%AE%89%E5%85%A8" class="tag">#安全</a>
+            </div>
+
+            <!-- 4. Email Comment -->
+            <div class="comment-section">
+                <p class="comment-text">有想法？欢迎通过邮件讨论。</p>
+                <button 
+                    class="btn btn-email" 
+                    onclick="sendEmailComment('博客遭遇 CDN 供应链投毒攻击：排查与修复全记录', '/blog/posts/6f412ead.html')"
+                    data-email-subject="关于文章的评论"
+                    data-email-hello="你好！"
+                    data-email-intro="我阅读了你的文章，以下是我的想法："
+                    data-email-fallback="无法打开邮件客户端，是否复制邮箱地址？"
+                >
+                    <i class="far fa-envelope"></i> 发送邮件评论
+                </button>
+            </div>
+        </article>
+        
+        <!-- 5. Prev/Next Navigation -->
+        <nav class="post-nav">
+            <span class="post-nav-item post-nav-prev disabled"></span>
+            
+            <a href="/blog/posts/42a9077b.html" class="post-nav-item post-nav-next">
+                <span class="post-nav-label">下一篇 →</span>
+                <span class="post-nav-title">Signals.dart使用介绍</span>
+            </a>
+            
+        </nav>
+    </div>
+
+    <!-- TOC Mobile Button -->
+    <button id="toc-mobile-btn" class="toc-mobile-btn" title="目录">
+        <i class="fas fa-list-ul"></i>
+    </button>
+
+    <!-- TOC Mobile Bottom Sheet -->
+    <div id="toc-bottomsheet" class="toc-bottomsheet">
+        <div class="toc-bottomsheet-overlay"></div>
+        <div class="toc-bottomsheet-content">
+            <div class="toc-bottomsheet-header">
+                <span>目录</span>
+                <button class="toc-bottomsheet-close"><i class="fas fa-times"></i></button>
+            </div>
+            <nav class="toc-bottomsheet-nav" id="toc-bottomsheet-nav">
+                <!-- TOC items will be generated by JavaScript -->
+            </nav>
+        </div>
+    </div>
+    
+    </main>
+
+    
+    <footer>
+        <div class="container">
+            <div class="footer-author">
+                <span>&copy; 2016-2025 </span>
+                <a href="https://github.com/jixiaoyong" target="_blank" rel="noopener noreferrer" title="GitHub">
+                    <i class="fab fa-github"></i>
+                    JI,XIAOYONG
+                </a>
+            </div>
+            <div>
+                <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer" class="footer-link">
+                    <i class="fab fa-creative-commons"></i> BY-NC-SA 4.0
+                </a>
+            </div>
+        </div>
+    </footer>
+    
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" title="返回顶部">
+        <i class="fas fa-rocket"></i>
+    </button>
+
+    <!-- Scripts: Cloudflare CDN (safe source) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/dart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/kotlin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/gradle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/groovy.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/yaml.min.js"></script>
+    <script>
+        // MathJax Configuration - Enable $...$ inline math
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\(', '\)']],
+                displayMath: [['$$', '$$'], ['\[', '\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+                ignoreHtmlClass: 'mathjax_ignore'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="/blog/scripts/client.js?v=1766376211139"></script>
+</body>
+</html>

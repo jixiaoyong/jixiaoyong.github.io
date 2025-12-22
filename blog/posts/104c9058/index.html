@@ -4,34 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Android 笔记之 Xfermode - JI,XIAOYONG's Blog</title>
-    <!-- Fonts: Use System Fonts + Merriweather/Fira via Staticfile if available or fallback -->
-    <!-- Prioritize system fonts for speed in China -->
-    <link rel="preconnect" href="https://fonts.loli.net">
-    <link rel="preconnect" href="https://gstatic.loli.net" crossorigin>
-    <link href="https://fonts.loli.net/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=Inter:wght@300;400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Fonts: Async loading with smart CDN switching (SJTUG for China, Google for international) -->
+    <!-- Font CSS will be loaded by JavaScript after page content loads -->
     
-    <!-- Icons: Staticfile CDN -->
-    <link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.4.0/css/all.min.css" onerror="this.href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'">
+    <!-- Icons: Cloudflare CDN (safe source) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="/blog/styles/main.css?v=1766340863969">
-    <link rel="stylesheet" href="/blog/styles/containers.css?v=1766340863969">
+    <link rel="stylesheet" href="/blog/styles/main.css?v=1766376211256">
+    <link rel="stylesheet" href="/blog/styles/containers.css?v=1766376211256">
 
-    <!-- Highlight.js Theme (Staticfile does not have all themes, checking common ones) -->
-    <!-- Using cdnjs.cloudflare.com as fallback if staticfile misses specific themes, but staticfile usually has them -->
-    <link rel="stylesheet" href="https://cdn.staticfile.net/highlight.js/11.7.0/styles/github.min.css" id="hljs-theme">
+    <!-- Highlight.js Theme: Cloudflare CDN (safe source) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" id="hljs-theme">
 
     <script>
-        // Check local storage for theme
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        document.documentElement.setAttribute('data-theme', savedTheme);
+        // Immediately compute and apply correct theme to prevent FOUC (Flash of Unstyled Content)
+        (function() {
+            const saved = localStorage.getItem('theme') || 'auto';
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const effective = saved === 'auto' ? (systemPrefersDark ? 'dark' : 'light') : saved;
+            document.documentElement.setAttribute('data-theme', effective);
+            // Store for use by client.js
+            window.__EFFECTIVE_THEME__ = effective;
+            window.__SAVED_THEME__ = saved;
+        })();
         // Language detection - simplistic redirect if on root
-        const userLang = navigator.language || navigator.userLanguage;
-        window.basePath = '/blog';
-        const basePath = window.basePath;
-        if (window.location.pathname === basePath + '/' && userLang.startsWith('en')) {
-           window.location.href = basePath + '/en/';
-        }
+        (function() {
+            const userLang = navigator.language || navigator.userLanguage;
+            window.basePath = '/blog';
+            const basePath = window.basePath;
+            if (window.location.pathname === basePath + '/' && userLang.startsWith('en')) {
+               window.location.href = basePath + '/en/';
+            }
+        })();
     </script>
 </head>
 <body>
@@ -339,13 +344,13 @@ canvas.restoreToCount(saveCount)
         <i class="fas fa-rocket"></i>
     </button>
 
-    <!-- Scripts: Staticfile CDN -->
-    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/highlight.min.js"></script>
-    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/dart.min.js"></script>
-    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/kotlin.min.js"></script>
-    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/gradle.min.js"></script>
-    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/groovy.min.js"></script>
-    <script src="https://cdn.staticfile.net/highlight.js/11.7.0/languages/yaml.min.js"></script>
+    <!-- Scripts: Cloudflare CDN (safe source) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/dart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/kotlin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/gradle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/groovy.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/yaml.min.js"></script>
     <script>
         // MathJax Configuration - Enable $...$ inline math
         window.MathJax = {
@@ -360,7 +365,7 @@ canvas.restoreToCount(saveCount)
             }
         };
     </script>
-    <script id="MathJax-script" async src="https://cdn.staticfile.net/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
-    <script src="/blog/scripts/client.js?v=1766340863969"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="/blog/scripts/client.js?v=1766376211256"></script>
 </body>
 </html>

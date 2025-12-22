@@ -58,19 +58,29 @@ nav li {
     align-items: center;
 }
 
-nav a { 
-    background-image: none !important; 
+nav a {
+    background-image: none !important;
     display: flex;
     align-items: center;
     gap: 0.4rem;
     height: 100%;
     text-decoration: none;
 }
-nav a:hover { color: var(--accent-yellow); }
-nav a:hover i { color: var(--accent-yellow); }
+
+nav a:hover {
+    color: var(--accent-yellow);
+}
+
+nav a:hover i {
+    color: var(--accent-yellow);
+}
 
 /* Mobile Menu */
-.mobile-menu-btn { display: none !important; } /* Hidden on Desktop by default */
+.mobile-menu-btn {
+    display: none !important;
+}
+
+/* Hidden on Desktop by default */
 
 .mobile-menu {
     position: absolute;
@@ -91,7 +101,8 @@ nav a:hover i { color: var(--accent-yellow); }
     flex-direction: column;
 }
 
-.mobile-menu li a, .mobile-menu li button {
+.mobile-menu li a,
+.mobile-menu li button {
     display: flex;
     align-items: center;
     gap: 0.75rem;
@@ -109,26 +120,38 @@ nav a:hover i { color: var(--accent-yellow); }
     transition: color 0.2s;
 }
 
-.mobile-menu li a:hover, .mobile-menu li button:hover {
-    color: var(--accent-yellow);
+/* Only apply hover effects on devices with hover capability (not touch screens) */
+@media (hover: hover) {
+
+    .mobile-menu li a:hover,
+    .mobile-menu li button:hover {
+        color: var(--accent-yellow);
+    }
 }
 
-.mobile-menu li a i, .mobile-menu li button i {
+.mobile-menu li a i,
+.mobile-menu li button i {
     width: 1.2rem;
     text-align: center;
     transition: color 0.2s;
 }
 
-.mobile-menu li a:hover i, .mobile-menu li button:hover i {
-    color: var(--accent-yellow);
+@media (hover: hover) {
+
+    .mobile-menu li a:hover i,
+    .mobile-menu li button:hover i {
+        color: var(--accent-yellow);
+    }
 }
 
-.mobile-menu li a:focus, .mobile-menu li button:focus {
+.mobile-menu li a:focus,
+.mobile-menu li button:focus {
     outline: none;
     color: var(--text-primary);
 }
 
-.mobile-menu li:last-child a, .mobile-menu li:last-child button {
+.mobile-menu li:last-child a,
+.mobile-menu li:last-child button {
     border-bottom: none;
 }
 
@@ -137,38 +160,46 @@ nav a:hover i { color: var(--accent-yellow); }
 }
 
 /* Fix Header Buttons */
-button.theme-toggle, button.mobile-menu-btn, button.close-search {
+button.theme-toggle,
+button.mobile-menu-btn,
+button.close-search {
     background: none;
     border: none;
     cursor: pointer;
     padding: 0.5rem;
     color: var(--text-primary);
-    display: flex; /* Ensure icon centers */
+    display: flex;
+    /* Ensure icon centers */
     align-items: center;
     justify-content: center;
     outline: none;
 }
 
-button.theme-toggle:focus, button.mobile-menu-btn:focus, button.close-search:focus {
+button.theme-toggle:focus,
+button.mobile-menu-btn:focus,
+button.close-search:focus {
     outline: none;
 }
 
-button.theme-toggle:active, button.mobile-menu-btn:active {
+button.theme-toggle:active,
+button.mobile-menu-btn:active {
     color: var(--accent-yellow);
 }
 
-button.theme-toggle i, button.mobile-menu-btn i {
+button.theme-toggle i,
+button.mobile-menu-btn i {
     font-size: 1.2rem;
     transition: color 0.2s;
 }
 
-button.theme-toggle:hover i, button.mobile-menu-btn:hover i {
+button.theme-toggle:hover i,
+button.mobile-menu-btn:hover i {
     color: var(--accent-yellow);
 }
 
 /* Ensure icons are visible in dark mode */
-[data-theme="dark"] button.theme-toggle, 
-[data-theme="dark"] button.mobile-menu-btn, 
+[data-theme="dark"] button.theme-toggle,
+[data-theme="dark"] button.mobile-menu-btn,
 [data-theme="dark"] button.close-search {
     color: #ffffff;
 }
@@ -208,13 +239,13 @@ footer .container {
 }
 
 .footer-author span {
-    margin-right: 1.5rem; 
+    margin-right: 1.5rem;
 }
 
 .footer-author a {
     display: inline-flex;
     align-items: center;
-    gap: 0rem; 
+    gap: 0rem;
     color: var(--text-secondary);
     text-decoration: none;
     transition: color 0.2s;
@@ -246,21 +277,43 @@ footer i {
 
 /* Mobile Responsive */
 @media (max-width: 640px) {
-    nav.desktop-nav { display: none; }
-    .mobile-menu-btn { display: block !important; }
-    
-    h1 { font-size: 1.75rem !important; }
-    .article-title { font-size: 1.75rem !important; word-break: break-word; }
-    .container { padding: 0 1rem; }
-    
+    nav.desktop-nav {
+        display: none;
+    }
+
+    .mobile-menu-btn {
+        display: block !important;
+    }
+
+    h1 {
+        font-size: 1.75rem !important;
+    }
+
+    .article-title {
+        font-size: 1.75rem !important;
+        word-break: break-word;
+    }
+
+    .container {
+        padding: 0 1rem;
+    }
+
     footer .container {
         justify-content: center;
         text-align: center;
     }
 }
+
 @media (min-width: 641px) {
-    .mobile-menu-btn { display: none; }
-    .mobile-menu { display: none !important; } /* Ensure hidden on desktop even if toggled */
+    .mobile-menu-btn {
+        display: none;
+    }
+
+    .mobile-menu {
+        display: none !important;
+    }
+
+    /* Ensure hidden on desktop even if toggled */
 }
 
 /* Back to Top Button */
