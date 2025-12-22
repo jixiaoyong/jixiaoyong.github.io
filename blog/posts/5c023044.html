@@ -8,19 +8,23 @@
     <link rel="canonical" href="/blog/blog/posts/5c023044.html">
     <link rel="alternate" hreflang="zh" href="/blog/blog/posts/5c023044.html">
     <link rel="alternate" hreflang="x-default" href="/blog/blog/posts/5c023044.html">
+    <!-- Highlight.js Theme (article pages only) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" id="hljs-theme">
     
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://google-fonts.mirrors.sjtug.sjtu.edu.cn">
+
     <!-- Fonts: Async loading with smart CDN switching (SJTUG for China, Google for international) -->
     <!-- Font CSS will be loaded by JavaScript after page content loads -->
     
-    <!-- Icons: Cloudflare CDN (safe source) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Icons: Cloudflare CDN (FontAwesome only - async loading) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
 
     <!-- Styles -->
-    <link rel="stylesheet" href="/blog/styles/main.css?v=1766377145355">
-    <link rel="stylesheet" href="/blog/styles/containers.css?v=1766377145355">
-
-    <!-- Highlight.js Theme: Cloudflare CDN (safe source) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" id="hljs-theme">
+    <link rel="stylesheet" href="/blog/styles/main.css?v=1766400927745">
 
     <script>
         // Immediately compute and apply correct theme to prevent FOUC (Flash of Unstyled Content)
@@ -35,8 +39,8 @@
         // Inject i18n data for client-side switching
         window.basePath = '/blog';
         window.__I18N_DATA__ = {
-            zh: {"common":{"search":"搜索","backToList":"返回列表","language":"语言","theme":{"title":"主题","auto":"跟随系统","light":"浅色","dark":"深色"},"nav":{"home":"首页","about":"关于"},"searchNoResults":"未找到相关文章","backToTop":"返回顶部"},"article":{"publishedOn":"发布于","updatedOn":"更新于","author":"作者","prevPost":"上一篇","nextPost":"下一篇","notByAi":{"tooltip":"本文是人类纯手工实现，没有 AI 参与 (Handcrafted by humans, no AI involved)","aiLevel":"AI 协作度：","warning":"⚠️ 本文部分或全部内容由 AI 辅助生成，请注意甄别。","tag1":"AI 辅助 20%","tag2":"AI 辅助 40%","tag3":"AI 协作 60%","tag4":"AI 生成 80%","tag5":"AI 生成 100%","desc1":"本文由人类主导创作，AI 提供少量辅助","desc2":"本文由人机协作完成，AI 参与了部分内容","desc3":"本文由人机协作完成，核心观点来自作者","desc4":"本文主要由 AI 生成，作者进行了审校","desc5":"本文完全由 AI 生成，请读者自行甄别"},"emailComment":{"title":"有想法？欢迎通过邮件讨论。","button":"发送邮件评论","subject":"关于文章的评论","bodyHello":"你好！","bodyIntro":"我阅读了你的文章，以下是我的想法：","copyFallback":"无法打开邮件客户端，是否复制邮箱地址？"}},"about":{"greeting":"你好 👋，我是","subtitle":"一名开发者。<br/>一个热爱世界的人。","contactTitle":"与我联系：","toolsTitle":"语言和工具："},"footer":{"copyright":"版权所有 © {0} {1}"},"notFound":{"title":"页面未找到","message":"抱歉！您访问的页面不存在或已被移动。","suggestion":"您可以尝试："}},
-            en: {"common":{"search":"Search","backToList":"Back to List","language":"Language","theme":{"title":"Theme","auto":"Auto","light":"Light","dark":"Dark"},"nav":{"home":"Home","about":"About"},"searchNoResults":"No results found","backToTop":"Back to Top"},"article":{"publishedOn":"Published on","updatedOn":"Updated on","author":"By","prevPost":"Previous","nextPost":"Next","notByAi":{"tooltip":"Handcrafted by humans, no AI involved","aiLevel":"AI Collaboration: ","warning":"⚠️ This article contains content generated or assisted by AI. Please verify critical information.","tag1":"20% AI Assisted","tag2":"40% AI Assisted","tag3":"60% AI Collaborated","tag4":"80% AI Generated","tag5":"100% AI Generated","desc1":"Human-led creation with minor AI assistance","desc2":"Human-AI collaboration for partial content","desc3":"Human-AI collaboration, core ideas from author","desc4":"Primarily AI-generated, reviewed by author","desc5":"Entirely AI-generated, please verify independently"},"emailComment":{"title":"Any thoughts? Feel free to discuss via email.","button":"Email Comment","subject":"Comment on article","bodyHello":"Hi!","bodyIntro":"I read your article and here are my thoughts:","copyFallback":"Cannot open email client. Copy email address?"}},"about":{"greeting":"Hi 👋, I'm","subtitle":"A developer.<br/>A man who love the world.","contactTitle":"Keep touch with me:","toolsTitle":"Languages and Tools:"},"footer":{"copyright":"Copyright © {0} {1}"},"notFound":{"title":"Page Not Found","message":"Oops! The page you're looking for doesn't exist or has been moved.","suggestion":"Maybe try one of these:"}}
+            zh: {"common":{"search":"搜索","backToList":"返回列表","language":"语言","theme":{"title":"主题","auto":"跟随系统","light":"浅色","dark":"深色"},"nav":{"home":"首页","about":"关于"},"searchNoResults":"未找到相关文章","backToTop":"返回顶部","noMorePosts":"共 {0} 篇文章，没有更多了"},"article":{"publishedOn":"发布于","updatedOn":"更新于","author":"作者","prevPost":"上一篇","nextPost":"下一篇","notByAi":{"tooltip":"本文是人类纯手工实现，没有 AI 参与 (Handcrafted by humans, no AI involved)","aiLevel":"AI 协作度：","warning":"⚠️ 本文部分或全部内容由 AI 辅助生成，请注意甄别。","tag1":"AI 辅助 20%","tag2":"AI 辅助 40%","tag3":"AI 协作 60%","tag4":"AI 生成 80%","tag5":"AI 生成 100%","desc1":"本文由人类主导创作，AI 提供少量辅助","desc2":"本文由人机协作完成，AI 参与了部分内容","desc3":"本文由人机协作完成，核心观点来自作者","desc4":"本文主要由 AI 生成，作者进行了审校","desc5":"本文完全由 AI 生成，请读者自行甄别"},"emailComment":{"title":"有想法？欢迎通过邮件讨论。","button":"发送邮件评论","subject":"关于文章的评论","bodyHello":"你好！","bodyIntro":"我阅读了你的文章，以下是我的想法：","copyFallback":"无法打开邮件客户端，是否复制邮箱地址？"}},"about":{"greeting":"你好 👋，我是","subtitle":"一名开发者。<br/>一个热爱世界的人。","contactTitle":"与我联系：","toolsTitle":"语言和工具：","techStack":"技术栈","totalPosts":"本站当前共 {0} 篇文章","timeline":{"title":"博客演进史"}},"footer":{"copyright":"版权所有 © {0} {1}"},"notFound":{"title":"页面未找到","message":"抱歉！您访问的页面不存在或已被移动。","suggestion":"您可以尝试："}},
+            en: {"common":{"search":"Search","backToList":"Back to List","language":"Language","theme":{"title":"Theme","auto":"Auto","light":"Light","dark":"Dark"},"nav":{"home":"Home","about":"About"},"searchNoResults":"No results found","backToTop":"Back to Top","noMorePosts":"{0} posts in total, no more"},"article":{"publishedOn":"Published on","updatedOn":"Updated on","author":"By","prevPost":"Previous","nextPost":"Next","notByAi":{"tooltip":"Handcrafted by humans, no AI involved","aiLevel":"AI Collaboration: ","warning":"⚠️ This article contains content generated or assisted by AI. Please verify critical information.","tag1":"20% AI Assisted","tag2":"40% AI Assisted","tag3":"60% AI Collaborated","tag4":"80% AI Generated","tag5":"100% AI Generated","desc1":"Human-led creation with minor AI assistance","desc2":"Human-AI collaboration for partial content","desc3":"Human-AI collaboration, core ideas from author","desc4":"Primarily AI-generated, reviewed by author","desc5":"Entirely AI-generated, please verify independently"},"emailComment":{"title":"Any thoughts? Feel free to discuss via email.","button":"Email Comment","subject":"Comment on article","bodyHello":"Hi!","bodyIntro":"I read your article and here are my thoughts:","copyFallback":"Cannot open email client. Copy email address?"}},"about":{"greeting":"Hi 👋, I'm","subtitle":"A developer.<br/>A man who love the world.","contactTitle":"Keep touch with me:","toolsTitle":"Languages and Tools:","techStack":"Tech Stack","totalPosts":"This site currently has {0} posts","timeline":{"title":"Blog Evolution"}},"footer":{"copyright":"Copyright © {0} {1}"},"notFound":{"title":"Page Not Found","message":"Oops! The page you're looking for doesn't exist or has been moved.","suggestion":"Maybe try one of these:"}}
         };
         // Initial language preference
         const savedLang = localStorage.getItem('preferred_lang');
@@ -50,7 +54,7 @@
     
     <header>
         <div class="container">
-            <a href="/blog/" class="logo">
+            <a href="/blog/" class="logo" onclick="if(window.location.pathname === '/blog/' || window.location.pathname === '/blog/index.html'){window.scrollTo({top:0,behavior:'smooth'});return false;}">
                 <img src="https://jixiaoyong.github.io/images/user_avatar.webp" alt="JI,XIAOYONG" class="logo-avatar">
                 JI,XIAOYONG
             </a>
@@ -138,13 +142,40 @@
             <!-- 2. Content -->
             <div class="article-content">
                 <p><a href="https://baike.baidu.com/item/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF">贝塞尔曲线</a>是用节点和控制点绘制的高精度曲线，Android 中常用的有二阶、三阶贝塞尔曲线。本文介绍使用贝塞尔曲线绘制折线图，并实现动画效果。</p>
-<p><img src="https://jixiaoyong.github.io/images/20200413215502.jpg" alt=""></p>
+<p>
+                        <div class="image-wrapper loading">
+                            
+                <div class="image-spinner">
+                    <div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div>
+                </div>
+            
+                            <img src="https://jixiaoyong.github.io/images/20200413215502.jpg" alt="" loading="eager" onload="this.parentElement.classList.remove('loading')">
+                        </div>
+                        </p>
 <p>本文代码链接：<a href="https://github.com/jixiaoyong/library/blob/master/library/src/main/java/cf/android666/applibrary/view/BezierViewAnim.kt">https://github.com/jixiaoyong/library/blob/master/library/src/main/java/cf/android666/applibrary/view/BezierViewAnim.kt</a></p>
 <h2>贝塞尔曲线介绍</h2>
 <p>下图是二阶贝塞尔曲线绘制方法介绍，只要各个点满足条件：AD/AB = BE/BC = DF/DE，那么当沿着当前线段移动 D、E 点时，F 点的运动轨迹就是一个贝塞尔曲线：</p>
-<p><img src="https://jixiaoyong.github.io/images/20200413215622.png" alt="图片来自：https://www.cnblogs.com/wjtaigwh/p/6647114.html"></p>
+<p>
+                        <div class="image-wrapper loading">
+                            
+                <div class="image-spinner">
+                    <div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div>
+                </div>
+            
+                            <img src="https://jixiaoyong.github.io/images/20200413215622.png" alt="图片来自：https://www.cnblogs.com/wjtaigwh/p/6647114.html" loading="lazy" onload="this.parentElement.classList.remove('loading')">
+                        </div>
+                        </p>
 <p>动图示意如下：</p>
-<p><img src="https://jixiaoyong.github.io/images/20200413222352.webp" alt=""></p>
+<p>
+                        <div class="image-wrapper loading">
+                            
+                <div class="image-spinner">
+                    <div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div>
+                </div>
+            
+                            <img src="https://jixiaoyong.github.io/images/20200413222352.webp" alt="" loading="lazy" onload="this.parentElement.classList.remove('loading')">
+                        </div>
+                        </p>
 <p>可以在下面的两个网站在线体验贝塞尔曲线：</p>
 <p><a href="https://aaaaaaaty.github.io/bezierMaker.js/playground/playground.html">https://aaaaaaaty.github.io/bezierMaker.js/playground/playground.html</a></p>
 <p><a href="https://bezier.method.ac/">https://bezier.method.ac/</a></p>
@@ -167,7 +198,16 @@ Path.cubicTo(float x1, float y1, float x2, float y2, float x3, float y3)//三阶
 <p>这里要处理特殊情况：第一个点 P<del>0</del>的前一个仍然为 P<del>0</del>，最后一个点 P<del>n</del>的后一个点仍为 P<del>n</del></p>
 </blockquote>
 <p>但这种情况绘制出来的贝塞尔曲线如下：</p>
-<p><img src="https://jixiaoyong.github.io/images/20200413220840.jpg" alt=""></p>
+<p>
+                        <div class="image-wrapper loading">
+                            
+                <div class="image-spinner">
+                    <div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div>
+                </div>
+            
+                            <img src="https://jixiaoyong.github.io/images/20200413220840.jpg" alt="" loading="lazy" onload="this.parentElement.classList.remove('loading')">
+                        </div>
+                        </p>
 <p>可以看到除了 P<del>0</del>和 P<del>n</del>外，其他点的曲线坐标和对应的点坐标不一致。</p>
 <h3>方法 2</h3>
 <p>为了解决方法 1 存在的问题，我们人为的在两个点之间加入两个控制点，这样在<code>startPoint</code>，<code>endPoint</code>之间的贝塞尔曲线首尾点的坐标必定落在起点和终点上（思路来自<a href="https://blog.csdn.net/laizuling/article/details/51162011">这里</a>）。</p>
@@ -243,7 +283,16 @@ mPathMeasure.getSegment(0F, stopD, dstPath, true) //按照长度比例截取对�
 //bezier anim
 canvas.drawPath(dstPath, bezierPaint) //绘制对应的 path
 </code></pre>
-<p><img src="https://jixiaoyong.github.io/images/20200413222302.jpg" alt=""></p>
+<p>
+                        <div class="image-wrapper loading">
+                            
+                <div class="image-spinner">
+                    <div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div>
+                </div>
+            
+                            <img src="https://jixiaoyong.github.io/images/20200413222302.jpg" alt="" loading="lazy" onload="this.parentElement.classList.remove('loading')">
+                        </div>
+                        </p>
 <h2>注意事项</h2>
 <ul>
 <li>使用 canvas 绘制坐标时，需要注意 android 的坐标原点位于屏幕左上角。所以在绘制曲线图时可以先将坐标原点向下平移一段距离，再绘制对应坐标（可以绘制实际的 y 坐标负值）</li>
@@ -340,19 +389,21 @@ canvas.drawPath(dstPath, bezierPaint) //绘制对应的 path
         <i class="fas fa-rocket"></i>
     </button>
 
-    <!-- Scripts: Cloudflare CDN (safe source) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/dart.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/kotlin.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/gradle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/groovy.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/yaml.min.js"></script>
+    <!-- Page-specific scripts (Highlight.js, MathJax, etc.) -->
+    
+    <!-- Highlight.js: Cloudflare CDN -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/dart.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/kotlin.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/gradle.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/groovy.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/yaml.min.js"></script>
     <script>
-        // MathJax Configuration - Enable $...$ inline math
+        // MathJax Configuration
         window.MathJax = {
             tex: {
-                inlineMath: [['$', '$'], ['\(', '\)']],
-                displayMath: [['$$', '$$'], ['\[', '\]']],
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
                 processEscapes: true
             },
             options: {
@@ -362,6 +413,9 @@ canvas.drawPath(dstPath, bezierPaint) //绘制对应的 path
         };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script src="/blog/scripts/client.js?v=1766377145355"></script>
+    
+
+    <!-- Core client.js -->
+    <script src="/blog/scripts/client.js?v=1766400927745"></script>
 </body>
 </html>

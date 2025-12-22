@@ -182,6 +182,12 @@ const I18nManager = {
             if (val) {
                 const attr = el.dataset.i18nAttr;
                 const isHtml = el.dataset.i18nHtml === 'true';
+                const params = el.dataset.i18nParams;
+
+                // Replace placeholders {0}, {1}, etc. with params
+                if (params) {
+                    val = val.replace('{0}', params);
+                }
 
                 if (attr) {
                     el.setAttribute(attr, attr === 'placeholder' ? val + '...' : val);
@@ -202,7 +208,7 @@ const I18nManager = {
         });
 
         // Update i18n-content containers (e.g. About page markdown)
-        document.querySelectorAll('.i18n-content').forEach(el => {
+        document.querySelectorAll('.i18n-content, .blog-timeline').forEach(el => {
             el.style.display = el.dataset.lang === lang ? 'block' : 'none';
         });
         // Update Language Switcher Text
@@ -228,6 +234,7 @@ const I18nManager = {
             const title = item.getAttribute(`data-i18n-${lang}-title`);
             const excerpt = item.getAttribute(`data-i18n-${lang}-excerpt`);
             const path = item.getAttribute(`data-i18n-${lang}-path`);
+            const tagsStr = item.getAttribute(`data-i18n-${lang}-tags`);
 
             if (title) {
                 const titleEl = item.querySelector('h2 a');
@@ -239,6 +246,17 @@ const I18nManager = {
             if (excerpt) {
                 const excerptEl = item.querySelector('.post-excerpt p');
                 if (excerptEl) excerptEl.textContent = excerpt;
+            }
+            if (tagsStr) {
+                const tagsRaw = tagsStr.split(',').filter(t => t);
+                const tagsContainer = item.querySelector('.post-tags');
+                if (tagsContainer && tagsRaw.length > 0) {
+                    // Re-render tags
+                    // Note: We don't have the rootPath here easily, assuming '?' or absolute path logic
+                    // The original Tags() uses rootPath + '?tag='
+                    // Here we simply use '?tag=' which is relative to current page (likely home /)
+                    tagsContainer.innerHTML = tagsRaw.map(tag => `<a href="?tag=${encodeURIComponent(tag)}" class="tag">#${tag}</a>`).join('\n');
+                }
             }
         });
     },
@@ -283,7 +301,6 @@ const I18nManager = {
     createHintContainer(article) {
         const container = document.createElement('div');
         container.id = 'translation-hint-container';
-        container.className = 'translation-banner';
         article.prepend(container);
         return container;
     }
@@ -369,7 +386,75 @@ const toggleAiPopup = (event) => {
     const popup = document.getElementById('aiPopup');
     if (popup) {
         popup.classList.toggle('show');
+        if (popup.classList.contains('show')) {
+            adjustPopupPosition(popup);
+        }
     }
+};
+
+const adjustPopupPosition = (popup) => {
+    const wrapper = popup.parentElement; // .ai-tag-wrapper
+    if (!wrapper) return;
+
+    // 1. Reset to base state to measure dimensions accurately
+    // We clear inline styles that might have been set previously
+    popup.style.left = '';
+    popup.style.transform = '';
+
+    // Force a reflow to ensure styles are applied before measuring
+    void popup.offsetWidth;
+
+    const wrapperRect = wrapper.getBoundingClientRect();
+    const popupRect = popup.getBoundingClientRect();
+    const viewportWidth = window.innerWidth;
+    const padding = 15; // Safe distance from edge
+
+    // 2. Ideal Position: Center popup relative to wrapper
+    // wrapper is at 0 (relative context). Center is wrapperWidth/2.
+    // Popup center is popupWidth/2.
+    // Initial Ideal Left relative to wrapper = (wrapperWidth / 2) - (popupWidth / 2)
+    const idealLeft = (wrapperRect.width / 2) - (popupRect.width / 2);
+
+    // 3. Calculate absolute left on screen if we placed it at idealLeft
+    // Absolute Popup Left = wrapperRect.left + idealLeft
+    const absLeft = wrapperRect.left + idealLeft;
+
+    // 4. Constrain within viewport
+    let correctedAbsLeft = absLeft;
+
+    // Check left edge
+    if (correctedAbsLeft < padding) {
+        correctedAbsLeft = padding;
+    }
+    // Check right edge
+    else if (correctedAbsLeft + popupRect.width > viewportWidth - padding) {
+        correctedAbsLeft = viewportWidth - padding - popupRect.width;
+    }
+
+    // 5. Calculate delta needed
+    // We need to set 'left' (relative to wrapper) such that the absolute position is correctedAbsLeft.
+    // Final Relative Left = correctedAbsLeft - wrapperRect.left.
+    const finalRelativeLeft = correctedAbsLeft - wrapperRect.left;
+
+    // 6. Arrow Position
+    // Arrow should point to center of wrapper.
+    // Center of wrapper (relative to popup) is what we need.
+    // Arrow is positioned relative to popup.
+    // We want Arrow Absolute Left ≈ Wrapper Absolute Center
+    // Wrapper Absolute Center = wrapperRect.left + (wrapperRect.width / 2)
+    // Popup Absolute Left = correctedAbsLeft
+    // Arrow Left (relative to popup) = (Wrapper Absolute Center) - (Popup Absolute Left)
+    // We need to account for arrow width (12px, so center is 6px) if we position by 'left'.
+    // Let's use the center point directly:
+    const arrowCenterRelativeToPopup = (wrapperRect.left + wrapperRect.width / 2) - correctedAbsLeft;
+    // Arrow is 12px wide. left = center - 6
+    const arrowLeft = arrowCenterRelativeToPopup - 6;
+
+    // 7. Apply styles
+    popup.style.left = `${finalRelativeLeft}px`;
+
+    // Update arrow via CSS variable
+    popup.style.setProperty('--arrow-left', `${arrowLeft}px`);
 };
 
 // Close AI Popup when clicking outside
@@ -416,38 +501,73 @@ let googleTranslateLoaded = false;
 window.loadGoogleTranslate = () => {
     if (googleTranslateLoaded) return;
 
-    const i18n = I18nManager.getI18n();
-    const toastMsg = i18n.common.emailFallback || 'Network error'; // Fallback for error toast
+    const lang = I18nManager.getLang();
+    const banner = document.querySelector('.translation-banner');
+    const btn = banner?.querySelector('.btn-simple');
 
-    // Show loading spinner or something?
-    const btn = document.querySelector('.translation-hint button');
-    if (btn) btn.disabled = true;
+    // Disable button and show loading state
+    if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${lang === 'en' ? 'Loading...' : '加载中...'}`;
+    }
+
+    // Show loading toast
+    showToast(lang === 'en' ? 'Loading Google Translate, please wait...' : '正在加载 Google 翻译，请稍候...');
 
     const script = document.createElement('script');
     script.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
     script.onerror = () => {
-        showToast(I18nManager.getLang() === 'en'
-            ? "Google Translate is unavailable. Please check your network context."
+        showToast(lang === 'en'
+            ? "Google Translate is unavailable. Please check your network."
             : "无法访问 Google 翻译，请检查网络环境。");
-        if (btn) btn.disabled = false;
+        if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = lang === 'en' ? 'Translate with Google' : '使用 Google 翻译';
+        }
     };
 
     window.googleTranslateElementInit = () => {
+        // Target language based on user preference (ISO 639-1 codes)
+        const targetLang = lang === 'en' ? 'en' : 'zh-CN';
+
+        // Set cookie to hint Google Translate (may not always work)
+        document.cookie = `googtrans=/zh-CN/${targetLang}; path=/`;
+
         new google.translate.TranslateElement({
             pageLanguage: 'zh-CN',
+            includedLanguages: 'en,zh-CN,ja,ko,fr,de,es',
             layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-            autoDisplay: true
+            autoDisplay: false
         }, 'google_translate_element');
+
         googleTranslateLoaded = true;
+
+        // Hide the translation banner after widget loads
+        if (banner) {
+            banner.style.display = 'none';
+        }
+
+        // Auto-select target language with retry mechanism
+        const selectTargetLanguage = (attempts = 0) => {
+            const selectEl = document.querySelector('.goog-te-combo');
+            if (selectEl && selectEl.options.length > 0) {
+                selectEl.value = targetLang;
+                selectEl.dispatchEvent(new Event('change'));
+            } else if (attempts < 5) {
+                // Retry up to 5 times with increasing delay
+                setTimeout(() => selectTargetLanguage(attempts + 1), 300 * (attempts + 1));
+            }
+        };
+        setTimeout(selectTargetLanguage, 500);
     };
 
-    // Need a container for the widget
-    const article = document.querySelector('article');
-    if (article) {
+    // Create container for the widget
+    const container = document.getElementById('translation-hint-container');
+    if (container) {
         const widgetContainer = document.createElement('div');
         widgetContainer.id = 'google_translate_element';
-        widgetContainer.style.marginBottom = '20px';
-        document.getElementById('translation-hint-container').appendChild(widgetContainer);
+        widgetContainer.style.marginBottom = '1rem';
+        container.appendChild(widgetContainer);
     }
 
     document.head.appendChild(script);
@@ -650,19 +770,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Create post item HTML
         const createPostItemHtml = (post) => {
-            const tagsHtml = post.tags && post.tags.length > 0
-                ? post.tags.map(tag => `<a href="?tag=${encodeURIComponent(tag)}" class="tag">#${tag}</a>`).join('')
-                : '';
-
             const dataAttrs = Object.entries(post.translations)
                 .map(([lang, t]) => `
                     data-i18n-${lang}-title="${t.title.replace(/"/g, '&quot;')}"
                     data-i18n-${lang}-excerpt="${t.excerpt.replace(/"/g, '&quot;')}"
                     data-i18n-${lang}-path="${t.path}"
+                    data-i18n-${lang}-tags="${(t.tags || []).join(',')}"
                 `).join(' ');
 
             // Default to Chinese or first translation
             const t = post.translations[I18nManager.getLang()] || post.translations['zh'] || Object.values(post.translations)[0];
+            const displayTags = t.tags || post.tags || [];
+            const tagsHtml = displayTags.length > 0
+                ? displayTags.map(tag => `<a href="?tag=${encodeURIComponent(tag)}" class="tag">#${tag}</a>`).join('')
+                : '';
 
             if (post.coverImage) {
                 return `
@@ -851,7 +972,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // 6.6. Demo Container Smart Collapse
-    // 根据内容高度自动收起超过阈值的 demo 容器
+    // 只在页面初始加载时根据内容高度自动收起超过阈值的 demo 容器
+    // 一旦用户手动展开，不再自动收起
     const initDemoSmartCollapse = () => {
         const demoContainers = document.querySelectorAll('.demo-container[data-collapse]');
 
@@ -861,6 +983,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const body = container.querySelector('.demo-body');
             if (!body) return;
+
+            // 如果已经被用户手动交互过，不再自动处理
+            if (container.dataset.userInteracted) return;
 
             // 解析阈值
             const parseThreshold = (value) => {
@@ -881,35 +1006,92 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const thresholdPx = parseThreshold(threshold);
 
-            // 检查内容高度
+            // 检查内容高度，只在初始加载时折叠超过阈值的容器
             if (body.scrollHeight > thresholdPx) {
                 container.removeAttribute('open');
             }
+
+            // 监听用户手动交互，一旦用户点击展开/收起，标记为已交互
+            container.addEventListener('toggle', () => {
+                container.dataset.userInteracted = 'true';
+            }, { once: true });
         });
     };
 
-    // 执行智能折叠
+    // 执行智能折叠（只在初始加载时执行一次）
     initDemoSmartCollapse();
 
-    // 窗口大小变化时重新检查（可选，延迟执行避免频繁触发）
+
+    // 6.5. Smart Table Responsive Handler
+    // Automatically detects table complexity and applies appropriate display mode
+    const initSmartTables = () => {
+        const tables = document.querySelectorAll('.article-content table');
+
+        tables.forEach(table => {
+            // Wrap table if not already wrapped
+            let wrapper = table.parentElement;
+            if (!wrapper.classList.contains('table-wrapper')) {
+                wrapper = document.createElement('div');
+                wrapper.className = 'table-wrapper';
+                table.parentNode.insertBefore(wrapper, table);
+                wrapper.appendChild(table);
+            }
+
+            // Determine display mode based on content
+            updateTableMode(wrapper, table);
+        });
+    };
+
+    // Determine and apply the appropriate table display mode
+    const updateTableMode = (wrapper, table) => {
+        // Temporarily force scroll mode to measure natural width
+        wrapper.classList.add('scroll-mode');
+
+        // Force reflow to get accurate measurements
+        void table.offsetWidth;
+
+        const naturalWidth = table.scrollWidth;
+        const containerWidth = wrapper.clientWidth;
+
+        // Threshold: if natural width exceeds container by 20%, use scroll mode
+        const THRESHOLD = 1.2;
+
+        if (naturalWidth > containerWidth * THRESHOLD) {
+            // Keep scroll mode - table is too wide to fit nicely
+            wrapper.classList.add('scroll-mode');
+        } else {
+            // Remove scroll mode - table fits within container
+            wrapper.classList.remove('scroll-mode');
+        }
+
+        // Check if table is tall enough to benefit from sticky headers
+        // Only apply if table has more than ~5 rows (roughly 250px)
+        const tableHeight = table.offsetHeight;
+        if (tableHeight > 250) {
+            wrapper.classList.add('sticky-header');
+        } else {
+            wrapper.classList.remove('sticky-header');
+        }
+    };
+
+    // Initialize tables
+    initSmartTables();
+
+    // Re-evaluate on window resize (debounced)
     let resizeTimeout;
     window.addEventListener('resize', () => {
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(initDemoSmartCollapse, 250);
+        if (resizeTimeout) clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            const wrappers = document.querySelectorAll('.article-content .table-wrapper');
+            wrappers.forEach(wrapper => {
+                const table = wrapper.querySelector('table');
+                if (table) {
+                    updateTableMode(wrapper, table);
+                }
+            });
+        }, 150);
     });
 
-
-    // 6.5. Table Responsive Wrapper - wrap tables for horizontal scroll on mobile
-    const tables = document.querySelectorAll('.article-content table');
-    tables.forEach(table => {
-        // Skip if already wrapped
-        if (table.parentElement.classList.contains('table-wrapper')) return;
-
-        const wrapper = document.createElement('div');
-        wrapper.className = 'table-wrapper';
-        table.parentNode.insertBefore(wrapper, table);
-        wrapper.appendChild(table);
-    });
 
     // 7. Image Captions and Lightbox
     const articleContent = document.querySelector('.article-content');

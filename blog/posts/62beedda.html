@@ -8,19 +8,23 @@
     <link rel="canonical" href="/blog/blog/posts/62beedda.html">
     <link rel="alternate" hreflang="zh" href="/blog/blog/posts/62beedda.html">
     <link rel="alternate" hreflang="x-default" href="/blog/blog/posts/62beedda.html">
+    <!-- Highlight.js Theme (article pages only) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" id="hljs-theme">
     
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://google-fonts.mirrors.sjtug.sjtu.edu.cn">
+
     <!-- Fonts: Async loading with smart CDN switching (SJTUG for China, Google for international) -->
     <!-- Font CSS will be loaded by JavaScript after page content loads -->
     
-    <!-- Icons: Cloudflare CDN (safe source) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Icons: Cloudflare CDN (FontAwesome only - async loading) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
 
     <!-- Styles -->
-    <link rel="stylesheet" href="/blog/styles/main.css?v=1766377145290">
-    <link rel="stylesheet" href="/blog/styles/containers.css?v=1766377145290">
-
-    <!-- Highlight.js Theme: Cloudflare CDN (safe source) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" id="hljs-theme">
+    <link rel="stylesheet" href="/blog/styles/main.css?v=1766400927676">
 
     <script>
         // Immediately compute and apply correct theme to prevent FOUC (Flash of Unstyled Content)
@@ -35,8 +39,8 @@
         // Inject i18n data for client-side switching
         window.basePath = '/blog';
         window.__I18N_DATA__ = {
-            zh: {"common":{"search":"搜索","backToList":"返回列表","language":"语言","theme":{"title":"主题","auto":"跟随系统","light":"浅色","dark":"深色"},"nav":{"home":"首页","about":"关于"},"searchNoResults":"未找到相关文章","backToTop":"返回顶部"},"article":{"publishedOn":"发布于","updatedOn":"更新于","author":"作者","prevPost":"上一篇","nextPost":"下一篇","notByAi":{"tooltip":"本文是人类纯手工实现，没有 AI 参与 (Handcrafted by humans, no AI involved)","aiLevel":"AI 协作度：","warning":"⚠️ 本文部分或全部内容由 AI 辅助生成，请注意甄别。","tag1":"AI 辅助 20%","tag2":"AI 辅助 40%","tag3":"AI 协作 60%","tag4":"AI 生成 80%","tag5":"AI 生成 100%","desc1":"本文由人类主导创作，AI 提供少量辅助","desc2":"本文由人机协作完成，AI 参与了部分内容","desc3":"本文由人机协作完成，核心观点来自作者","desc4":"本文主要由 AI 生成，作者进行了审校","desc5":"本文完全由 AI 生成，请读者自行甄别"},"emailComment":{"title":"有想法？欢迎通过邮件讨论。","button":"发送邮件评论","subject":"关于文章的评论","bodyHello":"你好！","bodyIntro":"我阅读了你的文章，以下是我的想法：","copyFallback":"无法打开邮件客户端，是否复制邮箱地址？"}},"about":{"greeting":"你好 👋，我是","subtitle":"一名开发者。<br/>一个热爱世界的人。","contactTitle":"与我联系：","toolsTitle":"语言和工具："},"footer":{"copyright":"版权所有 © {0} {1}"},"notFound":{"title":"页面未找到","message":"抱歉！您访问的页面不存在或已被移动。","suggestion":"您可以尝试："}},
-            en: {"common":{"search":"Search","backToList":"Back to List","language":"Language","theme":{"title":"Theme","auto":"Auto","light":"Light","dark":"Dark"},"nav":{"home":"Home","about":"About"},"searchNoResults":"No results found","backToTop":"Back to Top"},"article":{"publishedOn":"Published on","updatedOn":"Updated on","author":"By","prevPost":"Previous","nextPost":"Next","notByAi":{"tooltip":"Handcrafted by humans, no AI involved","aiLevel":"AI Collaboration: ","warning":"⚠️ This article contains content generated or assisted by AI. Please verify critical information.","tag1":"20% AI Assisted","tag2":"40% AI Assisted","tag3":"60% AI Collaborated","tag4":"80% AI Generated","tag5":"100% AI Generated","desc1":"Human-led creation with minor AI assistance","desc2":"Human-AI collaboration for partial content","desc3":"Human-AI collaboration, core ideas from author","desc4":"Primarily AI-generated, reviewed by author","desc5":"Entirely AI-generated, please verify independently"},"emailComment":{"title":"Any thoughts? Feel free to discuss via email.","button":"Email Comment","subject":"Comment on article","bodyHello":"Hi!","bodyIntro":"I read your article and here are my thoughts:","copyFallback":"Cannot open email client. Copy email address?"}},"about":{"greeting":"Hi 👋, I'm","subtitle":"A developer.<br/>A man who love the world.","contactTitle":"Keep touch with me:","toolsTitle":"Languages and Tools:"},"footer":{"copyright":"Copyright © {0} {1}"},"notFound":{"title":"Page Not Found","message":"Oops! The page you're looking for doesn't exist or has been moved.","suggestion":"Maybe try one of these:"}}
+            zh: {"common":{"search":"搜索","backToList":"返回列表","language":"语言","theme":{"title":"主题","auto":"跟随系统","light":"浅色","dark":"深色"},"nav":{"home":"首页","about":"关于"},"searchNoResults":"未找到相关文章","backToTop":"返回顶部","noMorePosts":"共 {0} 篇文章，没有更多了"},"article":{"publishedOn":"发布于","updatedOn":"更新于","author":"作者","prevPost":"上一篇","nextPost":"下一篇","notByAi":{"tooltip":"本文是人类纯手工实现，没有 AI 参与 (Handcrafted by humans, no AI involved)","aiLevel":"AI 协作度：","warning":"⚠️ 本文部分或全部内容由 AI 辅助生成，请注意甄别。","tag1":"AI 辅助 20%","tag2":"AI 辅助 40%","tag3":"AI 协作 60%","tag4":"AI 生成 80%","tag5":"AI 生成 100%","desc1":"本文由人类主导创作，AI 提供少量辅助","desc2":"本文由人机协作完成，AI 参与了部分内容","desc3":"本文由人机协作完成，核心观点来自作者","desc4":"本文主要由 AI 生成，作者进行了审校","desc5":"本文完全由 AI 生成，请读者自行甄别"},"emailComment":{"title":"有想法？欢迎通过邮件讨论。","button":"发送邮件评论","subject":"关于文章的评论","bodyHello":"你好！","bodyIntro":"我阅读了你的文章，以下是我的想法：","copyFallback":"无法打开邮件客户端，是否复制邮箱地址？"}},"about":{"greeting":"你好 👋，我是","subtitle":"一名开发者。<br/>一个热爱世界的人。","contactTitle":"与我联系：","toolsTitle":"语言和工具：","techStack":"技术栈","totalPosts":"本站当前共 {0} 篇文章","timeline":{"title":"博客演进史"}},"footer":{"copyright":"版权所有 © {0} {1}"},"notFound":{"title":"页面未找到","message":"抱歉！您访问的页面不存在或已被移动。","suggestion":"您可以尝试："}},
+            en: {"common":{"search":"Search","backToList":"Back to List","language":"Language","theme":{"title":"Theme","auto":"Auto","light":"Light","dark":"Dark"},"nav":{"home":"Home","about":"About"},"searchNoResults":"No results found","backToTop":"Back to Top","noMorePosts":"{0} posts in total, no more"},"article":{"publishedOn":"Published on","updatedOn":"Updated on","author":"By","prevPost":"Previous","nextPost":"Next","notByAi":{"tooltip":"Handcrafted by humans, no AI involved","aiLevel":"AI Collaboration: ","warning":"⚠️ This article contains content generated or assisted by AI. Please verify critical information.","tag1":"20% AI Assisted","tag2":"40% AI Assisted","tag3":"60% AI Collaborated","tag4":"80% AI Generated","tag5":"100% AI Generated","desc1":"Human-led creation with minor AI assistance","desc2":"Human-AI collaboration for partial content","desc3":"Human-AI collaboration, core ideas from author","desc4":"Primarily AI-generated, reviewed by author","desc5":"Entirely AI-generated, please verify independently"},"emailComment":{"title":"Any thoughts? Feel free to discuss via email.","button":"Email Comment","subject":"Comment on article","bodyHello":"Hi!","bodyIntro":"I read your article and here are my thoughts:","copyFallback":"Cannot open email client. Copy email address?"}},"about":{"greeting":"Hi 👋, I'm","subtitle":"A developer.<br/>A man who love the world.","contactTitle":"Keep touch with me:","toolsTitle":"Languages and Tools:","techStack":"Tech Stack","totalPosts":"This site currently has {0} posts","timeline":{"title":"Blog Evolution"}},"footer":{"copyright":"Copyright © {0} {1}"},"notFound":{"title":"Page Not Found","message":"Oops! The page you're looking for doesn't exist or has been moved.","suggestion":"Maybe try one of these:"}}
         };
         // Initial language preference
         const savedLang = localStorage.getItem('preferred_lang');
@@ -50,7 +54,7 @@
     
     <header>
         <div class="container">
-            <a href="/blog/" class="logo">
+            <a href="/blog/" class="logo" onclick="if(window.location.pathname === '/blog/' || window.location.pathname === '/blog/index.html'){window.scrollTo({top:0,behavior:'smooth'});return false;}">
                 <img src="https://jixiaoyong.github.io/images/user_avatar.webp" alt="JI,XIAOYONG" class="logo-avatar">
                 JI,XIAOYONG
             </a>
@@ -191,7 +195,16 @@
           )
 </code></pre>
 <p>这样，当从 FirstHeroPage 跳转到 SecondHeroPage 的时候，Hero 动画作用于 Hero.child，看起来好像是前一个页面的 HeroChildWidget 逐渐从 Alignment.bottomLeft 移动到 Alignment.topCenter，并且大小也从 100 逐渐变为 200。</p>
-<p><img src="https://jixiaoyong.github.io/images/flutter/hero/simple_hero.gif" alt="Simple Hero Animation"></p>
+<p>
+                        <div class="image-wrapper loading">
+                            
+                <div class="image-spinner">
+                    <div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div>
+                </div>
+            
+                            <img src="https://jixiaoyong.github.io/images/flutter/hero/simple_hero.gif" alt="Simple Hero Animation" loading="eager" onload="this.parentElement.classList.remove('loading')">
+                        </div>
+                        </p>
 <h4>原理分析</h4>
 <p>那么 Hero 动画是如何实现这个效果的呢？</p>
 <p>Flutter 中 Page 之间的跳转由 Navigator 管理，在 Navigator 管理的所有 Flutter Page 的上层有一个叠加层 Overlay，在 Z 轴方向上处于所有 Page 上层，其内部的 widget 可以被独立管理。</p>
@@ -211,7 +224,16 @@
 </li>
 </ul>
 <p>下图是 Flutter 官方对 Hero 动画执行的解释，刚好处于由 A 到 B 过渡的过程，可以看到 A、B 页面中的 Widget 都被移除，只有根据目标 Page——B 中的 Hero.child 创建的位于 Overlay 的 Destination hero 控件在从 A 中对应的位置和大小过渡到 B 中对应的位置和大小：</p>
-<p><img src="https://jixiaoyong.github.io/images/flutter/hero/hero-transition-2.webp" alt="Hero 动画进行中的图解"></p>
+<p>
+                        <div class="image-wrapper loading">
+                            
+                <div class="image-spinner">
+                    <div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div>
+                </div>
+            
+                            <img src="https://jixiaoyong.github.io/images/flutter/hero/hero-transition-2.webp" alt="Hero 动画进行中的图解" loading="lazy" onload="this.parentElement.classList.remove('loading')">
+                        </div>
+                        </p>
 <h3>进阶使用 Radial hero animations</h3>
 <p>默认实现的 Hero 动画只支持大小和位移变化，通过使用 Radial Transformation（径向转化）可以实现由圆变为正方形的过渡动画。</p>
 <blockquote>
@@ -270,14 +292,32 @@ class HeroClippedChildWidget extends StatelessWidget {
 </code></pre>
 <p>其中，FirstHeroPage 的 HeroClippedChildWidget.minClipOvalDiameter，SecondHeroPage 中则为 maxClipOvalDiameter。</p>
 <p>其效果如图：</p>
-<p><img src="https://jixiaoyong.github.io/images/flutter/hero/advanced_hero.gif" alt="advanced_hero"></p>
+<p>
+                        <div class="image-wrapper loading">
+                            
+                <div class="image-spinner">
+                    <div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div>
+                </div>
+            
+                            <img src="https://jixiaoyong.github.io/images/flutter/hero/advanced_hero.gif" alt="advanced_hero" loading="lazy" onload="this.parentElement.classList.remove('loading')">
+                        </div>
+                        </p>
 <blockquote>
 <p>实际上根据此方式，我们也可以监听 Hero.child 的大小、位置变化从而推测出 Hero 动画的进度和方向（是从 from 到 to，还是相反），从而实现更丰富的动画效果。</p>
 <p>比如监听进度从而实现旋转：<a href="https://github.com/jixiaoyong/flutter_custom_widget/blob/master/lib/widgets/animation_hero_child.dart">https://github.com/jixiaoyong/flutter_custom_widget/blob/master/lib/widgets/animation_hero_child.dart</a></p>
 </blockquote>
 <h4>原理分析</h4>
 <p>此类能够实现切换的同时修改 Hero.child 的样式，主要在于 ClipOval 和 ClipRect 的组合效果：</p>
-<p><img src="https://jixiaoyong.github.io/images/flutter/hero/radial-hero-animation.webp" alt="Radial hero animations 的示意图"></p>
+<p>
+                        <div class="image-wrapper loading">
+                            
+                <div class="image-spinner">
+                    <div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div>
+                </div>
+            
+                            <img src="https://jixiaoyong.github.io/images/flutter/hero/radial-hero-animation.webp" alt="Radial hero animations 的示意图" loading="lazy" onload="this.parentElement.classList.remove('loading')">
+                        </div>
+                        </p>
 <p>ClipRect 的大小固定为<code>var clipRectSize = maxClipOvalDiameter.width * math.sqrt2 / 2</code>，而 ClipOval 的大小则随着 Hero 动画的变化而变化，始终与 HeroClippedChildWidget 保持一致。</p>
 <p>假设从页面 A 到 B 切换时 Hero.child 会从小变大，那么：</p>
 <ul>
@@ -293,7 +333,16 @@ class HeroClippedChildWidget extends StatelessWidget {
 <li><code>createRectTween</code> 定义 Hero 动画的过渡组件动画渐变的方式，MaterialApp 默认使用 MaterialRectArcTween()，此外还有 MaterialRectCenterArcTween()（可以等比例缩放）、MaterialPointArcTween()。</li>
 </ul>
 <p>示意图如下：</p>
-<p><img src="https://flutter.github.io/assets-for-api-docs/assets/interaction/heroes.png" alt="flutter.cn 官网 Hero 示意图"></p>
+<p>
+                        <div class="image-wrapper loading">
+                            
+                <div class="image-spinner">
+                    <div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div>
+                </div>
+            
+                            <img src="https://flutter.github.io/assets-for-api-docs/assets/interaction/heroes.png" alt="flutter.cn 官网 Hero 示意图" loading="lazy" onload="this.parentElement.classList.remove('loading')">
+                        </div>
+                        </p>
 <h2>底层实现</h2>
 <h3>Hero</h3>
 <p>Hero 是一个 StatefulWidget，除了之前提到的各个属性之外，还提供了<code>_allHeroesFor()</code>方法供 HeroController 调用，用于查找指定 Context 下所有的 Hero Widget，并在检测到有重复 Hero.tag 时报错。</p>
@@ -828,19 +877,21 @@ class HeroClippedChildWidget extends StatelessWidget {
         <i class="fas fa-rocket"></i>
     </button>
 
-    <!-- Scripts: Cloudflare CDN (safe source) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/dart.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/kotlin.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/gradle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/groovy.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/yaml.min.js"></script>
+    <!-- Page-specific scripts (Highlight.js, MathJax, etc.) -->
+    
+    <!-- Highlight.js: Cloudflare CDN -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/dart.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/kotlin.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/gradle.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/groovy.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/yaml.min.js"></script>
     <script>
-        // MathJax Configuration - Enable $...$ inline math
+        // MathJax Configuration
         window.MathJax = {
             tex: {
-                inlineMath: [['$', '$'], ['\(', '\)']],
-                displayMath: [['$$', '$$'], ['\[', '\]']],
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
                 processEscapes: true
             },
             options: {
@@ -850,6 +901,9 @@ class HeroClippedChildWidget extends StatelessWidget {
         };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script src="/blog/scripts/client.js?v=1766377145290"></script>
+    
+
+    <!-- Core client.js -->
+    <script src="/blog/scripts/client.js?v=1766400927676"></script>
 </body>
 </html>

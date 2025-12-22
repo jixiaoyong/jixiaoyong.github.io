@@ -8,19 +8,23 @@
     <link rel="canonical" href="/blog/blog/posts/caa169b7.html">
     <link rel="alternate" hreflang="zh" href="/blog/blog/posts/caa169b7.html">
     <link rel="alternate" hreflang="x-default" href="/blog/blog/posts/caa169b7.html">
+    <!-- Highlight.js Theme (article pages only) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" id="hljs-theme">
     
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://google-fonts.mirrors.sjtug.sjtu.edu.cn">
+
     <!-- Fonts: Async loading with smart CDN switching (SJTUG for China, Google for international) -->
     <!-- Font CSS will be loaded by JavaScript after page content loads -->
     
-    <!-- Icons: Cloudflare CDN (safe source) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Icons: Cloudflare CDN (FontAwesome only - async loading) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
 
     <!-- Styles -->
-    <link rel="stylesheet" href="/blog/styles/main.css?v=1766377145387">
-    <link rel="stylesheet" href="/blog/styles/containers.css?v=1766377145387">
-
-    <!-- Highlight.js Theme: Cloudflare CDN (safe source) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" id="hljs-theme">
+    <link rel="stylesheet" href="/blog/styles/main.css?v=1766400927784">
 
     <script>
         // Immediately compute and apply correct theme to prevent FOUC (Flash of Unstyled Content)
@@ -35,8 +39,8 @@
         // Inject i18n data for client-side switching
         window.basePath = '/blog';
         window.__I18N_DATA__ = {
-            zh: {"common":{"search":"搜索","backToList":"返回列表","language":"语言","theme":{"title":"主题","auto":"跟随系统","light":"浅色","dark":"深色"},"nav":{"home":"首页","about":"关于"},"searchNoResults":"未找到相关文章","backToTop":"返回顶部"},"article":{"publishedOn":"发布于","updatedOn":"更新于","author":"作者","prevPost":"上一篇","nextPost":"下一篇","notByAi":{"tooltip":"本文是人类纯手工实现，没有 AI 参与 (Handcrafted by humans, no AI involved)","aiLevel":"AI 协作度：","warning":"⚠️ 本文部分或全部内容由 AI 辅助生成，请注意甄别。","tag1":"AI 辅助 20%","tag2":"AI 辅助 40%","tag3":"AI 协作 60%","tag4":"AI 生成 80%","tag5":"AI 生成 100%","desc1":"本文由人类主导创作，AI 提供少量辅助","desc2":"本文由人机协作完成，AI 参与了部分内容","desc3":"本文由人机协作完成，核心观点来自作者","desc4":"本文主要由 AI 生成，作者进行了审校","desc5":"本文完全由 AI 生成，请读者自行甄别"},"emailComment":{"title":"有想法？欢迎通过邮件讨论。","button":"发送邮件评论","subject":"关于文章的评论","bodyHello":"你好！","bodyIntro":"我阅读了你的文章，以下是我的想法：","copyFallback":"无法打开邮件客户端，是否复制邮箱地址？"}},"about":{"greeting":"你好 👋，我是","subtitle":"一名开发者。<br/>一个热爱世界的人。","contactTitle":"与我联系：","toolsTitle":"语言和工具："},"footer":{"copyright":"版权所有 © {0} {1}"},"notFound":{"title":"页面未找到","message":"抱歉！您访问的页面不存在或已被移动。","suggestion":"您可以尝试："}},
-            en: {"common":{"search":"Search","backToList":"Back to List","language":"Language","theme":{"title":"Theme","auto":"Auto","light":"Light","dark":"Dark"},"nav":{"home":"Home","about":"About"},"searchNoResults":"No results found","backToTop":"Back to Top"},"article":{"publishedOn":"Published on","updatedOn":"Updated on","author":"By","prevPost":"Previous","nextPost":"Next","notByAi":{"tooltip":"Handcrafted by humans, no AI involved","aiLevel":"AI Collaboration: ","warning":"⚠️ This article contains content generated or assisted by AI. Please verify critical information.","tag1":"20% AI Assisted","tag2":"40% AI Assisted","tag3":"60% AI Collaborated","tag4":"80% AI Generated","tag5":"100% AI Generated","desc1":"Human-led creation with minor AI assistance","desc2":"Human-AI collaboration for partial content","desc3":"Human-AI collaboration, core ideas from author","desc4":"Primarily AI-generated, reviewed by author","desc5":"Entirely AI-generated, please verify independently"},"emailComment":{"title":"Any thoughts? Feel free to discuss via email.","button":"Email Comment","subject":"Comment on article","bodyHello":"Hi!","bodyIntro":"I read your article and here are my thoughts:","copyFallback":"Cannot open email client. Copy email address?"}},"about":{"greeting":"Hi 👋, I'm","subtitle":"A developer.<br/>A man who love the world.","contactTitle":"Keep touch with me:","toolsTitle":"Languages and Tools:"},"footer":{"copyright":"Copyright © {0} {1}"},"notFound":{"title":"Page Not Found","message":"Oops! The page you're looking for doesn't exist or has been moved.","suggestion":"Maybe try one of these:"}}
+            zh: {"common":{"search":"搜索","backToList":"返回列表","language":"语言","theme":{"title":"主题","auto":"跟随系统","light":"浅色","dark":"深色"},"nav":{"home":"首页","about":"关于"},"searchNoResults":"未找到相关文章","backToTop":"返回顶部","noMorePosts":"共 {0} 篇文章，没有更多了"},"article":{"publishedOn":"发布于","updatedOn":"更新于","author":"作者","prevPost":"上一篇","nextPost":"下一篇","notByAi":{"tooltip":"本文是人类纯手工实现，没有 AI 参与 (Handcrafted by humans, no AI involved)","aiLevel":"AI 协作度：","warning":"⚠️ 本文部分或全部内容由 AI 辅助生成，请注意甄别。","tag1":"AI 辅助 20%","tag2":"AI 辅助 40%","tag3":"AI 协作 60%","tag4":"AI 生成 80%","tag5":"AI 生成 100%","desc1":"本文由人类主导创作，AI 提供少量辅助","desc2":"本文由人机协作完成，AI 参与了部分内容","desc3":"本文由人机协作完成，核心观点来自作者","desc4":"本文主要由 AI 生成，作者进行了审校","desc5":"本文完全由 AI 生成，请读者自行甄别"},"emailComment":{"title":"有想法？欢迎通过邮件讨论。","button":"发送邮件评论","subject":"关于文章的评论","bodyHello":"你好！","bodyIntro":"我阅读了你的文章，以下是我的想法：","copyFallback":"无法打开邮件客户端，是否复制邮箱地址？"}},"about":{"greeting":"你好 👋，我是","subtitle":"一名开发者。<br/>一个热爱世界的人。","contactTitle":"与我联系：","toolsTitle":"语言和工具：","techStack":"技术栈","totalPosts":"本站当前共 {0} 篇文章","timeline":{"title":"博客演进史"}},"footer":{"copyright":"版权所有 © {0} {1}"},"notFound":{"title":"页面未找到","message":"抱歉！您访问的页面不存在或已被移动。","suggestion":"您可以尝试："}},
+            en: {"common":{"search":"Search","backToList":"Back to List","language":"Language","theme":{"title":"Theme","auto":"Auto","light":"Light","dark":"Dark"},"nav":{"home":"Home","about":"About"},"searchNoResults":"No results found","backToTop":"Back to Top","noMorePosts":"{0} posts in total, no more"},"article":{"publishedOn":"Published on","updatedOn":"Updated on","author":"By","prevPost":"Previous","nextPost":"Next","notByAi":{"tooltip":"Handcrafted by humans, no AI involved","aiLevel":"AI Collaboration: ","warning":"⚠️ This article contains content generated or assisted by AI. Please verify critical information.","tag1":"20% AI Assisted","tag2":"40% AI Assisted","tag3":"60% AI Collaborated","tag4":"80% AI Generated","tag5":"100% AI Generated","desc1":"Human-led creation with minor AI assistance","desc2":"Human-AI collaboration for partial content","desc3":"Human-AI collaboration, core ideas from author","desc4":"Primarily AI-generated, reviewed by author","desc5":"Entirely AI-generated, please verify independently"},"emailComment":{"title":"Any thoughts? Feel free to discuss via email.","button":"Email Comment","subject":"Comment on article","bodyHello":"Hi!","bodyIntro":"I read your article and here are my thoughts:","copyFallback":"Cannot open email client. Copy email address?"}},"about":{"greeting":"Hi 👋, I'm","subtitle":"A developer.<br/>A man who love the world.","contactTitle":"Keep touch with me:","toolsTitle":"Languages and Tools:","techStack":"Tech Stack","totalPosts":"This site currently has {0} posts","timeline":{"title":"Blog Evolution"}},"footer":{"copyright":"Copyright © {0} {1}"},"notFound":{"title":"Page Not Found","message":"Oops! The page you're looking for doesn't exist or has been moved.","suggestion":"Maybe try one of these:"}}
         };
         // Initial language preference
         const savedLang = localStorage.getItem('preferred_lang');
@@ -50,7 +54,7 @@
     
     <header>
         <div class="container">
-            <a href="/blog/" class="logo">
+            <a href="/blog/" class="logo" onclick="if(window.location.pathname === '/blog/' || window.location.pathname === '/blog/index.html'){window.scrollTo({top:0,behavior:'smooth'});return false;}">
                 <img src="https://jixiaoyong.github.io/images/user_avatar.webp" alt="JI,XIAOYONG" class="logo-avatar">
                 JI,XIAOYONG
             </a>
@@ -303,19 +307,21 @@ com/example/MyOtherClass.class
         <i class="fas fa-rocket"></i>
     </button>
 
-    <!-- Scripts: Cloudflare CDN (safe source) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/dart.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/kotlin.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/gradle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/groovy.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/yaml.min.js"></script>
+    <!-- Page-specific scripts (Highlight.js, MathJax, etc.) -->
+    
+    <!-- Highlight.js: Cloudflare CDN -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/dart.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/kotlin.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/gradle.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/groovy.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/yaml.min.js"></script>
     <script>
-        // MathJax Configuration - Enable $...$ inline math
+        // MathJax Configuration
         window.MathJax = {
             tex: {
-                inlineMath: [['$', '$'], ['\(', '\)']],
-                displayMath: [['$$', '$$'], ['\[', '\]']],
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
                 processEscapes: true
             },
             options: {
@@ -325,6 +331,9 @@ com/example/MyOtherClass.class
         };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script src="/blog/scripts/client.js?v=1766377145387"></script>
+    
+
+    <!-- Core client.js -->
+    <script src="/blog/scripts/client.js?v=1766400927784"></script>
 </body>
 </html>

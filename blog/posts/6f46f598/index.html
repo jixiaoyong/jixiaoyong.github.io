@@ -8,19 +8,23 @@
     <link rel="canonical" href="/blog/blog/posts/6f46f598.html">
     <link rel="alternate" hreflang="zh" href="/blog/blog/posts/6f46f598.html">
     <link rel="alternate" hreflang="x-default" href="/blog/blog/posts/6f46f598.html">
+    <!-- Highlight.js Theme (article pages only) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" id="hljs-theme">
     
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://google-fonts.mirrors.sjtug.sjtu.edu.cn">
+
     <!-- Fonts: Async loading with smart CDN switching (SJTUG for China, Google for international) -->
     <!-- Font CSS will be loaded by JavaScript after page content loads -->
     
-    <!-- Icons: Cloudflare CDN (safe source) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Icons: Cloudflare CDN (FontAwesome only - async loading) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
 
     <!-- Styles -->
-    <link rel="stylesheet" href="/blog/styles/main.css?v=1766377145275">
-    <link rel="stylesheet" href="/blog/styles/containers.css?v=1766377145275">
-
-    <!-- Highlight.js Theme: Cloudflare CDN (safe source) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" id="hljs-theme">
+    <link rel="stylesheet" href="/blog/styles/main.css?v=1766400927661">
 
     <script>
         // Immediately compute and apply correct theme to prevent FOUC (Flash of Unstyled Content)
@@ -35,8 +39,8 @@
         // Inject i18n data for client-side switching
         window.basePath = '/blog';
         window.__I18N_DATA__ = {
-            zh: {"common":{"search":"搜索","backToList":"返回列表","language":"语言","theme":{"title":"主题","auto":"跟随系统","light":"浅色","dark":"深色"},"nav":{"home":"首页","about":"关于"},"searchNoResults":"未找到相关文章","backToTop":"返回顶部"},"article":{"publishedOn":"发布于","updatedOn":"更新于","author":"作者","prevPost":"上一篇","nextPost":"下一篇","notByAi":{"tooltip":"本文是人类纯手工实现，没有 AI 参与 (Handcrafted by humans, no AI involved)","aiLevel":"AI 协作度：","warning":"⚠️ 本文部分或全部内容由 AI 辅助生成，请注意甄别。","tag1":"AI 辅助 20%","tag2":"AI 辅助 40%","tag3":"AI 协作 60%","tag4":"AI 生成 80%","tag5":"AI 生成 100%","desc1":"本文由人类主导创作，AI 提供少量辅助","desc2":"本文由人机协作完成，AI 参与了部分内容","desc3":"本文由人机协作完成，核心观点来自作者","desc4":"本文主要由 AI 生成，作者进行了审校","desc5":"本文完全由 AI 生成，请读者自行甄别"},"emailComment":{"title":"有想法？欢迎通过邮件讨论。","button":"发送邮件评论","subject":"关于文章的评论","bodyHello":"你好！","bodyIntro":"我阅读了你的文章，以下是我的想法：","copyFallback":"无法打开邮件客户端，是否复制邮箱地址？"}},"about":{"greeting":"你好 👋，我是","subtitle":"一名开发者。<br/>一个热爱世界的人。","contactTitle":"与我联系：","toolsTitle":"语言和工具："},"footer":{"copyright":"版权所有 © {0} {1}"},"notFound":{"title":"页面未找到","message":"抱歉！您访问的页面不存在或已被移动。","suggestion":"您可以尝试："}},
-            en: {"common":{"search":"Search","backToList":"Back to List","language":"Language","theme":{"title":"Theme","auto":"Auto","light":"Light","dark":"Dark"},"nav":{"home":"Home","about":"About"},"searchNoResults":"No results found","backToTop":"Back to Top"},"article":{"publishedOn":"Published on","updatedOn":"Updated on","author":"By","prevPost":"Previous","nextPost":"Next","notByAi":{"tooltip":"Handcrafted by humans, no AI involved","aiLevel":"AI Collaboration: ","warning":"⚠️ This article contains content generated or assisted by AI. Please verify critical information.","tag1":"20% AI Assisted","tag2":"40% AI Assisted","tag3":"60% AI Collaborated","tag4":"80% AI Generated","tag5":"100% AI Generated","desc1":"Human-led creation with minor AI assistance","desc2":"Human-AI collaboration for partial content","desc3":"Human-AI collaboration, core ideas from author","desc4":"Primarily AI-generated, reviewed by author","desc5":"Entirely AI-generated, please verify independently"},"emailComment":{"title":"Any thoughts? Feel free to discuss via email.","button":"Email Comment","subject":"Comment on article","bodyHello":"Hi!","bodyIntro":"I read your article and here are my thoughts:","copyFallback":"Cannot open email client. Copy email address?"}},"about":{"greeting":"Hi 👋, I'm","subtitle":"A developer.<br/>A man who love the world.","contactTitle":"Keep touch with me:","toolsTitle":"Languages and Tools:"},"footer":{"copyright":"Copyright © {0} {1}"},"notFound":{"title":"Page Not Found","message":"Oops! The page you're looking for doesn't exist or has been moved.","suggestion":"Maybe try one of these:"}}
+            zh: {"common":{"search":"搜索","backToList":"返回列表","language":"语言","theme":{"title":"主题","auto":"跟随系统","light":"浅色","dark":"深色"},"nav":{"home":"首页","about":"关于"},"searchNoResults":"未找到相关文章","backToTop":"返回顶部","noMorePosts":"共 {0} 篇文章，没有更多了"},"article":{"publishedOn":"发布于","updatedOn":"更新于","author":"作者","prevPost":"上一篇","nextPost":"下一篇","notByAi":{"tooltip":"本文是人类纯手工实现，没有 AI 参与 (Handcrafted by humans, no AI involved)","aiLevel":"AI 协作度：","warning":"⚠️ 本文部分或全部内容由 AI 辅助生成，请注意甄别。","tag1":"AI 辅助 20%","tag2":"AI 辅助 40%","tag3":"AI 协作 60%","tag4":"AI 生成 80%","tag5":"AI 生成 100%","desc1":"本文由人类主导创作，AI 提供少量辅助","desc2":"本文由人机协作完成，AI 参与了部分内容","desc3":"本文由人机协作完成，核心观点来自作者","desc4":"本文主要由 AI 生成，作者进行了审校","desc5":"本文完全由 AI 生成，请读者自行甄别"},"emailComment":{"title":"有想法？欢迎通过邮件讨论。","button":"发送邮件评论","subject":"关于文章的评论","bodyHello":"你好！","bodyIntro":"我阅读了你的文章，以下是我的想法：","copyFallback":"无法打开邮件客户端，是否复制邮箱地址？"}},"about":{"greeting":"你好 👋，我是","subtitle":"一名开发者。<br/>一个热爱世界的人。","contactTitle":"与我联系：","toolsTitle":"语言和工具：","techStack":"技术栈","totalPosts":"本站当前共 {0} 篇文章","timeline":{"title":"博客演进史"}},"footer":{"copyright":"版权所有 © {0} {1}"},"notFound":{"title":"页面未找到","message":"抱歉！您访问的页面不存在或已被移动。","suggestion":"您可以尝试："}},
+            en: {"common":{"search":"Search","backToList":"Back to List","language":"Language","theme":{"title":"Theme","auto":"Auto","light":"Light","dark":"Dark"},"nav":{"home":"Home","about":"About"},"searchNoResults":"No results found","backToTop":"Back to Top","noMorePosts":"{0} posts in total, no more"},"article":{"publishedOn":"Published on","updatedOn":"Updated on","author":"By","prevPost":"Previous","nextPost":"Next","notByAi":{"tooltip":"Handcrafted by humans, no AI involved","aiLevel":"AI Collaboration: ","warning":"⚠️ This article contains content generated or assisted by AI. Please verify critical information.","tag1":"20% AI Assisted","tag2":"40% AI Assisted","tag3":"60% AI Collaborated","tag4":"80% AI Generated","tag5":"100% AI Generated","desc1":"Human-led creation with minor AI assistance","desc2":"Human-AI collaboration for partial content","desc3":"Human-AI collaboration, core ideas from author","desc4":"Primarily AI-generated, reviewed by author","desc5":"Entirely AI-generated, please verify independently"},"emailComment":{"title":"Any thoughts? Feel free to discuss via email.","button":"Email Comment","subject":"Comment on article","bodyHello":"Hi!","bodyIntro":"I read your article and here are my thoughts:","copyFallback":"Cannot open email client. Copy email address?"}},"about":{"greeting":"Hi 👋, I'm","subtitle":"A developer.<br/>A man who love the world.","contactTitle":"Keep touch with me:","toolsTitle":"Languages and Tools:","techStack":"Tech Stack","totalPosts":"This site currently has {0} posts","timeline":{"title":"Blog Evolution"}},"footer":{"copyright":"Copyright © {0} {1}"},"notFound":{"title":"Page Not Found","message":"Oops! The page you're looking for doesn't exist or has been moved.","suggestion":"Maybe try one of these:"}}
         };
         // Initial language preference
         const savedLang = localStorage.getItem('preferred_lang');
@@ -50,7 +54,7 @@
     
     <header>
         <div class="container">
-            <a href="/blog/" class="logo">
+            <a href="/blog/" class="logo" onclick="if(window.location.pathname === '/blog/' || window.location.pathname === '/blog/index.html'){window.scrollTo({top:0,behavior:'smooth'});return false;}">
                 <img src="https://jixiaoyong.github.io/images/user_avatar.webp" alt="JI,XIAOYONG" class="logo-avatar">
                 JI,XIAOYONG
             </a>
@@ -146,7 +150,16 @@
 <li>Clean Architecture</li>
 </ul>
 <p>上述架构循序渐进，当前主流设计模式是 MVVM，MVI 和 Clean Architecture，这三者的着重点各有不同，可以根据项目规模大小递进选择。</p>
-<p><img src="https://jixiaoyong.github.io/images/blog/android_architecture/android_architecture_0.png" alt="source: https://github.com/skydoves/android-developer-roadmap/blob/main/README_CN.md"></p>
+<p>
+                        <div class="image-wrapper loading">
+                            
+                <div class="image-spinner">
+                    <div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div>
+                </div>
+            
+                            <img src="https://jixiaoyong.github.io/images/blog/android_architecture/android_architecture_0.png" alt="source: https://github.com/skydoves/android-developer-roadmap/blob/main/README_CN.md" loading="eager" onload="this.parentElement.classList.remove('loading')">
+                        </div>
+                        </p>
 <h2>MVC</h2>
 <p><strong>MVC</strong>，<strong>M</strong>odel-<strong>V</strong>iew-<strong>C</strong>ontroller，是 Android 最原始的开发方式，通过 Controller（一般为 Activity，Fragment 等）来根据用户输入处理 Model（数据/业务逻辑，比如网络请求/数据读写），并将结果更新到 View（用户界面，包括 XML，Activity，Fragment 等）上面。</p>
 <p>在 Android 开发中，MVC 通常被用于实现应用程序的 UI 层。例如，在一个简单的应用程序中，<strong>View</strong> 可以是 Activity 或 Fragment，<strong>Controller</strong> 可以是 Activity 或 Fragment 的内部类，<strong>Model</strong> 可以是 POJO 类（类似 data class）。</p>
@@ -160,7 +173,16 @@
 </ul>
 <p>这样将 View 和 Model 隔离，V 和 P 一一对应，复杂的视图可以组合复用多个 P。并且此时的 Presenter 不再和 Android API 关联，更容易单元测试和维护。</p>
 <p>二者的区别如下图，MVP 相对于 MVC，<strong>将 V 和 M 解耦</strong>，使得 V 可以比较专注于 View 的逻辑：</p>
-<p><img src="https://jixiaoyong.github.io/images/blog/android_architecture/android_architecture_1.png" alt="https://medium.com/cr8resume/make-you-hand-dirty-with-mvp-model-view-presenter-eab5b5c16e42"></p>
+<p>
+                        <div class="image-wrapper loading">
+                            
+                <div class="image-spinner">
+                    <div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div>
+                </div>
+            
+                            <img src="https://jixiaoyong.github.io/images/blog/android_architecture/android_architecture_1.png" alt="https://medium.com/cr8resume/make-you-hand-dirty-with-mvp-model-view-presenter-eab5b5c16e42" loading="lazy" onload="this.parentElement.classList.remove('loading')">
+                        </div>
+                        </p>
 <p>关于 MVP 的代码实现，可以参考这个<a href="https://github.com/antoniolg/androidmvp">项目</a>。下面是一个简单的示例代码，参考了这个<a href="http://antonioleiva.com/mvp-android/">文章</a>：</p>
 <p><strong>Model</strong>，这里是请求后台提供登录相关数据：</p>
 <pre><code class="language-kotlin">public class LoginInteractor {
@@ -215,7 +237,16 @@ class LoginPresenter(var loginView: LoginView?, val loginInteractor: LoginIntera
 <p>但是 MVP 对于简单的项目来说，增加了没必要的复杂性（View 抽象类，Presenter 单独出来等），代码量增加，<strong>Presenter 持有 View 在执行耗时任务时可能导致内存泄露，Activity destroy 之后如果 Presenter 访问 View 可能会导致崩溃</strong>，并且 View 和 Presenter 存在一定的耦合（当 View 中出现诸如 view 类变化等时需要同步修改 Presenter）。</p>
 <h2>MVVM</h2>
 <p>由此，进化出 MVVM，<strong>M</strong>odel-<strong>V</strong>iew-<strong>V</strong>iewModel，使用 ViewModel 将 View 和 Model 关联起来，同时<strong>ViewModel 不持有 View 的引用</strong>，而是 View 通过 ViewModel 操作 Model，View 监听 ViewModel 暴露出来的数据并更新 UI。</p>
-<p><img src="https://jixiaoyong.github.io/images/blog/android_architecture/android_architecture_2.png" alt="https://medium.com/@husayn.hakeem/android-by-example-mvvm-data-binding-introduction-part-1-6a7a5f388bf7d"></p>
+<p>
+                        <div class="image-wrapper loading">
+                            
+                <div class="image-spinner">
+                    <div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div>
+                </div>
+            
+                            <img src="https://jixiaoyong.github.io/images/blog/android_architecture/android_architecture_2.png" alt="https://medium.com/@husayn.hakeem/android-by-example-mvvm-data-binding-introduction-part-1-6a7a5f388bf7d" loading="lazy" onload="this.parentElement.classList.remove('loading')">
+                        </div>
+                        </p>
 <p>在 MVVM 中<strong>ViewModel 只负责处理和提供数据，不再关心 View</strong>，便于测试，避免内存泄露；</p>
 <p>页面的更新和用户事件处理都由 <strong>View</strong> 自己处理（比如用户<code>点击页面event</code>之后，View 调用 <strong>ViewModel</strong> 请求通过<strong>Model</strong>请求网络/数据库，得到并更新<code>数据state</code>后，View 监听到数据并刷新<code>页面ui</code>），<strong>二者的耦合很低</strong>。而且 Jetpack 官方提供了 LiveData/StateFlow 等可以监听 Activity 等的生命周期，降低了内存泄露风险（参考：<a href="https://blog.csdn.net/u011033906/article/details/118113466">探究 Android MVC、MVP、MVVM 的区别以及优缺点</a>）。</p>
 <p>ViewModel 提供数据的读写方法之后，通过使用 DataBinding，可以实现 View 和 ViewMode<strong>l<a href="https://developer.android.com/topic/libraries/data-binding/two-way?hl=zh-cn">双向数据绑定</a></strong>（具体的代码实现可以参考<a href="https://github.com/husaynhakeem/TicTacToe-MVVM">TicTacToe-MVVM</a>）。</p>
@@ -231,7 +262,16 @@ class LoginPresenter(var loginView: LoginView?, val loginInteractor: LoginIntera
 <blockquote>
 <p>⚠️ 注意，这里的 Intent 表示意图、事件，并非 Android 中 Activity 之间传递的<code>Intent</code>类</p>
 </blockquote>
-<p><img src="https://jixiaoyong.github.io/images/blog/android_architecture/android_architecture_3.png" alt="https://proandroiddev.com/best-architecture-for-android-mvi-livedata-viewmodel-71a3a5ac7ee3"></p>
+<p>
+                        <div class="image-wrapper loading">
+                            
+                <div class="image-spinner">
+                    <div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div>
+                </div>
+            
+                            <img src="https://jixiaoyong.github.io/images/blog/android_architecture/android_architecture_3.png" alt="https://proandroiddev.com/best-architecture-for-android-mvi-livedata-viewmodel-71a3a5ac7ee3" loading="lazy" onload="this.parentElement.classList.remove('loading')">
+                        </div>
+                        </p>
 <p>MVI 和 MVVM 的最大区别在于，UI 层不再直接调用 VM 的各个方法执行业务逻辑（比如下载数据）而是通过<strong>V 给 VM 发送 Intent（比如 viewModel.setEvent），<strong>由 VM 内部根据不同的 Intent 执行不同的逻辑，从而使得</strong>V 和 VM 的耦合降低，<strong>此外</strong>MVI 强调单一数据源，数据是单向流动的</strong>。</p>
 <p>代码实现如下（参考自：<a href="https://github.com/myofficework000/MVI-JetpackCompose-Github">MVI-JetpackCompose-Github</a>）：</p>
 <p><strong>UI</strong> 给 VM 发送 <strong>Intent</strong>：</p>
@@ -305,7 +345,16 @@ fun ReposScreenDestination(UserId: String, navController: NavController) {
     }
 </code></pre>
 <p>分析上述代码的逻辑，可以看出，在 MVI 中，<strong>V</strong>iew 发送将用户操作使用<strong>I</strong>ntent 给<strong>V</strong>iewModel 处理，并从 ViewModel 获取到处理后的状态更新界面，此外 ViewModel 还负责使用 Repository 实际处理 Data，大体的逻辑示意如下：</p>
-<p><img src="https://jixiaoyong.github.io/images/blog/android_architecture/android_architecture_4.png" alt="https://www.scaler.com/topics/mvi-architecture-android/"></p>
+<p>
+                        <div class="image-wrapper loading">
+                            
+                <div class="image-spinner">
+                    <div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div>
+                </div>
+            
+                            <img src="https://jixiaoyong.github.io/images/blog/android_architecture/android_architecture_4.png" alt="https://www.scaler.com/topics/mvi-architecture-android/" loading="lazy" onload="this.parentElement.classList.remove('loading')">
+                        </div>
+                        </p>
 <h2>Clean Architecture</h2>
 <p>通过观察上述分析，我们不难发现，无论是 MVVM 还是 MVI 中，随着业务发展，VM 处理的逻辑会日益增长，繁重。在 MVVM/MVI 的基础之上，通过对业务逻辑的进一步抽象，可以实现<strong>Clean Architecture</strong>模式：</p>
 <p>这也是 Android 官方如今力推的模式，将 Android APP 分为三部分：</p>
@@ -319,10 +368,28 @@ fun ReposScreenDestination(UserId: String, navController: NavController) {
 <p>💡 注意 Clean Architecture 是一种架构思想，本文只介绍基于 MVVM/MVI 的实现，基于 MVP 的实现可参考 <a href="https://github.com/SmartDengg/android-clean-architecture-boilerplate">android-clean-architecture-boilerplate</a>。</p>
 </blockquote>
 <p><strong>Domain layer</strong>相当于将一些常用，复杂的逻辑单独提取出来（比如过滤新闻列表，提供日期格式化工具），避免 UI 过于繁重。这个层<strong>单纯处理业务逻辑，主线程安全，无生命周期，可以复用</strong>。一定程度上减轻了 ViewModel 的负担。</p>
-<p><img src="https://jixiaoyong.github.io/images/blog/android_architecture/android_architecture_5.png" alt="Android Clean Arhictecture https://developer.android.com/topic/architecture?hl=zh-cn"></p>
+<p>
+                        <div class="image-wrapper loading">
+                            
+                <div class="image-spinner">
+                    <div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div>
+                </div>
+            
+                            <img src="https://jixiaoyong.github.io/images/blog/android_architecture/android_architecture_5.png" alt="Android Clean Arhictecture https://developer.android.com/topic/architecture?hl=zh-cn" loading="lazy" onload="this.parentElement.classList.remove('loading')">
+                        </div>
+                        </p>
 <p>在上图中，UI elements 用来向用户展示 UI，State holder 则使用 ViewModel/普通类等类管理数据，对 UI 暴露 data，并处理逻辑。这二者组合实现了在屏幕上展示应用数据，并在用户交互等情况下导致数据变化时，将最新数据展示到 UI 上。</p>
 <p>在 Clean Architecture 中<strong>Presentation/UI Layer</strong>，<strong>Domain Layer</strong>和<strong>Data Layer</strong>这三者的层级关系，可以看下图：</p>
-<p><img src="https://jixiaoyong.github.io/images/blog/android_architecture/android_architecture_6.png" alt="https://proandroiddev.com/clean-architecture-data-flow-dependency-rule-615ffdd79e29"></p>
+<p>
+                        <div class="image-wrapper loading">
+                            
+                <div class="image-spinner">
+                    <div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div>
+                </div>
+            
+                            <img src="https://jixiaoyong.github.io/images/blog/android_architecture/android_architecture_6.png" alt="https://proandroiddev.com/clean-architecture-data-flow-dependency-rule-615ffdd79e29" loading="lazy" onload="this.parentElement.classList.remove('loading')">
+                        </div>
+                        </p>
 <p>一个重要的原则就是，高层模块（圆圈内部）不应该依赖底层模块（圆圈外部），两者应该依赖于抽象。</p>
 <p>这个架构满足了以下常见架构原则：</p>
 <ul>
@@ -338,13 +405,31 @@ fun ReposScreenDestination(UserId: String, navController: NavController) {
 <p><strong>从数据驱动 UI</strong>：应该使用数据模型 data models（最好是持久模型）驱动 UI，这些数据模型独立于 UI 和其他组件，实现在操作系统销毁 APP 进程时他们也被销毁后，用户不会丢失数据（可以从本地，网络恢复）。</p>
 <p><strong>单一事实来源</strong> Single source of truth：应用中定义的数据类型，应该分配一个单一事实来源（SSOT），这种情况下 SSOT 唯一持有/修改数据，对外暴露无可修改数据，在接受函数或事件时更新数据，比如数据库，ViewModel 等。这样将对数据修改集中到一个地方，方便定位问题。</p>
 <p><strong>单向数据流</strong> Unidirectional Data Flow：在 UDF 中，数据 state 只会沿一个方向流动，而 event 沿着相反方向修改数据。这样保证数据一致性，不容易出错，便于调试。比如 jetpack compose 中，每个 composable 函数从上一级接受数据，并将事件暴露给上一级（数据向下，事件向上）</p>
-<p><img src="https://jixiaoyong.github.io/images/blog/android_architecture/android_architecture_7.png" alt="https://developer.android.com/topic/architecture/ui-layer"></p>
+<p>
+                        <div class="image-wrapper loading">
+                            
+                <div class="image-spinner">
+                    <div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div>
+                </div>
+            
+                            <img src="https://jixiaoyong.github.io/images/blog/android_architecture/android_architecture_7.png" alt="https://developer.android.com/topic/architecture/ui-layer" loading="lazy" onload="this.parentElement.classList.remove('loading')">
+                        </div>
+                        </p>
 <blockquote>
 <p>⚠️ <a href="https://developer.android.com/topic/architecture/ui-layer/state-production?hl=zh-cn#initializing-state-production"><strong>警告：请避免在 ViewModel 的 init 块或构造函数中启动异步操作</strong></a>。异步操作不应是创建对象时的附带效应，因为异步代码在对象完全初始化之前可能会对该对象执行读写操作。这也称为对象泄露，可能会导致细微且难以诊断的错误。使用 Compose 状态时，这一点尤为重要。当 ViewModel 存储了 Compose 状态字段时，请勿在更新 Compose 状态字段的 ViewModel 的 init 块中启动协程，否则可能会出现 IllegalStateException。</p>
 </blockquote>
 <p>看一个 Clean Architecture 在 Andorid 中代码实现（<a href="https://github.com/android10/Android-CleanArchitecture-Kotlin">Android-CleanArchitecture-Kotlin</a>）：</p>
 <p>下面代码的整体架构如下：</p>
-<p><img src="https://jixiaoyong.github.io/images/blog/android_architecture/android_architecture_8.png" alt="https://fernandocejas.com/2018/05/07/architecting-android-reloaded/"></p>
+<p>
+                        <div class="image-wrapper loading">
+                            
+                <div class="image-spinner">
+                    <div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div>
+                </div>
+            
+                            <img src="https://jixiaoyong.github.io/images/blog/android_architecture/android_architecture_8.png" alt="https://fernandocejas.com/2018/05/07/architecting-android-reloaded/" loading="lazy" onload="this.parentElement.classList.remove('loading')">
+                        </div>
+                        </p>
 <p>在<strong>UI Layer</strong>中，使用 Activity/Fragment 等与 ViewModel 交互：</p>
 <pre><code class="language-kotlin">class MovieDetailsFragment : BaseFragment() {
     private val movieDetailsViewModel: MovieDetailsViewModel by inject()
@@ -512,19 +597,21 @@ class GetMovieDetails(private val moviesRepository: MoviesRepository) :
         <i class="fas fa-rocket"></i>
     </button>
 
-    <!-- Scripts: Cloudflare CDN (safe source) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/dart.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/kotlin.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/gradle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/groovy.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/yaml.min.js"></script>
+    <!-- Page-specific scripts (Highlight.js, MathJax, etc.) -->
+    
+    <!-- Highlight.js: Cloudflare CDN -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/dart.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/kotlin.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/gradle.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/groovy.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/yaml.min.js"></script>
     <script>
-        // MathJax Configuration - Enable $...$ inline math
+        // MathJax Configuration
         window.MathJax = {
             tex: {
-                inlineMath: [['$', '$'], ['\(', '\)']],
-                displayMath: [['$$', '$$'], ['\[', '\]']],
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
                 processEscapes: true
             },
             options: {
@@ -534,6 +621,9 @@ class GetMovieDetails(private val moviesRepository: MoviesRepository) :
         };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script src="/blog/scripts/client.js?v=1766377145275"></script>
+    
+
+    <!-- Core client.js -->
+    <script src="/blog/scripts/client.js?v=1766400927661"></script>
 </body>
 </html>

@@ -4,19 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About - JI,XIAOYONG's Blog</title>
-    
+    <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://google-fonts.mirrors.sjtug.sjtu.edu.cn">
+
     <!-- Fonts: Async loading with smart CDN switching (SJTUG for China, Google for international) -->
     <!-- Font CSS will be loaded by JavaScript after page content loads -->
     
-    <!-- Icons: Cloudflare CDN (safe source) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Icons: Cloudflare CDN (FontAwesome only - async loading) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
 
     <!-- Styles -->
-    <link rel="stylesheet" href="/blog/styles/main.css?v=1766377145495">
-    <link rel="stylesheet" href="/blog/styles/containers.css?v=1766377145495">
-
-    <!-- Highlight.js Theme: Cloudflare CDN (safe source) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" id="hljs-theme">
+    <link rel="stylesheet" href="/blog/styles/main.css?v=1766400927903">
 
     <script>
         // Immediately compute and apply correct theme to prevent FOUC (Flash of Unstyled Content)
@@ -31,8 +33,8 @@
         // Inject i18n data for client-side switching
         window.basePath = '/blog';
         window.__I18N_DATA__ = {
-            zh: {"common":{"search":"搜索","backToList":"返回列表","language":"语言","theme":{"title":"主题","auto":"跟随系统","light":"浅色","dark":"深色"},"nav":{"home":"首页","about":"关于"},"searchNoResults":"未找到相关文章","backToTop":"返回顶部"},"article":{"publishedOn":"发布于","updatedOn":"更新于","author":"作者","prevPost":"上一篇","nextPost":"下一篇","notByAi":{"tooltip":"本文是人类纯手工实现，没有 AI 参与 (Handcrafted by humans, no AI involved)","aiLevel":"AI 协作度：","warning":"⚠️ 本文部分或全部内容由 AI 辅助生成，请注意甄别。","tag1":"AI 辅助 20%","tag2":"AI 辅助 40%","tag3":"AI 协作 60%","tag4":"AI 生成 80%","tag5":"AI 生成 100%","desc1":"本文由人类主导创作，AI 提供少量辅助","desc2":"本文由人机协作完成，AI 参与了部分内容","desc3":"本文由人机协作完成，核心观点来自作者","desc4":"本文主要由 AI 生成，作者进行了审校","desc5":"本文完全由 AI 生成，请读者自行甄别"},"emailComment":{"title":"有想法？欢迎通过邮件讨论。","button":"发送邮件评论","subject":"关于文章的评论","bodyHello":"你好！","bodyIntro":"我阅读了你的文章，以下是我的想法：","copyFallback":"无法打开邮件客户端，是否复制邮箱地址？"}},"about":{"greeting":"你好 👋，我是","subtitle":"一名开发者。<br/>一个热爱世界的人。","contactTitle":"与我联系：","toolsTitle":"语言和工具："},"footer":{"copyright":"版权所有 © {0} {1}"},"notFound":{"title":"页面未找到","message":"抱歉！您访问的页面不存在或已被移动。","suggestion":"您可以尝试："}},
-            en: {"common":{"search":"Search","backToList":"Back to List","language":"Language","theme":{"title":"Theme","auto":"Auto","light":"Light","dark":"Dark"},"nav":{"home":"Home","about":"About"},"searchNoResults":"No results found","backToTop":"Back to Top"},"article":{"publishedOn":"Published on","updatedOn":"Updated on","author":"By","prevPost":"Previous","nextPost":"Next","notByAi":{"tooltip":"Handcrafted by humans, no AI involved","aiLevel":"AI Collaboration: ","warning":"⚠️ This article contains content generated or assisted by AI. Please verify critical information.","tag1":"20% AI Assisted","tag2":"40% AI Assisted","tag3":"60% AI Collaborated","tag4":"80% AI Generated","tag5":"100% AI Generated","desc1":"Human-led creation with minor AI assistance","desc2":"Human-AI collaboration for partial content","desc3":"Human-AI collaboration, core ideas from author","desc4":"Primarily AI-generated, reviewed by author","desc5":"Entirely AI-generated, please verify independently"},"emailComment":{"title":"Any thoughts? Feel free to discuss via email.","button":"Email Comment","subject":"Comment on article","bodyHello":"Hi!","bodyIntro":"I read your article and here are my thoughts:","copyFallback":"Cannot open email client. Copy email address?"}},"about":{"greeting":"Hi 👋, I'm","subtitle":"A developer.<br/>A man who love the world.","contactTitle":"Keep touch with me:","toolsTitle":"Languages and Tools:"},"footer":{"copyright":"Copyright © {0} {1}"},"notFound":{"title":"Page Not Found","message":"Oops! The page you're looking for doesn't exist or has been moved.","suggestion":"Maybe try one of these:"}}
+            zh: {"common":{"search":"搜索","backToList":"返回列表","language":"语言","theme":{"title":"主题","auto":"跟随系统","light":"浅色","dark":"深色"},"nav":{"home":"首页","about":"关于"},"searchNoResults":"未找到相关文章","backToTop":"返回顶部","noMorePosts":"共 {0} 篇文章，没有更多了"},"article":{"publishedOn":"发布于","updatedOn":"更新于","author":"作者","prevPost":"上一篇","nextPost":"下一篇","notByAi":{"tooltip":"本文是人类纯手工实现，没有 AI 参与 (Handcrafted by humans, no AI involved)","aiLevel":"AI 协作度：","warning":"⚠️ 本文部分或全部内容由 AI 辅助生成，请注意甄别。","tag1":"AI 辅助 20%","tag2":"AI 辅助 40%","tag3":"AI 协作 60%","tag4":"AI 生成 80%","tag5":"AI 生成 100%","desc1":"本文由人类主导创作，AI 提供少量辅助","desc2":"本文由人机协作完成，AI 参与了部分内容","desc3":"本文由人机协作完成，核心观点来自作者","desc4":"本文主要由 AI 生成，作者进行了审校","desc5":"本文完全由 AI 生成，请读者自行甄别"},"emailComment":{"title":"有想法？欢迎通过邮件讨论。","button":"发送邮件评论","subject":"关于文章的评论","bodyHello":"你好！","bodyIntro":"我阅读了你的文章，以下是我的想法：","copyFallback":"无法打开邮件客户端，是否复制邮箱地址？"}},"about":{"greeting":"你好 👋，我是","subtitle":"一名开发者。<br/>一个热爱世界的人。","contactTitle":"与我联系：","toolsTitle":"语言和工具：","techStack":"技术栈","totalPosts":"本站当前共 {0} 篇文章","timeline":{"title":"博客演进史"}},"footer":{"copyright":"版权所有 © {0} {1}"},"notFound":{"title":"页面未找到","message":"抱歉！您访问的页面不存在或已被移动。","suggestion":"您可以尝试："}},
+            en: {"common":{"search":"Search","backToList":"Back to List","language":"Language","theme":{"title":"Theme","auto":"Auto","light":"Light","dark":"Dark"},"nav":{"home":"Home","about":"About"},"searchNoResults":"No results found","backToTop":"Back to Top","noMorePosts":"{0} posts in total, no more"},"article":{"publishedOn":"Published on","updatedOn":"Updated on","author":"By","prevPost":"Previous","nextPost":"Next","notByAi":{"tooltip":"Handcrafted by humans, no AI involved","aiLevel":"AI Collaboration: ","warning":"⚠️ This article contains content generated or assisted by AI. Please verify critical information.","tag1":"20% AI Assisted","tag2":"40% AI Assisted","tag3":"60% AI Collaborated","tag4":"80% AI Generated","tag5":"100% AI Generated","desc1":"Human-led creation with minor AI assistance","desc2":"Human-AI collaboration for partial content","desc3":"Human-AI collaboration, core ideas from author","desc4":"Primarily AI-generated, reviewed by author","desc5":"Entirely AI-generated, please verify independently"},"emailComment":{"title":"Any thoughts? Feel free to discuss via email.","button":"Email Comment","subject":"Comment on article","bodyHello":"Hi!","bodyIntro":"I read your article and here are my thoughts:","copyFallback":"Cannot open email client. Copy email address?"}},"about":{"greeting":"Hi 👋, I'm","subtitle":"A developer.<br/>A man who love the world.","contactTitle":"Keep touch with me:","toolsTitle":"Languages and Tools:","techStack":"Tech Stack","totalPosts":"This site currently has {0} posts","timeline":{"title":"Blog Evolution"}},"footer":{"copyright":"Copyright © {0} {1}"},"notFound":{"title":"Page Not Found","message":"Oops! The page you're looking for doesn't exist or has been moved.","suggestion":"Maybe try one of these:"}}
         };
         // Initial language preference
         const savedLang = localStorage.getItem('preferred_lang');
@@ -46,7 +48,7 @@
     
     <header>
         <div class="container">
-            <a href="/blog/" class="logo">
+            <a href="/blog/" class="logo" onclick="if(window.location.pathname === '/blog/' || window.location.pathname === '/blog/index.html'){window.scrollTo({top:0,behavior:'smooth'});return false;}">
                 <img src="https://jixiaoyong.github.io/images/user_avatar.webp" alt="JI,XIAOYONG" class="logo-avatar">
                 JI,XIAOYONG
             </a>
@@ -123,29 +125,34 @@
             
             <h3 class="about-section-title" data-i18n="about.contactTitle">与我联系：</h3>
             <p class="about-links">
-                <a href="mailto:jixiaoyong1995@gmail.com" target="_blank" rel="noopener noreferrer">
+                <a href="#" onclick="window.location.href='mailto:' + 'jixiaoyong1995' + '@' + 'gmail.com'; return false;" rel="noopener noreferrer">
                     <img src="https://img.shields.io/badge/gmail-jixiaoyong1995-31aa52?logo=Gmail" alt="Email"/>
                 </a>
-                <!-- ... other links ... -->
             </p>
+            <h3 align="center" data-i18n="about.techStack">技术栈</h3>
+            <div class="tech-stack-icons">
+                <!-- Mobile / Languages -->
+                <i class="devicon-flutter-plain" title="Flutter"></i>
+                <i class="fab fa-android" title="Android"></i>
+                <i class="devicon-kotlin-plain" title="Kotlin"></i>
+                <i class="fab fa-java" title="Java"></i>
+                <i class="devicon-dart-plain" title="Dart"></i>
+                <i class="devicon-vim-plain" title="Vim"></i>
+            </div>
         </div>
     
         
         <article class="article-content about-page i18n-content" data-lang="zh" style="display: block">
-            <p>学习的过程需要不断的探索、累积，更需要有条理的总结，我会把平时学习的心得体会、经验总结放到这里，主要是为了自己能够在学习的过程中有计划的总结学习到的知识，同时也方便之后查阅。</p>
-<h2>2025-12-21</h2>
-<p>如你所见，这是一个托管在 GitHub 上面的博客。在 <a href="https://github.com/anthropics/claude-code">Antigravity</a> 的帮助下，我重新实现了一个简洁大方的博客主题，更加专注于内容本身。</p>
-<p>技术栈：TypeScript + 纯静态 HTML/CSS/JS，无框架依赖，构建速度极快。</p>
-<p>感谢 AI 时代带来的生产力革命，让个人开发者也能快速实现自己的想法。</p>
-<h2>2023-04-06</h2>
-<p>如你所见，这是一个托管在 GitHub 上面的博客，基于 vuepress 2.0 的 hope 主题，感谢所有为以上提到的项目有过付出的人，没有他们的话这个小站不会存在。</p>
-<p>在此之前，本博客使用了大约五六年的主题是基于 Hexo 的 NexT 主题，在我对编程尚且懵懂之际，为我提供了一个尚且不错的博客，感谢以上各位朋友。</p>
-<h2>2019-03-25</h2>
+            <h1>关于我</h1>
+<p>如你所见，这是一个托管在 GitHub 上面的博客，主要聚焦于移动互联网应用开发相关的内容，主要涉及 Flutter、Android、Dart、Java、Kotlin 等技术栈，很久之前还有一些关于数据结构的内容。</p>
+<p>学习的过程需要不断的探索、累积，更需要有条理的总结，我会把平时学习的心得体会、经验总结放到这里，主要是为了自己能够在学习的过程中有计划的总结学习到的知识，同时也方便之后查阅。</p>
+<h3>2019-03-25</h3>
 <p>今后写博客，尽量避免写一些口水文，基础教程之类的文章，这类文章在我的学习过程中对我有很大的帮助，但网络上已经有很多步骤更加具体，内容更加完善的文章，实在没有必要再花费时间在这里了。日后逐渐深入源码，探究平常用法背后的实现原理，希望以此记录自己提升技术能力的过程。</p>
-<h2>2018-02-27</h2>
+<h3>2018-02-27</h3>
 <p>在我学习的过程中，互联网给了我莫大的支持与帮助。但不可否认的是，中文互联网存在着很多&quot;相互借鉴&quot;的资料，其中不可避免有很多未经查实的资料，其危害不小。</p>
 <p>今天就因为这种问题，白白耽搁了一晚上的时间。而这还是我已经发现的有明显谬论的地方，其他没有发现的更是不知几多。</p>
 <p>很遗憾在此之前，我自己也写过不少这样欠缺思考，直接&quot;拿来主义&quot;的文章，真是惭愧。今日起，技术类文章务必自己理解了，理顺了才写，务必每个观点都有对应的参考依据。宁可少写，也不能乱写瞎写。之前的文章，也要慢慢的修正。</p>
+<p>今后写博客，尽量避免写一些口水文，基础教程之类的文章，这类文章在我的学习过程中对我有很大的帮助，但网络上已经有很多步骤更加具体，内容更加完善的文章，实在没有必要再花费时间在这里了。日后逐渐深入源码，探究平常用法背后的实现原理，希望以此记录自己提升技术能力的过程。</p>
 <p><span class="mathjax_ignore">哎呀，一不小心立了个 Flag，千万不要打脸 (￣ ε(#￣)☆╰╮(￣ ▽ ￣///)。</span></p>
 <h2>TODO List</h2>
 <ul>
@@ -159,31 +166,107 @@
         </article>
     
         <article class="article-content about-page i18n-content" data-lang="en" style="display: none">
-            <p>Learning is a continuous process of exploration and accumulation, and more importantly, it requires organized summarization. I put my learning experiences and summaries here, mainly for myself to systematically consolidate the knowledge I&#39;ve learned, and also for future reference.</p>
-<h2>2025-12-21</h2>
-<p>As you can see, this is a blog hosted on GitHub. With the help of <a href="https://github.com/anthropics/claude-code">Antigravity</a>, I&#39;ve reimplemented a clean and elegant blog theme that focuses more on the content itself.</p>
-<p>Tech stack: TypeScript + pure static HTML/CSS/JS, no framework dependencies, extremely fast build speed.</p>
-<p>Thanks to the productivity revolution brought by the AI era, individual developers can quickly realize their ideas.</p>
-<h2>2023-04-06</h2>
-<p>As you can see, this is a blog hosted on GitHub, based on the hope theme of vuepress 2.0. Thanks to everyone who has contributed to the projects mentioned above - without them, this little site wouldn&#39;t exist.</p>
-<p>Before this, the blog used the NexT theme based on Hexo for about five or six years. When I was still a beginner in programming, it provided me with a decent blog. Thanks to all those friends.</p>
-<h2>2019-03-25</h2>
-<p>From now on, I&#39;ll try to avoid writing superficial articles and basic tutorials. While such articles have been very helpful during my learning process, there are already many more detailed and comprehensive articles online. There&#39;s really no need to spend time on these anymore. Going forward, I&#39;ll delve into source code and explore the implementation principles behind common usage, hoping to document my journey of improving technical abilities.</p>
-<h2>2018-02-27</h2>
-<p>During my learning journey, the internet has provided me with tremendous support and help. However, it&#39;s undeniable that there are many &quot;mutually referenced&quot; materials on the Chinese internet, which inevitably include a lot of unverified information that can be quite harmful.</p>
-<p>Today, I wasted an entire evening due to such issues. And this is just what I&#39;ve discovered with obvious errors - who knows how many others remain undetected.</p>
-<p>Unfortunately, before this, I also wrote many articles that lacked deep thinking and were simply &quot;borrowed.&quot; It&#39;s quite embarrassing. From now on, I will only write technical articles after I truly understand them, and every point must have corresponding references. I&#39;d rather write less than write carelessly. Previous articles will also need to be gradually corrected.</p>
-<p><span class="mathjax_ignore">Oops, I accidentally set a Flag. Please don&#39;t let me eat my words (￣ ε(#￣)☆╰╮(￣ ▽ ￣///).</span></p>
+            <h1>About Me</h1>
+<p>As you can see, this is a blog hosted on GitHub. It primarily focuses on mobile internet application development, covering tech stacks like Flutter, Android, Dart, Java, and Kotlin, along with some older content related to data structures.</p>
+<p>Learning is a process of continuous exploration and accumulation, but even more importantly, it requires organized summarization. I post my learning insights and experiences here, mainly to systematically consolidate the knowledge I&#39;ve gained, and also to serve as a convenient reference for the future.</p>
+<h3>2019-03-25</h3>
+<p>Moving forward, I intend to avoid writing superficial &quot;filler&quot; articles or basic step-by-step tutorials. While such content was incredibly helpful during my own learning journey, the web is already saturated with detailed and comprehensive guides. There is little value in spending time reinventing the wheel. Instead, I plan to dive deeper into source code and explore the implementation principles behind common practices, hoping to document my journey of advancing my technical capabilities.</p>
+<h3>2018-02-27</h3>
+<p>Throughout my learning process, the internet has provided immense support and assistance. However, it&#39;s undeniable that the Chinese internet is full of &quot;mutually borrowed&quot; material, which inevitably includes a lot of unverified and erroneous information. The harm this causes is not insignificant.</p>
+<p>Just today, I wasted an entire evening due to this exact issue. And that&#39;s just the obvious fallacy I caught—who knows how many other errors remain undiscovered?</p>
+<p>Regrettably, before this, I also wrote unrelated articles that lacked deep independent thinking and were largely &quot;copy-pasted.&quot; It is truly embarrassing. From this day on, I will ensure that I fully understand and organize my thoughts before writing any technical article. Every format and viewpoint must be backed by referenceable evidence. I would rather write less than write irresponsibly. I will also gradually correct my previous articles.</p>
+<p>Moving forward, I intend to avoid writing superficial &quot;filler&quot; articles or basic step-by-step tutorials. While such content was incredibly helpful during my own learning journey, the web is already saturated with detailed and comprehensive guides. There is little value in spending time reinventing the wheel. Instead, I plan to dive deeper into source code and explore the implementation principles behind common practices, hoping to document my journey of advancing my technical capabilities.</p>
+<p><span class="mathjax_ignore">Oops, just set a Flag. Hope I don&#39;t have to eat my words later (￣ ε(#￣)☆╰╮(￣ ▽ ￣///).</span></p>
 <h2>TODO List</h2>
 <ul>
-<li>Choose the right direction</li>
-<li>Read extensively</li>
+<li>Choose a direction</li>
+<li>Read widely</li>
 <li>Think deeply</li>
-<li>Summarize promptly</li>
+<li>Summarize in time</li>
 <li>Output regularly</li>
 </ul>
 
         </article>
+    
+        
+        <div class="blog-timeline" data-lang="zh" style="display: block">
+            <h3 class="timeline-title">博客演进史</h3>
+            <div class="timeline-container">
+                
+            <div class="timeline-item active">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-time">2025.12 - 至今</div>
+                    <h4 class="timeline-era">自研 SSG 时代</h4>
+                    <p><p>回归极简与极致性能。在 Antigravity (AI) 协助下，于 2025 年 12 月 21 日构建了基于 <a href="https://www.typescriptlang.org/">TypeScript</a> 的自研 SSG 脚本，生成纯静态页面。<br> 感谢 AI 时代带来的生产力革命，让个人开发者也能快速实现自己的想法。也感谢 Vuepress，Hexo 等博客框架、主题的开发者们，让我能够在对编程一知半解的情况下就搭建起这个博客，一窥编程世界的魅力。</p>
+</p>
+                </div>
+            </div>
+        
+            <div class="timeline-item ">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-time">2023.04 - 2025.12</div>
+                    <h4 class="timeline-era">VuePress 时代</h4>
+                    <p><p>为了追求更现代化的交互体验，迁移到了 <a href="https://v2.vuepress.vuejs.org/zh/">VuePress 2.0</a>，并深度使用了 <a href="https://theme-hope.vuejs.press/zh/">VuePress Theme Hope</a> 主题。</p>
+</p>
+                </div>
+            </div>
+        
+            <div class="timeline-item ">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-time">2016 - 2023.04</div>
+                    <h4 class="timeline-era">Hexo 时代</h4>
+                    <p><p>始于 2016 年，使用 <a href="https://hexo.io/zh-cn/">Hexo</a> 配合 <a href="https://theme-next.js.org/">NexT</a> 主题进行写作。</p>
+</p>
+                </div>
+            </div>
+        
+            </div>
+        </div>
+        
+        <div class="blog-timeline" data-lang="en" style="display: none">
+            <h3 class="timeline-title">Blog Evolution</h3>
+            <div class="timeline-container">
+                
+            <div class="timeline-item active">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-time">2025.12 - Present</div>
+                    <h4 class="timeline-era">Custom SSG Era</h4>
+                    <p><p>Returning to minimalism and extreme performance. With the assistance of Antigravity (AI), I built a custom SSG script based on <a href="https://www.typescriptlang.org/">TypeScript</a> on Dec 21, 2025, to generate pure static pages.<br>Thanks to the productivity revolution of the AI era, individual developers can quickly bring their ideas to life. <br>I also want to extend my gratitude to the developers of blog frameworks and themes like VuePress and Hexo—they enabled me to build this blog and glimpse the exciting world of programming even when I was just starting out.</p>
+</p>
+                </div>
+            </div>
+        
+            <div class="timeline-item ">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-time">2023.04 - 2025.12</div>
+                    <h4 class="timeline-era">VuePress Era</h4>
+                    <p><p>Migrated to <a href="https://v2.vuepress.vuejs.org/">VuePress 2.0</a> for a modern interactive experience, utilizing the <a href="https://theme-hope.vuejs.press/">VuePress Theme Hope</a> deeply.</p>
+</p>
+                </div>
+            </div>
+        
+            <div class="timeline-item ">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-time">2016 - 2023.04</div>
+                    <h4 class="timeline-era">Hexo Era</h4>
+                    <p><p>Started in 2016, writing with <a href="https://hexo.io/">Hexo</a> and the <a href="https://theme-next.js.org/">NexT</a> theme.</p>
+</p>
+                </div>
+            </div>
+        
+            </div>
+        </div>
+        
+        
+        <div class="about-stats">
+            <span data-i18n="about.totalPosts" data-i18n-params="107">本站当前共 107 篇文章</span>
+        </div>
     
     </div>
     
@@ -215,28 +298,10 @@
         <i class="fas fa-rocket"></i>
     </button>
 
-    <!-- Scripts: Cloudflare CDN (safe source) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/dart.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/kotlin.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/gradle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/groovy.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/yaml.min.js"></script>
-    <script>
-        // MathJax Configuration - Enable $...$ inline math
-        window.MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\(', '\)']],
-                displayMath: [['$$', '$$'], ['\[', '\]']],
-                processEscapes: true
-            },
-            options: {
-                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-                ignoreHtmlClass: 'mathjax_ignore'
-            }
-        };
-    </script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script src="/blog/scripts/client.js?v=1766377145495"></script>
+    <!-- Page-specific scripts (Highlight.js, MathJax, etc.) -->
+    
+
+    <!-- Core client.js -->
+    <script src="/blog/scripts/client.js?v=1766400927903"></script>
 </body>
 </html>

@@ -8,19 +8,23 @@
     <link rel="canonical" href="/blog/blog/posts/d7356eaa.html">
     <link rel="alternate" hreflang="zh" href="/blog/blog/posts/d7356eaa.html">
     <link rel="alternate" hreflang="x-default" href="/blog/blog/posts/d7356eaa.html">
+    <!-- Highlight.js Theme (article pages only) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" id="hljs-theme">
     
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://google-fonts.mirrors.sjtug.sjtu.edu.cn">
+
     <!-- Fonts: Async loading with smart CDN switching (SJTUG for China, Google for international) -->
     <!-- Font CSS will be loaded by JavaScript after page content loads -->
     
-    <!-- Icons: Cloudflare CDN (safe source) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Icons: Cloudflare CDN (FontAwesome only - async loading) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
 
     <!-- Styles -->
-    <link rel="stylesheet" href="/blog/styles/main.css?v=1766377145271">
-    <link rel="stylesheet" href="/blog/styles/containers.css?v=1766377145271">
-
-    <!-- Highlight.js Theme: Cloudflare CDN (safe source) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" id="hljs-theme">
+    <link rel="stylesheet" href="/blog/styles/main.css?v=1766400927658">
 
     <script>
         // Immediately compute and apply correct theme to prevent FOUC (Flash of Unstyled Content)
@@ -35,8 +39,8 @@
         // Inject i18n data for client-side switching
         window.basePath = '/blog';
         window.__I18N_DATA__ = {
-            zh: {"common":{"search":"搜索","backToList":"返回列表","language":"语言","theme":{"title":"主题","auto":"跟随系统","light":"浅色","dark":"深色"},"nav":{"home":"首页","about":"关于"},"searchNoResults":"未找到相关文章","backToTop":"返回顶部"},"article":{"publishedOn":"发布于","updatedOn":"更新于","author":"作者","prevPost":"上一篇","nextPost":"下一篇","notByAi":{"tooltip":"本文是人类纯手工实现，没有 AI 参与 (Handcrafted by humans, no AI involved)","aiLevel":"AI 协作度：","warning":"⚠️ 本文部分或全部内容由 AI 辅助生成，请注意甄别。","tag1":"AI 辅助 20%","tag2":"AI 辅助 40%","tag3":"AI 协作 60%","tag4":"AI 生成 80%","tag5":"AI 生成 100%","desc1":"本文由人类主导创作，AI 提供少量辅助","desc2":"本文由人机协作完成，AI 参与了部分内容","desc3":"本文由人机协作完成，核心观点来自作者","desc4":"本文主要由 AI 生成，作者进行了审校","desc5":"本文完全由 AI 生成，请读者自行甄别"},"emailComment":{"title":"有想法？欢迎通过邮件讨论。","button":"发送邮件评论","subject":"关于文章的评论","bodyHello":"你好！","bodyIntro":"我阅读了你的文章，以下是我的想法：","copyFallback":"无法打开邮件客户端，是否复制邮箱地址？"}},"about":{"greeting":"你好 👋，我是","subtitle":"一名开发者。<br/>一个热爱世界的人。","contactTitle":"与我联系：","toolsTitle":"语言和工具："},"footer":{"copyright":"版权所有 © {0} {1}"},"notFound":{"title":"页面未找到","message":"抱歉！您访问的页面不存在或已被移动。","suggestion":"您可以尝试："}},
-            en: {"common":{"search":"Search","backToList":"Back to List","language":"Language","theme":{"title":"Theme","auto":"Auto","light":"Light","dark":"Dark"},"nav":{"home":"Home","about":"About"},"searchNoResults":"No results found","backToTop":"Back to Top"},"article":{"publishedOn":"Published on","updatedOn":"Updated on","author":"By","prevPost":"Previous","nextPost":"Next","notByAi":{"tooltip":"Handcrafted by humans, no AI involved","aiLevel":"AI Collaboration: ","warning":"⚠️ This article contains content generated or assisted by AI. Please verify critical information.","tag1":"20% AI Assisted","tag2":"40% AI Assisted","tag3":"60% AI Collaborated","tag4":"80% AI Generated","tag5":"100% AI Generated","desc1":"Human-led creation with minor AI assistance","desc2":"Human-AI collaboration for partial content","desc3":"Human-AI collaboration, core ideas from author","desc4":"Primarily AI-generated, reviewed by author","desc5":"Entirely AI-generated, please verify independently"},"emailComment":{"title":"Any thoughts? Feel free to discuss via email.","button":"Email Comment","subject":"Comment on article","bodyHello":"Hi!","bodyIntro":"I read your article and here are my thoughts:","copyFallback":"Cannot open email client. Copy email address?"}},"about":{"greeting":"Hi 👋, I'm","subtitle":"A developer.<br/>A man who love the world.","contactTitle":"Keep touch with me:","toolsTitle":"Languages and Tools:"},"footer":{"copyright":"Copyright © {0} {1}"},"notFound":{"title":"Page Not Found","message":"Oops! The page you're looking for doesn't exist or has been moved.","suggestion":"Maybe try one of these:"}}
+            zh: {"common":{"search":"搜索","backToList":"返回列表","language":"语言","theme":{"title":"主题","auto":"跟随系统","light":"浅色","dark":"深色"},"nav":{"home":"首页","about":"关于"},"searchNoResults":"未找到相关文章","backToTop":"返回顶部","noMorePosts":"共 {0} 篇文章，没有更多了"},"article":{"publishedOn":"发布于","updatedOn":"更新于","author":"作者","prevPost":"上一篇","nextPost":"下一篇","notByAi":{"tooltip":"本文是人类纯手工实现，没有 AI 参与 (Handcrafted by humans, no AI involved)","aiLevel":"AI 协作度：","warning":"⚠️ 本文部分或全部内容由 AI 辅助生成，请注意甄别。","tag1":"AI 辅助 20%","tag2":"AI 辅助 40%","tag3":"AI 协作 60%","tag4":"AI 生成 80%","tag5":"AI 生成 100%","desc1":"本文由人类主导创作，AI 提供少量辅助","desc2":"本文由人机协作完成，AI 参与了部分内容","desc3":"本文由人机协作完成，核心观点来自作者","desc4":"本文主要由 AI 生成，作者进行了审校","desc5":"本文完全由 AI 生成，请读者自行甄别"},"emailComment":{"title":"有想法？欢迎通过邮件讨论。","button":"发送邮件评论","subject":"关于文章的评论","bodyHello":"你好！","bodyIntro":"我阅读了你的文章，以下是我的想法：","copyFallback":"无法打开邮件客户端，是否复制邮箱地址？"}},"about":{"greeting":"你好 👋，我是","subtitle":"一名开发者。<br/>一个热爱世界的人。","contactTitle":"与我联系：","toolsTitle":"语言和工具：","techStack":"技术栈","totalPosts":"本站当前共 {0} 篇文章","timeline":{"title":"博客演进史"}},"footer":{"copyright":"版权所有 © {0} {1}"},"notFound":{"title":"页面未找到","message":"抱歉！您访问的页面不存在或已被移动。","suggestion":"您可以尝试："}},
+            en: {"common":{"search":"Search","backToList":"Back to List","language":"Language","theme":{"title":"Theme","auto":"Auto","light":"Light","dark":"Dark"},"nav":{"home":"Home","about":"About"},"searchNoResults":"No results found","backToTop":"Back to Top","noMorePosts":"{0} posts in total, no more"},"article":{"publishedOn":"Published on","updatedOn":"Updated on","author":"By","prevPost":"Previous","nextPost":"Next","notByAi":{"tooltip":"Handcrafted by humans, no AI involved","aiLevel":"AI Collaboration: ","warning":"⚠️ This article contains content generated or assisted by AI. Please verify critical information.","tag1":"20% AI Assisted","tag2":"40% AI Assisted","tag3":"60% AI Collaborated","tag4":"80% AI Generated","tag5":"100% AI Generated","desc1":"Human-led creation with minor AI assistance","desc2":"Human-AI collaboration for partial content","desc3":"Human-AI collaboration, core ideas from author","desc4":"Primarily AI-generated, reviewed by author","desc5":"Entirely AI-generated, please verify independently"},"emailComment":{"title":"Any thoughts? Feel free to discuss via email.","button":"Email Comment","subject":"Comment on article","bodyHello":"Hi!","bodyIntro":"I read your article and here are my thoughts:","copyFallback":"Cannot open email client. Copy email address?"}},"about":{"greeting":"Hi 👋, I'm","subtitle":"A developer.<br/>A man who love the world.","contactTitle":"Keep touch with me:","toolsTitle":"Languages and Tools:","techStack":"Tech Stack","totalPosts":"This site currently has {0} posts","timeline":{"title":"Blog Evolution"}},"footer":{"copyright":"Copyright © {0} {1}"},"notFound":{"title":"Page Not Found","message":"Oops! The page you're looking for doesn't exist or has been moved.","suggestion":"Maybe try one of these:"}}
         };
         // Initial language preference
         const savedLang = localStorage.getItem('preferred_lang');
@@ -50,7 +54,7 @@
     
     <header>
         <div class="container">
-            <a href="/blog/" class="logo">
+            <a href="/blog/" class="logo" onclick="if(window.location.pathname === '/blog/' || window.location.pathname === '/blog/index.html'){window.scrollTo({top:0,behavior:'smooth'});return false;}">
                 <img src="https://jixiaoyong.github.io/images/user_avatar.webp" alt="JI,XIAOYONG" class="logo-avatar">
                 JI,XIAOYONG
             </a>
@@ -132,6 +136,26 @@
                     <span class="publish-date mathjax_ignore">发布于 2025-05-17</span>
                     
                     
+                    <span class="meta-separator">•</span>
+                    <span class="ai-tag-wrapper">
+                        <span class="ai-tag level-3" onclick="toggleAiPopup(event)">
+                            <i class="fas fa-robot"></i>
+                            AI 协作 60%
+                        </span>
+                        <div class="ai-popup" id="aiPopup">
+                            <div class="ai-popup-header level-3">
+                                <i class="fas fa-robot"></i>AI 协作度：60%
+                            </div>
+                            <div class="ai-progress-bar">
+                                <div class="ai-progress-fill level-3"></div>
+                            </div>
+                            <div class="ai-popup-desc">
+                                <i class="fas fa-info-circle"></i>
+                                <span>本文由人机协作完成，核心观点来自作者</span>
+                            </div>
+                        </div>
+                    </span>
+                    
                 </div>
             </div>
 
@@ -183,7 +207,7 @@
 <hr>
 <p><a href="https://jixiaoyong.github.io/statics/git_revert_cherrypick_compare.html">点击在线查看清楚的对比</a></p>
 
-<details class="demo-container" id="normal-demo-d7356eaa-1-rg0igb" data-collapse="50vh" open>
+<details class="demo-container" id="normal-demo-d7356eaa-1-n3je1u" data-collapse="50vh" open>
   <summary class="demo-header">
     <span class="demo-title">上述操作的图形化演示</span>
     <span class="demo-toggle-icon">
@@ -194,106 +218,113 @@
   </summary>
   <div class="demo-body">
     
-    <style>#normal-demo-d7356eaa-1-rg0igb {
+    <style>#normal-demo-d7356eaa-1-n3je1u {
     font-family: sans-serif;
     margin: 0;
     padding: 0 8px;
-  }#normal-demo-d7356eaa-1-rg0igb .main-content {
+  }#normal-demo-d7356eaa-1-n3je1u .main-content {
     max-width: 1200px;
     margin: 0 auto;
     border-radius: 12px;
     padding: 24px 12px 40px 12px;
-  }#normal-demo-d7356eaa-1-rg0igb h1 {
+  }#normal-demo-d7356eaa-1-n3je1u h1 {
     text-align: center;
     margin-bottom: 16px;
-  }#normal-demo-d7356eaa-1-rg0igb .compare-table {
+  }#normal-demo-d7356eaa-1-n3je1u .compare-table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0 18px;
-  }#normal-demo-d7356eaa-1-rg0igb .compare-table th, #normal-demo-d7356eaa-1-rg0igb .compare-table td {
+  }#normal-demo-d7356eaa-1-n3je1u .compare-table th, #normal-demo-d7356eaa-1-n3je1u .compare-table td {
     vertical-align: top;
     padding: 0 12px;
     width: 50%;
-  }#normal-demo-d7356eaa-1-rg0igb .compare-table th {
+  }#normal-demo-d7356eaa-1-n3je1u .compare-table th {
     font-size: 1.1em;
     color: #2196f3;
     text-align: center;
     padding-bottom: 8px;
-  }#normal-demo-d7356eaa-1-rg0igb .stage-title-scheme1 {
+  }#normal-demo-d7356eaa-1-n3je1u .stage-title-scheme1 {
     font-weight: bold;
     font-size: 1.1em;
     margin-bottom: 6px;
     color: #1976d2;
-  }#normal-demo-d7356eaa-1-rg0igb .stage-title-scheme2 {
+  }#normal-demo-d7356eaa-1-n3je1u .stage-title-scheme2 {
     font-weight: bold;
     font-size: 1.1em;
     margin-bottom: 6px;
     color: #388e3c;
-  }#normal-demo-d7356eaa-1-rg0igb .stage-block {
+  }#normal-demo-d7356eaa-1-n3je1u .stage-block {
     border-radius: 8px;
     padding: 12px 10px 10px 10px;
     margin-bottom: 0;
     border: 1px solid var(--border-color, #e3e8ee);
-  }#normal-demo-d7356eaa-1-rg0igb .diff {
+    overflow-x: auto;
+    white-space: nowrap;
+  }#normal-demo-d7356eaa-1-n3je1u .diff {
     border: 2px solid #ff9800;
     border-radius: 8px;
     padding: 10px 10px 8px 10px;
     margin-top: 8px;
     margin-bottom: 0;
     color: #b26a00;
-  }#normal-demo-d7356eaa-1-rg0igb .final-result {
+    white-space: normal; /* Diff text should wrap */
+  }#normal-demo-d7356eaa-1-n3je1u .final-result {
     border: 2px solid #2196f3;
     border-radius: 8px;
     padding: 12px 10px 10px 10px;
     margin-top: 8px;
     margin-bottom: 0;
-  }#normal-demo-d7356eaa-1-rg0igb .commit-node {
+    overflow-x: auto;
+    white-space: nowrap;
+  }#normal-demo-d7356eaa-1-n3je1u .commit-node {
     display: inline-block;
     padding: 3px 8px;
     border-radius: 5px;
     margin-right: 6px;
     font-size: 0.98em;
-  }#normal-demo-d7356eaa-1-rg0igb .branch-a-node {
+    white-space: nowrap;
+    word-break: normal;
+  }#normal-demo-d7356eaa-1-n3je1u .branch-a-node {
     background: #2196f3;
     color: #fff;
-  }#normal-demo-d7356eaa-1-rg0igb .branch-b-node {
+  }#normal-demo-d7356eaa-1-n3je1u .branch-b-node {
     background: #4caf50;
     color: #fff;
-  }#normal-demo-d7356eaa-1-rg0igb .branch-c-node {
+  }#normal-demo-d7356eaa-1-n3je1u .branch-c-node {
     background: #ff9800;
     color: #fff;
-  }#normal-demo-d7356eaa-1-rg0igb .merged-node-from-c {
+  }#normal-demo-d7356eaa-1-n3je1u .merged-node-from-c {
     background: #ff9800;
     color: #fff;
     border: 1.5px solid #ff9800;
-  }#normal-demo-d7356eaa-1-rg0igb .merged-node-from-b {
+  }#normal-demo-d7356eaa-1-n3je1u .merged-node-from-b {
     background: #4caf50;
     color: #fff;
     border: 1.5px solid #4caf50;
-  }#normal-demo-d7356eaa-1-rg0igb .cherry-picked-commit {
+  }#normal-demo-d7356eaa-1-n3je1u .cherry-picked-commit {
     border: 2px solid #ef5350;
     color: #c62828;
-  }#normal-demo-d7356eaa-1-rg0igb .revert {
+  }#normal-demo-d7356eaa-1-n3je1u .revert {
     border: 2px solid #ffb300;
     color: #b26a00;
-  }#normal-demo-d7356eaa-1-rg0igb .strike {
+  }#normal-demo-d7356eaa-1-n3je1u .strike {
     text-decoration: line-through;
     opacity: 0.5;
     border: 2px dashed #888 !important;
-  }#normal-demo-d7356eaa-1-rg0igb .stage-desc {
+  }#normal-demo-d7356eaa-1-n3je1u .stage-desc {
     color: #888;
     font-size: 0.97em;
     margin-bottom: 6px;
   }
 
-  @media (max-width: 900px) {#normal-demo-d7356eaa-1-rg0igb .compare-table th, #normal-demo-d7356eaa-1-rg0igb .compare-table td {
+  @media (max-width: 900px) {#normal-demo-d7356eaa-1-n3je1u .compare-table th, #normal-demo-d7356eaa-1-n3je1u .compare-table td {
       display: block;
       width: 100%;
-    }#normal-demo-d7356eaa-1-rg0igb .compare-table tr {
+    }#normal-demo-d7356eaa-1-n3je1u .compare-table tr {
       display: block;
       margin-bottom: 32px;
     }
-  }#normal-demo-d7356eaa-1-rg0igb /* Styles for collapsible sections */
+  }#normal-demo-d7356eaa-1-n3je1u /* Styles for collapsible sections */
   .collapsible-header {
     cursor: pointer;
     padding: 16px 12px;
@@ -305,9 +336,9 @@
     margin-top: 20px;
     border-radius: 8px;
     transition: opacity 0.3s ease;
-  }#normal-demo-d7356eaa-1-rg0igb .collapsible-header:hover {
+  }#normal-demo-d7356eaa-1-n3je1u .collapsible-header:hover {
     opacity: 0.8;
-  }#normal-demo-d7356eaa-1-rg0igb .collapsible-content {
+  }#normal-demo-d7356eaa-1-n3je1u .collapsible-content {
     padding: 16px 12px;
     max-height: 0;
     overflow: hidden;
@@ -317,10 +348,10 @@
     border-bottom: 1px solid var(--border-color, #ddd);
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
-  }#normal-demo-d7356eaa-1-rg0igb .collapsible-content.active {
+  }#normal-demo-d7356eaa-1-n3je1u .collapsible-content.active {
     max-height: 5000px;
     /* Adjust based on expected content height */
-  }#normal-demo-d7356eaa-1-rg0igb /* Styles from git_log.html and git_log_chreey_pick.html */
+  }#normal-demo-d7356eaa-1-n3je1u /* Styles from git_log.html and git_log_chreey_pick.html */
   .branch-container {
     margin-bottom: 5px;
     padding: 6px 0;
@@ -328,59 +359,59 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 2px;
-  }#normal-demo-d7356eaa-1-rg0igb .branch-label {
+  }#normal-demo-d7356eaa-1-n3je1u .branch-label {
     border: 1px solid var(--border-color, #ddd);
     padding: 5px 10px;
     margin-bottom: 2px;
     display: inline-block;
-  }#normal-demo-d7356eaa-1-rg0igb /* .commit-node style is already defined */
-  /* .branch-a-node, #normal-demo-d7356eaa-1-rg0igb .branch-b-node, #normal-demo-d7356eaa-1-rg0igb .branch-c-node styles are already defined */
+  }#normal-demo-d7356eaa-1-n3je1u /* .commit-node style is already defined */
+  /* .branch-a-node, #normal-demo-d7356eaa-1-n3je1u .branch-b-node, #normal-demo-d7356eaa-1-n3je1u .branch-c-node styles are already defined */
 
   .merged-node-from-c {
     background-color: #ff9800;
     /* Orange - indicating from c */
-  }#normal-demo-d7356eaa-1-rg0igb .merged-node-from-b {
+  }#normal-demo-d7356eaa-1-n3je1u .merged-node-from-b {
     background-color: #4caf50;
     /* Green - indicating from b */
-  }#normal-demo-d7356eaa-1-rg0igb .revert {
+  }#normal-demo-d7356eaa-1-n3je1u .revert {
     background-color: #ffe0b2;
     border: 1px solid #ffb300;
     color: black;
-  }#normal-demo-d7356eaa-1-rg0igb .cherry-picked-commit {
+  }#normal-demo-d7356eaa-1-n3je1u .cherry-picked-commit {
     background-color: #ffebee;
     border: 1px solid #ef9a9a;
     color: black;
-  }#normal-demo-d7356eaa-1-rg0igb .branch-commits {
+  }#normal-demo-d7356eaa-1-n3je1u .branch-commits {
     display: flex;
     align-items: center;
-  }#normal-demo-d7356eaa-1-rg0igb .arrow {
+  }#normal-demo-d7356eaa-1-n3je1u .arrow {
     margin-right: 10px;
     font-size: 1.2em;
     color: #777;
-  }#normal-demo-d7356eaa-1-rg0igb .final-a {
+  }#normal-demo-d7356eaa-1-n3je1u .final-a {
     background-color: #fce4ec;
     border: 1px solid #f48fb1;
-  }#normal-demo-d7356eaa-1-rg0igb .strike {
+  }#normal-demo-d7356eaa-1-n3je1u .strike {
     text-decoration: line-through;
     color: gray;
-  }#normal-demo-d7356eaa-1-rg0igb .strike.branch-a-node, #normal-demo-d7356eaa-1-rg0igb .strike.branch-b-node, #normal-demo-d7356eaa-1-rg0igb .strike.branch-c-node, #normal-demo-d7356eaa-1-rg0igb .strike.merged-node-from-c, #normal-demo-d7356eaa-1-rg0igb .strike.merged-node-from-b {
+  }#normal-demo-d7356eaa-1-n3je1u .strike.branch-a-node, #normal-demo-d7356eaa-1-n3je1u .strike.branch-b-node, #normal-demo-d7356eaa-1-n3je1u .strike.branch-c-node, #normal-demo-d7356eaa-1-n3je1u .strike.merged-node-from-c, #normal-demo-d7356eaa-1-n3je1u .strike.merged-node-from-b {
     opacity: 0.5;
     text-decoration: line-through;
-  }#normal-demo-d7356eaa-1-rg0igb .step-description {
+  }#normal-demo-d7356eaa-1-n3je1u .step-description {
     margin-top: 10px;
     padding-left: 20px;
     font-size: 0.9em;
     color: #555;
-  }#normal-demo-d7356eaa-1-rg0igb .temp-branch-label {
+  }#normal-demo-d7356eaa-1-n3je1u .temp-branch-label {
     border: 1px solid #26c6da;
     padding: 5px 10px;
     margin-bottom: 2px;
     display: inline-block;
     color: #00838f;
-  }#normal-demo-d7356eaa-1-rg0igb /* Existing styles for collapsible sections */
+  }#normal-demo-d7356eaa-1-n3je1u /* Existing styles for collapsible sections */
   .collapsible-header {
     padding: 16px 12px;
-  }#normal-demo-d7356eaa-1-rg0igb .collapsible-content.active {
+  }#normal-demo-d7356eaa-1-n3je1u .collapsible-content.active {
     max-height: 5000px;
     /* Adjust based on expected content height */
   }
@@ -640,7 +671,7 @@
   </div>
 </details>
 
-<details class="demo-container" id="normal-demo-d7356eaa-2-p9r9jn" data-collapse="50vh" open>
+<details class="demo-container" id="normal-demo-d7356eaa-2-dfrox0" data-collapse="50vh" open>
   <summary class="demo-header">
     <span class="demo-title">Merge + Revert 详细步骤</span>
     <span class="demo-toggle-icon">
@@ -651,8 +682,162 @@
   </summary>
   <div class="demo-body">
     
-    <style>#normal-demo-d7356eaa-2-p9r9jn {font-family:sans-serif;margin:0;padding:0 8px}#normal-demo-d7356eaa-2-p9r9jn .main-content {max-width:1200px;margin:0 auto;border-radius:12px;padding:24px 12px 40px 12px}#normal-demo-d7356eaa-2-p9r9jn h1 {text-align:center;margin-bottom:16px}#normal-demo-d7356eaa-2-p9r9jn .compare-table {width:100%;border-collapse:separate;border-spacing:0 18px}#normal-demo-d7356eaa-2-p9r9jn .compare-table th, #normal-demo-d7356eaa-2-p9r9jn .compare-table td {vertical-align:top;padding:0 12px;width:50%}#normal-demo-d7356eaa-2-p9r9jn .compare-table th {font-size:1.1em;color:#2196f3;text-align:center;padding-bottom:8px}#normal-demo-d7356eaa-2-p9r9jn .stage-title-scheme1 {font-weight:bold;font-size:1.1em;margin-bottom:6px;color:#1976d2}#normal-demo-d7356eaa-2-p9r9jn .stage-title-scheme2 {font-weight:bold;font-size:1.1em;margin-bottom:6px;color:#388e3c}#normal-demo-d7356eaa-2-p9r9jn .stage-block {border-radius:8px;padding:12px 10px 10px 10px;margin-bottom:0;border:1px solid var(--border-color,#e3e8ee)}#normal-demo-d7356eaa-2-p9r9jn .diff {border:2px solid #ff9800;border-radius:8px;padding:10px 10px 8px 10px;margin-top:8px;margin-bottom:0;color:#b26a00}#normal-demo-d7356eaa-2-p9r9jn .final-result {border:2px solid #2196f3;border-radius:8px;padding:12px 10px 10px 10px;margin-top:8px;margin-bottom:0}#normal-demo-d7356eaa-2-p9r9jn .commit-node {display:inline-block;padding:3px 8px;border-radius:5px;margin-right:6px;font-size:0.98em}#normal-demo-d7356eaa-2-p9r9jn .branch-a-node {background:#2196f3;color:#fff}#normal-demo-d7356eaa-2-p9r9jn .branch-b-node {background:#4caf50;color:#fff}#normal-demo-d7356eaa-2-p9r9jn .branch-c-node {background:#ff9800;color:#fff}#normal-demo-d7356eaa-2-p9r9jn .merged-node-from-c {background:#ff9800;color:#fff;border:1.5px solid #ff9800}#normal-demo-d7356eaa-2-p9r9jn .merged-node-from-b {background:#4caf50;color:#fff;border:1.5px solid #4caf50}#normal-demo-d7356eaa-2-p9r9jn .cherry-picked-commit {border:2px solid #ef5350;color:#c62828}#normal-demo-d7356eaa-2-p9r9jn .revert {border:2px solid #ffb300;color:#b26a00}#normal-demo-d7356eaa-2-p9r9jn .strike {text-decoration:line-through;opacity:0.5;border:2px dashed #888 !important}#normal-demo-d7356eaa-2-p9r9jn .stage-desc {font-size:0.97em;margin-bottom:6px}
-  @media (max-width:900px){#normal-demo-d7356eaa-2-p9r9jn .compare-table th, #normal-demo-d7356eaa-2-p9r9jn .compare-table td {display:block;width:100%}#normal-demo-d7356eaa-2-p9r9jn .compare-table tr {display:block;margin-bottom:32px}}#normal-demo-d7356eaa-2-p9r9jn .collapsible-header {cursor:pointer;padding:16px 12px;width:100%;border:1px solid var(--border-color,#ddd);text-align:left;outline:none;font-size:1.1em;margin-top:20px;border-radius:8px;transition:opacity 0.3s ease}#normal-demo-d7356eaa-2-p9r9jn .collapsible-header:hover {opacity:0.8}#normal-demo-d7356eaa-2-p9r9jn .collapsible-content {padding:16px 12px;max-height:0;overflow:hidden;transition:max-height 0.2s ease-out;border-left:1px solid var(--border-color,#ddd);border-right:1px solid var(--border-color,#ddd);border-bottom:1px solid var(--border-color,#ddd);border-bottom-left-radius:8px;border-bottom-right-radius:8px}#normal-demo-d7356eaa-2-p9r9jn .collapsible-content.active {max-height:5000px}#normal-demo-d7356eaa-2-p9r9jn .branch-container {margin-bottom:5px;padding:6px 0;display:flex;flex-direction:column;align-items:flex-start;gap:2px}#normal-demo-d7356eaa-2-p9r9jn .branch-label {border:1px solid var(--border-color,#ddd);padding:5px 10px;margin-bottom:2px;display:inline-block}#normal-demo-d7356eaa-2-p9r9jn .branch-commits {display:flex;align-items:center}#normal-demo-d7356eaa-2-p9r9jn .arrow {margin-right:10px;font-size:1.2em}#normal-demo-d7356eaa-2-p9r9jn .final-a {border:1px solid #f48fb1}#normal-demo-d7356eaa-2-p9r9jn .strike.branch-a-node, #normal-demo-d7356eaa-2-p9r9jn .strike.branch-b-node, #normal-demo-d7356eaa-2-p9r9jn .strike.branch-c-node, #normal-demo-d7356eaa-2-p9r9jn .strike.merged-node-from-c, #normal-demo-d7356eaa-2-p9r9jn .strike.merged-node-from-b {opacity:0.5;text-decoration:line-through}#normal-demo-d7356eaa-2-p9r9jn .step-description {margin-top:10px;padding-left:20px;font-size:0.9em}#normal-demo-d7356eaa-2-p9r9jn .temp-branch-label {border:1px solid #26c6da;padding:5px 10px;margin-bottom:2px;display:inline-block;color:#00838f}
+    <style>#normal-demo-d7356eaa-2-dfrox0 {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0 8px;
+  }#normal-demo-d7356eaa-2-dfrox0 .main-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    border-radius: 12px;
+    padding: 24px 12px 40px 12px;
+  }#normal-demo-d7356eaa-2-dfrox0 h1 {
+    text-align: center;
+    margin-bottom: 16px;
+  }#normal-demo-d7356eaa-2-dfrox0 .compare-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 18px;
+  }#normal-demo-d7356eaa-2-dfrox0 .compare-table th, #normal-demo-d7356eaa-2-dfrox0 .compare-table td {
+    vertical-align: top;
+    padding: 0 12px;
+    width: 50%;
+  }#normal-demo-d7356eaa-2-dfrox0 .compare-table th {
+    font-size: 1.1em;
+    color: #2196f3;
+    text-align: center;
+    padding-bottom: 8px;
+  }#normal-demo-d7356eaa-2-dfrox0 .stage-title-scheme1 {
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-bottom: 6px;
+    color: #1976d2;
+  }#normal-demo-d7356eaa-2-dfrox0 .stage-title-scheme2 {
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-bottom: 6px;
+    color: #388e3c;
+  }#normal-demo-d7356eaa-2-dfrox0 .stage-block {
+    border-radius: 8px;
+    padding: 12px 10px 10px 10px;
+    margin-bottom: 0;
+    border: 1px solid var(--border-color, #e3e8ee);
+  }#normal-demo-d7356eaa-2-dfrox0 .diff {
+    border: 2px solid #ff9800;
+    border-radius: 8px;
+    padding: 10px 10px 8px 10px;
+    margin-top: 8px;
+    margin-bottom: 0;
+    color: #b26a00;
+  }#normal-demo-d7356eaa-2-dfrox0 .final-result {
+    border: 2px solid #2196f3;
+    border-radius: 8px;
+    padding: 12px 10px 10px 10px;
+    margin-top: 8px;
+    margin-bottom: 0;
+  }#normal-demo-d7356eaa-2-dfrox0 .commit-node {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 5px;
+    margin-right: 6px;
+    font-size: 0.98em;
+  }#normal-demo-d7356eaa-2-dfrox0 .branch-a-node {
+    background: #2196f3;
+    color: #fff;
+  }#normal-demo-d7356eaa-2-dfrox0 .branch-b-node {
+    background: #4caf50;
+    color: #fff;
+  }#normal-demo-d7356eaa-2-dfrox0 .branch-c-node {
+    background: #ff9800;
+    color: #fff;
+  }#normal-demo-d7356eaa-2-dfrox0 .merged-node-from-c {
+    background: #ff9800;
+    color: #fff;
+    border: 1.5px solid #ff9800;
+  }#normal-demo-d7356eaa-2-dfrox0 .merged-node-from-b {
+    background: #4caf50;
+    color: #fff;
+    border: 1.5px solid #4caf50;
+  }#normal-demo-d7356eaa-2-dfrox0 .cherry-picked-commit {
+    border: 2px solid #ef5350;
+    color: #c62828;
+  }#normal-demo-d7356eaa-2-dfrox0 .revert {
+    border: 2px solid #ffb300;
+    color: #b26a00;
+  }#normal-demo-d7356eaa-2-dfrox0 .strike {
+    text-decoration: line-through;
+    opacity: 0.5;
+    border: 2px dashed #888 !important;
+  }#normal-demo-d7356eaa-2-dfrox0 .stage-desc {
+    font-size: 0.97em;
+    margin-bottom: 6px;
+  }
+  @media (max-width: 900px) {#normal-demo-d7356eaa-2-dfrox0 .compare-table th, #normal-demo-d7356eaa-2-dfrox0 .compare-table td {
+      display: block;
+      width: 100%;
+    }#normal-demo-d7356eaa-2-dfrox0 .compare-table tr {
+      display: block;
+      margin-bottom: 32px;
+    }
+  }#normal-demo-d7356eaa-2-dfrox0 .collapsible-header {
+    cursor: pointer;
+    padding: 16px 12px;
+    width: 100%;
+    border: 1px solid var(--border-color, #ddd);
+    text-align: left;
+    outline: none;
+    font-size: 1.1em;
+    margin-top: 20px;
+    border-radius: 8px;
+    transition: opacity 0.3s ease;
+  }#normal-demo-d7356eaa-2-dfrox0 .collapsible-header:hover {
+    opacity: 0.8;
+  }#normal-demo-d7356eaa-2-dfrox0 .collapsible-content {
+    padding: 16px 12px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    border-left: 1px solid var(--border-color, #ddd);
+    border-right: 1px solid var(--border-color, #ddd);
+    border-bottom: 1px solid var(--border-color, #ddd);
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }#normal-demo-d7356eaa-2-dfrox0 .collapsible-content.active {
+    max-height: 5000px;
+  }#normal-demo-d7356eaa-2-dfrox0 .branch-container {
+    margin-bottom: 5px;
+    padding: 6px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }#normal-demo-d7356eaa-2-dfrox0 .branch-label {
+    border: 1px solid var(--border-color, #ddd);
+    padding: 5px 10px;
+    margin-bottom: 2px;
+    display: inline-block;
+  }#normal-demo-d7356eaa-2-dfrox0 .branch-commits {
+    display: flex;
+    align-items: center;
+  }#normal-demo-d7356eaa-2-dfrox0 .arrow {
+    margin-right: 10px;
+    font-size: 1.2em;
+  }#normal-demo-d7356eaa-2-dfrox0 .final-a {
+    border: 1px solid #f48fb1;
+  }#normal-demo-d7356eaa-2-dfrox0 .strike.branch-a-node, #normal-demo-d7356eaa-2-dfrox0 .strike.branch-b-node, #normal-demo-d7356eaa-2-dfrox0 .strike.branch-c-node, #normal-demo-d7356eaa-2-dfrox0 .strike.merged-node-from-c, #normal-demo-d7356eaa-2-dfrox0 .strike.merged-node-from-b {
+    opacity: 0.5;
+    text-decoration: line-through;
+  }#normal-demo-d7356eaa-2-dfrox0 .step-description {
+    margin-top: 10px;
+    padding-left: 20px;
+    font-size: 0.9em;
+  }#normal-demo-d7356eaa-2-dfrox0 .temp-branch-label {
+    border: 1px solid #26c6da;
+    padding: 5px 10px;
+    margin-bottom: 2px;
+    display: inline-block;
+    color: #00838f;
+  }
 </style>
 <!-- Detailed Steps Section -->
 <div>
@@ -930,7 +1115,7 @@
   </div>
 </details>
 
-<details class="demo-container" id="normal-demo-d7356eaa-3-reeklf" data-collapse="50vh" open>
+<details class="demo-container" id="normal-demo-d7356eaa-3-rxdq8q" data-collapse="50vh" open>
   <summary class="demo-header">
     <span class="demo-title">Reset + Cherry-pick 详细步骤</span>
     <span class="demo-toggle-icon">
@@ -941,7 +1126,8 @@
   </summary>
   <div class="demo-body">
     
-    <style>#normal-demo-d7356eaa-3-reeklf {font-family:sans-serif;margin:0;padding:0 8px}#normal-demo-d7356eaa-3-reeklf .main-content {max-width:1200px;margin:0 auto;border-radius:12px;padding:24px 12px 40px 12px}#normal-demo-d7356eaa-3-reeklf h1 {text-align:center;margin-bottom:16px}#normal-demo-d7356eaa-3-reeklf .compare-table {width:100%;border-collapse:separate;border-spacing:0 18px}#normal-demo-d7356eaa-3-reeklf .compare-table th, #normal-demo-d7356eaa-3-reeklf .compare-table td {vertical-align:top;padding:0 12px;width:50%}#normal-demo-d7356eaa-3-reeklf .compare-table th {font-size:1.1em;color:#2196f3;text-align:center;padding-bottom:8px}#normal-demo-d7356eaa-3-reeklf .stage-title-scheme1 {font-weight:bold;font-size:1.1em;margin-bottom:6px;color:#1976d2}#normal-demo-d7356eaa-3-reeklf .stage-title-scheme2 {font-weight:bold;font-size:1.1em;margin-bottom:6px;color:#388e3c}#normal-demo-d7356eaa-3-reeklf .stage-block {border-radius:8px;padding:12px 10px 10px 10px;margin-bottom:0;border:1px solid var(--border-color,#e3e8ee)}#normal-demo-d7356eaa-3-reeklf .diff {border:2px solid #ff9800;border-radius:8px;padding:10px 10px 8px 10px;margin-top:8px;margin-bottom:0;color:#b26a00}#normal-demo-d7356eaa-3-reeklf .final-result {border:2px solid #2196f3;border-radius:8px;padding:12px 10px 10px 10px;margin-top:8px;margin-bottom:0}#normal-demo-d7356eaa-3-reeklf .commit-node {display:inline-block;padding:3px 8px;border-radius:5px;margin-right:6px;font-size:0.98em}#normal-demo-d7356eaa-3-reeklf .branch-a-node {background:#2196f3;color:#fff}#normal-demo-d7356eaa-3-reeklf .branch-b-node {background:#4caf50;color:#fff}#normal-demo-d7356eaa-3-reeklf .branch-c-node {background:#ff9800;color:#fff}#normal-demo-d7356eaa-3-reeklf .merged-node-from-c {background:#ff9800;color:#fff;border:1.5px solid #ff9800}#normal-demo-d7356eaa-3-reeklf .merged-node-from-b {background:#4caf50;color:#fff;border:1.5px solid #4caf50}#normal-demo-d7356eaa-3-reeklf .cherry-picked-commit {border:2px solid #ef5350;color:#c62828}#normal-demo-d7356eaa-3-reeklf .revert {border:2px solid #ffb300;color:#b26a00}#normal-demo-d7356eaa-3-reeklf .strike {text-decoration:line-through;opacity:0.5;border:2px dashed #888 !important}#normal-demo-d7356eaa-3-reeklf .stage-desc {font-size:0.97em;margin-bottom:6px}@media (max-width:900px){#normal-demo-d7356eaa-3-reeklf .compare-table th, #normal-demo-d7356eaa-3-reeklf .compare-table td {display:block;width:100%}#normal-demo-d7356eaa-3-reeklf .compare-table tr {display:block;margin-bottom:32px}}#normal-demo-d7356eaa-3-reeklf .collapsible-header {cursor:pointer;padding:16px 12px;width:100%;border:1px solid var(--border-color,#ddd);text-align:left;outline:none;font-size:1.1em;margin-top:20px;border-radius:8px;transition:opacity 0.3s ease}#normal-demo-d7356eaa-3-reeklf .collapsible-header:hover {opacity:0.8}#normal-demo-d7356eaa-3-reeklf .collapsible-content {padding:16px 12px;max-height:0;overflow:hidden;transition:max-height 0.2s ease-out;border-left:1px solid var(--border-color,#ddd);border-right:1px solid var(--border-color,#ddd);border-bottom:1px solid var(--border-color,#ddd);border-bottom-left-radius:8px;border-bottom-right-radius:8px}#normal-demo-d7356eaa-3-reeklf .collapsible-content.active {max-height:5000px}#normal-demo-d7356eaa-3-reeklf .branch-container {margin-bottom:5px;padding:6px 0;display:flex;flex-direction:column;align-items:flex-start;gap:2px}#normal-demo-d7356eaa-3-reeklf .branch-label {border:1px solid var(--border-color,#ddd);padding:5px 10px;margin-bottom:2px;display:inline-block}#normal-demo-d7356eaa-3-reeklf .branch-commits {display:flex;align-items:center}#normal-demo-d7356eaa-3-reeklf .arrow {margin-right:10px;font-size:1.2em}#normal-demo-d7356eaa-3-reeklf .final-a {border:1px solid #f48fb1}#normal-demo-d7356eaa-3-reeklf .strike.branch-a-node, #normal-demo-d7356eaa-3-reeklf .strike.branch-b-node, #normal-demo-d7356eaa-3-reeklf .strike.branch-c-node, #normal-demo-d7356eaa-3-reeklf .strike.merged-node-from-c, #normal-demo-d7356eaa-3-reeklf .strike.merged-node-from-b {opacity:0.5;text-decoration:line-through}#normal-demo-d7356eaa-3-reeklf .step-description {margin-top:10px;padding-left:20px;font-size:0.9em}#normal-demo-d7356eaa-3-reeklf .temp-branch-label {border:1px solid #26c6da;padding:5px 10px;margin-bottom:2px;display:inline-block;color:#00838f}</style>
+    <style>#normal-demo-d7356eaa-3-rxdq8q {font-family:sans-serif;margin:0;padding:0 8px}#normal-demo-d7356eaa-3-rxdq8q .main-content {max-width:1200px;margin:0 auto;border-radius:12px;padding:24px 12px 40px 12px}#normal-demo-d7356eaa-3-rxdq8q h1 {text-align:center;margin-bottom:16px}#normal-demo-d7356eaa-3-rxdq8q .compare-table {width:100%;border-collapse:separate;border-spacing:0 18px}#normal-demo-d7356eaa-3-rxdq8q .compare-table th, #normal-demo-d7356eaa-3-rxdq8q .compare-table td {vertical-align:top;padding:0 12px;width:50%}#normal-demo-d7356eaa-3-rxdq8q .compare-table th {font-size:1.1em;color:#2196f3;text-align:center;padding-bottom:8px}#normal-demo-d7356eaa-3-rxdq8q .stage-title-scheme1 {font-weight:bold;font-size:1.1em;margin-bottom:6px;color:#1976d2}#normal-demo-d7356eaa-3-rxdq8q .stage-title-scheme2 {font-weight:bold;font-size:1.1em;margin-bottom:6px;color:#388e3c}#normal-demo-d7356eaa-3-rxdq8q .stage-block {border-radius:8px;padding:12px 10px 10px 10px;margin-bottom:0;border:1px solid var(--border-color,#e3e8ee);overflow-x:auto;white-space:nowrap}#normal-demo-d7356eaa-3-rxdq8q .diff {border:2px solid #ff9800;border-radius:8px;padding:10px 10px 8px 10px;margin-top:8px;margin-bottom:0;color:#b26a00;white-space:normal}#normal-demo-d7356eaa-3-rxdq8q .final-result {border:2px solid #2196f3;border-radius:8px;padding:12px 10px 10px 10px;margin-top:8px;margin-bottom:0}#normal-demo-d7356eaa-3-rxdq8q .commit-node {display:inline-block;padding:3px 8px;border-radius:5px;margin-right:6px;font-size:0.98em;white-space:nowrap;word-break:normal;flex-shrink:0}#normal-demo-d7356eaa-3-rxdq8q .branch-a-node {background:#2196f3;color:#fff}#normal-demo-d7356eaa-3-rxdq8q .branch-b-node {background:#4caf50;color:#fff}#normal-demo-d7356eaa-3-rxdq8q .branch-c-node {background:#ff9800;color:#fff}#normal-demo-d7356eaa-3-rxdq8q .merged-node-from-c {background:#ff9800;color:#fff;border:1.5px solid #ff9800}#normal-demo-d7356eaa-3-rxdq8q .merged-node-from-b {background:#4caf50;color:#fff;border:1.5px solid #4caf50}#normal-demo-d7356eaa-3-rxdq8q .cherry-picked-commit {border:2px solid #ef5350;color:#c62828}#normal-demo-d7356eaa-3-rxdq8q .revert {border:2px solid #ffb300;color:#b26a00}#normal-demo-d7356eaa-3-rxdq8q .strike {text-decoration:line-through;opacity:0.5;border:2px dashed #888 !important}#normal-demo-d7356eaa-3-rxdq8q .stage-desc {font-size:0.97em;margin-bottom:6px}
+  @media (max-width:900px){#normal-demo-d7356eaa-3-rxdq8q .compare-table th, #normal-demo-d7356eaa-3-rxdq8q .compare-table td {display:block;width:100%}#normal-demo-d7356eaa-3-rxdq8q .compare-table tr {display:block;margin-bottom:32px}}#normal-demo-d7356eaa-3-rxdq8q .collapsible-header {cursor:pointer;padding:16px 12px;width:100%;border:1px solid var(--border-color,#ddd);text-align:left;outline:none;font-size:1.1em;margin-top:20px;border-radius:8px;transition:opacity 0.3s ease}#normal-demo-d7356eaa-3-rxdq8q .collapsible-header:hover {opacity:0.8}#normal-demo-d7356eaa-3-rxdq8q .collapsible-content {padding:16px 12px;max-height:0;overflow:hidden;transition:max-height 0.2s ease-out;border-left:1px solid var(--border-color,#ddd);border-right:1px solid var(--border-color,#ddd);border-bottom:1px solid var(--border-color,#ddd);border-bottom-left-radius:8px;border-bottom-right-radius:8px}#normal-demo-d7356eaa-3-rxdq8q .collapsible-content.active {max-height:5000px}#normal-demo-d7356eaa-3-rxdq8q .branch-container {margin-bottom:5px;padding:6px 0;display:flex;flex-direction:column;align-items:flex-start;gap:2px;width:100%;overflow:hidden}#normal-demo-d7356eaa-3-rxdq8q .branch-label {border:1px solid var(--border-color,#ddd);padding:5px 10px;margin-bottom:2px;display:inline-block;flex-shrink:0}#normal-demo-d7356eaa-3-rxdq8q .branch-commits {display:flex;align-items:center;overflow-x:auto;width:100%;padding-bottom:5px}#normal-demo-d7356eaa-3-rxdq8q .arrow {margin-right:10px;font-size:1.2em}#normal-demo-d7356eaa-3-rxdq8q .final-a {border:1px solid #f48fb1}#normal-demo-d7356eaa-3-rxdq8q .strike.branch-a-node, #normal-demo-d7356eaa-3-rxdq8q .strike.branch-b-node, #normal-demo-d7356eaa-3-rxdq8q .strike.branch-c-node, #normal-demo-d7356eaa-3-rxdq8q .strike.merged-node-from-c, #normal-demo-d7356eaa-3-rxdq8q .strike.merged-node-from-b {opacity:0.5;text-decoration:line-through}#normal-demo-d7356eaa-3-rxdq8q .step-description {margin-top:10px;padding-left:20px;font-size:0.9em}#normal-demo-d7356eaa-3-rxdq8q .temp-branch-label {border:1px solid #26c6da;padding:5px 10px;margin-bottom:2px;display:inline-block;color:#00838f}</style>
         <div >
             <!-- Content from git_log_chreey_pick.html body -->
             <div id="stage1-reset-graphic" class="branch-container">
@@ -1287,19 +1473,21 @@
         <i class="fas fa-rocket"></i>
     </button>
 
-    <!-- Scripts: Cloudflare CDN (safe source) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/dart.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/kotlin.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/gradle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/groovy.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/yaml.min.js"></script>
+    <!-- Page-specific scripts (Highlight.js, MathJax, etc.) -->
+    
+    <!-- Highlight.js: Cloudflare CDN -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/dart.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/kotlin.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/gradle.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/groovy.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/yaml.min.js"></script>
     <script>
-        // MathJax Configuration - Enable $...$ inline math
+        // MathJax Configuration
         window.MathJax = {
             tex: {
-                inlineMath: [['$', '$'], ['\(', '\)']],
-                displayMath: [['$$', '$$'], ['\[', '\]']],
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
                 processEscapes: true
             },
             options: {
@@ -1309,6 +1497,9 @@
         };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script src="/blog/scripts/client.js?v=1766377145271"></script>
+    
+
+    <!-- Core client.js -->
+    <script src="/blog/scripts/client.js?v=1766400927658"></script>
 </body>
 </html>

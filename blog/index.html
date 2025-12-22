@@ -5,18 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JI,XIAOYONG's Blog - JI,XIAOYONG's Blog</title>
     
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://google-fonts.mirrors.sjtug.sjtu.edu.cn">
+
     <!-- Fonts: Async loading with smart CDN switching (SJTUG for China, Google for international) -->
     <!-- Font CSS will be loaded by JavaScript after page content loads -->
     
-    <!-- Icons: Cloudflare CDN (safe source) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Icons: Cloudflare CDN (FontAwesome only - async loading) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
 
     <!-- Styles -->
-    <link rel="stylesheet" href="/blog/styles/main.css?v=1766377145493">
-    <link rel="stylesheet" href="/blog/styles/containers.css?v=1766377145493">
-
-    <!-- Highlight.js Theme: Cloudflare CDN (safe source) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" id="hljs-theme">
+    <link rel="stylesheet" href="/blog/styles/main.css?v=1766400927900">
 
     <script>
         // Immediately compute and apply correct theme to prevent FOUC (Flash of Unstyled Content)
@@ -31,8 +33,8 @@
         // Inject i18n data for client-side switching
         window.basePath = '/blog';
         window.__I18N_DATA__ = {
-            zh: {"common":{"search":"搜索","backToList":"返回列表","language":"语言","theme":{"title":"主题","auto":"跟随系统","light":"浅色","dark":"深色"},"nav":{"home":"首页","about":"关于"},"searchNoResults":"未找到相关文章","backToTop":"返回顶部"},"article":{"publishedOn":"发布于","updatedOn":"更新于","author":"作者","prevPost":"上一篇","nextPost":"下一篇","notByAi":{"tooltip":"本文是人类纯手工实现，没有 AI 参与 (Handcrafted by humans, no AI involved)","aiLevel":"AI 协作度：","warning":"⚠️ 本文部分或全部内容由 AI 辅助生成，请注意甄别。","tag1":"AI 辅助 20%","tag2":"AI 辅助 40%","tag3":"AI 协作 60%","tag4":"AI 生成 80%","tag5":"AI 生成 100%","desc1":"本文由人类主导创作，AI 提供少量辅助","desc2":"本文由人机协作完成，AI 参与了部分内容","desc3":"本文由人机协作完成，核心观点来自作者","desc4":"本文主要由 AI 生成，作者进行了审校","desc5":"本文完全由 AI 生成，请读者自行甄别"},"emailComment":{"title":"有想法？欢迎通过邮件讨论。","button":"发送邮件评论","subject":"关于文章的评论","bodyHello":"你好！","bodyIntro":"我阅读了你的文章，以下是我的想法：","copyFallback":"无法打开邮件客户端，是否复制邮箱地址？"}},"about":{"greeting":"你好 👋，我是","subtitle":"一名开发者。<br/>一个热爱世界的人。","contactTitle":"与我联系：","toolsTitle":"语言和工具："},"footer":{"copyright":"版权所有 © {0} {1}"},"notFound":{"title":"页面未找到","message":"抱歉！您访问的页面不存在或已被移动。","suggestion":"您可以尝试："}},
-            en: {"common":{"search":"Search","backToList":"Back to List","language":"Language","theme":{"title":"Theme","auto":"Auto","light":"Light","dark":"Dark"},"nav":{"home":"Home","about":"About"},"searchNoResults":"No results found","backToTop":"Back to Top"},"article":{"publishedOn":"Published on","updatedOn":"Updated on","author":"By","prevPost":"Previous","nextPost":"Next","notByAi":{"tooltip":"Handcrafted by humans, no AI involved","aiLevel":"AI Collaboration: ","warning":"⚠️ This article contains content generated or assisted by AI. Please verify critical information.","tag1":"20% AI Assisted","tag2":"40% AI Assisted","tag3":"60% AI Collaborated","tag4":"80% AI Generated","tag5":"100% AI Generated","desc1":"Human-led creation with minor AI assistance","desc2":"Human-AI collaboration for partial content","desc3":"Human-AI collaboration, core ideas from author","desc4":"Primarily AI-generated, reviewed by author","desc5":"Entirely AI-generated, please verify independently"},"emailComment":{"title":"Any thoughts? Feel free to discuss via email.","button":"Email Comment","subject":"Comment on article","bodyHello":"Hi!","bodyIntro":"I read your article and here are my thoughts:","copyFallback":"Cannot open email client. Copy email address?"}},"about":{"greeting":"Hi 👋, I'm","subtitle":"A developer.<br/>A man who love the world.","contactTitle":"Keep touch with me:","toolsTitle":"Languages and Tools:"},"footer":{"copyright":"Copyright © {0} {1}"},"notFound":{"title":"Page Not Found","message":"Oops! The page you're looking for doesn't exist or has been moved.","suggestion":"Maybe try one of these:"}}
+            zh: {"common":{"search":"搜索","backToList":"返回列表","language":"语言","theme":{"title":"主题","auto":"跟随系统","light":"浅色","dark":"深色"},"nav":{"home":"首页","about":"关于"},"searchNoResults":"未找到相关文章","backToTop":"返回顶部","noMorePosts":"共 {0} 篇文章，没有更多了"},"article":{"publishedOn":"发布于","updatedOn":"更新于","author":"作者","prevPost":"上一篇","nextPost":"下一篇","notByAi":{"tooltip":"本文是人类纯手工实现，没有 AI 参与 (Handcrafted by humans, no AI involved)","aiLevel":"AI 协作度：","warning":"⚠️ 本文部分或全部内容由 AI 辅助生成，请注意甄别。","tag1":"AI 辅助 20%","tag2":"AI 辅助 40%","tag3":"AI 协作 60%","tag4":"AI 生成 80%","tag5":"AI 生成 100%","desc1":"本文由人类主导创作，AI 提供少量辅助","desc2":"本文由人机协作完成，AI 参与了部分内容","desc3":"本文由人机协作完成，核心观点来自作者","desc4":"本文主要由 AI 生成，作者进行了审校","desc5":"本文完全由 AI 生成，请读者自行甄别"},"emailComment":{"title":"有想法？欢迎通过邮件讨论。","button":"发送邮件评论","subject":"关于文章的评论","bodyHello":"你好！","bodyIntro":"我阅读了你的文章，以下是我的想法：","copyFallback":"无法打开邮件客户端，是否复制邮箱地址？"}},"about":{"greeting":"你好 👋，我是","subtitle":"一名开发者。<br/>一个热爱世界的人。","contactTitle":"与我联系：","toolsTitle":"语言和工具：","techStack":"技术栈","totalPosts":"本站当前共 {0} 篇文章","timeline":{"title":"博客演进史"}},"footer":{"copyright":"版权所有 © {0} {1}"},"notFound":{"title":"页面未找到","message":"抱歉！您访问的页面不存在或已被移动。","suggestion":"您可以尝试："}},
+            en: {"common":{"search":"Search","backToList":"Back to List","language":"Language","theme":{"title":"Theme","auto":"Auto","light":"Light","dark":"Dark"},"nav":{"home":"Home","about":"About"},"searchNoResults":"No results found","backToTop":"Back to Top","noMorePosts":"{0} posts in total, no more"},"article":{"publishedOn":"Published on","updatedOn":"Updated on","author":"By","prevPost":"Previous","nextPost":"Next","notByAi":{"tooltip":"Handcrafted by humans, no AI involved","aiLevel":"AI Collaboration: ","warning":"⚠️ This article contains content generated or assisted by AI. Please verify critical information.","tag1":"20% AI Assisted","tag2":"40% AI Assisted","tag3":"60% AI Collaborated","tag4":"80% AI Generated","tag5":"100% AI Generated","desc1":"Human-led creation with minor AI assistance","desc2":"Human-AI collaboration for partial content","desc3":"Human-AI collaboration, core ideas from author","desc4":"Primarily AI-generated, reviewed by author","desc5":"Entirely AI-generated, please verify independently"},"emailComment":{"title":"Any thoughts? Feel free to discuss via email.","button":"Email Comment","subject":"Comment on article","bodyHello":"Hi!","bodyIntro":"I read your article and here are my thoughts:","copyFallback":"Cannot open email client. Copy email address?"}},"about":{"greeting":"Hi 👋, I'm","subtitle":"A developer.<br/>A man who love the world.","contactTitle":"Keep touch with me:","toolsTitle":"Languages and Tools:","techStack":"Tech Stack","totalPosts":"This site currently has {0} posts","timeline":{"title":"Blog Evolution"}},"footer":{"copyright":"Copyright © {0} {1}"},"notFound":{"title":"Page Not Found","message":"Oops! The page you're looking for doesn't exist or has been moved.","suggestion":"Maybe try one of these:"}}
         };
         // Initial language preference
         const savedLang = localStorage.getItem('preferred_lang');
@@ -46,7 +48,7 @@
     
     <header>
         <div class="container">
-            <a href="/blog/" class="logo">
+            <a href="/blog/" class="logo" onclick="if(window.location.pathname === '/blog/' || window.location.pathname === '/blog/index.html'){window.scrollTo({top:0,behavior:'smooth'});return false;}">
                 <img src="https://jixiaoyong.github.io/images/user_avatar.webp" alt="JI,XIAOYONG" class="logo-avatar">
                 JI,XIAOYONG
             </a>
@@ -117,10 +119,12 @@
                     data-i18n-zh-title="博客遭遇 CDN 供应链投毒攻击：排查与修复全记录"
                     data-i18n-zh-excerpt="最近发现博客在手机上浏览时会自动跳转到第三方诈骗网站，经过排查发现是使用的 CDN 遭受了供应链投毒攻击。本文记录整个排查和修复过程。 问题现象 手机浏览博客时，页面会自动跳转到诈骗网站 主要影响移动端用户 PC 端偶尔也会出现跳转 问题根因 cdn.staticfile.net 供应链攻击 经过排..."
                     data-i18n-zh-path="/blog/posts/6f412ead.html"
+                    data-i18n-zh-tags=""
                  
                     data-i18n-en-title="Blog Under Attack: Troubleshooting and Fixing a CDN Supply Chain Poisoning Incident"
                     data-i18n-en-excerpt="Recently, I discovered that my blog was automatically redirecting to third-party scam websites when browsed on mobile devices. After troubleshooting, ..."
                     data-i18n-en-path="/blog/posts/en/6f412ead.html"
+                    data-i18n-en-tags="Changelog,Security"
                 >
                 <div class="post-header">
                     <h2><a href="/blog/posts/6f412ead.html">博客遭遇 CDN 供应链投毒攻击：排查与修复全记录</a></h2>
@@ -138,6 +142,7 @@
                     data-i18n-zh-title="Signals.dart使用介绍"
                     data-i18n-zh-excerpt="本文旨在为 Dart 和 Flutter 开发者提供 Signals.dart 框架的全面介绍。Signals.dart 借鉴了现代前端响应式系统（如 SolidJS 或 Vue 3）的核心理念，提供了一种基于 Pull-Based（拉取式） 架构的、高效且极简的状态管理方案。 文档重点阐述了框架的..."
                     data-i18n-zh-path="/blog/posts/42a9077b.html"
+                    data-i18n-zh-tags=""
                 >
                 <div class="post-header">
                     <h2><a href="/blog/posts/42a9077b.html">Signals.dart使用介绍</a></h2>
@@ -155,6 +160,7 @@
                     data-i18n-zh-title="Android Flutter 插件第三方 aar 库依赖方式对比分析"
                     data-i18n-zh-excerpt="背景说明 在开发 Flutter 插件时，我们经常需要集成第三方 Android 库。然而，将本地 AAR 文件直接添加到 Flutter 插件模块中，是无法自动将 AAR 的依赖关系和内容正确传递给宿主 App 的。 尤其需要注意的是： AGP 7.0+ 的明确限制：Android Gradle ..."
                     data-i18n-zh-path="/blog/posts/d89b1d83.html"
+                    data-i18n-zh-tags=""
                 >
                 <div class="post-header">
                     <h2><a href="/blog/posts/d89b1d83.html">Android Flutter 插件第三方 aar 库依赖方式对比分析</a></h2>
@@ -172,6 +178,7 @@
                     data-i18n-zh-title="Git Merge+Revert 与 Reset+Cherry-pick 对比"
                     data-i18n-zh-excerpt="日常使用 git 开发管理分支非常方便，但是偶尔也会出现一些问题，比如这次就遇到了回滚合并导致后续合并丢失部分内容这样的情况，本文介绍一下如何处理这种情况，分析事故原因。 Merge+Revert 方案在复杂合并和回滚时容易引入副作用，可能导致部分内容被意外撤销；而 Reset+Cherry-pic..."
                     data-i18n-zh-path="/blog/posts/d7356eaa.html"
+                    data-i18n-zh-tags=""
                 >
                 <div class="post-header">
                     <h2><a href="/blog/posts/d7356eaa.html">Git Merge+Revert 与 Reset+Cherry-pick 对比</a></h2>
@@ -187,15 +194,16 @@
             
             <div class="post-item" 
                     data-i18n-zh-title="Android 架构模式一览"
-                    data-i18n-zh-excerpt="Android 的架构依次有： MVC MVP MVVM MVI Clean Architecture 上述架构循序渐进，当前主流设计模式是 MVVM，MVI 和 Clean Architecture，这三者的着重点各有不同，可以根据项目规模大小递进选择。 MVC MVC，Model-View-Co..."
+                    data-i18n-zh-excerpt="Android 的架构依次有： MVC MVP MVVM MVI Clean Architecture 上述架构循序渐进，当前主流设计模式是 MVVM，MVI 和 Clean Architecture，这三者的着重点各有不同，可以根据项目规模大小递进选择。 [图片] MVC MVC，Model-Vi..."
                     data-i18n-zh-path="/blog/posts/6f46f598.html"
+                    data-i18n-zh-tags=""
                 >
                 <div class="post-header">
                     <h2><a href="/blog/posts/6f46f598.html">Android 架构模式一览</a></h2>
                     <span class="post-date">2023-12-15</span>
                 </div>
                 <div class="post-excerpt">
-                    <p>Android 的架构依次有： MVC MVP MVVM MVI Clean Architecture 上述架构循序渐进，当前主流设计模式是 MVVM，MVI 和 Clean Architecture，这三者的着重点各有不同，可以根据项目规模大小递进选择。 MVC MVC，Model-View-Co...</p>
+                    <p>Android 的架构依次有： MVC MVP MVVM MVI Clean Architecture 上述架构循序渐进，当前主流设计模式是 MVVM，MVI 和 Clean Architecture，这三者的着重点各有不同，可以根据项目规模大小递进选择。 [图片] MVC MVC，Model-Vi...</p>
                 </div>
                 <div class="post-tags">
                     
@@ -206,6 +214,7 @@
                     data-i18n-zh-title="Flutter 动画分析之 CustomPaint"
                     data-i18n-zh-excerpt="本文讨论的 Flutter 动画主要限定在：随着每一帧的变化，修改 Flutter Widget 的大小、颜色、位置等属性，使之看起来从一种状态渐变为另外一种状态 这一范围。 根据之前的分析，关于 Flutter 中的 Widget 动画，大体可以分为三大类： 隐式动画，以 ImplicitlyAn..."
                     data-i18n-zh-path="/blog/posts/adf541c0.html"
+                    data-i18n-zh-tags=""
                 >
                 <div class="post-header">
                     <h2><a href="/blog/posts/adf541c0.html">Flutter 动画分析之 CustomPaint</a></h2>
@@ -223,6 +232,7 @@
                     data-i18n-zh-title="Flutter 动画分析之 AnimatedWidget&ImplicitlyAnimatedWidget"
                     data-i18n-zh-excerpt="本文讨论的 Flutter 动画主要限定在：随着每一帧的变化，修改 Flutter Widget 的大小、颜色、位置等属性，使之看起来从一种状态渐变为另外一种状态 这一范围。 在之前的文章中，我们将 Flutter 中动画的实现分为 底层实现 和 封装好的 Widget 两大部分，目前已经分析了底层..."
                     data-i18n-zh-path="/blog/posts/47c43abe.html"
+                    data-i18n-zh-tags=""
                 >
                 <div class="post-header">
                     <h2><a href="/blog/posts/47c43abe.html">Flutter 动画分析之 AnimatedWidget&ImplicitlyAnimatedWidget</a></h2>
@@ -240,6 +250,7 @@
                     data-i18n-zh-title="Flutter 动画分析之 AnimationController"
                     data-i18n-zh-excerpt="本文讨论的 Flutter 动画主要限定在：随着每一帧的变化，修改 Flutter Widget 的大小、颜色、位置等属性，使之看起来从一种状态渐变为另外一种状态 这一范围。 Flutter 中关于动画的类有很多，为了便于分析，将其分为两大类： Flutter 框架底层实现动画的各个类，比如 Ani..."
                     data-i18n-zh-path="/blog/posts/6ec43bd8.html"
+                    data-i18n-zh-tags=""
                 >
                 <div class="post-header">
                     <h2><a href="/blog/posts/6ec43bd8.html">Flutter 动画分析之 AnimationController</a></h2>
@@ -257,6 +268,7 @@
                     data-i18n-zh-title="Flutter 动画分析之 Tween&Curve"
                     data-i18n-zh-excerpt="在上篇文章中，我们分析了 Flutter 中主要由AnimationController控制动画的开始、结束，但是默认情况下其只能产生线性变化的 double 类型的 value，如果想随时间变化，让 Widget 产生 Size、Offset 等属性的变化，亦或者控制这些值变化的速度快慢，这时候就..."
                     data-i18n-zh-path="/blog/posts/820d6240.html"
+                    data-i18n-zh-tags=""
                 >
                 <div class="post-header">
                     <h2><a href="/blog/posts/820d6240.html">Flutter 动画分析之 Tween&Curve</a></h2>
@@ -274,6 +286,7 @@
                     data-i18n-zh-title="Flutter 动画分析之 Hero"
                     data-i18n-zh-excerpt="Flutter 中的 Hero 动画是指可以在切换页面时自动跨页面实现 Widget 放大缩小、位移的动画，在用户看起来好像是当前页面的 Widget“飞”入到另外一个页面，底层基于 Overlay 实现。 本文对其原理和应用做一简单分析，主要是对官方介绍的理解与分析，感兴趣的可以直接阅读官方文档。..."
                     data-i18n-zh-path="/blog/posts/62beedda.html"
+                    data-i18n-zh-tags=""
                 >
                 <div class="post-header">
                     <h2><a href="/blog/posts/62beedda.html">Flutter 动画分析之 Hero</a></h2>
@@ -291,6 +304,7 @@
                     data-i18n-zh-title="Flutter 图片加载方案分析之 power_image"
                     data-i18n-zh-excerpt="Flutter 默认提供了Image用于从网络、文件等加载图片，并且使用ImageCache统一管理图片缓存，但有时候并不能满足使用需求（比如网络图片没有磁盘缓存，导致每次 ImageCache 清除缓存之后又要从网络下载），所以又出现了fluttercachednetworkimage、exten..."
                     data-i18n-zh-path="/blog/posts/727d7800.html"
+                    data-i18n-zh-tags=""
                 >
                 <div class="post-header">
                     <h2><a href="/blog/posts/727d7800.html">Flutter 图片加载方案分析之 power_image</a></h2>
@@ -308,6 +322,7 @@
                     data-i18n-zh-title="Flutter 图片加载方案分析之 extended_image"
                     data-i18n-zh-excerpt="Flutter 默认提供了Image用于从网络、文件等加载图片，并且使用ImageCache统一管理图片缓存，但有时候并不能满足使用需求（比如网络图片没有磁盘缓存，导致每次 ImageCache 清除缓存之后又要从网络下载），所以又出现了fluttercachednetworkimage、exten..."
                     data-i18n-zh-path="/blog/posts/23ac516a.html"
+                    data-i18n-zh-tags=""
                 >
                 <div class="post-header">
                     <h2><a href="/blog/posts/23ac516a.html">Flutter 图片加载方案分析之 extended_image</a></h2>
@@ -325,6 +340,7 @@
                     data-i18n-zh-title="Flutter 图片加载方案分析之 Image"
                     data-i18n-zh-excerpt="Flutter 默认提供了Image用于从网络、文件等加载图片，并且使用ImageCache统一管理图片缓存，但有时候并不能满足使用需求（比如网络图片没有磁盘缓存，导致每次 ImageCache 清除缓存之后又要从网络下载），所以又出现了fluttercachednetworkimage、exten..."
                     data-i18n-zh-path="/blog/posts/1912667a.html"
+                    data-i18n-zh-tags=""
                 >
                 <div class="post-header">
                     <h2><a href="/blog/posts/1912667a.html">Flutter 图片加载方案分析之 Image</a></h2>
@@ -342,6 +358,7 @@
                     data-i18n-zh-title="Flutter 滑动分析之 NestedScrollView"
                     data-i18n-zh-excerpt="Flutter 中的 scrollable widget 根据实现方式的不同，可以分为两大类： 基于 RenderBox 的 box protocol 实现的，主要基于 Size 实现布局。常见的有SingleChildScrollView。 基于 RenderSliver 的 sliver pro..."
                     data-i18n-zh-path="/blog/posts/ae8e53be.html"
+                    data-i18n-zh-tags=""
                 >
                 <div class="post-header">
                     <h2><a href="/blog/posts/ae8e53be.html">Flutter 滑动分析之 NestedScrollView</a></h2>
@@ -359,6 +376,7 @@
                     data-i18n-zh-title="Flutter 滑动分析之 Scrollview"
                     data-i18n-zh-excerpt="Flutter 中的 scrollable widget 根据实现方式的不同，可以分为两大类： 基于 RenderBox 的 box protocol 实现的，主要基于 Size 实现布局。常见的有 SingleChildScrollView。 基于 RenderSliver 的 sliver pr..."
                     data-i18n-zh-path="/blog/posts/60f8d92f.html"
+                    data-i18n-zh-tags=""
                 >
                 <div class="post-header">
                     <h2><a href="/blog/posts/60f8d92f.html">Flutter 滑动分析之 Scrollview</a></h2>
@@ -376,6 +394,7 @@
                     data-i18n-zh-title="Flutter 滑动分析之 SingleChildScrollView"
                     data-i18n-zh-excerpt="Flutter 中的 scrollable widget 根据实现方式的不同，可以分为两大类： 基于 RenderBox 的 box protocol 实现的，主要基于 Size 实现布局。常见的有 SingleChildScrollView。 基于 RenderSliver 的 sliver pr..."
                     data-i18n-zh-path="/blog/posts/d3bdcb53.html"
+                    data-i18n-zh-tags=""
                 >
                 <div class="post-header">
                     <h2><a href="/blog/posts/d3bdcb53.html">Flutter 滑动分析之 SingleChildScrollView</a></h2>
@@ -393,6 +412,7 @@
                     data-i18n-zh-title="Flutter APP 绘制过程简析"
                     data-i18n-zh-excerpt="本文基于 Flutter 3.0 Flutter App 基于 Dart 语言编写，提供了一套简单易用的 API，可以让开发者在 Flutter 中快速开发出一个精美的 APP。那么在 Flutter 中是如何绘制一个 APP 呢，runApp 是怎么将我们编写的 Widget 等添加到手机上的呢？..."
                     data-i18n-zh-path="/blog/posts/4cbcfe72.html"
+                    data-i18n-zh-tags=""
                 >
                 <div class="post-header">
                     <h2><a href="/blog/posts/4cbcfe72.html">Flutter APP 绘制过程简析</a></h2>
@@ -410,6 +430,7 @@
                     data-i18n-zh-title="Dart event loop"
                     data-i18n-zh-excerpt="本文基于 Dart 2.17 Dart App 中所有的代码都在一个 isolate 中运行（各个 isolate 之间的代码运行时是隔离的），一个 isolate 有自己的 heap，维持有一个消息队列 eventloop，处理两种消息： 1. 执行用户点击、屏幕刷新、绘制，一般的 Future、..."
                     data-i18n-zh-path="/blog/posts/db62c118.html"
+                    data-i18n-zh-tags=""
                 >
                 <div class="post-header">
                     <h2><a href="/blog/posts/db62c118.html">Dart event loop</a></h2>
@@ -425,15 +446,16 @@
             
             <div class="post-item" 
                     data-i18n-zh-title="Dart 读取文件过程分析"
-                    data-i18n-zh-excerpt="Dart 读取文件时，先在 Dart 代码创建 File 引用，通过与跨通信（先通过 IO Service 而发送请求到 native 端，等到 native 执行完操作之后再回调结果）从而实现对文件的读写。 实现一个简单的读取文件的代码如下： 整个过程如下： 过程分析 Dart 端发起文件读写请求..."
+                    data-i18n-zh-excerpt="Dart 读取文件时，先在 Dart 代码创建 File 引用，通过与跨通信（先通过 IO Service 而发送请求到 native 端，等到 native 执行完操作之后再回调结果）从而实现对文件的读写。 实现一个简单的读取文件的代码如下： 整个过程如下： [图片] 过程分析 Dart 端发起文..."
                     data-i18n-zh-path="/blog/posts/3db5282.html"
+                    data-i18n-zh-tags=""
                 >
                 <div class="post-header">
                     <h2><a href="/blog/posts/3db5282.html">Dart 读取文件过程分析</a></h2>
                     <span class="post-date">2022-06-02</span>
                 </div>
                 <div class="post-excerpt">
-                    <p>Dart 读取文件时，先在 Dart 代码创建 File 引用，通过与跨通信（先通过 IO Service 而发送请求到 native 端，等到 native 执行完操作之后再回调结果）从而实现对文件的读写。 实现一个简单的读取文件的代码如下： 整个过程如下： 过程分析 Dart 端发起文件读写请求...</p>
+                    <p>Dart 读取文件时，先在 Dart 代码创建 File 引用，通过与跨通信（先通过 IO Service 而发送请求到 native 端，等到 native 执行完操作之后再回调结果）从而实现对文件的读写。 实现一个简单的读取文件的代码如下： 整个过程如下： [图片] 过程分析 Dart 端发起文...</p>
                 </div>
                 <div class="post-tags">
                     
@@ -444,6 +466,7 @@
                     data-i18n-zh-title="Dart VM"
                     data-i18n-zh-excerpt="本文是对 Dart 官方 VM 的介绍的总结摘要，推荐直接阅读官方原文。 Dart VM is a collection of components for executing Dart code natively. Notably, it includes the following: Runti..."
                     data-i18n-zh-path="/blog/posts/550e5790.html"
+                    data-i18n-zh-tags=""
                 >
                 <div class="post-header">
                     <h2><a href="/blog/posts/550e5790.html">Dart VM</a></h2>
@@ -464,6 +487,7 @@
                     <div class="load-more-spinner" style="display: none;">
                         <i class="fas fa-spinner fa-spin"></i>
                     </div>
+                    <div class="load-more-end" data-i18n="common.noMorePosts" data-i18n-params="107" style="display: none;">共 107 篇文章，没有更多了</div>
                 </div>
                 
             </div>
@@ -496,28 +520,10 @@
         <i class="fas fa-rocket"></i>
     </button>
 
-    <!-- Scripts: Cloudflare CDN (safe source) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/dart.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/kotlin.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/gradle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/groovy.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/yaml.min.js"></script>
-    <script>
-        // MathJax Configuration - Enable $...$ inline math
-        window.MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\(', '\)']],
-                displayMath: [['$$', '$$'], ['\[', '\]']],
-                processEscapes: true
-            },
-            options: {
-                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-                ignoreHtmlClass: 'mathjax_ignore'
-            }
-        };
-    </script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script src="/blog/scripts/client.js?v=1766377145493"></script>
+    <!-- Page-specific scripts (Highlight.js, MathJax, etc.) -->
+    
+
+    <!-- Core client.js -->
+    <script src="/blog/scripts/client.js?v=1766400927900"></script>
 </body>
 </html>
