@@ -129,6 +129,90 @@ p {
     }
 }
 /* Layout */
+
+/* Inline SVG Icon Styles */
+.icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: -0.125em;
+    flex-shrink: 0;
+    /* Default size as fallback */
+    width: 1em;
+    height: 1em;
+}
+
+.icon svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+}
+
+/* Icon sizes */
+.icon-sm {
+    width: 0.875em;
+    height: 0.875em;
+}
+
+.icon-md {
+    width: 1.125em;
+    height: 1.125em;
+}
+
+.icon-lg {
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.icon-xl {
+    width: 2em;
+    height: 2em;
+}
+
+/* Tech Stack Icons (larger) */
+.tech-stack-icons .icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    transition: all 0.2s ease;
+    position: relative;
+    cursor: pointer;
+}
+
+.tech-stack-icons .icon:hover {
+    color: var(--accent-yellow);
+    transform: scale(1.1);
+}
+
+/* Tooltip for tech stack icons */
+.tech-stack-icons .icon::after {
+    content: attr(title);
+    position: absolute;
+    bottom: -2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--text-primary);
+    color: var(--bg-primary);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s, visibility 0.2s;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.tech-stack-icons .icon:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Back to Top Icon */
+.back-to-top .icon svg {
+    transform: rotate(-45deg);
+}
+
 .container {
     max-width: var(--max-width);
     margin: 0 auto;
@@ -197,11 +281,21 @@ nav a {
     text-decoration: none;
 }
 
-nav a:hover {
-    color: var(--accent-yellow);
+/* Desktop nav: hide text on smaller screens, show on larger */
+nav a .nav-text,
+nav button .nav-text {
+    display: none;
 }
 
-nav a:hover i {
+@media (min-width: 1024px) {
+    nav a .nav-text,
+    nav button .nav-text {
+        display: inline;
+    }
+}
+
+nav a:hover,
+nav button:hover {
     color: var(--accent-yellow);
 }
 
@@ -370,14 +464,14 @@ footer .container {
     align-items: center;
 }
 
-.footer-author span {
+.footer-author > span {
     margin-right: 1.5rem;
 }
 
 .footer-author a {
     display: inline-flex;
     align-items: center;
-    gap: 0rem;
+    gap: 0.25rem;
     color: var(--text-secondary);
     text-decoration: none;
     transition: color 0.2s;
@@ -2270,9 +2364,11 @@ article .tags .tag:hover {
 
 .toc-bottomsheet-nav {
     overflow-y: auto;
-    overscroll-behavior: contain;
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: touch;
     padding: 1rem 1.25rem;
     flex: 1;
+    touch-action: pan-y;
 }
 
 /* Mobile TOC Group */
@@ -2418,17 +2514,41 @@ article .tags .tag:hover {
     color: var(--accent-yellow);
 }
 
-/* Image Loading Styles */
+/* Image Loading Styles - iOS Style */
 .image-wrapper {
     position: relative;
     display: block;
     overflow: hidden;
-    background-color: var(--bg-secondary);
-    /* Placeholder background */
     border-radius: 8px;
-    /* Optional: matches many modern designs */
     margin-bottom: 2rem;
-    /* Keep consistent with p/img spacing */
+    /* No background by default (success state) */
+}
+
+/* Loading state: show background, min-height, blur effect */
+.image-wrapper.loading {
+    background-color: var(--bg-secondary);
+    min-height: 100px;
+}
+
+.image-wrapper.loading img {
+    filter: blur(10px);
+    transform: scale(1.02);
+    opacity: 0.6;
+}
+
+/* Error state: show background and error UI */
+.image-wrapper.error {
+    background-color: var(--bg-secondary);
+    min-height: 100px;
+}
+
+.image-wrapper.error img {
+    display: none;
+}
+
+/* Loaded state: no background, clear image */
+.image-wrapper.loaded {
+    background-color: transparent;
 }
 
 .image-wrapper img {
@@ -2436,12 +2556,13 @@ article .tags .tag:hover {
     width: 100%;
     height: auto;
     opacity: 1;
-    transition: opacity 0.3s ease-in-out;
+    transition: filter 0.4s ease-out, opacity 0.4s ease-out, transform 0.4s ease-out;
 }
 
-.image-wrapper.loading img {
-    opacity: 0;
-    /* Hide image while loading */
+.image-wrapper.loaded img {
+    filter: blur(0);
+    transform: scale(1);
+    opacity: 1;
 }
 
 /* iOS-style Spinner */
@@ -2452,6 +2573,7 @@ article .tags .tag:hover {
     transform: translate(-50%, -50%);
     width: 30px;
     height: 30px;
+    color: var(--text-secondary);
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.2s ease;
@@ -2459,92 +2581,61 @@ article .tags .tag:hover {
 
 .image-wrapper.loading .image-spinner {
     opacity: 1;
-    /* Show spinner while loading */
 }
 
-.image-spinner-blade {
+/* Error State UI */
+.image-error {
     position: absolute;
-    left: 44.5%;
-    top: 37%;
-    width: 10%;
-    height: 25%;
-    border-radius: 50%/20%;
-    animation: image-spinner-fade 1s linear infinite;
-    background-color: var(--text-secondary);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 16px;
+    border-radius: 12px;
+    transition: background 0.2s;
 }
 
-.image-spinner-blade:nth-child(1) {
-    animation-delay: -1.66667s;
-    transform: rotate(30deg) translate(0, -150%);
+.image-error:hover {
+    background: rgba(0, 0, 0, 0.05);
 }
 
-.image-spinner-blade:nth-child(2) {
-    animation-delay: -1.58333s;
-    transform: rotate(60deg) translate(0, -150%);
+[data-theme="dark"] .image-error:hover {
+    background: rgba(255, 255, 255, 0.05);
 }
 
-.image-spinner-blade:nth-child(3) {
-    animation-delay: -1.5s;
-    transform: rotate(90deg) translate(0, -150%);
+.image-error-icon {
+    width: 40px;
+    height: 40px;
+    color: var(--text-secondary);
+    opacity: 0.6;
 }
 
-.image-spinner-blade:nth-child(4) {
-    animation-delay: -1.41667s;
-    transform: rotate(120deg) translate(0, -150%);
+.image-error-text {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    text-align: center;
 }
 
-.image-spinner-blade:nth-child(5) {
-    animation-delay: -1.33333s;
-    transform: rotate(150deg) translate(0, -150%);
+/* Image Caption - iOS Style */
+.article-content figure {
+    margin: 1.5rem 0;
+    text-align: center;
 }
 
-.image-spinner-blade:nth-child(6) {
-    animation-delay: -1.25s;
-    transform: rotate(180deg) translate(0, -150%);
-}
-
-.image-spinner-blade:nth-child(7) {
-    animation-delay: -1.16667s;
-    transform: rotate(210deg) translate(0, -150%);
-}
-
-.image-spinner-blade:nth-child(8) {
-    animation-delay: -1.08333s;
-    transform: rotate(240deg) translate(0, -150%);
-}
-
-.image-spinner-blade:nth-child(9) {
-    animation-delay: -1s;
-    transform: rotate(270deg) translate(0, -150%);
-}
-
-.image-spinner-blade:nth-child(10) {
-    animation-delay: -0.91667s;
-    transform: rotate(300deg) translate(0, -150%);
-}
-
-.image-spinner-blade:nth-child(11) {
-    animation-delay: -0.83333s;
-    transform: rotate(330deg) translate(0, -150%);
-}
-
-.image-spinner-blade:nth-child(12) {
-    animation-delay: -0.75s;
-    transform: rotate(360deg) translate(0, -150%);
-}
-
-@keyframes image-spinner-fade {
-    0% {
-        opacity: 0.85;
-    }
-
-    50% {
-        opacity: 0.25;
-    }
-
-    100% {
-        opacity: 0.25;
-    }
+.article-content figcaption {
+    margin-top: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-align: center;
+    line-height: 1.5;
+    /* iOS-style subtle appearance */
+    display: inline-block;
+    background: transparent;
 }
 
 /* Timeline Styles (Blog History) */

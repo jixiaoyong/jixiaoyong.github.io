@@ -19,12 +19,8 @@
     <!-- Fonts: Async loading with smart CDN switching (SJTUG for China, Google for international) -->
     <!-- Font CSS will be loaded by JavaScript after page content loads -->
     
-    <!-- Icons: Cloudflare CDN (FontAwesome only - async loading) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
-
     <!-- Styles -->
-    <link rel="stylesheet" href="/blog/styles/main.css?v=1766402209784">
+    <link rel="stylesheet" href="/blog/styles/main.css?v=1766420959106">
 
     <script>
         // Immediately compute and apply correct theme to prevent FOUC (Flash of Unstyled Content)
@@ -39,14 +35,21 @@
         // Inject i18n data for client-side switching
         window.basePath = '/blog';
         window.__I18N_DATA__ = {
-            zh: {"common":{"search":"搜索","backToList":"返回列表","language":"语言","theme":{"title":"主题","auto":"跟随系统","light":"浅色","dark":"深色"},"nav":{"home":"首页","about":"关于"},"searchNoResults":"未找到相关文章","backToTop":"返回顶部","noMorePosts":"共 {0} 篇文章，没有更多了"},"article":{"publishedOn":"发布于","updatedOn":"更新于","author":"作者","prevPost":"上一篇","nextPost":"下一篇","notByAi":{"tooltip":"本文是人类纯手工实现，没有 AI 参与 (Handcrafted by humans, no AI involved)","aiLevel":"AI 协作度：","warning":"⚠️ 本文部分或全部内容由 AI 辅助生成，请注意甄别。","tag1":"AI 辅助 20%","tag2":"AI 辅助 40%","tag3":"AI 协作 60%","tag4":"AI 生成 80%","tag5":"AI 生成 100%","desc1":"本文由人类主导创作，AI 提供少量辅助","desc2":"本文由人机协作完成，AI 参与了部分内容","desc3":"本文由人机协作完成，核心观点来自作者","desc4":"本文主要由 AI 生成，作者进行了审校","desc5":"本文完全由 AI 生成，请读者自行甄别"},"emailComment":{"title":"有想法？欢迎通过邮件讨论。","button":"发送邮件评论","subject":"关于文章的评论","bodyHello":"你好！","bodyIntro":"我阅读了你的文章，以下是我的想法：","copyFallback":"无法打开邮件客户端，是否复制邮箱地址？"}},"about":{"greeting":"你好 👋，我是","subtitle":"一名开发者。<br/>一个热爱世界的人。","contactTitle":"与我联系：","toolsTitle":"语言和工具：","techStack":"技术栈","totalPosts":"本站当前共 {0} 篇文章","timeline":{"title":"博客演进史"}},"footer":{"copyright":"版权所有 © {0} {1}"},"notFound":{"title":"页面未找到","message":"抱歉！您访问的页面不存在或已被移动。","suggestion":"您可以尝试："}},
-            en: {"common":{"search":"Search","backToList":"Back to List","language":"Language","theme":{"title":"Theme","auto":"Auto","light":"Light","dark":"Dark"},"nav":{"home":"Home","about":"About"},"searchNoResults":"No results found","backToTop":"Back to Top","noMorePosts":"{0} posts in total, no more"},"article":{"publishedOn":"Published on","updatedOn":"Updated on","author":"By","prevPost":"Previous","nextPost":"Next","notByAi":{"tooltip":"Handcrafted by humans, no AI involved","aiLevel":"AI Collaboration: ","warning":"⚠️ This article contains content generated or assisted by AI. Please verify critical information.","tag1":"20% AI Assisted","tag2":"40% AI Assisted","tag3":"60% AI Collaborated","tag4":"80% AI Generated","tag5":"100% AI Generated","desc1":"Human-led creation with minor AI assistance","desc2":"Human-AI collaboration for partial content","desc3":"Human-AI collaboration, core ideas from author","desc4":"Primarily AI-generated, reviewed by author","desc5":"Entirely AI-generated, please verify independently"},"emailComment":{"title":"Any thoughts? Feel free to discuss via email.","button":"Email Comment","subject":"Comment on article","bodyHello":"Hi!","bodyIntro":"I read your article and here are my thoughts:","copyFallback":"Cannot open email client. Copy email address?"}},"about":{"greeting":"Hi 👋, I'm","subtitle":"A developer.<br/>A man who love the world.","contactTitle":"Keep touch with me:","toolsTitle":"Languages and Tools:","techStack":"Tech Stack","totalPosts":"This site currently has {0} posts","timeline":{"title":"Blog Evolution"}},"footer":{"copyright":"Copyright © {0} {1}"},"notFound":{"title":"Page Not Found","message":"Oops! The page you're looking for doesn't exist or has been moved.","suggestion":"Maybe try one of these:"}}
+            zh: {"common":{"search":"搜索","backToList":"返回列表","language":"语言","theme":{"title":"主题","auto":"跟随系统","light":"浅色","dark":"深色"},"nav":{"home":"首页","about":"关于"},"searchNoResults":"未找到相关文章","backToTop":"返回顶部","noMorePosts":"共 {0} 篇文章，没有更多了"},"article":{"publishedOn":"发布于","updatedOn":"更新于","author":"作者","prevPost":"上一篇","nextPost":"下一篇","toc":"目录","notByAi":{"tooltip":"本文是人类纯手工实现，没有 AI 参与 (Handcrafted by humans, no AI involved)","aiLevel":"AI 协作度：","warning":"⚠️ 本文部分或全部内容由 AI 辅助生成，请注意甄别。","tag1":"AI 辅助 20%","tag2":"AI 辅助 40%","tag3":"AI 协作 60%","tag4":"AI 生成 80%","tag5":"AI 生成 100%","desc1":"本文由人类主导创作，AI 提供少量辅助","desc2":"本文由人机协作完成，AI 参与了部分内容","desc3":"本文由人机协作完成，核心观点来自作者","desc4":"本文主要由 AI 生成，作者进行了审校","desc5":"本文完全由 AI 生成，请读者自行甄别"},"emailComment":{"title":"有想法？欢迎通过邮件讨论。","button":"发送邮件评论","subject":"关于文章的评论","bodyHello":"你好！","bodyIntro":"我阅读了你的文章，以下是我的想法：","copyFallback":"无法打开邮件客户端，是否复制邮箱地址？"}},"about":{"greeting":"你好 👋，我是","subtitle":"一名开发者。<br/>一个热爱世界的人。","contactTitle":"与我联系：","toolsTitle":"语言和工具：","techStack":"技术栈","totalPosts":"本站当前共 {0} 篇文章","timeline":{"title":"博客演进史"}},"footer":{"copyright":"版权所有 © {0} {1}"},"notFound":{"title":"页面未找到","message":"抱歉！您访问的页面不存在或已被移动。","suggestion":"您可以尝试："},"image":{"tapToRetry":"轻触重试","loadFailed":"加载失败"}},
+            en: {"common":{"search":"Search","backToList":"Back to List","language":"Language","theme":{"title":"Theme","auto":"Auto","light":"Light","dark":"Dark"},"nav":{"home":"Home","about":"About"},"searchNoResults":"No results found","backToTop":"Back to Top","noMorePosts":"{0} posts in total, no more"},"article":{"publishedOn":"Published on","updatedOn":"Updated on","author":"By","prevPost":"Previous","nextPost":"Next","toc":"Table of Contents","notByAi":{"tooltip":"Handcrafted by humans, no AI involved","aiLevel":"AI Collaboration: ","warning":"⚠️ This article contains content generated or assisted by AI. Please verify critical information.","tag1":"20% AI Assisted","tag2":"40% AI Assisted","tag3":"60% AI Collaborated","tag4":"80% AI Generated","tag5":"100% AI Generated","desc1":"Human-led creation with minor AI assistance","desc2":"Human-AI collaboration for partial content","desc3":"Human-AI collaboration, core ideas from author","desc4":"Primarily AI-generated, reviewed by author","desc5":"Entirely AI-generated, please verify independently"},"emailComment":{"title":"Any thoughts? Feel free to discuss via email.","button":"Email Comment","subject":"Comment on article","bodyHello":"Hi!","bodyIntro":"I read your article and here are my thoughts:","copyFallback":"Cannot open email client. Copy email address?"}},"about":{"greeting":"Hi 👋, I'm","subtitle":"A developer.<br/>A man who love the world.","contactTitle":"Keep touch with me:","toolsTitle":"Languages and Tools:","techStack":"Tech Stack","totalPosts":"This site currently has {0} posts","timeline":{"title":"Blog Evolution"}},"footer":{"copyright":"Copyright © {0} {1}"},"notFound":{"title":"Page Not Found","message":"Oops! The page you're looking for doesn't exist or has been moved.","suggestion":"Maybe try one of these:"},"image":{"tapToRetry":"Tap to retry","loadFailed":"Failed to load"}}
         };
         // Initial language preference
+        // 逻辑：UI 语言严格由用户偏好 (localStorage) 决定，与当前页面内容语言 (URL) 无关。
         const savedLang = localStorage.getItem('preferred_lang');
-        if (!savedLang && navigator.language.startsWith('en')) {
-            localStorage.setItem('preferred_lang', 'en');
-        }
+        const systemLang = navigator.language.startsWith('en') ? 'en' : 'zh';
+        
+        // 如果用户未设置，默认为系统语言
+        const targetLang = savedLang || systemLang;
+
+        window.__CURRENT_LANG__ = targetLang;
+        
+        // 我们不根据 URL 自动修改 localStorage。
+        // LocalStorage 仅在用户点击切换按钮时由 client.js 修改。
     </script>
 </head>
 <body>
@@ -63,41 +66,56 @@
             <nav class="desktop-nav">
                 <ul>
                     
-        <li><a href="/blog/" data-i18n="common.nav.home"><i class="fas fa-home"></i> 首页</a></li>
-        <li><a href="/blog/about.html" data-i18n="common.nav.about"><i class="fas fa-user"></i> 关于</a></li>
+        <li><a href="/blog/"><span class="icon icon-md"><svg viewBox="0 0 576 512" fill="currentColor"><path d="M280.37 148.26L96 300.11V464a16 16 0 0 0 16 16l112.06-.29a16 16 0 0 0 15.92-16V368a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v95.64a16 16 0 0 0 16 16.05L464 480a16 16 0 0 0 16-16V300L295.67 148.26a12.19 12.19 0 0 0-15.3 0zM571.6 251.47L488 182.56V44.05a12 12 0 0 0-12-12h-56a12 12 0 0 0-12 12v72.61L318.47 43a48 48 0 0 0-61 0L4.34 251.47a12 12 0 0 0-1.6 16.9l25.5 31A12 12 0 0 0 45.15 301l235.22-193.74a12.19 12.19 0 0 1 15.3 0L530.9 301a12 12 0 0 0 16.9-1.6l25.5-31a12 12 0 0 0-1.7-16.93z"/></svg></span> <span data-i18n="common.nav.home">首页</span></a></li>
+        <li><a href="/blog/about.html"><span class="icon icon-md"><svg viewBox="0 0 448 512" fill="currentColor"><path d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"/></svg></span> <span data-i18n="common.nav.about">关于</span></a></li>
     
-                    <li><a href="#" onclick="switchView('search')" data-i18n="common.search" data-i18n-attr="title" title="搜索"><i class="fas fa-search"></i></a></li>
+                    <li><a href="#" onclick="switchView('search')" data-i18n-attr="title" title="搜索"><span class="icon icon-md"><svg viewBox="0 0 512 512" fill="currentColor"><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></span> <span class="nav-text" data-i18n="common.search">搜索</span></a></li>
                     <li>
-                        <button onclick="switchLanguage()" class="theme-toggle" data-i18n="common.language" data-i18n-attr="title" title="语言">
-                            <i class="fas fa-language"></i>
-                            <span id="lang-text-desktop" style="font-size:0.7rem;vertical-align:super;">中</span>
-                        </button>
+                        
+    <button onclick="switchLanguage()" class="theme-toggle" data-i18n-attr="title" title="语言">
+        <span class="icon icon-md"><svg viewBox="0 0 640 512" fill="currentColor"><path d="M152.1 236.2c-3.5-12.1-7.8-33.2-7.8-33.2h-.5s-4.3 21.1-7.8 33.2l-11.1 37.5H163zM616 96H336v320h280c13.3 0 24-10.7 24-24V120c0-13.3-10.7-24-24-24zm-24 120c0 6.6-5.4 12-12 12h-11.4c-6.9 23.6-21.7 47.4-42.7 69.9 8.4 6.4 17.1 12.5 26.1 18 5.5 3.4 7.3 10.5 4.1 16.2l-7.9 13.9c-3.4 5.9-10.9 7.8-16.7 4.3-12.6-7.8-24.5-16.1-35.4-24.9-10.9 8.7-22.7 17.1-35.4 24.9-5.8 3.5-13.3 1.6-16.7-4.3l-7.9-13.9c-3.2-5.6-1.4-12.8 4.2-16.2 9.3-5.7 18-11.7 26.1-18-7.9-8.4-14.9-17-21-25.7-4-5.7-2.2-13.6 3.7-17.1l6.5-3.9 7.3-4.3c5.4-3.2 12.4-1.7 16 3.4 5 7 10.8 14 17.4 20.9 13.5-14.2 23.8-28.9 30-43.2H412c-6.6 0-12-5.4-12-12v-16c0-6.6 5.4-12 12-12h64v-16c0-6.6 5.4-12 12-12h16c6.6 0 12 5.4 12 12v16h64c6.6 0 12 5.4 12 12zM0 120v272c0 13.3 10.7 24 24 24h280V96H24c-13.3 0-24 10.7-24 24zm58.9 216.1L116.4 167c1.7-4.9 6.2-8.1 11.4-8.1h32.5c5.1 0 9.7 3.3 11.4 8.1l57.5 169.1c2.6 7.8-3.1 15.9-11.4 15.9h-22.9a12 12 0 0 1-11.5-8.6l-9.4-31.9h-60.2l-9.1 31.8c-1.5 5.1-6.2 8.7-11.5 8.7H70.3c-8.2 0-14-8.1-11.4-15.9z"/></svg></span>
+        <span class="nav-text" style="">
+            <span id="lang-text-desktop" style="font-size:0.85rem;">中文</span>
+        </span>
+    </button>
                     </li>
-                    <li><button onclick="toggleTheme()" class="theme-toggle" data-i18n="common.theme.title" data-i18n-attr="title" title="主题"><i id="theme-icon" class="fas fa-adjust"></i></button></li>
+                    <li>
+                        
+    <button onclick="toggleTheme()" class="theme-toggle" data-i18n-attr="title" title="主题">
+        <span class="theme-icon-dynamic icon icon-md"><svg viewBox="0 0 512 512" fill="currentColor"><path d="M8 256c0 136.966 111.033 248 248 248s248-111.034 248-248S392.966 8 256 8 8 119.033 8 256zm248 184V72c101.705 0 184 82.311 184 184 0 101.705-82.311 184-184 184z"/></svg></span>
+        
+    </button>
+                    </li>
                 </ul>
             </nav>
 
             <!-- Mobile Menu Toggle -->
-            <button class="mobile-menu-btn btn" onclick="toggleMobileMenu()">
-                <i id="menu-icon" class="fas fa-bars"></i>
+            <button class="mobile-menu-btn btn" aria-label="Toggle menu">
+                <span id="menu-icon" class="icon icon-xl"><svg viewBox="0 0 448 512" fill="currentColor"><path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"/></svg></span>
             </button>
         </div>
 
         <!-- Mobile Menu Container (Hidden by default) -->
         <div id="mobile-menu" class="mobile-menu hidden">
             <ul>
-                <li><a href="/blog/" data-i18n="common.nav.home"><i class="fas fa-home"></i> 首页</a></li>
-                <li><a href="/blog/about.html" data-i18n="common.nav.about"><i class="fas fa-user"></i> 关于</a></li>
-                <li><a href="#" onclick="switchView('search')" data-i18n="common.search"><i class="fas fa-search"></i> 搜索</a></li>
+                <li><a href="/blog/"><span class="icon icon-md"><svg viewBox="0 0 576 512" fill="currentColor"><path d="M280.37 148.26L96 300.11V464a16 16 0 0 0 16 16l112.06-.29a16 16 0 0 0 15.92-16V368a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v95.64a16 16 0 0 0 16 16.05L464 480a16 16 0 0 0 16-16V300L295.67 148.26a12.19 12.19 0 0 0-15.3 0zM571.6 251.47L488 182.56V44.05a12 12 0 0 0-12-12h-56a12 12 0 0 0-12 12v72.61L318.47 43a48 48 0 0 0-61 0L4.34 251.47a12 12 0 0 0-1.6 16.9l25.5 31A12 12 0 0 0 45.15 301l235.22-193.74a12.19 12.19 0 0 1 15.3 0L530.9 301a12 12 0 0 0 16.9-1.6l25.5-31a12 12 0 0 0-1.7-16.93z"/></svg></span> <span data-i18n="common.nav.home">首页</span></a></li>
+                <li><a href="/blog/about.html"><span class="icon icon-md"><svg viewBox="0 0 448 512" fill="currentColor"><path d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"/></svg></span> <span data-i18n="common.nav.about">关于</span></a></li>
+                <li><a href="#" onclick="switchView('search')"><span class="icon icon-md"><svg viewBox="0 0 512 512" fill="currentColor"><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></span> <span data-i18n="common.search">搜索</span></a></li>
                 <li>
-                    <button class="btn theme-toggle-mobile" onclick="switchLanguage()">
-                        <i class="fas fa-language"></i> <span data-i18n="common.language">语言</span>: <span id="lang-text-mobile">English</span>
-                    </button>
+                    
+    <button onclick="switchLanguage()" class="btn theme-toggle-mobile" data-i18n-attr="title" title="语言">
+        <span class="icon icon-md"><svg viewBox="0 0 640 512" fill="currentColor"><path d="M152.1 236.2c-3.5-12.1-7.8-33.2-7.8-33.2h-.5s-4.3 21.1-7.8 33.2l-11.1 37.5H163zM616 96H336v320h280c13.3 0 24-10.7 24-24V120c0-13.3-10.7-24-24-24zm-24 120c0 6.6-5.4 12-12 12h-11.4c-6.9 23.6-21.7 47.4-42.7 69.9 8.4 6.4 17.1 12.5 26.1 18 5.5 3.4 7.3 10.5 4.1 16.2l-7.9 13.9c-3.4 5.9-10.9 7.8-16.7 4.3-12.6-7.8-24.5-16.1-35.4-24.9-10.9 8.7-22.7 17.1-35.4 24.9-5.8 3.5-13.3 1.6-16.7-4.3l-7.9-13.9c-3.2-5.6-1.4-12.8 4.2-16.2 9.3-5.7 18-11.7 26.1-18-7.9-8.4-14.9-17-21-25.7-4-5.7-2.2-13.6 3.7-17.1l6.5-3.9 7.3-4.3c5.4-3.2 12.4-1.7 16 3.4 5 7 10.8 14 17.4 20.9 13.5-14.2 23.8-28.9 30-43.2H412c-6.6 0-12-5.4-12-12v-16c0-6.6 5.4-12 12-12h64v-16c0-6.6 5.4-12 12-12h16c6.6 0 12 5.4 12 12v16h64c6.6 0 12 5.4 12 12zM0 120v272c0 13.3 10.7 24 24 24h280V96H24c-13.3 0-24 10.7-24 24zm58.9 216.1L116.4 167c1.7-4.9 6.2-8.1 11.4-8.1h32.5c5.1 0 9.7 3.3 11.4 8.1l57.5 169.1c2.6 7.8-3.1 15.9-11.4 15.9h-22.9a12 12 0 0 1-11.5-8.6l-9.4-31.9h-60.2l-9.1 31.8c-1.5 5.1-6.2 8.7-11.5 8.7H70.3c-8.2 0-14-8.1-11.4-15.9z"/></svg></span>
+        <span class="nav-text" style="margin-left: 0.5rem;">
+             <span data-i18n="common.language">语言</span>: <span id="lang-text-mobile" style="">中文</span>
+        </span>
+    </button>
                 </li>
                 <li>
-                    <button class="btn theme-toggle-mobile" onclick="toggleTheme()">
-                        <i class="fas fa-palette"></i> <span data-i18n="common.theme.title">主题</span>: <span id="theme-text-mobile" data-i18n="common.theme.auto">跟随系统</span>
-                    </button>
+                    
+    <button onclick="toggleTheme()" class="theme-toggle btn theme-toggle-mobile" data-i18n-attr="title" title="主题">
+        <span class="theme-icon-dynamic icon icon-md"><svg viewBox="0 0 512 512" fill="currentColor"><path d="M8 256c0 136.966 111.033 248 248 248s248-111.034 248-248S392.966 8 256 8 8 119.033 8 256zm248 184V72c101.705 0 184 82.311 184 184 0 101.705-82.311 184-184 184z"/></svg></span>
+        <span class="nav-text" style="margin-left: 0.8rem;"> <span data-i18n="common.theme.title">主题</span>: <span id="theme-text-mobile" data-i18n="common.theme.auto">跟随系统</span></span>
+    </button>
                 </li>
             </ul>
         </div>
@@ -120,7 +138,7 @@
     <div id="article" class="view active article-with-toc" style="display: block;">
         <!-- TOC Sidebar (Desktop) -->
         <aside class="toc-sidebar" id="toc-sidebar">
-            <div class="toc-header">目录</div>
+            <div class="toc-header"><span data-i18n="article.toc">目录</span></div>
             <nav class="toc-nav" id="toc-nav">
                 <!-- TOC items will be generated by JavaScript -->
             </nav>
@@ -133,8 +151,8 @@
                 <div class="post-meta mathjax_ignore">
                     <span class="author">JI,XIAOYONG</span>
                     <span class="meta-separator">•</span>
-                    <span class="publish-date mathjax_ignore">发布于 2022-07-27</span>
-                    <span class="publish-date mathjax_ignore">(更新于 2023-12-30)</span>
+                    <span class="publish-date mathjax_ignore"><span data-i18n="article.publishedOn">发布于</span> 2022-07-27</span>
+                    <span class="publish-date mathjax_ignore">(<span data-i18n="article.updatedOn">更新于</span> 2023-12-30)</span>
                     
                 </div>
             </div>
@@ -510,15 +528,25 @@ int get sizeBytes =&gt; image.height * image.width * 4;
 <h2>总结</h2>
 <p>简单总结一下 Flutter 原生 Image 组件加载图片的流程：</p>
 <p>
-                        <div class="image-wrapper loading">
-                            
-                <div class="image-spinner">
-                    <div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div><div class="image-spinner-blade"></div>
-                </div>
-            
-                            <img src="https://jixiaoyong.github.io/images/flutter_image_class_structure.png" alt="flutter_image_class_structure.png" loading="eager" onload="this.parentElement.classList.remove('loading')">
-                        </div>
-                        </p>
+<div class="image-wrapper loading">
+    
+<svg class="image-spinner" viewBox="0 0 50 50">
+    <circle cx="25" cy="25" r="20" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-dasharray="80, 200" stroke-dashoffset="0">
+        <animateTransform attributeName="transform" type="rotate" dur="1s" from="0 25 25" to="360 25 25" repeatCount="indefinite"/>
+    </circle>
+</svg>
+    <div class="image-error" style="display: none;">
+        
+<svg class="image-error-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+    <circle cx="8.5" cy="8.5" r="1.5"/>
+    <polyline points="21 15 16 10 5 21"/>
+    <line x1="2" y1="2" x2="22" y2="22"/>
+</svg>
+        <span class="image-error-text" data-i18n="image.tapToRetry">轻触重试</span>
+    </div>
+    <img src="https://jixiaoyong.github.io/images/flutter_image_class_structure.png" alt="flutter_image_class_structure.png" loading="eager">
+</div></p>
 <p>简单来说如下：</p>
 <ul>
 <li>用户通过 Image Widget 的各个构造方法创建指定的 ImageProvider；</li>
@@ -540,7 +568,7 @@ int get sizeBytes =&gt; image.height * image.width * 4;
 
             <!-- 4. Email Comment -->
             <div class="comment-section">
-                <p class="comment-text">有想法？欢迎通过邮件讨论。</p>
+                <p class="comment-text" data-i18n="article.emailComment.title">有想法？欢迎通过邮件讨论。</p>
                 <button 
                     class="btn btn-email" 
                     onclick="sendEmailComment('Flutter 图片加载方案分析之 Image', '/blog/posts/1912667a.html')"
@@ -549,7 +577,7 @@ int get sizeBytes =&gt; image.height * image.width * 4;
                     data-email-intro="我阅读了你的文章，以下是我的想法："
                     data-email-fallback="无法打开邮件客户端，是否复制邮箱地址？"
                 >
-                    <i class="far fa-envelope"></i> 发送邮件评论
+                    <span class="icon"><svg viewBox="0 0 512 512" fill="currentColor"><path d="M464 64H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm0 48v40.805c-22.422 18.259-58.168 46.651-134.587 106.49-16.841 13.247-50.201 45.072-73.413 44.701-23.208.375-56.579-31.459-73.413-44.701C106.18 199.465 70.425 171.067 48 152.805V112h416zM48 400V214.398c22.914 18.251 55.409 43.862 104.938 82.646 21.857 17.205 60.134 55.186 103.062 54.955 42.717.231 80.509-37.199 103.053-54.947 49.528-38.783 82.032-64.401 104.947-82.653V400H48z"/></svg></span> <span data-i18n="article.emailComment.button">发送邮件评论</span>
                 </button>
             </div>
         </article>
@@ -557,14 +585,20 @@ int get sizeBytes =&gt; image.height * image.width * 4;
         <!-- 5. Prev/Next Navigation -->
         <nav class="post-nav">
             
-            <a href="/blog/posts/23ac516a.html" class="post-nav-item post-nav-prev">
-                <span class="post-nav-label">← 上一篇</span>
+            <a href="/blog/posts/23ac516a.html" 
+               class="post-nav-item post-nav-prev"
+               data-i18n-zh-path="/blog/posts/23ac516a.html"
+               data-i18n-en-path="">
+                <span class="post-nav-label">← <span data-i18n="article.prevPost">上一篇</span></span>
                 <span class="post-nav-title">Flutter 图片加载方案分析之 extended_image</span>
             </a>
             
             
-            <a href="/blog/posts/ae8e53be.html" class="post-nav-item post-nav-next">
-                <span class="post-nav-label">下一篇 →</span>
+            <a href="/blog/posts/ae8e53be.html" 
+               class="post-nav-item post-nav-next"
+               data-i18n-zh-path="/blog/posts/ae8e53be.html"
+               data-i18n-en-path="">
+                <span class="post-nav-label"><span data-i18n="article.nextPost">下一篇</span> →</span>
                 <span class="post-nav-title">Flutter 滑动分析之 NestedScrollView</span>
             </a>
             
@@ -572,8 +606,8 @@ int get sizeBytes =&gt; image.height * image.width * 4;
     </div>
 
     <!-- TOC Mobile Button -->
-    <button id="toc-mobile-btn" class="toc-mobile-btn" title="目录">
-        <i class="fas fa-list-ul"></i>
+    <button id="toc-mobile-btn" class="toc-mobile-btn" title="目录" data-i18n-attr="title" data-i18n="article.toc">
+        <span class="icon"><svg viewBox="0 0 512 512" fill="currentColor"><path d="M48 48a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm0 160a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm0 160a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm448 16H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zm0-320H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16V80a16 16 0 0 0-16-16zm0 160H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16z"/></svg></span>
     </button>
 
     <!-- TOC Mobile Bottom Sheet -->
@@ -581,8 +615,8 @@ int get sizeBytes =&gt; image.height * image.width * 4;
         <div class="toc-bottomsheet-overlay"></div>
         <div class="toc-bottomsheet-content">
             <div class="toc-bottomsheet-header">
-                <span>目录</span>
-                <button class="toc-bottomsheet-close"><i class="fas fa-times"></i></button>
+                <span data-i18n="article.toc">目录</span>
+                <button class="toc-bottomsheet-close"><span class="icon"><svg viewBox="0 0 352 512" fill="currentColor"><path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"/></svg></span></button>
             </div>
             <nav class="toc-bottomsheet-nav" id="toc-bottomsheet-nav">
                 <!-- TOC items will be generated by JavaScript -->
@@ -598,13 +632,12 @@ int get sizeBytes =&gt; image.height * image.width * 4;
             <div class="footer-author">
                 <span>&copy; 2016-2025 </span>
                 <a href="https://github.com/jixiaoyong" target="_blank" rel="noopener noreferrer" title="GitHub">
-                    <i class="fab fa-github"></i>
-                    JI,XIAOYONG
+                    <span class="icon"><svg viewBox="0 0 496 512" fill="currentColor"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>JI,XIAOYONG
                 </a>
             </div>
             <div>
                 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer" class="footer-link">
-                    <i class="fab fa-creative-commons"></i> BY-NC-SA 4.0
+                    <span class="icon"><svg viewBox="0 0 496 512" fill="currentColor"><path d="M245.83 214.87l-33.22 17.28c-9.43-19.58-25.24-19.93-27.46-19.93-22.13 0-33.22 14.61-33.22 43.84 0 23.57 9.21 43.84 33.22 43.84 14.47 0 24.65-7.09 30.57-21.26l30.55 15.5c-6.17 11.51-25.69 38.98-65.1 38.98-22.6 0-73.96-10.32-73.96-77.05 0-58.69 43-77.06 72.63-77.06 30.72-.01 52.7 11.95 65.99 35.86zm143.05 0l-32.78 17.28c-9.5-19.77-25.72-19.93-27.9-19.93-22.14 0-33.22 14.61-33.22 43.84 0 23.55 9.23 43.84 33.22 43.84 14.45 0 24.65-7.09 30.54-21.26l31 15.5c-2.1 3.75-21.39 38.98-65.09 38.98-22.69 0-73.96-9.87-73.96-77.05 0-58.67 42.97-77.06 72.63-77.06 30.71-.01 52.58 11.95 65.56 35.86zM247.56 8.05C104.74 8.05 0 123.11 0 256.05c0 138.49 113.6 248 247.56 248 129.93 0 248.44-100.87 248.44-248 0-137.87-106.62-248-248.44-248zm.87 450.81c-112.54 0-203.7-93.04-203.7-202.81 0-105.42 85.43-203.27 203.72-203.27 112.53 0 202.82 89.46 202.82 203.26-.01 121.69-99.68 202.82-202.84 202.82z"/></svg></span> BY-NC-SA 4.0
                 </a>
             </div>
         </div>
@@ -615,7 +648,7 @@ int get sizeBytes =&gt; image.height * image.width * 4;
     <button id="back-to-top" class="back-to-top" 
             data-i18n="common.backToTop" data-i18n-attr="title"
             title="返回顶部">
-        <i class="fas fa-rocket"></i>
+        <span class="icon"><svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M3.7242 8.45192L7.28876 7.19383C6.55281 8.18469 5.92055 9.24884 5.40213 10.3696L3.7242 8.45192ZM1.24742 8.6585L4.54987 12.4327L4.07152 13.6286C3.92296 14 4.01003 14.4242 4.29289 14.7071L4.60651 15.0207C2.90342 16.9411 1.9627 18.9496 1.05132 21.6838C0.931539 22.0431 1.02506 22.4393 1.29289 22.7071C1.56073 22.9749 1.95689 23.0685 2.31623 22.9487C5.05037 22.0373 7.05889 21.0966 8.97928 19.3935L9.29289 19.7071C9.57576 19.99 9.99997 20.077 10.3714 19.9285L11.5673 19.4501L15.3415 22.7526C15.5911 22.971 15.9327 23.0514 16.2535 22.9673C16.5744 22.8832 16.8326 22.6456 16.943 22.3328L19.9291 13.8722C21.8977 11.5428 23 8.57479 23 5.48078V2C23 1.44772 22.5523 1 22 1H18.5192C15.4252 1 12.4572 2.10225 10.1278 4.0709L1.66718 7.05701C1.35444 7.16739 1.11676 7.42565 1.03268 7.74646C0.948589 8.06728 1.02903 8.40891 1.24742 8.6585ZM3.68527 20.3147C4.31277 18.7992 5.017 17.5929 6.02356 16.4378L7.56223 17.9764C6.40713 18.983 5.20083 19.6872 3.68527 20.3147ZM10.2408 17.8266L9.70711 17.2929L6.70711 14.2929L6.17337 13.7592L6.88327 11.9844C7.53465 10.356 8.44936 8.84567 9.59079 7.51401L10.1674 6.84129C12.2572 4.40319 15.308 3 18.5192 3H21V5.48078C21 8.69196 19.5968 11.7428 17.1587 13.8326L16.486 14.4092C15.1543 15.5506 13.644 16.4653 12.0156 17.1167L10.2408 17.8266ZM15.5481 20.2758L13.6304 18.5979C14.7512 18.0795 15.8153 17.4472 16.8062 16.7112L15.5481 20.2758ZM15 8C15 7.44772 15.4477 7 16 7C16.5523 7 17 7.44772 17 8C17 8.55228 16.5523 9 16 9C15.4477 9 15 8.55228 15 8ZM16 5C14.3431 5 13 6.34315 13 8C13 9.65685 14.3431 11 16 11C17.6569 11 19 9.65685 19 8C19 6.34315 17.6569 5 16 5Z"/></svg></span>
     </button>
 
     <!-- Page-specific scripts (Highlight.js, MathJax, etc.) -->
@@ -645,6 +678,6 @@ int get sizeBytes =&gt; image.height * image.width * 4;
     
 
     <!-- Core client.js -->
-    <script src="/blog/scripts/client.js?v=1766402209784"></script>
+    <script src="/blog/scripts/client.js?v=1766420959106"></script>
 </body>
 </html>

@@ -1,4 +1,15 @@
 // ===========================================
+// SVG Icons (inline, no CDN dependency)
+// ===========================================
+const SVG_ICONS = {
+    sun: `<svg viewBox="0 0 512 512" fill="currentColor"><path d="M256 160c-52.9 0-96 43.1-96 96s43.1 96 96 96 96-43.1 96-96-43.1-96-96-96zm246.4 80.5l-94.7-47.3 33.5-100.4c4.5-13.6-8.4-26.5-21.9-21.9l-100.4 33.5-47.4-94.8c-6.4-12.8-24.6-12.8-31 0l-47.3 94.7L92.7 70.8c-13.6-4.5-26.5 8.4-21.9 21.9l33.5 100.4-94.7 47.4c-12.8 6.4-12.8 24.6 0 31l94.7 47.3-33.5 100.5c-4.5 13.6 8.4 26.5 21.9 21.9l100.4-33.5 47.3 94.7c6.4 12.8 24.6 12.8 31 0l47.3-94.7 100.4 33.5c13.6 4.5 26.5-8.4 21.9-21.9l-33.5-100.4 94.7-47.3c13-6.5 13-24.7.2-31.1zm-155.9 106c-49.9 49.9-131.1 49.9-181 0-49.9-49.9-49.9-131.1 0-181 49.9-49.9 131.1-49.9 181 0 49.9 49.9 49.9 131.1 0 181z"/></svg>`,
+    moon: `<svg viewBox="0 0 512 512" fill="currentColor"><path d="M283.211 512c78.962 0 151.079-35.925 198.857-94.792 7.068-8.708-.639-21.43-11.562-19.35-124.203 23.654-238.262-71.576-238.262-196.954 0-72.222 38.662-138.635 101.498-174.394 9.686-5.512 7.25-20.197-3.756-22.23A258.156 258.156 0 0 0 283.211 0c-141.309 0-256 114.511-256 256 0 141.309 114.511 256 256 256z"/></svg>`,
+    adjust: `<svg viewBox="0 0 512 512" fill="currentColor"><path d="M8 256c0 136.966 111.033 248 248 248s248-111.034 248-248S392.966 8 256 8 8 119.033 8 256zm248 184V72c101.705 0 184 82.311 184 184 0 101.705-82.311 184-184 184z"/></svg>`,
+    bars: `<svg viewBox="0 0 448 512" fill="currentColor"><path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"/></svg>`,
+    times: `<svg viewBox="0 0 352 512" fill="currentColor"><path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"/></svg>`,
+};
+
+// ===========================================
 // Smart Font CDN Loader
 // SJTUG for China, Google Fonts for international
 // ===========================================
@@ -131,11 +142,18 @@ const applyTheme = (theme) => {
             : 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css';
     }
 
-    // Update icons and text
-    const icon = document.getElementById('theme-icon');
-    if (icon) {
-        icon.className = effective === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
-    }
+    // Update icons based on user's SELECTED mode (not effective theme)
+    const icons = document.querySelectorAll('.theme-icon-dynamic');
+    icons.forEach(icon => {
+        icon.innerHTML = '';
+        if (theme === 'light') {
+            icon.innerHTML = SVG_ICONS.sun;
+        } else if (theme === 'dark') {
+            icon.innerHTML = SVG_ICONS.moon;
+        } else {
+            icon.innerHTML = SVG_ICONS.adjust;
+        }
+    });
 
     // Update mobile menu theme text using i18n
     const textMobile = document.getElementById('theme-text-mobile');
@@ -148,9 +166,39 @@ const applyTheme = (theme) => {
 /**
  * I18n Manager to handle global language state and UI updates
  */
+const I18nUtils = {
+    getStorage(key, def) {
+        try {
+            return localStorage.getItem(key) || def;
+        } catch (e) {
+            console.warn('[I18nUtils] Storage access error', e);
+            return def; 
+        } 
+    },
+    setStorage(key, val) {
+        try {
+            localStorage.setItem(key, val);
+        } catch (e) {
+            console.warn('[I18nUtils] Storage write error', e);
+        }
+    }
+};
+
+/**
+ * I18n Manager to handle global language state and UI updates
+ */
 const I18nManager = {
     getLang() {
-        return localStorage.getItem('preferred_lang') || 'zh';
+        // Priority: 
+        // 1. Runtime override (window.__CURRENT_LANG__) - populated by Head Script
+        // 2. LocalStorage
+        // 3. Fallback to 'zh'
+        // This ensures the JS logic matches the "Pre-Hydration" logic from BaseLayout.
+        if (window.__CURRENT_LANG__) {
+             return window.__CURRENT_LANG__;
+        }
+        const lang = I18nUtils.getStorage('preferred_lang', 'zh');
+        return lang;
     },
 
     getI18n() {
@@ -159,32 +207,42 @@ const I18nManager = {
     },
 
     setLang(lang) {
-        localStorage.setItem('preferred_lang', lang);
+        console.log('[I18n] setLang:', lang);
+        I18nUtils.setStorage('preferred_lang', lang);
+        
+        // Update runtime global
+        window.__CURRENT_LANG__ = lang;
+        
         this.updateUI();
+        
         // Custom event for other components to listen to
         window.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang } }));
     },
 
     updateUI() {
-        const i18n = this.getI18n();
         const lang = this.getLang();
+        console.log('[I18n] updateUI currentLang:', lang);
+        const i18n = this.getI18n();
 
+        document.documentElement.lang = lang; // Ensure HTML lang attribute is synced
+        
         // Update all elements with data-i18n
-        // Update standard data-i18n elements
         document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.dataset.i18n;
+            if (!key) return;
+            
             const keys = key.split('.');
             let val = i18n;
             for (const k of keys) {
                 val = val ? val[k] : null;
             }
 
-            if (val) {
+            if (val !== undefined && val !== null) {
                 const attr = el.dataset.i18nAttr;
                 const isHtml = el.dataset.i18nHtml === 'true';
                 const params = el.dataset.i18nParams;
 
-                // Replace placeholders {0}, {1}, etc. with params
+                // Replace placeholders {0}, {1} with params
                 if (params) {
                     val = val.replace('{0}', params);
                 }
@@ -194,11 +252,16 @@ const I18nManager = {
                 } else if (isHtml) {
                     el.innerHTML = val;
                 } else {
-                    // Preserve icons if they exist
-                    const icon = el.querySelector('i');
+                    // Preserve icons if they exist (e.g. in Buttons)
+                    const icon = el.querySelector('i') || el.querySelector('svg') || el.querySelector('.icon');
                     if (icon) {
+                        // If there is an icon, we assume the text is a text node alongside it.
+                        // We clear and re-append. 
+                        // Implementation detail: Use a span for text if possible to avoid this.
+                        // Current impl re-appends icon.
+                        const iconClone = icon.cloneNode(true);
                         el.innerHTML = '';
-                        el.appendChild(icon);
+                        el.appendChild(iconClone);
                         el.appendChild(document.createTextNode(' ' + val));
                     } else {
                         el.textContent = val;
@@ -211,12 +274,13 @@ const I18nManager = {
         document.querySelectorAll('.i18n-content, .blog-timeline').forEach(el => {
             el.style.display = el.dataset.lang === lang ? 'block' : 'none';
         });
+        
         // Update Language Switcher Text
         const langTextDesktop = document.getElementById('lang-text-desktop');
-        if (langTextDesktop) langTextDesktop.textContent = lang === 'en' ? 'En' : '中';
+        if (langTextDesktop) langTextDesktop.textContent = lang === 'en' ? 'En' : '中文';
 
         const langTextMobile = document.getElementById('lang-text-mobile');
-        if (langTextMobile) langTextMobile.textContent = lang === 'en' ? '中文' : 'English';
+        if (langTextMobile) langTextMobile.textContent = lang === 'en' ? 'English' : '中文';
 
         // Update Homepage Posts if present
         this.updateHomePosts(lang);
@@ -224,24 +288,49 @@ const I18nManager = {
         // Update Detail Page Hints if present
         this.updateDetailHints(lang);
 
+        // Update Post Navigation (Prev/Next)
+        this.updatePostNav(lang);
+
         // Update Theme Text (since it depends on current i18n)
-        const currentTheme = localStorage.getItem('theme') || 'auto';
-        applyTheme(currentTheme);
+        const currentTheme = I18nUtils.getStorage('theme', 'auto');
+        if (typeof applyTheme === 'function') {
+            applyTheme(currentTheme);
+        }
+    },
+
+    updatePostNav(lang) {
+        document.querySelectorAll('.post-nav-item').forEach(item => {
+            // Fallback logic: Preferred Lang -> ZH
+            const zhPath = item.getAttribute('data-i18n-zh-path');
+            const targetPath = item.getAttribute(`data-i18n-${lang}-path`) || zhPath;
+            
+            // Only update href if a valid path exists
+            if (targetPath) {
+                item.href = targetPath;
+            }
+        });
     },
 
     updateHomePosts(lang) {
         document.querySelectorAll('.post-item').forEach(item => {
             const title = item.getAttribute(`data-i18n-${lang}-title`);
             const excerpt = item.getAttribute(`data-i18n-${lang}-excerpt`);
-            const path = item.getAttribute(`data-i18n-${lang}-path`);
+            // Fallback logic for path: Preferred Lang -> ZH -> Current Href
+            const zhPath = item.getAttribute('data-i18n-zh-path');
+            const targetPath = item.getAttribute(`data-i18n-${lang}-path`) || zhPath;
+            
             const tagsStr = item.getAttribute(`data-i18n-${lang}-tags`);
 
             if (title) {
                 const titleEl = item.querySelector('h2 a');
                 if (titleEl) titleEl.textContent = title;
-                const coverLink = item.querySelector('.post-cover a');
-                if (coverLink) coverLink.href = path;
-                if (titleEl) titleEl.href = path;
+                
+                // Update links with fallback
+                if (targetPath) {
+                    const coverLink = item.querySelector('.post-cover a');
+                    if (coverLink) coverLink.href = targetPath;
+                    if (titleEl) titleEl.href = targetPath;
+                }
             }
             if (excerpt) {
                 const excerptEl = item.querySelector('.post-excerpt p');
@@ -252,9 +341,6 @@ const I18nManager = {
                 const tagsContainer = item.querySelector('.post-tags');
                 if (tagsContainer && tagsRaw.length > 0) {
                     // Re-render tags
-                    // Note: We don't have the rootPath here easily, assuming '?' or absolute path logic
-                    // The original Tags() uses rootPath + '?tag='
-                    // Here we simply use '?tag=' which is relative to current page (likely home /)
                     tagsContainer.innerHTML = tagsRaw.map(tag => `<a href="?tag=${encodeURIComponent(tag)}" class="tag">#${tag}</a>`).join('\n');
                 }
             }
@@ -263,12 +349,23 @@ const I18nManager = {
 
     updateDetailHints(lang) {
         const article = document.querySelector('article');
-        if (!article) return;
+        // Ignore if no article or if it is the "About Page" (which handles i18n internally)
+        if (!article || article.classList.contains('about-page')) return;
 
-        const currentArticleLang = document.documentElement.lang || 'zh';
+        // Determine the content language of the article.
+        // It could be on the article tag or html tag. SSG puts lang on HTML.
+        // However, checking html.lang is tricky because we might have just updated it to currentLang in updateUI.
+        // But the *Article Content* itself is static SSG.
+        // Data attribute on article: data-lang="en"? It's not there by default.
+        // But we DO have data-has-translation-en="true" or similar.
+        
+        // Infer content language: If current URL contains /en/, it's EN. Else ZH.
+        const isUrlEn = window.location.pathname.includes('/en/');
+        const contentLang = isUrlEn ? 'en' : 'zh';
+        
         const container = document.getElementById('translation-hint-container') || this.createHintContainer(article);
 
-        if (lang === currentArticleLang) {
+        if (lang === contentLang) {
             container.classList.remove('visible');
             return;
         }
@@ -314,10 +411,10 @@ const updateThemeUI = (theme) => {
 
     // Icons
     if (icon) {
-        icon.className = ''; // Reset
-        if (theme === 'light') icon.className = 'fas fa-sun';
-        else if (theme === 'dark') icon.className = 'fas fa-moon';
-        else icon.className = 'fas fa-adjust'; // Auto
+        icon.className = 'icon icon-md';
+        if (theme === 'light') icon.innerHTML = SVG_ICONS.sun;
+        else if (theme === 'dark') icon.innerHTML = SVG_ICONS.moon;
+        else icon.innerHTML = SVG_ICONS.adjust; // Auto
     }
 
     // Mobile Text
@@ -341,19 +438,16 @@ const EMAIL_ADDRESS = 'jixiaoyong1995+blog@gmail.com';
 
 const sendEmailComment = (articleTitle, articlePath) => {
     try {
-        // Get i18n strings from button data attributes
-        const btn = document.querySelector('.btn-email');
-        const subject = btn?.dataset.emailSubject || 'Comment on article';
-        const hello = btn?.dataset.emailHello || 'Hi!';
-        const intro = btn?.dataset.emailIntro || 'I read your article and here are my thoughts:';
-        const fallbackMsg = btn?.dataset.emailFallback || 'Cannot open email client. Copy email address?';
+        // Get i18n strings dynamically
+        const i18n = I18nManager.getI18n();
+        const { subject, bodyHello, bodyIntro, copyFallback } = i18n.article.emailComment;
 
         // Build article URL
         const articleUrl = window.location.origin + articlePath;
 
         // Build email subject and body
         const fullSubject = `${subject}《${articleTitle}》`;
-        const body = `${hello}\n\n${intro}\n\n[《${articleTitle}》](${articleUrl})\n\n`;
+        const body = `${bodyHello}\n\n${bodyIntro}\n\n[《${articleTitle}》](${articleUrl})\n\n`;
 
         // Generate mailto link
         const mailtoLink = `mailto:${EMAIL_ADDRESS}?subject=${encodeURIComponent(fullSubject)}&body=${encodeURIComponent(body)}`;
@@ -363,12 +457,17 @@ const sendEmailComment = (articleTitle, articlePath) => {
 
     } catch (error) {
         // Fallback: offer to copy email address
-        const btn = document.querySelector('.btn-email');
-        const fallbackMsg = btn?.dataset.emailFallback || 'Cannot open email client. Copy email address?';
+        const i18n = I18nManager.getI18n();
+        const fallbackMsg = i18n.article.emailComment.copyFallback;
 
         if (confirm(`${fallbackMsg}\n\n${EMAIL_ADDRESS}`)) {
             navigator.clipboard.writeText(EMAIL_ADDRESS).then(() => {
-                alert('Email copied!');
+                // Try to use showToast if available, else alert
+                if (typeof showToast === 'function') {
+                    showToast('Email copied!');
+                } else {
+                    alert('Email copied!');
+                }
             }).catch(() => {
                 // Final fallback: prompt with email
                 prompt('Copy this email:', EMAIL_ADDRESS);
@@ -469,29 +568,25 @@ window.toggleAiPopup = toggleAiPopup;
 
 // Language Switcher
 const switchLanguage = () => {
-    // Close mobile menu if open
-    const mobileMenu = document.getElementById('mobile-menu');
-    if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
-        toggleMobileMenu();
-    }
-
     const currentLang = I18nManager.getLang();
     const newLang = currentLang === 'zh' ? 'en' : 'zh';
-
-    // Check if we should redirect (on detail page with direct translation)
-    const article = document.querySelector('article');
-    if (article) {
-        const translationPath = article.getAttribute(`data-translation-path-${newLang}`);
-        if (translationPath) {
-            // Save preference before redirecting
-            localStorage.setItem('preferred_lang', newLang);
-            window.location.href = translationPath;
-            return;
-        }
-    }
-
-    // Otherwise just toggle UI
+    
+    console.log(`[I18n] Switch requested: ${currentLang} -> ${newLang}`);
+    
     I18nManager.setLang(newLang);
+};
+
+const initLanguageListeners = () => {
+    document.querySelectorAll('.js-language-switch').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation(); 
+            switchLanguage();
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenu && !mobileMenu.classList.contains('hidden') && btn.closest('#mobile-menu')) {
+                toggleMobileMenu();
+            }
+        });
+    });
 };
 
 /**
@@ -588,18 +683,28 @@ const showToast = (message) => {
 const toggleMobileMenu = () => {
     const menu = document.getElementById('mobile-menu');
     const icon = document.getElementById('menu-icon');
-    if (menu) {
+    if (menu && icon) {
         const isHidden = menu.classList.toggle('hidden');
-        if (icon) {
-            icon.className = isHidden ? 'fas fa-bars' : 'fas fa-times';
-        }
+        // Only update innerHTML, preserve existing classes (icon icon-xl)
+        icon.innerHTML = isHidden ? SVG_ICONS.bars : SVG_ICONS.times;
+    }
+};
+
+// Add robust listener for mobile menu button
+// This prevents race conditions with DOM updates and event bubbling
+const initMobileMenuBtn = () => {
+    const btn = document.querySelector('.mobile-menu-btn');
+    if (btn) {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleMobileMenu();
+        });
     }
 };
 
 // Close mobile menu when clicking a menu item
 document.addEventListener('click', (e) => {
     const menu = document.getElementById('mobile-menu');
-    const menuBtn = document.querySelector('.mobile-menu-btn');
 
     if (!menu || menu.classList.contains('hidden')) return;
 
@@ -617,17 +722,24 @@ document.addEventListener('click', (e) => {
 
 // Init
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Initial I18n Update
+    console.log('[Init] DOMContentLoaded');
+    // 1. Initial I18n Init
+    // Note: I18nManager.getLang() now uses window.__CURRENT_LANG__ which is already smart.
+    // We execute updateUI to ensure binding of data-i18n elements if they need to change from SSG default.
+    // If SSG matched __CURRENT_LANG__, this should be a no-op visually, but good for consistency.
     I18nManager.updateUI();
+    
+    initMobileMenuBtn();
+    // initLanguageListeners(); // Inline onclick deals with it
 
     // 2. Restore Theme
     const savedTheme = localStorage.getItem('theme') || 'auto';
-    applyTheme(savedTheme);
+    if (typeof applyTheme === 'function') applyTheme(savedTheme);
 
     // 2. Listen for System Changes (for Auto mode)
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
         if (localStorage.getItem('theme') === 'auto') {
-            applyTheme('auto');
+            if (typeof applyTheme === 'function') applyTheme('auto');
         }
     });
 
@@ -1112,6 +1224,61 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
+    // 6.7. Image Loading State Initialization
+    // iOS-style blur-to-clear transition with error handling and retry
+    const initImageLoadingState = () => {
+        const imageWrappers = document.querySelectorAll('.image-wrapper');
+        
+        imageWrappers.forEach(wrapper => {
+            const img = wrapper.querySelector('img');
+            const errorEl = wrapper.querySelector('.image-error');
+            if (!img) return;
+            
+            // Handle image load success
+            const onLoad = () => {
+                wrapper.classList.remove('loading', 'error');
+                wrapper.classList.add('loaded');
+                if (errorEl) errorEl.style.display = 'none';
+            };
+            
+            // Handle image load error
+            const onError = () => {
+                wrapper.classList.remove('loading', 'loaded');
+                wrapper.classList.add('error');
+                if (errorEl) errorEl.style.display = 'flex';
+            };
+            
+            // Check if already loaded (from cache)
+            if (img.complete) {
+                if (img.naturalWidth > 0) {
+                    onLoad();
+                } else {
+                    onError();
+                }
+            } else {
+                // Add event listeners
+                img.addEventListener('load', onLoad);
+                img.addEventListener('error', onError);
+            }
+            
+            // Click to retry on error
+            if (errorEl) {
+                errorEl.addEventListener('click', () => {
+                    // Reset state and reload
+                    wrapper.classList.remove('error');
+                    wrapper.classList.add('loading');
+                    errorEl.style.display = 'none';
+                    
+                    // Force reload by appending timestamp
+                    const originalSrc = img.src.split('?')[0];
+                    img.src = originalSrc + '?retry=' + Date.now();
+                });
+            }
+        });
+    };
+    initImageLoadingState();
+
+
     // 7. Image Captions and Lightbox
     const articleContent = document.querySelector('.article-content');
     if (articleContent) {
@@ -1207,6 +1374,32 @@ document.addEventListener('DOMContentLoaded', () => {
     if (tocArticleContent && tocNav) {
         // Find all headings in article content
         const headings = tocArticleContent.querySelectorAll('h2, h3, h4');
+
+        // Helper for robust body scroll locking (iOS fix)
+        let scrollPosition = 0;
+        const disableBodyScroll = () => {
+            scrollPosition = window.scrollY;
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${scrollPosition}px`;
+            document.body.style.width = '100%';
+            document.body.style.overflow = 'hidden';
+        };
+
+        const enableBodyScroll = () => {
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            document.body.style.overflow = '';
+            window.scrollTo(0, scrollPosition);
+        };
+
+        // Close bottomsheet helper
+        const closeTocBottomsheet = () => {
+            if (tocBottomsheet && tocBottomsheet.classList.contains('active')) {
+                tocBottomsheet.classList.remove('active');
+                enableBodyScroll();
+            }
+        };
 
         if (headings.length > 0) {
             // Build hierarchical structure: h2 -> [h3 -> [h4]]
@@ -1363,10 +1556,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 behavior: 'smooth'
                             });
                             // Close bottomsheet if open
-                            if (tocBottomsheet) {
-                                tocBottomsheet.classList.remove('active');
-                                document.body.style.overflow = '';
-                            }
+                            closeTocBottomsheet();
                         }
                     });
                 });
@@ -1409,16 +1599,13 @@ document.addEventListener('DOMContentLoaded', () => {
                                 behavior: 'smooth'
                             });
                             // Close bottomsheet if open
-                            if (tocBottomsheet) {
-                                tocBottomsheet.classList.remove('active');
-                                document.body.style.overflow = '';
-                            }
+                            closeTocBottomsheet();
                         }
                     });
                 });
 
                 // Regular links without children
-                const regularLinks = container.querySelectorAll('.toc-h3:not(.has-children), .toc-h4');
+                const regularLinks = container.querySelectorAll('.toc-h2:not(.has-children), .toc-h3:not(.has-children), .toc-h4');
                 regularLinks.forEach(link => {
                     link.addEventListener('click', (e) => {
                         e.preventDefault();
@@ -1432,10 +1619,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 behavior: 'smooth'
                             });
                             // Close bottomsheet if open
-                            if (tocBottomsheet) {
-                                tocBottomsheet.classList.remove('active');
-                                document.body.style.overflow = '';
-                            }
+                            closeTocBottomsheet();
                         }
                     });
                 });
@@ -1591,17 +1775,31 @@ document.addEventListener('DOMContentLoaded', () => {
             if (tocMobileBtn && tocBottomsheet) {
                 tocMobileBtn.addEventListener('click', () => {
                     tocBottomsheet.classList.add('active');
-                    document.body.style.overflow = 'hidden';
+                    disableBodyScroll();
                 });
 
-                // Close bottomsheet
-                const closeBottomsheet = () => {
-                    tocBottomsheet.classList.remove('active');
-                    document.body.style.overflow = '';
-                };
+                tocBottomsheet.querySelector('.toc-bottomsheet-overlay').addEventListener('click', closeTocBottomsheet);
+                tocBottomsheet.querySelector('.toc-bottomsheet-close').addEventListener('click', closeTocBottomsheet);
 
-                tocBottomsheet.querySelector('.toc-bottomsheet-overlay').addEventListener('click', closeBottomsheet);
-                tocBottomsheet.querySelector('.toc-bottomsheet-close').addEventListener('click', closeBottomsheet);
+                // Prevent body scroll when touching non-scrollable parts of TOC
+                tocBottomsheet.addEventListener('touchmove', (e) => {
+                    if (!e.target.closest('.toc-bottomsheet-nav')) {
+                        e.preventDefault();
+                    }
+                }, { passive: false });
+
+                // iOS Edge Case: When TOC is shorter than container, or at scroll bounds, 
+                // scroll event might bubble to body. 
+                // We add a listener to the nav to stop propagation if it's bubbling.
+                // However, touchmove bubbling is what causes scroll. 
+                // With overscroll-behavior: none in CSS, this is mostly handled.
+                // But let's add stopPropagation for good measure on touchmove within nav
+                const nav = tocBottomsheet.querySelector('.toc-bottomsheet-nav');
+                if (nav) {
+                    nav.addEventListener('touchmove', (e) => {
+                       e.stopPropagation(); // Stop bubbling to the parent listener above or body
+                    }, { passive: true }); // Standard scroll behavior
+                }
             }
 
             // Handle resize - toggle between sidebar and mobile button
