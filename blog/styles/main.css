@@ -250,6 +250,8 @@ nav a:hover i {
     transition: color 0.2s;
 }
 
+
+
 /* Only apply hover effects on devices with hover capability (not touch screens) */
 @media (hover: hover) {
 
@@ -591,11 +593,42 @@ footer i {
     position: absolute;
     top: 2rem;
     right: 2rem;
-    font-size: 2rem;
+    font-size: 2.5rem;
     background: none;
     border: none;
     color: var(--text-primary);
     cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close-search:hover {
+    color: var(--accent-yellow);
+}
+
+/* Mobile Search Adaptations */
+@media (max-width: 768px) {
+    .search-overlay {
+        padding-top: 80px;
+    }
+
+    .close-search {
+        top: 1.5rem;
+        right: 1.5rem;
+        font-size: 2rem;
+    }
+
+    .search-box {
+        padding: 0 1.5rem;
+    }
+
+    .search-input {
+        font-size: 1rem;
+        padding: 0.75rem 0.5rem;
+    }
+
+    .search-results {
+        max-height: calc(100vh - 160px);
+    }
 }
 /* Post List Styles */
 .post-list {
@@ -1870,6 +1903,7 @@ article .tags .tag:hover {
     width: 240px;
     max-height: calc(100vh - 160px);
     overflow-y: auto;
+    overscroll-behavior: contain;
     padding: 1rem;
     font-size: 0.85rem;
     z-index: 50;
@@ -1896,22 +1930,43 @@ article .tags .tag:hover {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 16px;
-    height: 16px;
+    width: 24px;
+    height: 24px;
     margin-right: 4px;
+    margin-left: -4px;
     transition: transform 0.25s ease;
     flex-shrink: 0;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.toc-chevron:hover {
+    background: var(--bg-secondary);
 }
 
 .toc-chevron svg {
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     stroke: var(--text-secondary);
     stroke-width: 2;
     stroke-linecap: round;
     stroke-linejoin: round;
     fill: none;
     transition: stroke 0.2s;
+}
+
+/* Mobile: even larger tap target */
+@media (max-width: 768px) {
+    .toc-chevron {
+        width: 32px;
+        height: 32px;
+        margin-right: 8px;
+    }
+
+    .toc-chevron svg {
+        width: 14px;
+        height: 14px;
+    }
 }
 
 .expanded>.toc-chevron {
@@ -2215,6 +2270,7 @@ article .tags .tag:hover {
 
 .toc-bottomsheet-nav {
     overflow-y: auto;
+    overscroll-behavior: contain;
     padding: 1rem 1.25rem;
     flex: 1;
 }

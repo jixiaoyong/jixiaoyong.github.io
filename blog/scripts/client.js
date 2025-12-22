@@ -596,6 +596,25 @@ const toggleMobileMenu = () => {
     }
 };
 
+// Close mobile menu when clicking a menu item
+document.addEventListener('click', (e) => {
+    const menu = document.getElementById('mobile-menu');
+    const menuBtn = document.querySelector('.mobile-menu-btn');
+
+    if (!menu || menu.classList.contains('hidden')) return;
+
+    // Check if clicked on a menu item (anchor or button inside menu)
+    if (e.target.closest('#mobile-menu a, #mobile-menu button')) {
+        toggleMobileMenu();
+        return;
+    }
+
+    // Check if clicked outside the menu and not on the toggle button
+    if (!e.target.closest('#mobile-menu') && !e.target.closest('.mobile-menu-btn')) {
+        toggleMobileMenu();
+    }
+});
+
 // Init
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Initial I18n Update
@@ -1299,7 +1318,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Toggle h2 children
                 h2Links.forEach(link => {
                     link.addEventListener('click', (e) => {
-                        // If has children, toggle expansion first
+                        e.preventDefault();
+
+                        // Check if clicked on chevron or its SVG child
+                        const isChevronClick = e.target.closest('.toc-chevron');
+
                         const parent = link.closest('.toc-group');
                         const children = parent.querySelector('.toc-children');
 
@@ -1323,19 +1346,27 @@ document.addEventListener('DOMContentLoaded', () => {
                                 link.classList.add('expanded');
                                 children.classList.add('expanded');
                             }
+
+                            // If chevron click, stop here - don't navigate
+                            if (isChevronClick) {
+                                return;
+                            }
                         }
 
-                        // Still allow navigation
-                        e.preventDefault();
+                        // Navigate to heading (only if text was clicked, not chevron)
                         const targetId = link.getAttribute('data-target');
                         const targetEl = document.getElementById(targetId);
                         if (targetEl) {
-                            // Update URL hash
                             history.pushState(null, '', `#${targetId}`);
                             window.scrollTo({
                                 top: targetEl.offsetTop - 100,
                                 behavior: 'smooth'
                             });
+                            // Close bottomsheet if open
+                            if (tocBottomsheet) {
+                                tocBottomsheet.classList.remove('active');
+                                document.body.style.overflow = '';
+                            }
                         }
                     });
                 });
@@ -1343,6 +1374,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Toggle h3 children (if any h4s)
                 h3Links.forEach(link => {
                     link.addEventListener('click', (e) => {
+                        e.preventDefault();
+
+                        // Check if clicked on chevron or its SVG child
+                        const isChevronClick = e.target.closest('.toc-chevron');
+
                         // Find h4 container within the same wrapper
                         const wrapper = link.closest('.toc-h3-wrapper');
                         const h4Container = wrapper ? wrapper.querySelector('.toc-children-h4') : null;
@@ -1356,19 +1392,27 @@ document.addEventListener('DOMContentLoaded', () => {
                                 link.classList.add('expanded');
                                 h4Container.classList.add('expanded');
                             }
+
+                            // If chevron click, stop here - don't navigate
+                            if (isChevronClick) {
+                                return;
+                            }
                         }
 
-                        // Still allow navigation
-                        e.preventDefault();
+                        // Navigate to heading (only if text was clicked, not chevron)
                         const targetId = link.getAttribute('data-target');
                         const targetEl = document.getElementById(targetId);
                         if (targetEl) {
-                            // Update URL hash
                             history.pushState(null, '', `#${targetId}`);
                             window.scrollTo({
                                 top: targetEl.offsetTop - 100,
                                 behavior: 'smooth'
                             });
+                            // Close bottomsheet if open
+                            if (tocBottomsheet) {
+                                tocBottomsheet.classList.remove('active');
+                                document.body.style.overflow = '';
+                            }
                         }
                     });
                 });

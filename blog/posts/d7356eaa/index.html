@@ -24,7 +24,7 @@
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
 
     <!-- Styles -->
-    <link rel="stylesheet" href="/blog/styles/main.css?v=1766400927658">
+    <link rel="stylesheet" href="/blog/styles/main.css?v=1766402209743">
 
     <script>
         // Immediately compute and apply correct theme to prevent FOUC (Flash of Unstyled Content)
@@ -108,7 +108,7 @@
     <div id="search-overlay" class="search-overlay hidden">
         <button class="close-search" onclick="closeSearch()">&times;</button>
         <div class="search-box">
-            <input type="text" id="search-input" 
+            <input type="text" id="search-input" class="search-input"
                    data-i18n="common.search" data-i18n-attr="placeholder"
                    placeholder="搜索..." autocomplete="off">
         </div>
@@ -207,7 +207,7 @@
 <hr>
 <p><a href="https://jixiaoyong.github.io/statics/git_revert_cherrypick_compare.html">点击在线查看清楚的对比</a></p>
 
-<details class="demo-container" id="normal-demo-d7356eaa-1-n3je1u" data-collapse="50vh" open>
+<details class="demo-container" id="normal-demo-d7356eaa-1-iy1wdy" data-collapse="50vh" open>
   <summary class="demo-header">
     <span class="demo-title">上述操作的图形化演示</span>
     <span class="demo-toggle-icon">
@@ -218,49 +218,49 @@
   </summary>
   <div class="demo-body">
     
-    <style>#normal-demo-d7356eaa-1-n3je1u {
+    <style>#normal-demo-d7356eaa-1-iy1wdy {
     font-family: sans-serif;
     margin: 0;
     padding: 0 8px;
-  }#normal-demo-d7356eaa-1-n3je1u .main-content {
+  }#normal-demo-d7356eaa-1-iy1wdy .main-content {
     max-width: 1200px;
     margin: 0 auto;
     border-radius: 12px;
     padding: 24px 12px 40px 12px;
-  }#normal-demo-d7356eaa-1-n3je1u h1 {
+  }#normal-demo-d7356eaa-1-iy1wdy h1 {
     text-align: center;
     margin-bottom: 16px;
-  }#normal-demo-d7356eaa-1-n3je1u .compare-table {
+  }#normal-demo-d7356eaa-1-iy1wdy .compare-table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0 18px;
-  }#normal-demo-d7356eaa-1-n3je1u .compare-table th, #normal-demo-d7356eaa-1-n3je1u .compare-table td {
+  }#normal-demo-d7356eaa-1-iy1wdy .compare-table th, #normal-demo-d7356eaa-1-iy1wdy .compare-table td {
     vertical-align: top;
     padding: 0 12px;
     width: 50%;
-  }#normal-demo-d7356eaa-1-n3je1u .compare-table th {
+  }#normal-demo-d7356eaa-1-iy1wdy .compare-table th {
     font-size: 1.1em;
     color: #2196f3;
     text-align: center;
     padding-bottom: 8px;
-  }#normal-demo-d7356eaa-1-n3je1u .stage-title-scheme1 {
+  }#normal-demo-d7356eaa-1-iy1wdy .stage-title-scheme1 {
     font-weight: bold;
     font-size: 1.1em;
     margin-bottom: 6px;
     color: #1976d2;
-  }#normal-demo-d7356eaa-1-n3je1u .stage-title-scheme2 {
+  }#normal-demo-d7356eaa-1-iy1wdy .stage-title-scheme2 {
     font-weight: bold;
     font-size: 1.1em;
     margin-bottom: 6px;
     color: #388e3c;
-  }#normal-demo-d7356eaa-1-n3je1u .stage-block {
+  }#normal-demo-d7356eaa-1-iy1wdy .stage-block {
     border-radius: 8px;
     padding: 12px 10px 10px 10px;
     margin-bottom: 0;
     border: 1px solid var(--border-color, #e3e8ee);
     overflow-x: auto;
     white-space: nowrap;
-  }#normal-demo-d7356eaa-1-n3je1u .diff {
+  }#normal-demo-d7356eaa-1-iy1wdy .diff {
     border: 2px solid #ff9800;
     border-radius: 8px;
     padding: 10px 10px 8px 10px;
@@ -268,7 +268,7 @@
     margin-bottom: 0;
     color: #b26a00;
     white-space: normal; /* Diff text should wrap */
-  }#normal-demo-d7356eaa-1-n3je1u .final-result {
+  }#normal-demo-d7356eaa-1-iy1wdy .final-result {
     border: 2px solid #2196f3;
     border-radius: 8px;
     padding: 12px 10px 10px 10px;
@@ -276,7 +276,7 @@
     margin-bottom: 0;
     overflow-x: auto;
     white-space: nowrap;
-  }#normal-demo-d7356eaa-1-n3je1u .commit-node {
+  }#normal-demo-d7356eaa-1-iy1wdy .commit-node {
     display: inline-block;
     padding: 3px 8px;
     border-radius: 5px;
@@ -284,47 +284,47 @@
     font-size: 0.98em;
     white-space: nowrap;
     word-break: normal;
-  }#normal-demo-d7356eaa-1-n3je1u .branch-a-node {
+  }#normal-demo-d7356eaa-1-iy1wdy .branch-a-node {
     background: #2196f3;
     color: #fff;
-  }#normal-demo-d7356eaa-1-n3je1u .branch-b-node {
+  }#normal-demo-d7356eaa-1-iy1wdy .branch-b-node {
     background: #4caf50;
     color: #fff;
-  }#normal-demo-d7356eaa-1-n3je1u .branch-c-node {
+  }#normal-demo-d7356eaa-1-iy1wdy .branch-c-node {
     background: #ff9800;
     color: #fff;
-  }#normal-demo-d7356eaa-1-n3je1u .merged-node-from-c {
+  }#normal-demo-d7356eaa-1-iy1wdy .merged-node-from-c {
     background: #ff9800;
     color: #fff;
     border: 1.5px solid #ff9800;
-  }#normal-demo-d7356eaa-1-n3je1u .merged-node-from-b {
+  }#normal-demo-d7356eaa-1-iy1wdy .merged-node-from-b {
     background: #4caf50;
     color: #fff;
     border: 1.5px solid #4caf50;
-  }#normal-demo-d7356eaa-1-n3je1u .cherry-picked-commit {
+  }#normal-demo-d7356eaa-1-iy1wdy .cherry-picked-commit {
     border: 2px solid #ef5350;
     color: #c62828;
-  }#normal-demo-d7356eaa-1-n3je1u .revert {
+  }#normal-demo-d7356eaa-1-iy1wdy .revert {
     border: 2px solid #ffb300;
     color: #b26a00;
-  }#normal-demo-d7356eaa-1-n3je1u .strike {
+  }#normal-demo-d7356eaa-1-iy1wdy .strike {
     text-decoration: line-through;
     opacity: 0.5;
     border: 2px dashed #888 !important;
-  }#normal-demo-d7356eaa-1-n3je1u .stage-desc {
+  }#normal-demo-d7356eaa-1-iy1wdy .stage-desc {
     color: #888;
     font-size: 0.97em;
     margin-bottom: 6px;
   }
 
-  @media (max-width: 900px) {#normal-demo-d7356eaa-1-n3je1u .compare-table th, #normal-demo-d7356eaa-1-n3je1u .compare-table td {
+  @media (max-width: 900px) {#normal-demo-d7356eaa-1-iy1wdy .compare-table th, #normal-demo-d7356eaa-1-iy1wdy .compare-table td {
       display: block;
       width: 100%;
-    }#normal-demo-d7356eaa-1-n3je1u .compare-table tr {
+    }#normal-demo-d7356eaa-1-iy1wdy .compare-table tr {
       display: block;
       margin-bottom: 32px;
     }
-  }#normal-demo-d7356eaa-1-n3je1u /* Styles for collapsible sections */
+  }#normal-demo-d7356eaa-1-iy1wdy /* Styles for collapsible sections */
   .collapsible-header {
     cursor: pointer;
     padding: 16px 12px;
@@ -336,9 +336,9 @@
     margin-top: 20px;
     border-radius: 8px;
     transition: opacity 0.3s ease;
-  }#normal-demo-d7356eaa-1-n3je1u .collapsible-header:hover {
+  }#normal-demo-d7356eaa-1-iy1wdy .collapsible-header:hover {
     opacity: 0.8;
-  }#normal-demo-d7356eaa-1-n3je1u .collapsible-content {
+  }#normal-demo-d7356eaa-1-iy1wdy .collapsible-content {
     padding: 16px 12px;
     max-height: 0;
     overflow: hidden;
@@ -348,10 +348,10 @@
     border-bottom: 1px solid var(--border-color, #ddd);
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
-  }#normal-demo-d7356eaa-1-n3je1u .collapsible-content.active {
+  }#normal-demo-d7356eaa-1-iy1wdy .collapsible-content.active {
     max-height: 5000px;
     /* Adjust based on expected content height */
-  }#normal-demo-d7356eaa-1-n3je1u /* Styles from git_log.html and git_log_chreey_pick.html */
+  }#normal-demo-d7356eaa-1-iy1wdy /* Styles from git_log.html and git_log_chreey_pick.html */
   .branch-container {
     margin-bottom: 5px;
     padding: 6px 0;
@@ -359,59 +359,59 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 2px;
-  }#normal-demo-d7356eaa-1-n3je1u .branch-label {
+  }#normal-demo-d7356eaa-1-iy1wdy .branch-label {
     border: 1px solid var(--border-color, #ddd);
     padding: 5px 10px;
     margin-bottom: 2px;
     display: inline-block;
-  }#normal-demo-d7356eaa-1-n3je1u /* .commit-node style is already defined */
-  /* .branch-a-node, #normal-demo-d7356eaa-1-n3je1u .branch-b-node, #normal-demo-d7356eaa-1-n3je1u .branch-c-node styles are already defined */
+  }#normal-demo-d7356eaa-1-iy1wdy /* .commit-node style is already defined */
+  /* .branch-a-node, #normal-demo-d7356eaa-1-iy1wdy .branch-b-node, #normal-demo-d7356eaa-1-iy1wdy .branch-c-node styles are already defined */
 
   .merged-node-from-c {
     background-color: #ff9800;
     /* Orange - indicating from c */
-  }#normal-demo-d7356eaa-1-n3je1u .merged-node-from-b {
+  }#normal-demo-d7356eaa-1-iy1wdy .merged-node-from-b {
     background-color: #4caf50;
     /* Green - indicating from b */
-  }#normal-demo-d7356eaa-1-n3je1u .revert {
+  }#normal-demo-d7356eaa-1-iy1wdy .revert {
     background-color: #ffe0b2;
     border: 1px solid #ffb300;
     color: black;
-  }#normal-demo-d7356eaa-1-n3je1u .cherry-picked-commit {
+  }#normal-demo-d7356eaa-1-iy1wdy .cherry-picked-commit {
     background-color: #ffebee;
     border: 1px solid #ef9a9a;
     color: black;
-  }#normal-demo-d7356eaa-1-n3je1u .branch-commits {
+  }#normal-demo-d7356eaa-1-iy1wdy .branch-commits {
     display: flex;
     align-items: center;
-  }#normal-demo-d7356eaa-1-n3je1u .arrow {
+  }#normal-demo-d7356eaa-1-iy1wdy .arrow {
     margin-right: 10px;
     font-size: 1.2em;
     color: #777;
-  }#normal-demo-d7356eaa-1-n3je1u .final-a {
+  }#normal-demo-d7356eaa-1-iy1wdy .final-a {
     background-color: #fce4ec;
     border: 1px solid #f48fb1;
-  }#normal-demo-d7356eaa-1-n3je1u .strike {
+  }#normal-demo-d7356eaa-1-iy1wdy .strike {
     text-decoration: line-through;
     color: gray;
-  }#normal-demo-d7356eaa-1-n3je1u .strike.branch-a-node, #normal-demo-d7356eaa-1-n3je1u .strike.branch-b-node, #normal-demo-d7356eaa-1-n3je1u .strike.branch-c-node, #normal-demo-d7356eaa-1-n3je1u .strike.merged-node-from-c, #normal-demo-d7356eaa-1-n3je1u .strike.merged-node-from-b {
+  }#normal-demo-d7356eaa-1-iy1wdy .strike.branch-a-node, #normal-demo-d7356eaa-1-iy1wdy .strike.branch-b-node, #normal-demo-d7356eaa-1-iy1wdy .strike.branch-c-node, #normal-demo-d7356eaa-1-iy1wdy .strike.merged-node-from-c, #normal-demo-d7356eaa-1-iy1wdy .strike.merged-node-from-b {
     opacity: 0.5;
     text-decoration: line-through;
-  }#normal-demo-d7356eaa-1-n3je1u .step-description {
+  }#normal-demo-d7356eaa-1-iy1wdy .step-description {
     margin-top: 10px;
     padding-left: 20px;
     font-size: 0.9em;
     color: #555;
-  }#normal-demo-d7356eaa-1-n3je1u .temp-branch-label {
+  }#normal-demo-d7356eaa-1-iy1wdy .temp-branch-label {
     border: 1px solid #26c6da;
     padding: 5px 10px;
     margin-bottom: 2px;
     display: inline-block;
     color: #00838f;
-  }#normal-demo-d7356eaa-1-n3je1u /* Existing styles for collapsible sections */
+  }#normal-demo-d7356eaa-1-iy1wdy /* Existing styles for collapsible sections */
   .collapsible-header {
     padding: 16px 12px;
-  }#normal-demo-d7356eaa-1-n3je1u .collapsible-content.active {
+  }#normal-demo-d7356eaa-1-iy1wdy .collapsible-content.active {
     max-height: 5000px;
     /* Adjust based on expected content height */
   }
@@ -671,7 +671,7 @@
   </div>
 </details>
 
-<details class="demo-container" id="normal-demo-d7356eaa-2-dfrox0" data-collapse="50vh" open>
+<details class="demo-container" id="normal-demo-d7356eaa-2-vdo1p1" data-collapse="50vh" open>
   <summary class="demo-header">
     <span class="demo-title">Merge + Revert 详细步骤</span>
     <span class="demo-toggle-icon">
@@ -682,104 +682,104 @@
   </summary>
   <div class="demo-body">
     
-    <style>#normal-demo-d7356eaa-2-dfrox0 {
+    <style>#normal-demo-d7356eaa-2-vdo1p1 {
     font-family: sans-serif;
     margin: 0;
     padding: 0 8px;
-  }#normal-demo-d7356eaa-2-dfrox0 .main-content {
+  }#normal-demo-d7356eaa-2-vdo1p1 .main-content {
     max-width: 1200px;
     margin: 0 auto;
     border-radius: 12px;
     padding: 24px 12px 40px 12px;
-  }#normal-demo-d7356eaa-2-dfrox0 h1 {
+  }#normal-demo-d7356eaa-2-vdo1p1 h1 {
     text-align: center;
     margin-bottom: 16px;
-  }#normal-demo-d7356eaa-2-dfrox0 .compare-table {
+  }#normal-demo-d7356eaa-2-vdo1p1 .compare-table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0 18px;
-  }#normal-demo-d7356eaa-2-dfrox0 .compare-table th, #normal-demo-d7356eaa-2-dfrox0 .compare-table td {
+  }#normal-demo-d7356eaa-2-vdo1p1 .compare-table th, #normal-demo-d7356eaa-2-vdo1p1 .compare-table td {
     vertical-align: top;
     padding: 0 12px;
     width: 50%;
-  }#normal-demo-d7356eaa-2-dfrox0 .compare-table th {
+  }#normal-demo-d7356eaa-2-vdo1p1 .compare-table th {
     font-size: 1.1em;
     color: #2196f3;
     text-align: center;
     padding-bottom: 8px;
-  }#normal-demo-d7356eaa-2-dfrox0 .stage-title-scheme1 {
+  }#normal-demo-d7356eaa-2-vdo1p1 .stage-title-scheme1 {
     font-weight: bold;
     font-size: 1.1em;
     margin-bottom: 6px;
     color: #1976d2;
-  }#normal-demo-d7356eaa-2-dfrox0 .stage-title-scheme2 {
+  }#normal-demo-d7356eaa-2-vdo1p1 .stage-title-scheme2 {
     font-weight: bold;
     font-size: 1.1em;
     margin-bottom: 6px;
     color: #388e3c;
-  }#normal-demo-d7356eaa-2-dfrox0 .stage-block {
+  }#normal-demo-d7356eaa-2-vdo1p1 .stage-block {
     border-radius: 8px;
     padding: 12px 10px 10px 10px;
     margin-bottom: 0;
     border: 1px solid var(--border-color, #e3e8ee);
-  }#normal-demo-d7356eaa-2-dfrox0 .diff {
+  }#normal-demo-d7356eaa-2-vdo1p1 .diff {
     border: 2px solid #ff9800;
     border-radius: 8px;
     padding: 10px 10px 8px 10px;
     margin-top: 8px;
     margin-bottom: 0;
     color: #b26a00;
-  }#normal-demo-d7356eaa-2-dfrox0 .final-result {
+  }#normal-demo-d7356eaa-2-vdo1p1 .final-result {
     border: 2px solid #2196f3;
     border-radius: 8px;
     padding: 12px 10px 10px 10px;
     margin-top: 8px;
     margin-bottom: 0;
-  }#normal-demo-d7356eaa-2-dfrox0 .commit-node {
+  }#normal-demo-d7356eaa-2-vdo1p1 .commit-node {
     display: inline-block;
     padding: 3px 8px;
     border-radius: 5px;
     margin-right: 6px;
     font-size: 0.98em;
-  }#normal-demo-d7356eaa-2-dfrox0 .branch-a-node {
+  }#normal-demo-d7356eaa-2-vdo1p1 .branch-a-node {
     background: #2196f3;
     color: #fff;
-  }#normal-demo-d7356eaa-2-dfrox0 .branch-b-node {
+  }#normal-demo-d7356eaa-2-vdo1p1 .branch-b-node {
     background: #4caf50;
     color: #fff;
-  }#normal-demo-d7356eaa-2-dfrox0 .branch-c-node {
+  }#normal-demo-d7356eaa-2-vdo1p1 .branch-c-node {
     background: #ff9800;
     color: #fff;
-  }#normal-demo-d7356eaa-2-dfrox0 .merged-node-from-c {
+  }#normal-demo-d7356eaa-2-vdo1p1 .merged-node-from-c {
     background: #ff9800;
     color: #fff;
     border: 1.5px solid #ff9800;
-  }#normal-demo-d7356eaa-2-dfrox0 .merged-node-from-b {
+  }#normal-demo-d7356eaa-2-vdo1p1 .merged-node-from-b {
     background: #4caf50;
     color: #fff;
     border: 1.5px solid #4caf50;
-  }#normal-demo-d7356eaa-2-dfrox0 .cherry-picked-commit {
+  }#normal-demo-d7356eaa-2-vdo1p1 .cherry-picked-commit {
     border: 2px solid #ef5350;
     color: #c62828;
-  }#normal-demo-d7356eaa-2-dfrox0 .revert {
+  }#normal-demo-d7356eaa-2-vdo1p1 .revert {
     border: 2px solid #ffb300;
     color: #b26a00;
-  }#normal-demo-d7356eaa-2-dfrox0 .strike {
+  }#normal-demo-d7356eaa-2-vdo1p1 .strike {
     text-decoration: line-through;
     opacity: 0.5;
     border: 2px dashed #888 !important;
-  }#normal-demo-d7356eaa-2-dfrox0 .stage-desc {
+  }#normal-demo-d7356eaa-2-vdo1p1 .stage-desc {
     font-size: 0.97em;
     margin-bottom: 6px;
   }
-  @media (max-width: 900px) {#normal-demo-d7356eaa-2-dfrox0 .compare-table th, #normal-demo-d7356eaa-2-dfrox0 .compare-table td {
+  @media (max-width: 900px) {#normal-demo-d7356eaa-2-vdo1p1 .compare-table th, #normal-demo-d7356eaa-2-vdo1p1 .compare-table td {
       display: block;
       width: 100%;
-    }#normal-demo-d7356eaa-2-dfrox0 .compare-table tr {
+    }#normal-demo-d7356eaa-2-vdo1p1 .compare-table tr {
       display: block;
       margin-bottom: 32px;
     }
-  }#normal-demo-d7356eaa-2-dfrox0 .collapsible-header {
+  }#normal-demo-d7356eaa-2-vdo1p1 .collapsible-header {
     cursor: pointer;
     padding: 16px 12px;
     width: 100%;
@@ -790,9 +790,9 @@
     margin-top: 20px;
     border-radius: 8px;
     transition: opacity 0.3s ease;
-  }#normal-demo-d7356eaa-2-dfrox0 .collapsible-header:hover {
+  }#normal-demo-d7356eaa-2-vdo1p1 .collapsible-header:hover {
     opacity: 0.8;
-  }#normal-demo-d7356eaa-2-dfrox0 .collapsible-content {
+  }#normal-demo-d7356eaa-2-vdo1p1 .collapsible-content {
     padding: 16px 12px;
     max-height: 0;
     overflow: hidden;
@@ -802,36 +802,36 @@
     border-bottom: 1px solid var(--border-color, #ddd);
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
-  }#normal-demo-d7356eaa-2-dfrox0 .collapsible-content.active {
+  }#normal-demo-d7356eaa-2-vdo1p1 .collapsible-content.active {
     max-height: 5000px;
-  }#normal-demo-d7356eaa-2-dfrox0 .branch-container {
+  }#normal-demo-d7356eaa-2-vdo1p1 .branch-container {
     margin-bottom: 5px;
     padding: 6px 0;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 2px;
-  }#normal-demo-d7356eaa-2-dfrox0 .branch-label {
+  }#normal-demo-d7356eaa-2-vdo1p1 .branch-label {
     border: 1px solid var(--border-color, #ddd);
     padding: 5px 10px;
     margin-bottom: 2px;
     display: inline-block;
-  }#normal-demo-d7356eaa-2-dfrox0 .branch-commits {
+  }#normal-demo-d7356eaa-2-vdo1p1 .branch-commits {
     display: flex;
     align-items: center;
-  }#normal-demo-d7356eaa-2-dfrox0 .arrow {
+  }#normal-demo-d7356eaa-2-vdo1p1 .arrow {
     margin-right: 10px;
     font-size: 1.2em;
-  }#normal-demo-d7356eaa-2-dfrox0 .final-a {
+  }#normal-demo-d7356eaa-2-vdo1p1 .final-a {
     border: 1px solid #f48fb1;
-  }#normal-demo-d7356eaa-2-dfrox0 .strike.branch-a-node, #normal-demo-d7356eaa-2-dfrox0 .strike.branch-b-node, #normal-demo-d7356eaa-2-dfrox0 .strike.branch-c-node, #normal-demo-d7356eaa-2-dfrox0 .strike.merged-node-from-c, #normal-demo-d7356eaa-2-dfrox0 .strike.merged-node-from-b {
+  }#normal-demo-d7356eaa-2-vdo1p1 .strike.branch-a-node, #normal-demo-d7356eaa-2-vdo1p1 .strike.branch-b-node, #normal-demo-d7356eaa-2-vdo1p1 .strike.branch-c-node, #normal-demo-d7356eaa-2-vdo1p1 .strike.merged-node-from-c, #normal-demo-d7356eaa-2-vdo1p1 .strike.merged-node-from-b {
     opacity: 0.5;
     text-decoration: line-through;
-  }#normal-demo-d7356eaa-2-dfrox0 .step-description {
+  }#normal-demo-d7356eaa-2-vdo1p1 .step-description {
     margin-top: 10px;
     padding-left: 20px;
     font-size: 0.9em;
-  }#normal-demo-d7356eaa-2-dfrox0 .temp-branch-label {
+  }#normal-demo-d7356eaa-2-vdo1p1 .temp-branch-label {
     border: 1px solid #26c6da;
     padding: 5px 10px;
     margin-bottom: 2px;
@@ -1115,7 +1115,7 @@
   </div>
 </details>
 
-<details class="demo-container" id="normal-demo-d7356eaa-3-rxdq8q" data-collapse="50vh" open>
+<details class="demo-container" id="normal-demo-d7356eaa-3-dv4yg7" data-collapse="50vh" open>
   <summary class="demo-header">
     <span class="demo-title">Reset + Cherry-pick 详细步骤</span>
     <span class="demo-toggle-icon">
@@ -1126,8 +1126,8 @@
   </summary>
   <div class="demo-body">
     
-    <style>#normal-demo-d7356eaa-3-rxdq8q {font-family:sans-serif;margin:0;padding:0 8px}#normal-demo-d7356eaa-3-rxdq8q .main-content {max-width:1200px;margin:0 auto;border-radius:12px;padding:24px 12px 40px 12px}#normal-demo-d7356eaa-3-rxdq8q h1 {text-align:center;margin-bottom:16px}#normal-demo-d7356eaa-3-rxdq8q .compare-table {width:100%;border-collapse:separate;border-spacing:0 18px}#normal-demo-d7356eaa-3-rxdq8q .compare-table th, #normal-demo-d7356eaa-3-rxdq8q .compare-table td {vertical-align:top;padding:0 12px;width:50%}#normal-demo-d7356eaa-3-rxdq8q .compare-table th {font-size:1.1em;color:#2196f3;text-align:center;padding-bottom:8px}#normal-demo-d7356eaa-3-rxdq8q .stage-title-scheme1 {font-weight:bold;font-size:1.1em;margin-bottom:6px;color:#1976d2}#normal-demo-d7356eaa-3-rxdq8q .stage-title-scheme2 {font-weight:bold;font-size:1.1em;margin-bottom:6px;color:#388e3c}#normal-demo-d7356eaa-3-rxdq8q .stage-block {border-radius:8px;padding:12px 10px 10px 10px;margin-bottom:0;border:1px solid var(--border-color,#e3e8ee);overflow-x:auto;white-space:nowrap}#normal-demo-d7356eaa-3-rxdq8q .diff {border:2px solid #ff9800;border-radius:8px;padding:10px 10px 8px 10px;margin-top:8px;margin-bottom:0;color:#b26a00;white-space:normal}#normal-demo-d7356eaa-3-rxdq8q .final-result {border:2px solid #2196f3;border-radius:8px;padding:12px 10px 10px 10px;margin-top:8px;margin-bottom:0}#normal-demo-d7356eaa-3-rxdq8q .commit-node {display:inline-block;padding:3px 8px;border-radius:5px;margin-right:6px;font-size:0.98em;white-space:nowrap;word-break:normal;flex-shrink:0}#normal-demo-d7356eaa-3-rxdq8q .branch-a-node {background:#2196f3;color:#fff}#normal-demo-d7356eaa-3-rxdq8q .branch-b-node {background:#4caf50;color:#fff}#normal-demo-d7356eaa-3-rxdq8q .branch-c-node {background:#ff9800;color:#fff}#normal-demo-d7356eaa-3-rxdq8q .merged-node-from-c {background:#ff9800;color:#fff;border:1.5px solid #ff9800}#normal-demo-d7356eaa-3-rxdq8q .merged-node-from-b {background:#4caf50;color:#fff;border:1.5px solid #4caf50}#normal-demo-d7356eaa-3-rxdq8q .cherry-picked-commit {border:2px solid #ef5350;color:#c62828}#normal-demo-d7356eaa-3-rxdq8q .revert {border:2px solid #ffb300;color:#b26a00}#normal-demo-d7356eaa-3-rxdq8q .strike {text-decoration:line-through;opacity:0.5;border:2px dashed #888 !important}#normal-demo-d7356eaa-3-rxdq8q .stage-desc {font-size:0.97em;margin-bottom:6px}
-  @media (max-width:900px){#normal-demo-d7356eaa-3-rxdq8q .compare-table th, #normal-demo-d7356eaa-3-rxdq8q .compare-table td {display:block;width:100%}#normal-demo-d7356eaa-3-rxdq8q .compare-table tr {display:block;margin-bottom:32px}}#normal-demo-d7356eaa-3-rxdq8q .collapsible-header {cursor:pointer;padding:16px 12px;width:100%;border:1px solid var(--border-color,#ddd);text-align:left;outline:none;font-size:1.1em;margin-top:20px;border-radius:8px;transition:opacity 0.3s ease}#normal-demo-d7356eaa-3-rxdq8q .collapsible-header:hover {opacity:0.8}#normal-demo-d7356eaa-3-rxdq8q .collapsible-content {padding:16px 12px;max-height:0;overflow:hidden;transition:max-height 0.2s ease-out;border-left:1px solid var(--border-color,#ddd);border-right:1px solid var(--border-color,#ddd);border-bottom:1px solid var(--border-color,#ddd);border-bottom-left-radius:8px;border-bottom-right-radius:8px}#normal-demo-d7356eaa-3-rxdq8q .collapsible-content.active {max-height:5000px}#normal-demo-d7356eaa-3-rxdq8q .branch-container {margin-bottom:5px;padding:6px 0;display:flex;flex-direction:column;align-items:flex-start;gap:2px;width:100%;overflow:hidden}#normal-demo-d7356eaa-3-rxdq8q .branch-label {border:1px solid var(--border-color,#ddd);padding:5px 10px;margin-bottom:2px;display:inline-block;flex-shrink:0}#normal-demo-d7356eaa-3-rxdq8q .branch-commits {display:flex;align-items:center;overflow-x:auto;width:100%;padding-bottom:5px}#normal-demo-d7356eaa-3-rxdq8q .arrow {margin-right:10px;font-size:1.2em}#normal-demo-d7356eaa-3-rxdq8q .final-a {border:1px solid #f48fb1}#normal-demo-d7356eaa-3-rxdq8q .strike.branch-a-node, #normal-demo-d7356eaa-3-rxdq8q .strike.branch-b-node, #normal-demo-d7356eaa-3-rxdq8q .strike.branch-c-node, #normal-demo-d7356eaa-3-rxdq8q .strike.merged-node-from-c, #normal-demo-d7356eaa-3-rxdq8q .strike.merged-node-from-b {opacity:0.5;text-decoration:line-through}#normal-demo-d7356eaa-3-rxdq8q .step-description {margin-top:10px;padding-left:20px;font-size:0.9em}#normal-demo-d7356eaa-3-rxdq8q .temp-branch-label {border:1px solid #26c6da;padding:5px 10px;margin-bottom:2px;display:inline-block;color:#00838f}</style>
+    <style>#normal-demo-d7356eaa-3-dv4yg7 {font-family:sans-serif;margin:0;padding:0 8px}#normal-demo-d7356eaa-3-dv4yg7 .main-content {max-width:1200px;margin:0 auto;border-radius:12px;padding:24px 12px 40px 12px}#normal-demo-d7356eaa-3-dv4yg7 h1 {text-align:center;margin-bottom:16px}#normal-demo-d7356eaa-3-dv4yg7 .compare-table {width:100%;border-collapse:separate;border-spacing:0 18px}#normal-demo-d7356eaa-3-dv4yg7 .compare-table th, #normal-demo-d7356eaa-3-dv4yg7 .compare-table td {vertical-align:top;padding:0 12px;width:50%}#normal-demo-d7356eaa-3-dv4yg7 .compare-table th {font-size:1.1em;color:#2196f3;text-align:center;padding-bottom:8px}#normal-demo-d7356eaa-3-dv4yg7 .stage-title-scheme1 {font-weight:bold;font-size:1.1em;margin-bottom:6px;color:#1976d2}#normal-demo-d7356eaa-3-dv4yg7 .stage-title-scheme2 {font-weight:bold;font-size:1.1em;margin-bottom:6px;color:#388e3c}#normal-demo-d7356eaa-3-dv4yg7 .stage-block {border-radius:8px;padding:12px 10px 10px 10px;margin-bottom:0;border:1px solid var(--border-color,#e3e8ee);overflow-x:auto;white-space:nowrap}#normal-demo-d7356eaa-3-dv4yg7 .diff {border:2px solid #ff9800;border-radius:8px;padding:10px 10px 8px 10px;margin-top:8px;margin-bottom:0;color:#b26a00;white-space:normal}#normal-demo-d7356eaa-3-dv4yg7 .final-result {border:2px solid #2196f3;border-radius:8px;padding:12px 10px 10px 10px;margin-top:8px;margin-bottom:0}#normal-demo-d7356eaa-3-dv4yg7 .commit-node {display:inline-block;padding:3px 8px;border-radius:5px;margin-right:6px;font-size:0.98em;white-space:nowrap;word-break:normal;flex-shrink:0}#normal-demo-d7356eaa-3-dv4yg7 .branch-a-node {background:#2196f3;color:#fff}#normal-demo-d7356eaa-3-dv4yg7 .branch-b-node {background:#4caf50;color:#fff}#normal-demo-d7356eaa-3-dv4yg7 .branch-c-node {background:#ff9800;color:#fff}#normal-demo-d7356eaa-3-dv4yg7 .merged-node-from-c {background:#ff9800;color:#fff;border:1.5px solid #ff9800}#normal-demo-d7356eaa-3-dv4yg7 .merged-node-from-b {background:#4caf50;color:#fff;border:1.5px solid #4caf50}#normal-demo-d7356eaa-3-dv4yg7 .cherry-picked-commit {border:2px solid #ef5350;color:#c62828}#normal-demo-d7356eaa-3-dv4yg7 .revert {border:2px solid #ffb300;color:#b26a00}#normal-demo-d7356eaa-3-dv4yg7 .strike {text-decoration:line-through;opacity:0.5;border:2px dashed #888 !important}#normal-demo-d7356eaa-3-dv4yg7 .stage-desc {font-size:0.97em;margin-bottom:6px}
+  @media (max-width:900px){#normal-demo-d7356eaa-3-dv4yg7 .compare-table th, #normal-demo-d7356eaa-3-dv4yg7 .compare-table td {display:block;width:100%}#normal-demo-d7356eaa-3-dv4yg7 .compare-table tr {display:block;margin-bottom:32px}}#normal-demo-d7356eaa-3-dv4yg7 .collapsible-header {cursor:pointer;padding:16px 12px;width:100%;border:1px solid var(--border-color,#ddd);text-align:left;outline:none;font-size:1.1em;margin-top:20px;border-radius:8px;transition:opacity 0.3s ease}#normal-demo-d7356eaa-3-dv4yg7 .collapsible-header:hover {opacity:0.8}#normal-demo-d7356eaa-3-dv4yg7 .collapsible-content {padding:16px 12px;max-height:0;overflow:hidden;transition:max-height 0.2s ease-out;border-left:1px solid var(--border-color,#ddd);border-right:1px solid var(--border-color,#ddd);border-bottom:1px solid var(--border-color,#ddd);border-bottom-left-radius:8px;border-bottom-right-radius:8px}#normal-demo-d7356eaa-3-dv4yg7 .collapsible-content.active {max-height:5000px}#normal-demo-d7356eaa-3-dv4yg7 .branch-container {margin-bottom:5px;padding:6px 0;display:flex;flex-direction:column;align-items:flex-start;gap:2px;width:100%;overflow:hidden}#normal-demo-d7356eaa-3-dv4yg7 .branch-label {border:1px solid var(--border-color,#ddd);padding:5px 10px;margin-bottom:2px;display:inline-block;flex-shrink:0}#normal-demo-d7356eaa-3-dv4yg7 .branch-commits {display:flex;align-items:center;overflow-x:auto;width:100%;padding-bottom:5px}#normal-demo-d7356eaa-3-dv4yg7 .arrow {margin-right:10px;font-size:1.2em}#normal-demo-d7356eaa-3-dv4yg7 .final-a {border:1px solid #f48fb1}#normal-demo-d7356eaa-3-dv4yg7 .strike.branch-a-node, #normal-demo-d7356eaa-3-dv4yg7 .strike.branch-b-node, #normal-demo-d7356eaa-3-dv4yg7 .strike.branch-c-node, #normal-demo-d7356eaa-3-dv4yg7 .strike.merged-node-from-c, #normal-demo-d7356eaa-3-dv4yg7 .strike.merged-node-from-b {opacity:0.5;text-decoration:line-through}#normal-demo-d7356eaa-3-dv4yg7 .step-description {margin-top:10px;padding-left:20px;font-size:0.9em}#normal-demo-d7356eaa-3-dv4yg7 .temp-branch-label {border:1px solid #26c6da;padding:5px 10px;margin-bottom:2px;display:inline-block;color:#00838f}</style>
         <div >
             <!-- Content from git_log_chreey_pick.html body -->
             <div id="stage1-reset-graphic" class="branch-container">
@@ -1500,6 +1500,6 @@
     
 
     <!-- Core client.js -->
-    <script src="/blog/scripts/client.js?v=1766400927658"></script>
+    <script src="/blog/scripts/client.js?v=1766402209743"></script>
 </body>
 </html>
