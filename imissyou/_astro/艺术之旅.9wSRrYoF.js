@@ -1,11 +1,14 @@
 const n=`---
-title: 艺术之旅
-tags: 一派胡言
-abbrlink: 84339c60
-date: 2019-02-09T22:12:04+0800
-updated: 2023-12-30T14:33:04+0800
-summaryZh: 记录了一次对所谓的“艺术聚集地”的探访。作者本怀着对艺术的憧憬，却发现那里充斥着流水线式的复制品和商业气息，表达了对这种“伪艺术”现象的失望与讽刺。
-summaryEn: Records a visit to a so-called "art gathering place". The author originally had a longing for art, but found that the place was full of assembly-line replicas and commercial atmosphere, expressing disappointment and satire on this "pseudo-art" phenomenon.
+"title": "艺术之旅"
+"date": "2019-02-09T22:12:04+0800"
+"tags":
+  - "一派胡言"
+"author": "残桐落叶"
+"published": true
+"abbrlink": "84339c60"
+"updated": "2023-12-30T14:33:04+0800"
+"summaryZh": "记录了一次对所谓的“艺术聚集地”的探访。作者本怀着对艺术的憧憬，却发现那里充斥着流水线式的复制品和商业气息，表达了对这种“伪艺术”现象的失望与讽刺。"
+"summaryEn": "Records a visit to a so-called \\"art gathering place\\". The author originally had a longing for art, but found that the place was full of assembly-line replicas and commercial atmosphere, expressing disappointment and satire on this \\"pseudo-art\\" phenomenon."
 ---
 
 今天去了一个据说很有文艺气息的地方，这里是一个油画家聚集地，碾转倒了几次车后终于在导航的指引下到达目的地，一条条弯曲交错的小径穿插在一堆最高不过四五层砖瓦矮平房之间，一个个奇奇怪怪的工作室镶嵌在其中。大概是由于春节的缘故，虽然街道上不时拥过一簇簇游客，但整条街开门营业的工作室几乎一把手就能数过来。
