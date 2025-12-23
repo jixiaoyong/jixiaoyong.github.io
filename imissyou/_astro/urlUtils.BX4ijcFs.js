@@ -1,0 +1,1 @@
+import{D as e}from"./blog.config.DJ2JAiW9.js";const i=()=>{const s=typeof import.meta<"u"?"/imissyou":e;return s.endsWith("/")?s:`${s}/`},o=s=>{if(!s)return;if(s.startsWith("http")||s.startsWith("//"))return s;const t=i();if(s.startsWith("/")){if(t==="/")return s;const r=s.substring(1);return`${t}${r}`}return`${t}${s}`};export{i as g,o as r};
