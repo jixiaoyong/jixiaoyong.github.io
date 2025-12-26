@@ -41,9 +41,9 @@
     function getEditUrl(filePath) {
         const params = new URLSearchParams({
             project: PROJECT_ID,
-            edit: filePath
+            path: filePath
         });
-        return EDITOR_BASE_URL + '/?' + params.toString();
+        return EDITOR_BASE_URL + '/edit?' + params.toString();
     }
 
     /**

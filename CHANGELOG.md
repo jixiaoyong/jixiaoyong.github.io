@@ -1,5 +1,29 @@
 # Changelog
 
+## [2025-12-26 21:02:44] Deploy
+
+**Scope**: blog-system,imissyou-system
+**Authors**: JI,XIAOYONG
+
+## blog-system
+| Type | Description | Author |
+|------|-------------|--------|
+| feat | update editorLink utility across JavaScript and TypeScript implementations | @JI,XIAOYONG |
+
+## imissyou-system
+| Type | Description | Author |
+|------|-------------|--------|
+| chore | 移除生成的类型定义文件中的 content.d.ts 引用 | @JI,XIAOYONG |
+| feat | update editorLink utility across JavaScript and TypeScript implementations | @JI,XIAOYONG |
+
+---
+Auto deploy by GitHub Action
+Source: blog_source_code@cea724f
+Date: 2025-12-26 21:02:44
+
+---
+
+
 ## [2025-12-26 19:16:59] Deploy
 
 **Scope**: blog-system,editor,imissyou-system
