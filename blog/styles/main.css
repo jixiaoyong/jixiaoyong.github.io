@@ -2784,6 +2784,34 @@ article .tags .tag:hover {
     background: rgba(250, 204, 21, 0.1);
     border-radius: 2px;
 }
+
+/* Edit Button (shown when logged into editor) */
+.edit-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.edit-button:hover {
+    color: var(--accent-yellow);
+    border-color: var(--accent-yellow);
+}
+
+.edit-button .icon {
+    width: 14px;
+    height: 14px;
+}
+
+.edit-button.hidden {
+    display: none !important;
+}
 /**
  * Demo Container Styles
  * 用于 ::: normal-demo 容器的样式

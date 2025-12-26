@@ -14,7 +14,7 @@
     <!-- Font CSS will be loaded by JavaScript after page content loads -->
     
     <!-- Styles -->
-    <link rel="stylesheet" href="/blog/styles/main.css?v=1766660993906">
+    <link rel="stylesheet" href="/blog/styles/main.css?v=1766747764180">
 
     <script>
         // Immediately compute and apply correct theme to prevent FOUC (Flash of Unstyled Content)
@@ -159,6 +159,21 @@
             </div>
         </div>
     
+        
+            <div class="i18n-content" data-lang="zh" style="display: block; margin-top: 1rem; text-align: right;">
+                <a href="#" class="edit-button hidden" data-edit-path="src/_pages/about.md" style="display: none;">
+                    <span class="icon"><svg viewBox="0 0 512 512" fill="currentColor"><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L37.8 353c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 96 96zm-20.9-20.9L304 98.6l50.7-50.7c28.1-28.1 73.7-28.1 101.8 0l11.3 11.3c28.1 28.1 28.1 73.7 0 101.8l-50.7 50.7-16.3-16.3z"/></svg></span>
+                    <span>编辑此页</span>
+                </a>
+            </div>
+        
+            <div class="i18n-content" data-lang="en" style="display: none; margin-top: 1rem; text-align: right;">
+                <a href="#" class="edit-button hidden" data-edit-path="src/_pages/en/about.md" style="display: none;">
+                    <span class="icon"><svg viewBox="0 0 512 512" fill="currentColor"><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L37.8 353c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 96 96zm-20.9-20.9L304 98.6l50.7-50.7c28.1-28.1 73.7-28.1 101.8 0l11.3 11.3c28.1 28.1 28.1 73.7 0 101.8l-50.7 50.7-16.3-16.3z"/></svg></span>
+                    <span>Edit this page</span>
+                </a>
+            </div>
+        
         
         <article class="article-content about-page i18n-content" data-lang="zh" style="display: block">
             <h1>关于我</h1>
@@ -314,7 +329,10 @@
     <!-- Page-specific scripts (Highlight.js, MathJax, etc.) -->
     
 
+    <!-- Editor Link (detects login status and shows edit buttons) -->
+    <script src="/blog/scripts/editorLink.js?v=1766747764180"></script>
+
     <!-- Core client.js -->
-    <script src="/blog/scripts/client.js?v=1766660993906"></script>
+    <script src="/blog/scripts/client.js?v=1766747764180"></script>
 </body>
 </html>

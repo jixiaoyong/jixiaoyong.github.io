@@ -20,7 +20,7 @@
     <!-- Font CSS will be loaded by JavaScript after page content loads -->
     
     <!-- Styles -->
-    <link rel="stylesheet" href="/blog/styles/main.css?v=1766660993774">
+    <link rel="stylesheet" href="/blog/styles/main.css?v=1766747764048">
 
     <script>
         // Immediately compute and apply correct theme to prevent FOUC (Flash of Unstyled Content)
@@ -154,6 +154,16 @@
                     <span class="publish-date mathjax_ignore"><span data-i18n="article.publishedOn">发布于</span> 2019-12-15</span>
                     <span class="publish-date mathjax_ignore">(<span data-i18n="article.updatedOn">更新于</span> 2023-12-30)</span>
                     
+                    <!-- Edit Button (hidden by default, shown by JS when logged in) -->
+                    <a href="#" 
+                       class="edit-button hidden" 
+                       data-edit-path="src/_posts/JavaNote-HashMap保存数据.md"
+                       style="display: none; margin-left: 0.5rem;"
+                       data-i18n="article.edit"
+                       title="Edit">
+                        <span class="icon"><svg viewBox="0 0 512 512" fill="currentColor"><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L37.8 353c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 96 96zm-20.9-20.9L304 98.6l50.7-50.7c28.1-28.1 73.7-28.1 101.8 0l11.3 11.3c28.1 28.1 28.1 73.7 0 101.8l-50.7 50.7-16.3-16.3z"/></svg></span>
+                        <span data-i18n="article.edit">Edit</span>
+                    </a>
                 </div>
             </div>
 
@@ -471,7 +481,10 @@ final int capacity() {
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
 
+    <!-- Editor Link (detects login status and shows edit buttons) -->
+    <script src="/blog/scripts/editorLink.js?v=1766747764048"></script>
+
     <!-- Core client.js -->
-    <script src="/blog/scripts/client.js?v=1766660993774"></script>
+    <script src="/blog/scripts/client.js?v=1766747764048"></script>
 </body>
 </html>
