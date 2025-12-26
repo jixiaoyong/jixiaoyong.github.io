@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Git Heatmap Dashboard</title>
+    <style>
+      :root {
+        --bg-color: transparent;
+        --text-color: #24292f;
+        --btn-bg: #f6f8fa;
+        --btn-border: #d0d7de;
+        --btn-active-bg: #0969da;
+        --btn-active-text: #ffffff;
+        --empty-color: #ebedf0;
+        --c1: #9be9a8;
+        --c2: #40c463;
+        --c3: #30a14e;
+        --c4: #216e39;
+        /* 每月1号的边框颜色，比背景稍深 */
+        --border-highlight: #d0d7de;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg-color: #0d1117;
+          --text-color: #adbac7;
+          --btn-bg: #2d333b;
+          --btn-border: #444c56;
+          --empty-color: #2d333b;
+          --c1: #0e4429;
+          --c2: #006d32;
+          --c3: #26a641;
+          --c4: #39d353;
+          --border-highlight: #444c56;
+        }
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        background: var(--bg-color);
+        font-family: -apple-system, sans-serif;
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+
+      .wrapper {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        min-height: 100vh;
+        box-sizing: border-box;
+        padding: 12px;
+        position: relative;
+      }
+
+      #mainContent {
+        display: flex;
+        flex-direction: column;
+      }
+
+      #mainContent.hidden {
+        display: none;
+      }
+
+      /* Header 响应式布局：解决窄屏重叠 */
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 16px;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .title {
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--text-color);
+        min-width: 140px;
+      }
+
+      .nav-btns {
+        display: flex;
+        gap: 4px;
+        background: var(--btn-bg);
+        padding: 3px;
+        border: 1px solid var(--btn-border);
+        border-radius: 6px;
+      }
+
+      button {
+        border: none;
+        background: transparent;
+        color: var(--text-color);
+        padding: 5px 12px;
+        font-size: 12px;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      button.active {
+        background: var(--btn-active-bg);
+        color: var(--btn-active-text);
+      }
+
+      .canvas-scroll-container {
+        width: 100%;
+        overflow-x: auto;
+        position: relative;
+        scrollbar-width: thin;
+      }
+
+      canvas {
+        display: block;
+        cursor: crosshair;
+      }
+
+      /* 浮窗样式 */
+      #tooltip {
+        position: absolute;
+        background: rgba(0, 0, 0, 0.85);
+        color: #fff;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 12px;
+        pointer-events: none;
+        visibility: hidden;
+        z-index: 1000;
+        white-space: nowrap;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .footer {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 5px;
+        font-size: 11px;
+        color: var(--text-color);
+        margin-top: 8px;
+      }
+
+      .legend-box {
+        width: 10px;
+        height: 10px;
+        border-radius: 2px;
+      }
+
+      /* iOS 风格的状态界面 */
+      .state-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 240px;
+        padding: 40px 20px;
+      }
+
+      .state-container.hidden {
+        display: none;
+      }
+
+      /* iOS 风格加载动画 */
+      .ios-spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid rgba(0, 0, 0, 0.1);
+        border-top-color: #000;
+        border-radius: 50%;
+        animation: ios-spin 0.8s linear infinite;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .ios-spinner {
+          border-color: rgba(255, 255, 255, 0.2);
+          border-top-color: #fff;
+        }
+      }
+
+      @keyframes ios-spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .loading-text {
+        margin-top: 16px;
+        font-size: 15px;
+        color: #666;
+        font-weight: 400;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .loading-text {
+          color: #999;
+        }
+      }
+
+      /* 错误状态 */
+      .error-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: #f5f5f5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+        font-size: 30px;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .error-icon {
+          background: #2d2d2d;
+        }
+      }
+
+      .error-title {
+        font-size: 17px;
+        font-weight: 600;
+        color: #000;
+        margin-bottom: 8px;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .error-title {
+          color: #fff;
+        }
+      }
+
+      .error-message {
+        font-size: 15px;
+        color: #666;
+        margin-bottom: 24px;
+        text-align: center;
+        max-width: 280px;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .error-message {
+          color: #999;
+        }
+      }
+
+      .retry-button {
+        background: #007aff;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 24px;
+        font-size: 17px;
+        font-weight: 400;
+        cursor: pointer;
+        transition: opacity 0.2s;
+      }
+
+      .retry-button:active {
+        opacity: 0.6;
+      }
+
+      /* 空状态 */
+      .empty-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: #f5f5f5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+        font-size: 30px;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .empty-icon {
+          background: #2d2d2d;
+        }
+      }
+
+      .empty-title {
+        font-size: 17px;
+        font-weight: 600;
+        color: #000;
+        margin-bottom: 8px;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .empty-title {
+          color: #fff;
+        }
+      }
+
+      .empty-message {
+        font-size: 15px;
+        color: #666;
+        text-align: center;
+        max-width: 280px;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .empty-message {
+          color: #999;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <div id="tooltip"></div>
+
+      <!-- 加载状态 -->
+      <div class="state-container" id="loadingState">
+        <div class="ios-spinner"></div>
+        <div class="loading-text">正在加载...</div>
+      </div>
+
+      <!-- 错误状态 -->
+      <div class="state-container hidden" id="errorState">
+        <div class="error-icon">⚠️</div>
+        <div class="error-title">加载失败</div>
+        <div class="error-message" id="errorMessage">
+          无法加载数据，请检查网络连接
+        </div>
+        <button class="retry-button" onclick="loadData()">重试</button>
+      </div>
+
+      <!-- 空状态 -->
+      <div class="state-container hidden" id="emptyState">
+        <div class="empty-icon">📭</div>
+        <div class="empty-title">暂无数据</div>
+        <div class="empty-message">当前没有可显示的内容</div>
+      </div>
+
+      <!-- 主要内容（成功加载后显示） -->
+      <div id="mainContent" class="hidden">
+        <div class="header">
+          <div class="title" id="pageTitle">2025 年度开发轨迹</div>
+          <div class="nav-btns">
+            <button id="btn-all" class="active" onclick="switchTab('all')">
+              All
+            </button>
+            <button id="btn-github" onclick="switchTab('github')">
+              GitHub
+            </button>
+            <button id="btn-other" onclick="switchTab('other')">Other</button>
+          </div>
+        </div>
+
+        <div class="canvas-scroll-container" id="scrollContainer">
+          <canvas id="heatmapCanvas"></canvas>
+        </div>
+
+        <div class="footer">
+          <span>Less</span>
+          <div class="legend-box" style="background: var(--empty-color)"></div>
+          <div class="legend-box" style="background: var(--c1)"></div>
+          <div class="legend-box" style="background: var(--c2)"></div>
+          <div class="legend-box" style="background: var(--c3)"></div>
+          <div class="legend-box" style="background: var(--c4)"></div>
+          <span>More</span>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let fullData = null,
+        currentView = "all";
+      let targetYear = 2025; // 将从 URL 参数或数据文件路径中获取
+      const boxSize = 11,
+        gap = 3,
+        labelHeight = 22,
+        dayLabelWidth = 35,
+        weeks = 53;
+      const stats = new Map(),
+        rects = [];
+
+      // 从 URL 参数获取配置
+      function getUrlParams() {
+        const params = new URLSearchParams(window.location.search);
+        return {
+          url: params.get("url") || params.get("json"),
+          name: params.get("name") || params.get("n"),
+          year: params.get("year") || params.get("y"),
+        };
+      }
+
+      // 从 URL 参数获取 JSON 文件地址
+      function getJsonUrl() {
+        const urlParams = getUrlParams();
+
+        // 优先从 year 参数获取年份
+        if (urlParams.year) {
+          targetYear = parseInt(urlParams.year);
+        }
+
+        if (urlParams.url) {
+          // 尝试从文件路径中提取年份（如果 URL 参数中没有指定年份）
+          if (!urlParams.year) {
+            const yearMatch = urlParams.url.match(/(\d{4})\.json$/);
+            if (yearMatch) {
+              targetYear = parseInt(yearMatch[1]);
+            }
+          }
+          return urlParams.url;
+        }
+
+        // 默认读取 data 目录下当前年份的文件
+        if (!urlParams.year) {
+          targetYear = new Date().getFullYear();
+        }
+        return `./data/${targetYear}.json`;
+      }
+
+      // 更新页面标题
+      function updatePageTitle() {
+        const urlParams = getUrlParams();
+        const name = urlParams.name;
+        const titleElement = document.getElementById("pageTitle");
+
+        if (name) {
+          titleElement.textContent = `${name} ${targetYear} 年的年度开发轨迹`;
+        } else {
+          titleElement.textContent = `${targetYear} 年度开发轨迹`;
+        }
+      }
+
+      // 状态管理
+      function showState(state) {
+        document
+          .getElementById("loadingState")
+          .classList.toggle("hidden", state !== "loading");
+        document
+          .getElementById("errorState")
+          .classList.toggle("hidden", state !== "error");
+        document
+          .getElementById("emptyState")
+          .classList.toggle("hidden", state !== "empty");
+        document
+          .getElementById("mainContent")
+          .classList.toggle("hidden", state !== "success");
+      }
+
+      // 检查数据是否为空
+      function isEmpty(data) {
+        if (!data) return true;
+        const hasGithub = data.github && Object.keys(data.github).length > 0;
+        const hasOther = data.other && Object.keys(data.other).length > 0;
+        return !hasGithub && !hasOther;
+      }
+
+      // 加载数据
+      function loadData() {
+        const jsonUrl = getJsonUrl();
+        showState("loading");
+
+        fetch(jsonUrl)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(
+                `HTTP ${response.status}: ${response.statusText}`
+              );
+            }
+            return response.json();
+          })
+          .then((json) => {
+            if (isEmpty(json)) {
+              showState("empty");
+            } else {
+              fullData = json;
+              showState("success");
+              updatePageTitle(); // 更新标题
+              draw();
+              setupCanvasInteractions();
+            }
+          })
+          .catch((error) => {
+            console.error("加载失败:", error);
+            const errorMsg = document.getElementById("errorMessage");
+            if (error.message.includes("HTTP")) {
+              errorMsg.textContent = `加载失败 (${error.message})`;
+            } else if (error.message.includes("JSON")) {
+              errorMsg.textContent = "数据格式错误，请检查文件内容";
+            } else if (error.message.includes("Failed to fetch")) {
+              errorMsg.textContent = "网络连接失败，请检查网络设置";
+            } else {
+              errorMsg.textContent = error.message || "加载失败，请稍后重试";
+            }
+            showState("error");
+          });
+      }
+
+      // 初始化：更新标题并加载数据
+      updatePageTitle();
+      loadData();
+
+      function switchTab(type) {
+        currentView = type;
+        document
+          .querySelectorAll("button")
+          .forEach((b) => b.classList.toggle("active", b.id === "btn-" + type));
+        draw();
+      }
+
+      // 辅助函数：格式化日期为 YYYY-MM-DD
+      function formatDate(date) {
+        const y = date.getFullYear();
+        const m = String(date.getMonth() + 1).padStart(2, "0");
+        const d = String(date.getDate()).padStart(2, "0");
+        return `${y}-${m}-${d}`;
+      }
+
+      // 关键逻辑：解压数据
+      // 将 {"1": {"2": 5}} 转换为 Map<"2025-01-02", 5>
+      function inflateData(compressedSource) {
+        if (!compressedSource) return;
+        Object.keys(compressedSource).forEach((monthKey) => {
+          const daysObj = compressedSource[monthKey];
+          Object.keys(daysObj).forEach((dayKey) => {
+            const count = daysObj[dayKey];
+            // 补零处理
+            const m = monthKey.padStart(2, "0");
+            const d = dayKey.padStart(2, "0");
+            const dateStr = `${targetYear}-${m}-${d}`;
+
+            stats.set(dateStr, (stats.get(dateStr) || 0) + count);
+          });
+        });
+      }
+
+      // 根据容器宽度决定是否居中显示
+      function updateCanvasAlignment() {
+        const canvas = document.getElementById("heatmapCanvas");
+        const container = document.getElementById("scrollContainer");
+        const fixedWidth = dayLabelWidth + weeks * (boxSize + gap);
+        const containerWidth = container.clientWidth;
+
+        if (containerWidth > fixedWidth) {
+          canvas.style.margin = "0 auto";
+        } else {
+          canvas.style.margin = "0";
+        }
+      }
+
+      function draw() {
+        if (!fullData) return;
+        const canvas = document.getElementById("heatmapCanvas"),
+          ctx = canvas.getContext("2d"),
+          dpr = window.devicePixelRatio || 1;
+        const fixedWidth = dayLabelWidth + weeks * (boxSize + gap),
+          fixedHeight = labelHeight + 7 * (boxSize + gap) + 5;
+
+        canvas.width = fixedWidth * dpr;
+        canvas.height = fixedHeight * dpr;
+        canvas.style.width = fixedWidth + "px";
+        canvas.style.height = fixedHeight + "px";
+        ctx.scale(dpr, dpr);
+
+        // 更新对齐方式
+        updateCanvasAlignment();
+
+        const s = getComputedStyle(document.documentElement);
+        const colors = [
+          s.getPropertyValue("--c1"),
+          s.getPropertyValue("--c2"),
+          s.getPropertyValue("--c3"),
+          s.getPropertyValue("--c4"),
+        ];
+        const emptyColor = s.getPropertyValue("--empty-color"),
+          txtColor = s.getPropertyValue("--text-color"),
+          hiColor = s.getPropertyValue("--border-highlight");
+
+        // 清空并重新聚合数据
+        stats.clear();
+        rects.length = 0;
+
+        if (currentView !== "other") inflateData(fullData.github);
+        if (currentView !== "github") inflateData(fullData.other);
+
+        // 绘制月份
+        ctx.fillStyle = txtColor;
+        ctx.font = "11px sans-serif";
+        for (let i = 0; i < 12; i++) {
+          const fdm = new Date(targetYear, i, 1);
+          const wNum = Math.floor(
+            (fdm - new Date(targetYear, 0, 1)) / (7 * 86400000)
+          );
+          ctx.fillText(
+            i + 1 + "月",
+            dayLabelWidth + wNum * (boxSize + gap),
+            13
+          );
+        }
+        // 绘制星期
+        ["Mon", "Wed", "Fri"].forEach((t, i) =>
+          ctx.fillText(t, 2, labelHeight + (i * 2 + 1) * (boxSize + gap) + 10)
+        );
+
+        // 绘制方块循环
+        let cur = new Date(targetYear, 0, 1);
+        // 调整到该年的第一个周日（以便对齐网格）
+        cur.setDate(cur.getDate() - cur.getDay());
+
+        for (let w = 0; w < weeks; w++) {
+          for (let d = 0; d < 7; d++) {
+            const ds = formatDate(cur); // 使用修正后的日期格式化函数
+            const count = stats.get(ds) || 0;
+
+            if (cur.getFullYear() === targetYear) {
+              const x = dayLabelWidth + w * (boxSize + gap),
+                y = labelHeight + d * (boxSize + gap);
+              ctx.fillStyle =
+                count === 0
+                  ? emptyColor
+                  : count <= 3
+                  ? colors[0]
+                  : count <= 6
+                  ? colors[1]
+                  : count <= 10
+                  ? colors[2]
+                  : colors[3];
+
+              // 绘制方块
+              ctx.beginPath();
+              if (ctx.roundRect) ctx.roundRect(x, y, boxSize, boxSize, 2);
+              else ctx.rect(x, y, boxSize, boxSize);
+              ctx.fill();
+
+              // 绘制每月1号的浅色边框
+              if (cur.getDate() === 1) {
+                ctx.strokeStyle = hiColor;
+                ctx.lineWidth = 1;
+                ctx.stroke();
+              }
+
+              // 记录交互坐标
+              rects.push({ x, y, date: ds, count });
+            }
+            cur.setDate(cur.getDate() + 1);
+          }
+        }
+      }
+
+      // 设置 Canvas 交互事件（只绑定一次）
+      let interactionsSetup = false;
+      function setupCanvasInteractions() {
+        if (interactionsSetup) return;
+        interactionsSetup = true;
+
+        const canvas = document.getElementById("heatmapCanvas");
+        const tooltip = document.getElementById("tooltip");
+
+        canvas.addEventListener("mousemove", (e) => {
+          const rect = canvas.getBoundingClientRect();
+          const mouseX = e.clientX - rect.left;
+          const mouseY = e.clientY - rect.top;
+
+          // 碰撞检测
+          const target = rects.find(
+            (r) =>
+              mouseX >= r.x &&
+              mouseX <= r.x + boxSize &&
+              mouseY >= r.y &&
+              mouseY <= r.y + boxSize
+          );
+
+          if (target) {
+            tooltip.style.visibility = "visible";
+            tooltip.innerText = `${target.date} : ${target.count} 次提交`;
+            tooltip.style.left = e.pageX + 15 + "px";
+            tooltip.style.top = e.pageY - 35 + "px";
+          } else {
+            tooltip.style.visibility = "hidden";
+          }
+        });
+
+        canvas.addEventListener("mouseleave", () => {
+          tooltip.style.visibility = "hidden";
+        });
+      }
+
+      // 监听暗黑模式切换
+      window
+        .matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", draw);
+
+      // 监听窗口大小变化，更新对齐方式
+      let resizeTimer;
+      window.addEventListener("resize", () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(updateCanvasAlignment, 100);
+      });
+    </script>
+  </body>
+</html>

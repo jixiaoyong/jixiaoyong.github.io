@@ -1,0 +1,17 @@
+# GitHub Token - 包含敏感认证信息，绝对不能提交到公开仓库
+github_token
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 编辑器配置（可选）
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Ignore detailed data files
+data/*.details.json
+
