@@ -21,8 +21,24 @@
         --border-highlight: #d0d7de;
       }
 
+      /* 深色主题变量 - 通过 URL 参数 ?theme=dark 或系统主题触发 */
+      .dark-theme,
+      :root.dark-theme {
+        --bg-color: #0d1117;
+        --text-color: #adbac7;
+        --btn-bg: #2d333b;
+        --btn-border: #444c56;
+        --empty-color: #2d333b;
+        --c1: #0e4429;
+        --c2: #006d32;
+        --c3: #26a641;
+        --c4: #39d353;
+        --border-highlight: #444c56;
+      }
+
+      /* 系统主题检测（当没有强制指定 theme 参数时生效） */
       @media (prefers-color-scheme: dark) {
-        :root {
+        :root:not(.light-theme) {
           --bg-color: #0d1117;
           --text-color: #adbac7;
           --btn-bg: #2d333b;
@@ -384,8 +400,43 @@
           url: params.get("url") || params.get("json"),
           name: params.get("name") || params.get("n"),
           year: params.get("year") || params.get("y"),
+          theme: params.get("theme") || params.get("t"), // 支持 light / dark
         };
       }
+
+      // 应用主题
+      function applyTheme() {
+        const urlParams = getUrlParams();
+        const theme = urlParams.theme;
+
+        if (theme === "dark") {
+          document.documentElement.classList.add("dark-theme");
+          document.documentElement.classList.remove("light-theme");
+        } else if (theme === "light") {
+          document.documentElement.classList.add("light-theme");
+          document.documentElement.classList.remove("dark-theme");
+        }
+        // 如果没有指定 theme 参数，则使用系统主题（CSS media query）
+      }
+
+      // 立即应用主题（避免闪烁）
+      applyTheme();
+
+      // 监听来自父页面的主题消息（支持动态切换）
+      window.addEventListener("message", (event) => {
+        if (event.data && event.data.type === "theme-change") {
+          const theme = event.data.theme;
+          if (theme === "dark") {
+            document.documentElement.classList.add("dark-theme");
+            document.documentElement.classList.remove("light-theme");
+          } else if (theme === "light") {
+            document.documentElement.classList.add("light-theme");
+            document.documentElement.classList.remove("dark-theme");
+          }
+          // 重绘以应用新主题
+          if (fullData) draw();
+        }
+      });
 
       // 从 URL 参数获取 JSON 文件地址
       function getJsonUrl() {
