@@ -1,5 +1,36 @@
 # Changelog
 
+## [2025-12-28 00:58:30] Deploy
+
+**Scope**: imissyou-post,editor,imissyou-system
+**Authors**: JI,XIAOYONG
+
+## imissyou-post
+| Type | Description | Author |
+|------|-------------|--------|
+| chore | Update imissyou build command in deploy workflow and remove redundant comment. | @JI,XIAOYONG |
+
+## editor
+| Type | Description | Author |
+|------|-------------|--------|
+| chore | Update imissyou build command in deploy workflow and remove redundant comment. | @JI,XIAOYONG |
+| feat | 为编辑器项目添加图标并优化SSR下的语言检测 | @JI,XIAOYONG |
+
+## imissyou-system
+| Type | Description | Author |
+|------|-------------|--------|
+| feat | 为编辑器项目添加图标并优化SSR下的语言检测 | @JI,XIAOYONG |
+| feat | Enhance About component to accept initial post data for SSR, optimize data fetching, and improve SSR compatibility. | @JI,XIAOYONG |
+| feat | Introduce initial data props to About and PostDetail components for improved SSG/SSR hydration. | @JI,XIAOYONG |
+
+---
+Auto deploy by GitHub Action
+Source: blog_source_code@d31d3ce
+Date: 2025-12-28 00:58:30
+
+---
+
+
 ## [2025-12-26 21:02:44] Deploy
 
 **Scope**: blog-system,imissyou-system

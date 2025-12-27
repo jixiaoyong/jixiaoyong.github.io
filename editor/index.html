@@ -1,35 +1,43 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/editor/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Blog Editor</title>
-    
-    <!-- 预连接 GitHub API 域名，加速首次请求 -->
-    <link rel="dns-prefetch" href="https://api.github.com" />
-    <link rel="dns-prefetch" href="https://github.com" />
-    <link rel="preconnect" href="https://api.github.com" crossorigin />
-    <link rel="preconnect" href="https://github.com" crossorigin />
-    
-    <!-- 主题色，防止白屏闪烁 -->
-    <meta name="theme-color" content="#18181b" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)" />
-    
-    <!-- 内联脚本：提前设置暗色模式，避免闪烁 -->
-    <script>
-      (function() {
-        const theme = localStorage.getItem('theme') || 
-          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        document.documentElement.classList.add(theme);
-      })();
-    </script>
-    <script type="module" crossorigin src="/editor/assets/index-DZIfsQJO.js"></script>
-    <link rel="modulepreload" crossorigin href="/editor/assets/highlight-D7qElfpT.js">
-    <link rel="modulepreload" crossorigin href="/editor/assets/react-vendor-De436sE3.js">
-    <link rel="stylesheet" crossorigin href="/editor/assets/index-DavtMiS5.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/editor/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/editor/favicon-16x16.png" />
+  <link rel="icon" type="image/png" href="/editor/favicon.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/editor/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/editor/android-chrome-192x192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="/editor/android-chrome-512x512.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog Editor</title>
+
+  <!-- 预连接 GitHub API 域名，加速首次请求 -->
+  <link rel="dns-prefetch" href="https://api.github.com" />
+  <link rel="dns-prefetch" href="https://github.com" />
+  <link rel="preconnect" href="https://api.github.com" crossorigin />
+  <link rel="preconnect" href="https://github.com" crossorigin />
+
+  <!-- 主题色，防止白屏闪烁 -->
+  <meta name="theme-color" content="#18181b" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)" />
+
+  <!-- 内联脚本：提前设置暗色模式，避免闪烁 -->
+  <script>
+    (function () {
+      const theme = localStorage.getItem('theme') ||
+        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.classList.add(theme);
+    })();
+  </script>
+  <script type="module" crossorigin src="/editor/assets/index-DZIfsQJO.js"></script>
+  <link rel="modulepreload" crossorigin href="/editor/assets/highlight-D7qElfpT.js">
+  <link rel="modulepreload" crossorigin href="/editor/assets/react-vendor-De436sE3.js">
+  <link rel="stylesheet" crossorigin href="/editor/assets/index-DavtMiS5.css">
+</head>
+
+<body>
+  <div id="root"></div>
+</body>
+
 </html>
