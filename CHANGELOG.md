@@ -1,5 +1,41 @@
 # Changelog
 
+## [2025-12-28 17:04:20] Deploy
+
+**Scope**: blog-post,blog-system,editor,imissyou-system
+**Authors**: JI,XIAOYONG
+
+## blog-post
+| Type | Description | Author |
+|------|-------------|--------|
+| feat | Update numerous blog posts and enhance the editor with new utilities and improved tag and metadata management. | @JI,XIAOYONG |
+
+## blog-system
+| Type | Description | Author |
+|------|-------------|--------|
+| feat | Add CRC32 utility for abbrlink, enhance editor metadata persistence and tag suggestions, and generate tag/category data for blog builds. | @JI,XIAOYONG |
+
+## editor
+| Type | Description | Author |
+|------|-------------|--------|
+| feat | Add exit protection, draft recovery, and Markdown export, and refine published status UI. | @JI,XIAOYONG |
+| feat | Add CRC32 utility for abbrlink, enhance editor metadata persistence and tag suggestions, and generate tag/category data for blog builds. | @JI,XIAOYONG |
+| feat | 通过用户界面锁定和用户界面重构，实现批量图片上传、强制刷新和优化重命名。 | @JI,XIAOYONG |
+| refactor | streamline new post creation route and update documentation | @JI,XIAOYONG |
+
+## imissyou-system
+| Type | Description | Author |
+|------|-------------|--------|
+| feat | Add CRC32 utility for abbrlink, enhance editor metadata persistence and tag suggestions, and generate tag/category data for blog builds. | @JI,XIAOYONG |
+
+---
+Auto deploy by GitHub Action
+Source: blog_source_code@67c0af0
+Date: 2025-12-28 17:04:20
+
+---
+
+
 ## [2025-12-28 00:58:30] Deploy
 
 **Scope**: imissyou-post,editor,imissyou-system
