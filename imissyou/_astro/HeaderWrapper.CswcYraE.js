@@ -1,4 +1,4 @@
-import{j as e,u as E,I as P}from"./index.BXo_EHdT.js";import{g as C,J as I,z as T}from"./editorLink.BDUxihjM.js";import{r as c}from"./index.7in8nkh5.js";import{r as A}from"./posts.C-sP4kx_.js";import{s as v}from"./blog.config.DNWflByI.js";import{g as $,r as x}from"./urlUtils.DgE27Xza.js";import{g as F,I as m}from"./blogService.BMwyj4B8.js";import"./index.BL2HOGcR.js";const y=({onClick:n,children:d,variant:h="icon",className:l="",title:f,ariaLabel:a,disabled:t=!1,type:o="button"})=>{const b=`
+import{j as e,u as E,I as P}from"./index.BXo_EHdT.js";import{g as C,J as I,z as T}from"./editorLink.BDUxihjM.js";import{r as c}from"./index.7in8nkh5.js";import{r as A}from"./posts.C-sP4kx_.js";import{s as v}from"./blog.config.DNWflByI.js";import{g as $,r as x}from"./urlUtils.DgE27Xza.js";import{g as F,I as m}from"./blogService.CYhg7FKM.js";import"./index.BL2HOGcR.js";const y=({onClick:n,children:d,variant:h="icon",className:l="",title:f,ariaLabel:a,disabled:t=!1,type:o="button"})=>{const b=`
     inline-flex items-center justify-center
     transition-all duration-150
     focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2

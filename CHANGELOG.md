@@ -1,5 +1,31 @@
 # Changelog
 
+## [2025-12-30 19:11:40] Deploy
+
+**Scope**: editor,imissyou-system
+**Authors**: JI,XIAOYONG
+
+## editor
+| Type | Description | Author |
+|------|-------------|--------|
+| feat | Enhance image component with editing capabilities for URL, alt text, width, and height, and update tag handling. | @JI,XIAOYONG |
+| feat | Add image loading/error states with retry functionality and introduce a generated posts map. | @JI,XIAOYONG |
+| feat | Introduce new date utilities, enhance Tiptap editor with markdown paste rules, and refactor date handling across components. | @JI,XIAOYONG |
+| style | Reformat TiptapEditor forwardRef wrapper for improved readability. | @JI,XIAOYONG |
+
+## imissyou-system
+| Type | Description | Author |
+|------|-------------|--------|
+| feat | generate `posts-map.ts` for lazy post imports and remove unused content type reference. | @JI,XIAOYONG |
+
+---
+Auto deploy by GitHub Action
+Source: blog_source_code@029ba50
+Date: 2025-12-30 19:11:40
+
+---
+
+
 ## [2025-12-30 19:08:16] Deploy
 
 **Scope**: imissyou
