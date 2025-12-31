@@ -1,5 +1,30 @@
 # Changelog
 
+## [2025-12-31 12:15:15] Deploy
+
+**Scope**: editor,imissyou-system
+**Authors**: JI,XIAOYONG
+
+## editor
+| Type | Description | Author |
+|------|-------------|--------|
+| refactor | Standardize map bounding box calculation to point coordinates, refine zoom factors, and remove unused image component state. | @JI,XIAOYONG |
+| feat | Add new post, enhance map auto-bounding and dynamic styling, optimize Chinese font loading, and improve date formatting. | @JI,XIAOYONG |
+
+## imissyou-system
+| Type | Description | Author |
+|------|-------------|--------|
+| refactor | Standardize map bounding box calculation to point coordinates, refine zoom factors, and remove unused image component state. | @JI,XIAOYONG |
+| feat | Add new post, enhance map auto-bounding and dynamic styling, optimize Chinese font loading, and improve date formatting. | @JI,XIAOYONG |
+
+---
+Auto deploy by GitHub Action
+Source: blog_source_code@123ae7e
+Date: 2025-12-31 12:15:15
+
+---
+
+
 ## [2025-12-30 19:11:40] Deploy
 
 **Scope**: editor,imissyou-system
