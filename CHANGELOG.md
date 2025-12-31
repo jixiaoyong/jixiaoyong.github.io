@@ -1,5 +1,47 @@
 # Changelog
 
+## [2025-12-31 17:43:30] Deploy
+
+**Scope**: blog-post,blog-system,editor,imissyou-system
+**Authors**: JI,XIAOYONG
+
+## blog-post
+| Type | Description | Author |
+|------|-------------|--------|
+| feat | add shortcode and markdown utilities, enhance date utils, and refactor post processing | @JI,XIAOYONG |
+
+## blog-system
+| Type | Description | Author |
+|------|-------------|--------|
+| feat | Implement Zod schemas for front matter validation and centralize parsing utilities in `packages/utils`, updating dependent projects and deployment workflow. | @JI,XIAOYONG |
+| feat | Introduce `@localtools/utils` package for shared utilities and refactor existing projects to use it. | @JI,XIAOYONG |
+| feat | Add and integrate `normalizeTags` utility for consistent tag and category parsing across blog, editor, and service components. | @JI,XIAOYONG |
+
+## editor
+| Type | Description | Author |
+|------|-------------|--------|
+| feat | add shortcode and markdown utilities, enhance date utils, and refactor post processing | @JI,XIAOYONG |
+| feat | Introduce `@localtools/utils` package for shared utilities and refactor existing projects to use it. | @JI,XIAOYONG |
+| feat | Add and integrate `normalizeTags` utility for consistent tag and category parsing across blog, editor, and service components. | @JI,XIAOYONG |
+| feat | Add Tiptap editor support for iframes and Hexo shortcodes with transformation, and enhance front matter tag parsing. | @JI,XIAOYONG |
+
+## imissyou-system
+| Type | Description | Author |
+|------|-------------|--------|
+| feat | Implement Zod schemas for front matter validation and centralize parsing utilities in `packages/utils`, updating dependent projects and deployment workflow. | @JI,XIAOYONG |
+| feat | add shortcode and markdown utilities, enhance date utils, and refactor post processing | @JI,XIAOYONG |
+| feat | Introduce `@localtools/utils` package for shared utilities and refactor existing projects to use it. | @JI,XIAOYONG |
+| feat | Add and integrate `normalizeTags` utility for consistent tag and category parsing across blog, editor, and service components. | @JI,XIAOYONG |
+| feat | Add Tiptap editor support for iframes and Hexo shortcodes with transformation, and enhance front matter tag parsing. | @JI,XIAOYONG |
+
+---
+Auto deploy by GitHub Action
+Source: blog_source_code@741d92f
+Date: 2025-12-31 17:43:30
+
+---
+
+
 ## [2025-12-31 12:31:22] Deploy
 
 **Scope**: imissyou

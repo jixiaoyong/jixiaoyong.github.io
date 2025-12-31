@@ -6,7 +6,9 @@ published: true
 abbrlink: a3800a46
 ---
 
-![万物流变 πάντα ῥεῖ](https://jixiaoyong.github.io/images/imissyou/20251228145834488.webp)从 2015 年[第一篇年终总结](https://jixiaoyong.github.io/imissyou/#/posts/b4cc77f1)起，至今已有十年矣。
+![万物流变 πάντα ῥεῖ](https://jixiaoyong.github.io/images/imissyou/20251228145834488.webp)
+
+从 2015 年[第一篇年终总结](https://jixiaoyong.github.io/imissyou/#/posts/b4cc77f1)起，至今已有十年矣。
 
 回顾[往年](https://jixiaoyong.github.io/imissyou/tags/%E5%B2%81%E5%B2%81%E4%BB%8A%E6%9C%9D/)种种，这些年来，变化万千，历历在目，期间滋味，自非寻常，刚好接着这年末的时候，草草记录下来。
 
@@ -16,7 +18,9 @@ abbrlink: a3800a46
 
 如果说这些年学到了些许什么，或许是生活中的种种皆是造化，无法预期，不可预知，无能掌控，不得为之。
 
-![changes](https://jixiaoyong.github.io/images/imissyou/20251228145835566.svg)## 2024
+![changes](https://jixiaoyong.github.io/images/imissyou/20251228145835566.svg)
+
+## 2024
 
 这些年仿若扁舟入海，跌宕起伏，无非随波逐浪，侥幸至此。远远的飘渺的终点，锵然四顾，无拘无束，无有归途。
 
@@ -30,7 +34,7 @@ abbrlink: a3800a46
 
 是啊，何尝不是。
 
-> 🌦️ ***sun and rain happening at the same time***
+> 🌦️ **_sun and rain happening at the same time_**
 
 或许，狂风暴雨中，穿破厚厚的云层，足够足够高的云海之外，白日耀耀，光芒万丈，温暖、亲切、多彩。
 
@@ -58,13 +62,23 @@ abbrlink: a3800a46
 
 主要都是在重庆度过。
 
-{% map points='\\[{"name":"重庆","lng":106.5512,"lat":29.5657,"province":"重庆市"},{"name":"香港","lng":114.1694,"lat":22.3193,"province":"香港特别行政区"}\\]' %}
+{% map points='[{"name":"重庆","lng":106.5512,"lat":29.5657,"province":"重庆市"},{"name":"香港","lng":114.1694,"lat":22.3193,"province":"香港特别行政区"}]'  %}
 
 2024 年年底在一家智能穿戴公司入职，在持续了四五个月地狱通勤和 996 之后，有幸得到年前一家公司的再次面试邀约，欣然接受并入职，期间虽小有挑战，但在同事和 AI 的帮助下顺利工作至今。
 
 如果说 2022 年的 AI 还只是副驾驶的话，三年后的今天，AI 已然成为一个技术超绝的可以独当一面的老司机了。在今年的工作中，我愈发享受 AI 辅助下工作的效率提高的便捷，完成了之前很难想象的[工作内容](https://github.com/jixiaoyong)。
 
-![2022 年的 AI 尚且是个新奇玩意，三年后已然远非吴下阿蒙](https://jixiaoyong.github.io/images/imissyou/20251228145834490.webp)就我个人而言，一两年前还难以实现的想法，如今借助于 AI，即使是从未涉猎的技术领域我也能够尝试一下，探索一番，似乎找到了新的乐趣，有段时间甚至废寝忘食地操作着电脑与 AI 共舞，你正在看的这个博客源码就是在 AI 的辅助下（大部分编程工作都要归功于 antigravity）完成的，感谢科技的进步。
+![2022 年的 AI 尚且是个新奇玩意，三年后已然远非吴下阿蒙](https://jixiaoyong.github.io/images/imissyou/20251228145834490.webp)
+
+就我个人生活而言，一两年前还难以实现的想法，如今借助于 AI，即使是从未涉猎的技术领域我也能够尝试一下，探索一番，似乎找到了新的乐趣，有段时间甚至废寝忘食地操作着电脑与 AI 共舞，你正在看的这个博客源码就是在 AI 的辅助下（大部分编程工作都要归功于 antigravity）完成的，感谢科技的进步。
+
+<iframe
+  src="https://jixiaoyong.github.io/statics/git_yearly/report.html?year=2025"
+  width="100%"
+  height="220"
+  frameborder="0"
+>
+</iframe>
 
 AI 的突风猛进为以前很多想法插上了翅膀，很多事情变得容易起来，使资平如我也有了更多的可能。
 
@@ -78,7 +92,9 @@ AI 的突风猛进为以前很多想法插上了翅膀，很多事情变得容�
 
 这节的标题是下一个十年，我回想起来的却是上个十年，上上个十年……年初的时候我在手机桌面添置了一个倒计时，2025 年，365 天，那时的我还在孤身奔波于 996 的高强度工作牢笼之中，转眼已然换了新工作、新住所。
 
-![行文至此，又是十天过去了](https://jixiaoyong.github.io/images/imissyou/20251228145834486.webp)After work, I no longer return to empty walls; instead, I know someone is waiting for me. Things were happening, and a lot of changes unfolded around those days. Life felt different, shifting in ways I could hardly put into words.
+![行文至此，又是十天过去了](https://jixiaoyong.github.io/images/imissyou/20251228145834486.webp)
+
+After work, I no longer return to empty walls; instead, I know someone is waiting for me. Things were happening, and a lot of changes unfolded around those days. Life felt different, shifting in ways I could hardly put into words.
 
 下一个十年实在是太过遥远，我也实在没想到从在这个博客写下文章开始，能够持续这么长时间，而我也真的足够幸运能够踏入、从事这个行业，从与同学一起考证入坑，再到废寝忘食地用着一台联想笔记本啃视频敲案例，讲台上老师呜呀呜呀，后排里我沉醉于数码世界忘乎所以，整个大学四年，似乎只有后面两年我才算找到了学习的乐趣所在。如今回想起来，算是除了[社团生活](https://jixiaoyong.github.io/imissyou/posts/8c989346/)之外，不多的回忆亮点了。
 
@@ -98,7 +114,7 @@ AI 的突风猛进为以前很多想法插上了翅膀，很多事情变得容�
 
 **不确定感**，恐怕是未来也将不断出现的主题了。
 
-所以我实在无法站在这十年的节点，设想后面会发生如何如何，***πάντα ῥεῖ，万物流变，变化永恒***。
+所以我实在无法站在这十年的节点，设想后面会发生如何如何，**_πάντα ῥεῖ，万物流变，变化永恒_**。
 
 只是，在这样的一个节点，为着逝去的过往，告别的人们，离去的人们，道一声珍重，珍重。
 
@@ -120,4 +136,5 @@ AI 的突风猛进为以前很多想法插上了翅膀，很多事情变得容�
 
 [ApkSigner](https://github.com/jixiaoyong/ApkSigner)， 业余时开发的工作相关的小工具，今年以来工作环境变化了逐渐停止了维护。
 
-我们的[朋友圈](https://xiaoyong.pages.dev/)，不知什么时候，开始尝试脱离微信的生态，这个朋友圈是一个小小的尝试。`;export{n as default};
+我们的[朋友圈](https://xiaoyong.pages.dev/)，不知什么时候，开始尝试脱离微信的生态，这个朋友圈是一个小小的尝试。
+`;export{n as default};
