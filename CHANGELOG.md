@@ -1,5 +1,18 @@
 # Changelog
 
+## [2025-12-31 12:31:22] Deploy
+
+**Scope**: imissyou
+**Authors**: JI,XIAOYONG
+
+---
+Auto deploy by GitHub Action
+Source: blog_source_code@8bec7e4
+Date: 2025-12-31 12:31:22
+
+---
+
+
 ## [2025-12-31 12:15:15] Deploy
 
 **Scope**: editor,imissyou-system
