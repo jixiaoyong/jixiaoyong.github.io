@@ -1,5 +1,23 @@
 # Changelog
 
+## [2025-12-31 18:53:42] Deploy
+
+**Scope**: imissyou-system
+**Authors**: JI,XIAOYONG
+
+## imissyou-system
+| Type | Description | Author |
+|------|-------------|--------|
+| refactor | remove local date utility functions and simplify date display with string slicing for timezone consistency. | @JI,XIAOYONG |
+
+---
+Auto deploy by GitHub Action
+Source: blog_source_code@b8e4206
+Date: 2025-12-31 18:53:42
+
+---
+
+
 ## [2025-12-31 18:24:14] Deploy
 
 **Scope**: editor,imissyou-system
