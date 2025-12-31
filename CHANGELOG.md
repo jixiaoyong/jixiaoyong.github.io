@@ -1,5 +1,28 @@
 # Changelog
 
+## [2025-12-31 18:24:14] Deploy
+
+**Scope**: editor,imissyou-system
+**Authors**: JI,XIAOYONG
+
+## editor
+| Type | Description | Author |
+|------|-------------|--------|
+| feat | Improve editor shortcode handling with pre/post-processing and standardize front matter date formats for YAML serialization. | @JI,XIAOYONG |
+
+## imissyou-system
+| Type | Description | Author |
+|------|-------------|--------|
+| feat | Improve editor shortcode handling with pre/post-processing and standardize front matter date formats for YAML serialization. | @JI,XIAOYONG |
+
+---
+Auto deploy by GitHub Action
+Source: blog_source_code@7ff4bfb
+Date: 2025-12-31 18:24:14
+
+---
+
+
 ## [2025-12-31 17:43:30] Deploy
 
 **Scope**: blog-post,blog-system,editor,imissyou-system

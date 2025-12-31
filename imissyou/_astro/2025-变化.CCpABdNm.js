@@ -1,7 +1,7 @@
 const n=`---
 title: 2025，「变化」
 date: 2026-01-01T00:00:00+08:00
-tags: ["岁岁今朝"]
+tags: [岁岁今朝]
 published: true
 abbrlink: a3800a46
 ---
