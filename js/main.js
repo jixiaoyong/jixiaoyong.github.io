@@ -23,16 +23,33 @@ function throttle(func, limit) {
   };
 }
 
-// 移动端检测函数 - 简化和稳定化
+// 移动端检测函数 - 简化和稳定化，使用媒体查询缓存
+let isMobileDevice = null;
 function isMobile() {
-  return window.innerWidth <= 768;
+  if (isMobileDevice === null) {
+    isMobileDevice = window.innerWidth <= 768 || window.matchMedia('(max-width: 768px)').matches;
+  }
+  return isMobileDevice;
 }
+
+// 监听窗口大小变化，更新移动端状态
+let resizeTimer = null;
+window.addEventListener('resize', () => {
+  if (resizeTimer) clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    isMobileDevice = window.innerWidth <= 768;
+  }, 250);
+});
 
 // 鼠标移动光晕效果 - 优化版本
 let glowElements = [];
 const maxGlowElements = 3;
 
+// 移动端禁用鼠标光晕效果以提升性能
 const throttledMouseMove = throttle((e) => {
+  // 移动端不执行光晕效果
+  if (isMobile()) return;
+  
   const container = document.querySelector(".container");
   if (!container) return;
 
@@ -45,6 +62,7 @@ const throttledMouseMove = throttle((e) => {
   container.style.setProperty("--x", `${x}px`);
   container.style.setProperty("--y", `${y}px`);
 
+  // 限制光晕元素数量，提升性能
   while (glowElements.length >= maxGlowElements) {
     const oldGlow = glowElements.shift();
     if (oldGlow && oldGlow.parentNode) {
@@ -68,6 +86,7 @@ const throttledMouseMove = throttle((e) => {
     transition: width 2s ease-out, height 2s ease-out, opacity 2s ease-out;
     opacity: 0.3;
     filter: blur(5px);
+    will-change: width, height, opacity;
   `;
 
   container.appendChild(glow);
@@ -90,19 +109,24 @@ const throttledMouseMove = throttle((e) => {
   }, 2000);
 }, 50);
 
-document.addEventListener("mousemove", throttledMouseMove);
+// 只在非移动端添加鼠标移动事件
+if (!isMobile()) {
+  document.addEventListener("mousemove", throttledMouseMove);
+}
 
-// 卡片悬停效果
+// 卡片悬停效果 - 移动端禁用以提升性能
 const card = document.querySelector(".card");
-if (card) {
-  card.addEventListener("mousemove", (e) => {
+if (card && !isMobile()) {
+  const throttledCardMove = throttle((e) => {
     const { left, top, width, height } = card.getBoundingClientRect();
     const x = (e.clientX - left) / width - 0.5;
     const y = (e.clientY - top) / height - 0.5;
 
     card.style.transform = `perspective(1000px) rotateX(${y * 5}deg) rotateY(${-x * 5}deg)`;
     card.style.boxShadow = `${-x * 20}px ${y * 20}px 30px rgba(0, 0, 0, 0.2)`;
-  });
+  }, 16); // 约 60fps
+
+  card.addEventListener("mousemove", throttledCardMove);
 
   card.addEventListener("mouseleave", () => {
     card.style.transform = "perspective(1000px) rotateX(0) rotateY(0)";

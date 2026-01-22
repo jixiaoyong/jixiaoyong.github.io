@@ -139,7 +139,7 @@
       }
     }
 
-    /* Keyframe animation for gradient shift */
+    /* Keyframe animation for gradient shift - 优化性能 */
     @keyframes gradientShift {
       0% {
         background-position: 0% 50%;
@@ -159,6 +159,28 @@
 
       100% {
         background-position: 0% 50%;
+      }
+    }
+
+    /* 减少重绘 - 使用 transform 代替 background-position（如果可能） */
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      body,
+      [data-theme="dark"] body {
+        animation: none !important;
+        background-position: center !important;
+      }
+
+      .avatar {
+        animation: none !important;
       }
     }
 
@@ -213,6 +235,7 @@
       margin: 0;
       width: 100%;
       height: 100%;
+      will-change: background-position;
     }
 
     [data-theme="dark"] body {
@@ -224,6 +247,7 @@
       min-height: 100vh;
       width: 100%;
       height: 100%;
+      will-change: background-position;
     }
 
     * {
@@ -400,10 +424,11 @@
       /* 为头像留出空间 */
       box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.5);
-      transition: all 0.5s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
       overflow: visible;
       margin-top: 78px;
       /* 确保Card在头像下方正确位置 */
+      will-change: transform;
     }
 
     [data-theme="light"] .card {
@@ -452,7 +477,7 @@
       border: 2px solid rgba(255, 255, 255, 0.8);
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1),
         0 0 0 1px rgba(255, 255, 255, 0.5);
-      transition: all 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
       overflow: hidden;
       background: rgba(255, 255, 255, 0.9);
       -webkit-backdrop-filter: blur(10px);
@@ -465,6 +490,7 @@
       z-index: 10;
       /* 确保在z轴上方 */
       animation: avatarGlow 3s linear infinite;
+      will-change: transform, box-shadow, background;
     }
 
     @keyframes avatarGlow {
@@ -916,7 +942,10 @@
       border: 1px solid rgba(255, 255, 255, 0.3);
       backdrop-filter: blur(12px) saturate(180%);
       -webkit-backdrop-filter: blur(12px) saturate(180%);
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        background 0.3s ease,
+        border-color 0.3s ease;
       text-decoration: none;
       color: var(--text-primary);
       position: relative;
@@ -924,6 +953,7 @@
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.06),
         inset 0 1px 0 rgba(255, 255, 255, 0.2);
       transform: scale(1);
+      will-change: transform;
     }
 
     .nav-link::before {
@@ -1053,12 +1083,14 @@
         background-position: center;
         /* 确保渐变效果在移动端更明显 */
         background-attachment: scroll;
+        will-change: background-position;
       }
 
       [data-theme="dark"] body {
         animation: gradientShiftMobile 10s ease-in-out infinite;
         background-size: 250% 250%;
         background-attachment: scroll;
+        will-change: background-position;
       }
 
       /* 简化悬停效果 */
@@ -1246,11 +1278,18 @@
       body {
         animation: gradientShiftMobile 8s ease-in-out infinite;
         background-size: 350% 350%;
+        will-change: background-position;
       }
 
       [data-theme="dark"] body {
         animation: gradientShiftMobile 6s ease-in-out infinite;
         background-size: 300% 300%;
+        will-change: background-position;
+      }
+
+      /* 移动端减少动画复杂度 */
+      .avatar {
+        animation-duration: 4s;
       }
 
       /* 增强渐变对比度 */
@@ -1325,7 +1364,7 @@
           <source srcset="https://jixiaoyong.github.io/images/user_avatar.webp" type="image/webp" />
           <!-- 原始格式作为后备 - LCP 关键元素使用 eager 加载 -->
           <img src="https://jixiaoyong.github.io/images/moments/20250101010014.jpeg" alt="JI,XIAOYONG"
-            fetchpriority="high" decoding="async" width="156" height="156"
+            fetchpriority="high" decoding="async" loading="eager" width="156" height="156"
             onerror="this.onerror=null; this.src='https://jixiaoyong.github.io/images/moments/20250101010014.jpeg';"
             onload="this.classList.add('loaded')" />
         </picture>
@@ -1375,6 +1414,8 @@
   </footer>
   <!-- 主脚本 - defer 加载不阻塞渲染 -->
   <script defer src="js/main.js"></script>
+  <!-- 预加载关键资源 -->
+  <link rel="prefetch" href="https://jixiaoyong.github.io/images/user_avatar.webp" as="image" />
 </body>
 
 </html>
