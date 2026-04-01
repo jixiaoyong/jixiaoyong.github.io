@@ -1,5 +1,28 @@
 # Changelog
 
+## [2026-04-01 12:13:26] Deploy
+
+**Scope**: editor,imissyou-system
+**Authors**: JI,XIAOYONG
+
+## editor
+| Type | Description | Author |
+|------|-------------|--------|
+| feat | 通过改进错误处理、类型定义和用户体验提升，更新依赖项并改进编辑器组件 | @JI,XIAOYONG |
+
+## imissyou-system
+| Type | Description | Author |
+|------|-------------|--------|
+| feat | 通过改进错误处理、类型定义和用户体验提升，更新依赖项并改进编辑器组件 | @JI,XIAOYONG |
+
+---
+Auto deploy by GitHub Action
+Source: blog_source_code@0ea5659
+Date: 2026-04-01 12:13:26
+
+---
+
+
 ## [2025-12-31 18:53:42] Deploy
 
 **Scope**: imissyou-system
