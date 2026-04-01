@@ -1,5 +1,33 @@
 # Changelog
 
+## [2026-04-01 16:36:41] Deploy
+
+**Scope**: blog-system,editor,imissyou-system
+**Authors**: JI,XIAOYONG
+
+## blog-system
+| Type | Description | Author |
+|------|-------------|--------|
+| fix | 升级工作区与子项目依赖并刷新锁文件以消除安全告警 | @JI,XIAOYONG |
+
+## editor
+| Type | Description | Author |
+|------|-------------|--------|
+| fix | 升级工作区与子项目依赖并刷新锁文件以消除安全告警 | @JI,XIAOYONG |
+
+## imissyou-system
+| Type | Description | Author |
+|------|-------------|--------|
+| fix | 升级工作区与子项目依赖并刷新锁文件以消除安全告警 | @JI,XIAOYONG |
+
+---
+Auto deploy by GitHub Action
+Source: blog_source_code@a49f9b6
+Date: 2026-04-01 16:36:41
+
+---
+
+
 ## [2026-04-01 12:13:26] Deploy
 
 **Scope**: editor,imissyou-system
