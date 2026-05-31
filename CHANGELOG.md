@@ -1,5 +1,36 @@
 # Changelog
 
+## [2026-05-31 21:38:59] Deploy
+
+**Scope**: blog-system,editor,imissyou-system
+**Authors**: jixiaoyong
+
+## blog-system
+| Type | Description | Author |
+|------|-------------|--------|
+| fix | 升级依赖修复安全漏洞并迁移 Astro 6 | @jixiaoyong |
+
+## editor
+| Type | Description | Author |
+|------|-------------|--------|
+| fix | 将 .npmrc 改为本地配置并完善 CI 安装流程 | @jixiaoyong |
+| fix | 升级依赖修复安全漏洞并迁移 Astro 6 | @jixiaoyong |
+
+## imissyou-system
+| Type | Description | Author |
+|------|-------------|--------|
+| fix | 将 .npmrc 改为本地配置并完善 CI 安装流程 | @jixiaoyong |
+| fix | 修复编译依赖冲突并优化人生轨迹页面 | @jixiaoyong |
+| fix | 升级依赖修复安全漏洞并迁移 Astro 6 | @jixiaoyong |
+
+---
+Auto deploy by GitHub Action
+Source: blog_source_code@ff7e8e1
+Date: 2026-05-31 21:38:59
+
+---
+
+
 ## [2026-04-01 16:36:41] Deploy
 
 **Scope**: blog-system,editor,imissyou-system
