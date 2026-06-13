@@ -1,3 +1,13 @@
 _site/
 .sass-cache/
 .jekyll-metadata
+
+# macOS
+.DS_Store
+**/.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor / OS
+Thumbs.db
+*.swp

@@ -1,314 +1,625 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>页面未找到 - 404 Not Found</title>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="页面未找到 — JI,XIAOYONG's Website" />
+  <meta name="robots" content="noindex" />
+  <title>404 · 页面未找到</title>
 
-    <style>
-      /* ==============================
-           1. 现代化 UI 样式
-           ============================== */
-      :root {
-        --primary-color: #333;
-        --accent-color: #007bff;
-        --bg-color: #f8f9fa;
-      }
-      body,
-      html {
-        height: 100%;
-        margin: 0;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-          "Helvetica Neue", Arial, sans-serif;
-        background-color: var(--bg-color);
-        color: var(--primary-color);
-      }
+  <link rel="icon" href="/favicon.ico" sizes="32x32" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+  <link rel="icon" type="image/webp" href="/imissyou/assets/avatar-light.webp" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
-      /* 默认隐藏内容，由 JS 决定显示 Loading 还是 404 */
-      #main-content {
-        display: none;
-      }
 
-      .container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-        text-align: center;
-        padding: 20px;
-      }
 
-      .illustration {
-        max-width: 300px;
-        width: 80%;
-        margin-bottom: 2rem;
-        opacity: 0.8;
-      }
+  <script>
+    (function () {
+      var saved = localStorage.getItem("theme");
+      var dark = saved === "dark" || (!saved && window.matchMedia("(prefers-color-scheme: dark)").matches);
+      document.documentElement.setAttribute("data-theme", dark ? "dark" : "light");
+    })();
+  </script>
 
-      h1 {
-        font-size: 2rem;
-        margin-bottom: 0.5rem;
-      }
-      p {
-        font-size: 1rem;
-        color: #666;
-        margin-bottom: 2rem;
-        max-width: 400px;
-        line-height: 1.6;
-      }
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Lora:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet" />
 
-      .btn-group {
-        display: flex;
-        gap: 15px;
-      }
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-      .btn {
-        text-decoration: none;
-        padding: 10px 20px;
-        border-radius: 8px;
-        font-weight: 500;
-        transition: all 0.2s ease;
-      }
+    :root {
+      --pad: clamp(18px, 4.5vw, 40px);
+      --display: "Cormorant Garamond", Georgia, serif;
+      --sans: "DM Sans", system-ui, -apple-system, sans-serif;
+      --serif: "Lora", Georgia, "Noto Serif SC", serif;
+    }
 
-      .btn-primary {
-        background-color: var(--accent-color);
-        color: white;
-        box-shadow: 0 4px 6px rgba(0, 123, 255, 0.2);
-      }
-      .btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 8px rgba(0, 123, 255, 0.3);
-      }
+    :root, [data-theme="light"] {
+      --text: #292524; --muted: #a8a29e; --accent: #ea580c;
+      --accent-soft: rgba(234,88,12,0.08); --accent-border: rgba(234,88,12,0.18);
+      --bg: #fffbf5;
+      --mesh: radial-gradient(ellipse 80% 60% at 18% 0%, rgba(254,215,170,0.38), transparent 55%),
+        radial-gradient(ellipse 55% 45% at 88% 25%, rgba(167,139,250,0.1), transparent 50%),
+        radial-gradient(ellipse 50% 40% at 50% 100%, rgba(251,146,60,0.08), transparent 55%);
+      --line: rgba(234,88,12,0.1); --row-hover: rgba(234,88,12,0.05);
+      --icon-hover-bg: rgba(234,88,12,0.13);
+      --icon-shadow: inset 0 1px 0 rgba(255,255,255,0.45);
+      --icon-hover-shadow: inset 0 1px 2px rgba(41,37,36,0.05), 0 1px 3px rgba(234,88,12,0.07);
+      --toggle-bg: rgba(255,251,245,0.88); --toggle-border: rgba(234,88,12,0.12);
+      --toggle-chip: rgba(255,255,255,0.85);
+    }
 
-      .btn-secondary {
-        background-color: #fff;
-        color: #555;
-        border: 1px solid #ddd;
-      }
-      .btn-secondary:hover {
-        background-color: #f1f1f1;
-      }
+    [data-theme="dark"] {
+      --text: #fafaf9; --muted: #a8a29e; --accent: #fb923c;
+      --accent-soft: rgba(251,146,60,0.1); --accent-border: rgba(251,146,60,0.22);
+      --bg: #1c1410;
+      --mesh: radial-gradient(ellipse 60% 50% at 15% 10%, rgba(234,88,12,0.15), transparent 55%),
+        radial-gradient(ellipse 50% 40% at 85% 70%, rgba(167,139,250,0.08), transparent 50%),
+        radial-gradient(ellipse 45% 35% at 50% 100%, rgba(180,83,9,0.12), transparent 55%);
+      --line: rgba(255,255,255,0.08); --row-hover: rgba(251,146,60,0.08);
+      --icon-hover-bg: rgba(251,146,60,0.15);
+      --icon-shadow: inset 0 1px 0 rgba(255,255,255,0.07);
+      --icon-hover-shadow: inset 0 1px 3px rgba(0,0,0,0.2), 0 1px 4px rgba(251,146,60,0.06);
+      --toggle-bg: rgba(28,20,16,0.92); --toggle-border: rgba(251,146,60,0.12);
+      --toggle-chip: rgba(41,32,26,0.9);
+    }
 
-      /* Loading 状态样式 */
-      #redirect-msg {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 1.1rem;
-        color: #666;
-        display: block; /* 默认显示 loading */
-      }
-    </style>
+    html {
+      -webkit-text-size-adjust: 100%;
+      color-scheme: light dark;
+    }
 
-    <script>
-      (function () {
-        // =========================================================
-        // 2. 核心路由配置 | Route Configuration
-        // =========================================================
+    body {
+      min-height: 100dvh;
+      font-family: var(--sans);
+      font-size: 15px;
+      color: var(--text);
+      background: var(--bg);
+      transition: background 0.45s ease, color 0.3s ease;
+      -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-        // Type A: SPA Projects (Vue/React/etc with Client-Side Routing)
-        // Strategy: Redirect to Hash mode (e.g., /blog/p/1 -> /blog/#/p/1)
-        // Requirement: Project MUST handle hash routing in its own index.html.
-        var spaProjects = ["/imissyou", "/blog", "/editor"];
+    body.loading { opacity: 0; }
+    body.ready { opacity: 1; transition: opacity 0.4s ease; }
 
-        // Type B: Static/Simple Projects (HTML/JS without Router)
-        // Strategy: Do NOT redirect. Show 404 UI but add a specialized "Go to Home" button.
-        // Why: /eat/unknown -> Redirecting to /eat/#/unknown is useless if /eat/index.html ignores hash.
-        var staticProjects = {
-          "/eat": { name: "今天吃什么", home: "/eat/" },
-          "/cookie": { name: "小饼干", home: "/cookie/" },
-        };
+    ::selection {
+      background: rgba(250, 204, 21, 0.35);
+      color: var(--text);
+    }
 
-        // =========================================================
-        // 3. 路由分发逻辑 | Dispatch Logic
-        // =========================================================
-        var path = window.location.pathname;
-        var search = window.location.search;
-        var hash = window.location.hash;
+    .bg, .mesh, .grain { position: fixed; inset: 0; pointer-events: none; }
+    .bg { z-index: -3; background: var(--bg); transition: background 0.45s ease; }
+    .mesh { z-index: -2; background: var(--mesh); transition: background 0.45s ease; }
+    .grain {
+      z-index: -1; opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
 
-        // --- Helper: Find matched project ---
-        function findStartedWith(str, list) {
-          if (Array.isArray(list)) {
-            return list.find(function (p) {
-              return str.startsWith(p);
-            });
-          }
-          for (var key in list) {
-            if (str.startsWith(key)) return list[key];
-          }
-          return null;
-        }
+    .theme-toggle-container {
+      position: fixed; top: max(16px, env(safe-area-inset-top)); right: max(16px, env(safe-area-inset-right));
+      z-index: 100; display: flex; flex-direction: column; gap: 4px;
+      background: var(--toggle-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--toggle-border);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      transition: border-radius 0.2s ease, padding 0.2s ease, box-shadow 0.2s ease;
+      overflow: hidden; isolation: isolate;
+    }
+    .theme-toggle-container.collapsed {
+      width: 42px; height: 42px; padding: 0;
+      border-radius: 50%; justify-content: center; align-items: center;
+    }
+    .theme-toggle-container:not(.collapsed) {
+      width: 148px; padding: 8px; border-radius: 16px;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.1);
+    }
+    .theme-toggle-container.collapsed .theme-toggle[data-theme] { display: none; }
+    .theme-toggle-container:not(.collapsed) .theme-toggle.toggle-expand { display: none; }
+    .theme-toggle-container.collapsed .theme-toggle.toggle-expand {
+      display: flex; width: 42px; height: 42px; border-radius: 50%;
+      justify-content: center; align-items: center; padding: 0;
+    }
+    .theme-toggle-container.collapsed .theme-toggle.toggle-expand span:not(.icon) { display: none; }
+    .theme-toggle {
+      display: flex; align-items: center; gap: 8px; width: 100%;
+      background: none; border: none; color: var(--muted);
+      padding: 9px 12px; border-radius: 10px; cursor: pointer;
+      font: 500 12px/1 var(--sans); transition: color 0.15s, background 0.15s;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .theme-toggle:hover { color: var(--text); background: var(--toggle-chip); }
+    .theme-toggle.active { color: var(--accent); background: var(--accent-soft); font-weight: 600; }
+    .icon {
+      display: inline-block;
+      flex-shrink: 0;
+      line-height: 1;
+      color: inherit;
+      vertical-align: middle;
+      width: 1em;
+      height: 1em;
+      font-size: inherit;
+    }
+    .icon::before {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 100%;
+      background-color: currentColor;
+      -webkit-mask: var(--icon-src) no-repeat center / contain;
+      mask: var(--icon-src) no-repeat center / contain;
+    }
+    .icon--toggle { width: 16px; height: 16px; font-size: 13px; }
+    .icon--chip { width: 11px; height: 11px; font-size: 11px; color: var(--accent); }
+    .theme-toggle .icon { width: 16px; height: 16px; font-size: 13px; flex-shrink: 0; }
+    .icon--pen-nib { --icon-src: url("/assets/icons/pen-nib.svg"); }
+    .icon--github { --icon-src: url("/assets/icons/github.svg"); }
+    .icon--palette { --icon-src: url("/assets/icons/palette.svg"); }
+    .icon--desktop { --icon-src: url("/assets/icons/desktop.svg"); }
+    .icon--sun { --icon-src: url("/assets/icons/sun.svg"); }
+    .icon--moon { --icon-src: url("/assets/icons/moon.svg"); }
+    .icon--house { --icon-src: url("/assets/icons/house.svg"); }
+    .icon--arrow-left { --icon-src: url("/assets/icons/arrow-left.svg"); }
+    .icon--folder-open { --icon-src: url("/assets/icons/folder-open.svg"); }
 
-        // Logic 1: Check if it's an SPA
-        var matchedSpa = findStartedWith(path, spaProjects);
+    #redirect-msg {
+      position: fixed; inset: 0;
+      display: none; flex-direction: column;
+      align-items: center; justify-content: center; gap: 14px;
+      padding: var(--pad);
+      font-size: clamp(0.95rem, 2.8vw, 1.05rem);
+      color: var(--muted); letter-spacing: 0.02em;
+      text-align: center;
+    }
+    #redirect-msg.visible { display: flex; }
 
-        if (matchedSpa) {
-          handleSpaRedirect(matchedSpa);
+    .recovery-spinner {
+      width: 22px; height: 22px;
+      border: 2px solid var(--line);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .recovery-text::after {
+      content: "";
+      display: inline-block; width: 4px; height: 1em; margin-left: 2px;
+      background: var(--accent); opacity: 0.6;
+      animation: blink 1s step-end infinite;
+      vertical-align: text-bottom;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    #main-content { display: none; }
+
+    .stage {
+      min-height: 100dvh;
+      padding: max(32px, env(safe-area-inset-top)) var(--pad) max(48px, env(safe-area-inset-bottom));
+      display: flex; flex-direction: column; align-items: center;
+    }
+
+    .not-found {
+      flex: 1;
+      display: flex; flex-direction: column;
+      width: 100%; max-width: 680px; margin: 0 auto;
+      min-height: 0;
+      animation: rise 0.55s ease both;
+    }
+    @keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+
+    /* ── error header — centered group ── */
+    .error-head {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 100%;
+      max-width: 480px;
+      margin-inline: auto;
+      margin-top: auto;
+      margin-bottom: clamp(12px, 2.5vw, 16px);
+    }
+
+    .error-code {
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: clamp(3.75rem, 15vw, 6.25rem);
+      letter-spacing: -0.03em;
+      line-height: 0.95;
+      color: var(--text);
+      font-variant-numeric: lining-nums;
+    }
+    .error-code span {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .error-title {
+      margin-top: clamp(12px, 3vw, 16px);
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: clamp(1.35rem, 4vw, 1.75rem);
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+      width: 100%;
+    }
+
+    .error-desc {
+      margin-top: clamp(10px, 2.5vw, 14px);
+      font-size: clamp(0.9rem, 2.5vw, 0.95rem);
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 34ch;
+      width: 100%;
+    }
+
+    /* ── horizontal pill/chip nav (variant C) ── */
+    .links {
+      flex-shrink: 0;
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
+      width: 100%;
+      max-width: 480px;
+      margin-inline: auto;
+      margin-top: clamp(40px, 8vw, 56px);
+    }
+
+    .links .chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--accent-soft);
+      text-decoration: none; color: inherit;
+      font: inherit; cursor: pointer;
+      font-size: 0.85rem;
+      transition: border-color 0.2s, background 0.2s, color 0.2s;
+    }
+    button.chip {
+      background: var(--accent-soft);
+      border: 1px solid var(--line);
+    }
+    .links .chip:hover, .links .chip:focus-visible {
+      border-color: var(--accent-border);
+      background: var(--row-hover);
+      color: var(--accent);
+      outline: none;
+    }
+
+    .not-found-bottom {
+      flex-shrink: 0; width: 100%;
+      margin-top: auto; padding-top: clamp(16px, 3.5vw, 22px);
+    }
+
+    .colophon {
+      padding-top: clamp(14px, 3vw, 20px);
+      border-top: 1px solid var(--line);
+    }
+    .colophon-row {
+      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
+      gap: 8px 16px;
+      font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
+    }
+    .colophon-tag {
+      display: inline-flex; align-items: center; gap: 5px;
+    }
+    .colophon-mark {
+      width: 3px; height: 12px; flex-shrink: 0;
+      background: var(--accent); border-radius: 1px;
+    }
+    .colophon-host { color: var(--accent); font-weight: 600; }
+    .colophon-tld { color: var(--muted); opacity: 0.5; font-weight: 400; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .not-found, body.ready { animation: none !important; transition: none !important; }
+      .recovery-spinner { animation: none !important; border-top-color: var(--accent); }
+      .recovery-text::after { animation: none !important; opacity: 0.6; }
+      .links .chip { transition: none !important; }
+    }
+  </style>
+
+  <script>
+    (function () {
+      var spaProjects = ["/imissyou", "/blog", "/editor"];
+
+      var staticProjects = {
+        "/eat": { name: "今天吃什么", home: "/eat/" },
+        "/cookie": { name: "小饼干", home: "/cookie/" },
+      };
+
+      var ATTEMPTING_MSG = "页面未找到，正在尝试寻找正确路径…";
+      var FAILURE_DESC = "您访问的页面不存在或已被移动。请选择下方链接继续浏览。";
+
+      var path = window.location.pathname;
+      var search = window.location.search;
+      var hash = window.location.hash;
+
+      function whenReady(fn) {
+        if (document.body) {
+          fn();
         } else {
-          // Logic 2: Check if it's a Static Project
-          var matchedStatic = findStartedWith(path, staticProjects);
-          if (matchedStatic) {
-            handleStaticError(matchedStatic);
-          } else {
-            // Logic 3: Unknown path
-            show404();
-          }
+          document.addEventListener("DOMContentLoaded", fn, { once: true });
         }
+      }
 
-        // =========================================================
-        // 4. 处理函数 | Handlers
-        // =========================================================
+      function findStartedWith(str, list) {
+        if (Array.isArray(list)) {
+          return list.find(function (p) { return str.startsWith(p); });
+        }
+        for (var key in list) {
+          if (str.startsWith(key)) return list[key];
+        }
+        return null;
+      }
 
-        function handleSpaRedirect(projectRoot) {
-          // Circuit Breaker: Prevent infinite redirects
-          // Use a counter to allow a few retries (e.g. for flaky connections or user refreshes)
-          var storageKey = "spa_redirect_guard";
-          var lastRedirect = sessionStorage.getItem(storageKey);
-          var now = Date.now();
-          var MAX_RETRIES = 3;
-          var TIME_WINDOW = 5000; // 5 seconds
+      function setAttempting() {
+        var loader = document.getElementById("redirect-msg");
+        var text = loader && loader.querySelector(".recovery-text");
+        if (text) text.textContent = ATTEMPTING_MSG;
+        if (loader) {
+          loader.classList.add("visible");
+          loader.setAttribute("aria-busy", "true");
+        }
+        document.body.classList.remove("loading");
+        document.body.classList.add("ready");
+      }
 
-          var guardData = { path: path, count: 1, time: now };
+      function setFailed(options) {
+        options = options || {};
+        var loader = document.getElementById("redirect-msg");
+        var content = document.getElementById("main-content");
 
-          if (lastRedirect) {
-            try {
-              var data = JSON.parse(lastRedirect);
-              // Check if it's the same path and within time window
-              if (data.path === path && now - data.time < TIME_WINDOW) {
-                if (data.count >= MAX_RETRIES) {
-                  console.error("Infinite redirect loop detected for:", path);
-                  show404WithMsg(
-                    "无法加载子应用 (" +
-                      projectRoot +
-                      ")。<br>检测到重定向循环，可能该模块已被移除或损坏。"
-                  );
-                  sessionStorage.removeItem(storageKey); // Clear for next fresh try
-                  return;
-                }
-                // Increment count
-                guardData.count = data.count + 1;
-                guardData.time = data.time; // Keep original start time window
+        if (loader) {
+          loader.classList.remove("visible");
+          loader.removeAttribute("aria-busy");
+        }
+        if (content) content.style.display = "flex";
+        document.body.classList.remove("loading");
+        document.body.classList.add("ready");
+
+        if (options.title) {
+          var title = document.getElementById("error-title");
+          if (title) title.textContent = options.title;
+        }
+        var desc = document.getElementById("error-desc");
+        if (desc) desc.textContent = options.desc || FAILURE_DESC;
+      }
+
+      function handleSpaRedirect(projectRoot) {
+        var storageKey = "spa_redirect_guard";
+        var lastRedirect = sessionStorage.getItem(storageKey);
+        var now = Date.now();
+        var MAX_RETRIES = 3;
+        var TIME_WINDOW = 5000;
+
+        var guardData = { path: path, count: 1, time: now };
+
+        if (lastRedirect) {
+          try {
+            var data = JSON.parse(lastRedirect);
+            if (data.path === path && now - data.time < TIME_WINDOW) {
+              if (data.count >= MAX_RETRIES) {
+                whenReady(function () {
+                  setFailed({
+                    desc: "无法加载子应用 (" + projectRoot + ")。检测到重定向循环，可能该模块已被移除或损坏。请选择下方链接继续浏览。",
+                  });
+                });
+                sessionStorage.removeItem(storageKey);
+                return;
               }
-            } catch (e) {
-              // ignore JSON error
+              guardData.count = data.count + 1;
+              guardData.time = data.time;
             }
+          } catch (e) { /* ignore */ }
+        }
+
+        sessionStorage.setItem(storageKey, JSON.stringify(guardData));
+
+        var subPath = path.substring(projectRoot.length);
+        if (!subPath || subPath === "/") subPath = "/";
+
+        var newUrl = projectRoot + "/index.html#" + subPath + search + hash;
+        window.location.replace(newUrl);
+      }
+
+      function iconHtml(name) {
+        var icons = {
+          "folder-open": "folder-open",
+          "pen-nib": "pen-nib",
+          github: "github"
+        };
+        var slug = icons[name];
+        return slug
+          ? '<span class="icon icon--chip icon--' + slug + '" aria-hidden="true"></span>'
+          : "";
+      }
+
+      function createLinkChip(href, iconName, label, external) {
+        var chip = document.createElement("a");
+        chip.className = "chip";
+        chip.href = href;
+        if (external) {
+          chip.target = "_blank";
+          chip.rel = "noopener";
+        }
+        chip.innerHTML = iconHtml(iconName) + " " + label;
+        return chip;
+      }
+
+      function handleStaticError(projectConfig) {
+        whenReady(function () {
+          setFailed({
+            title: "页面未找到 · " + projectConfig.name,
+            desc: "您访问的「" + projectConfig.name + "」页面不存在或已被移动。请选择下方链接继续浏览。",
+          });
+
+          var nav = document.getElementById("error-nav");
+          if (nav) {
+            nav.insertBefore(
+              createLinkChip(projectConfig.home, "folder-open", "前往「" + projectConfig.name + "」首页"),
+              nav.firstChild
+            );
           }
+        });
+      }
 
-          // Set Guard
-          sessionStorage.setItem(storageKey, JSON.stringify(guardData));
+      var matchedSpa = findStartedWith(path, spaProjects);
 
-          // Calculate subpath
-          var subPath = path.substring(projectRoot.length);
-          if (!subPath || subPath === "/") subPath = "/";
-
-          // Construct new URL: /blog + /index.html + /# + /article/1
-          // We explicitly add index.html to avoid 404s on servers that don't auto-resolve directories
-          var newUrl = projectRoot + "/index.html#" + subPath + search + hash;
-
-          // Redirect
-          window.location.replace(newUrl);
+      if (matchedSpa) {
+        whenReady(function () {
+          setAttempting();
+          requestAnimationFrame(function () {
+            handleSpaRedirect(matchedSpa);
+          });
+        });
+      } else {
+        var matchedStatic = findStartedWith(path, staticProjects);
+        if (matchedStatic) {
+          handleStaticError(matchedStatic);
+        } else {
+          whenReady(setFailed);
         }
+      }
+    })();
+  </script>
+</head>
+<body class="loading">
+  <div class="bg" aria-hidden="true"></div>
+  <div class="mesh" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
 
-        function handleStaticError(projectConfig) {
-          // Show 404 immediately
-          show404();
+  <div class="theme-toggle-container collapsed">
+    <button type="button" class="theme-toggle toggle-expand" aria-label="主题设置">
+      <span class="icon icon--toggle icon--palette" aria-hidden="true"></span>
+      <span>主题</span>
+    </button>
+    <button type="button" class="theme-toggle" data-theme="system" aria-label="跟随系统">
+      <span class="icon icon--toggle icon--desktop" aria-hidden="true"></span>
+      <span>系统</span>
+    </button>
+    <button type="button" class="theme-toggle" data-theme="light" aria-label="暖雾亮色">
+      <span class="icon icon--toggle icon--sun" aria-hidden="true"></span>
+      <span>亮色</span>
+    </button>
+    <button type="button" class="theme-toggle" data-theme="dark" aria-label="暖夜暗色">
+      <span class="icon icon--toggle icon--moon" aria-hidden="true"></span>
+      <span>暗色</span>
+    </button>
+  </div>
 
-          // Add a smart suggestion button
-          setTimeout(function () {
-            var btnGroup = document.querySelector(".btn-group");
-            if (btnGroup) {
-              var newBtn = document.createElement("a");
-              newBtn.href = projectConfig.home;
-              newBtn.className = "btn btn-primary"; // Make this one primary
-              newBtn.style.backgroundColor = "#17a2b8"; // Distinct color (Teal)
-              newBtn.innerText = "前往 [" + projectConfig.name + "] 首页";
+  <p id="redirect-msg" role="status" aria-live="polite">
+    <span class="recovery-spinner" aria-hidden="true"></span>
+    <span class="recovery-text">页面未找到，正在尝试寻找正确路径…</span>
+  </p>
 
-              btnGroup.insertBefore(newBtn, btnGroup.firstChild);
-            }
+  <main class="stage" id="main-content">
+    <article class="not-found">
+      <header class="error-head">
+        <p class="error-code" aria-hidden="true">4<span>0</span>4</p>
+        <h1 class="error-title" id="error-title">页面未找到</h1>
+        <p class="error-desc" id="error-desc">
+          您访问的页面不存在或已被移动。请选择下方链接继续浏览。
+        </p>
+      </header>
 
-            // Optional: Update title text
-            var titleEl = document.querySelector("h1");
-            if (titleEl)
-              titleEl.innerText = "页面未找到 (" + projectConfig.name + ")";
-          }, 100);
+      <nav class="links" id="error-nav" aria-label="404 导航">
+        <a class="chip" href="/"><span class="icon icon--chip icon--house" aria-hidden="true"></span> 返回首页</a>
+        <button type="button" class="chip" onclick="history.back()"><span class="icon icon--chip icon--arrow-left" aria-hidden="true"></span> 返回上一页</button>
+        <a class="chip" href="https://jixiaoyong.github.io/blog/" target="_blank" rel="noopener"><span class="icon icon--chip icon--pen-nib" aria-hidden="true"></span> Blog</a>
+        <a class="chip" href="https://github.com/jixiaoyong" target="_blank" rel="noopener"><span class="icon icon--chip icon--github" aria-hidden="true"></span> GitHub</a>
+      </nav>
+
+      <footer class="not-found-bottom colophon" aria-label="站点信息">
+        <div class="colophon-row">
+          <span class="colophon-tag"><span class="colophon-mark" aria-hidden="true"></span>404 Not Found</span>
+          <span><span class="colophon-host">jixiaoyong</span><span class="colophon-tld">.github.io</span></span>
+        </div>
+      </footer>
+    </article>
+  </main>
+
+  <script>
+    (function () {
+      var html = document.documentElement;
+      var prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
+      var currentTheme = localStorage.getItem("theme") || "system";
+
+      function resolveTheme(theme) {
+        if (theme === "system") return prefersDark.matches ? "dark" : "light";
+        return theme;
+      }
+
+      function applyTheme(theme) {
+        currentTheme = theme;
+        if (theme === "system") {
+          localStorage.removeItem("theme");
+        } else {
+          localStorage.setItem("theme", theme);
         }
+        html.setAttribute("data-theme", resolveTheme(theme));
+        document.querySelectorAll(".theme-toggle[data-theme]").forEach(function (btn) {
+          btn.classList.toggle("active", btn.dataset.theme === theme);
+        });
+      }
 
-        function show404WithMsg(msg) {
-          show404();
-          setTimeout(function () {
-            var p = document.querySelector("p");
-            if (p) p.innerHTML = msg;
-          }, 60);
+      applyTheme(currentTheme);
+
+      prefersDark.addEventListener("change", function () {
+        if (currentTheme === "system") {
+          html.setAttribute("data-theme", prefersDark.matches ? "dark" : "light");
         }
+      });
 
-        function show404() {
-          // Show UI
-          setTimeout(function () {
-            var loader = document.getElementById("redirect-msg");
-            var content = document.getElementById("main-content");
-            if (loader) loader.style.display = "none";
-            if (content) content.style.display = "flex";
-          }, 50);
-        }
-      })();
-    </script>
-  </head>
-  <body>
-    <div id="redirect-msg">正在尝试定位页面...</div>
+      var themeContainer = document.querySelector(".theme-toggle-container");
+      var toggleExpand = document.querySelector(".toggle-expand");
+      var autoCollapseTimer = null;
+      var ignoreOutsideClick = false;
 
-    <div class="container" id="main-content">
-      <svg
-        class="illustration"
-        viewBox="0 0 400 300"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <style>
-          .cls-1 {
-            fill: #e6e6e6;
-          }
-          .cls-2 {
-            fill: #007bff;
-          }
-        </style>
-        <circle cx="200" cy="150" r="100" class="cls-1" />
-        <text
-          x="50%"
-          y="50%"
-          dominant-baseline="middle"
-          text-anchor="middle"
-          font-family="sans-serif"
-          font-weight="bold"
-          font-size="60"
-          fill="#999"
-        >
-          404
-        </text>
-        <text
-          x="50%"
-          y="70%"
-          dominant-baseline="middle"
-          text-anchor="middle"
-          font-family="sans-serif"
-          font-size="14"
-          fill="#666"
-        >
-          Page Not Found
-        </text>
-      </svg>
+      function expandThemeContainer() {
+        themeContainer.classList.remove("collapsed");
+        if (autoCollapseTimer) clearTimeout(autoCollapseTimer);
+        autoCollapseTimer = setTimeout(function () {
+          themeContainer.classList.add("collapsed");
+        }, 12000);
+      }
 
-      <h1>哎呀，迷路了</h1>
-      <p>
-        您访问的页面不存在，或者已经被移动到了新的地址。<br />我们会自动尝试为您寻找正确的路径。
-      </p>
+      function collapseThemeContainer() {
+        if (themeContainer.classList.contains("collapsed")) return;
+        themeContainer.classList.add("collapsed");
+        if (autoCollapseTimer) clearTimeout(autoCollapseTimer);
+      }
 
-      <div class="btn-group">
-        <a href="javascript:history.back()" class="btn btn-secondary"
-          >返回上一页</a
-        >
-        <a href="/" class="btn btn-primary">回到首页</a>
-      </div>
-    </div>
-  </body>
+      if (toggleExpand) {
+        toggleExpand.addEventListener("click", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          ignoreOutsideClick = true;
+          expandThemeContainer();
+          requestAnimationFrame(function () { ignoreOutsideClick = false; });
+        });
+      }
+
+      if (themeContainer) {
+        themeContainer.addEventListener("mouseenter", expandThemeContainer);
+        themeContainer.addEventListener("mouseleave", collapseThemeContainer);
+        themeContainer.addEventListener("click", function (e) { e.stopPropagation(); });
+      }
+
+      document.querySelectorAll(".theme-toggle[data-theme]").forEach(function (btn) {
+        btn.addEventListener("click", function (e) {
+          e.stopPropagation();
+          applyTheme(btn.dataset.theme);
+          collapseThemeContainer();
+        });
+      });
+
+      document.addEventListener("click", function () {
+        if (ignoreOutsideClick) return;
+        collapseThemeContainer();
+      });
+    })();
+  </script>
+</body>
 </html>
