@@ -1,0 +1,177 @@
+/* 使用系统字体 + 中文常见字体作为后备，无需外部加载 */
+:root {
+  /* Color Tokens - 奢华深灰/深紫背景，搭配温暖霓虹橙红 */
+  --bg-primary: #0a0a0d;
+  --bg-secondary: #131318;
+  --bg-tertiary: #1c1c24;
+  
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #9ea0a8;
+  --color-text-muted: #5e606b;
+  
+  --accent-color: #ff7a00;
+  --accent-color-hover: #ff9122;
+  --accent-gradient: linear-gradient(135deg, #ff7a00, #ff3b30);
+  --accent-glow: rgba(255, 122, 0, 0.3);
+  --accent-glow-light: rgba(255, 122, 0, 0.1);
+  
+  --color-danger: #ff453a;
+  --color-success: #30d158;
+  --border-color: #24242c;
+  
+  /* Layout & Spacing */
+  --header-height: 64px;
+  --nav-height: 60px;
+  
+  /* Shadows & Glassmorphism */
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 12px 36px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.7);
+  --glass-bg: rgba(19, 19, 24, 0.75);
+  --glass-blur: blur(20px);
+  --glass-border: rgba(255, 255, 255, 0.05);
+  
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-full: 9999px;
+  
+  /* Transitions */
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --transition-spring: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Reset & Global Base */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  height: 100%;
+  background-color: var(--bg-primary);
+}
+
+body {
+  font-family: 'Outfit', 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', '微软雅黑', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--color-text-primary);
+  line-height: 1.4;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+}
+
+a {
+  color: var(--accent-color);
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+button {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  user-select: none;
+}
+
+input {
+  font-family: inherit;
+  font-size: inherit;
+  border: none;
+  background: transparent;
+  color: inherit;
+}
+
+input:focus {
+  outline: none;
+}
+
+/* Glassmorphism Panel Helper */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-md);
+}
+
+/* =================================================================================================
+ * 漂浮的背景霓虹微件 (Background Neon Floating Widgets)
+ * ================================================================================================= */
+
+.bg-decorations-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.neon-food-widget {
+  position: absolute;
+  font-size: 2.2rem;
+  opacity: 0.12;
+  filter: drop-shadow(0 0 10px var(--accent-color));
+  animation: floatAround 16s ease-in-out infinite alternate;
+}
+
+/* 定义四个不同的漂浮初始位置及延时 */
+.widget-burger {
+  top: 15%;
+  left: 8%;
+  animation-duration: 20s;
+  animation-delay: 0s;
+}
+
+.widget-chopsticks {
+  top: 25%;
+  right: 10%;
+  animation-duration: 18s;
+  animation-delay: -3s;
+}
+
+.widget-ramen {
+  bottom: 30%;
+  left: 12%;
+  animation-duration: 22s;
+  animation-delay: -5s;
+}
+
+.widget-pizza {
+  bottom: 20%;
+  right: 8%;
+  animation-duration: 24s;
+  animation-delay: -2s;
+}
+
+@keyframes floatAround {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  50% {
+    transform: translateY(-25px) rotate(15deg) scale(1.1);
+  }
+  100% {
+    transform: translateY(15px) rotate(-10deg) scale(0.95);
+  }
+}

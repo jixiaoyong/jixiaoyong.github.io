@@ -1,0 +1,261 @@
+/* Input Panel, Chips and Stream Voice Subtitle Bubble */
+
+/* 智能文本输入Wrapper */
+.input-input-wrapper {
+  display: flex;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 4px;
+  transition: all var(--transition-fast);
+  margin-top: 8px;
+}
+
+.input-input-wrapper:focus-within {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 10px var(--accent-glow-light);
+}
+
+.input-input-wrapper input {
+  flex: 1;
+  padding: 12px 16px;
+  background: transparent;
+  color: var(--color-text-primary);
+  font-size: 0.95rem;
+}
+
+.input-input-wrapper input::placeholder {
+  color: var(--color-text-muted);
+}
+
+/* =================================================================================================
+ * Chips 胶囊标签样式
+ * ================================================================================================= */
+
+.chips-section {
+  margin-top: 20px;
+}
+
+.chips-section-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+#chipsCount {
+  background: var(--bg-tertiary);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  color: var(--accent-color);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.chips-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-height: 90px;
+  max-height: 200px;
+  overflow-y: auto;
+  background: rgba(10, 10, 13, 0.4);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 12px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: rgba(255, 122, 0, 0.08);
+  border: 1px solid rgba(255, 122, 0, 0.25);
+  color: var(--color-text-primary);
+  border-radius: var(--radius-full);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: default;
+  user-select: none;
+  animation: chipScaleIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.25) forwards;
+}
+
+@keyframes chipScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.chip-delete {
+  font-size: 1.1rem;
+  line-height: 1;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: color var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chip-delete:hover {
+  color: var(--color-danger);
+}
+
+.chip[contenteditable="true"] {
+  outline: none;
+  border-color: var(--accent-color);
+  background: var(--bg-tertiary);
+  cursor: text;
+  box-shadow: 0 0 10px var(--accent-glow);
+}
+
+/* =================================================================================================
+ * 全屏虚化 Siri 级实时流式字幕面板 (Real-time Streaming Subtitle Overlay)
+ * ================================================================================================= */
+
+.voice-bubble-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(10, 10, 13, 0.85);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  z-index: 200; /* 高于抽屉，全局独占 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  animation: fadeInMask var(--transition-normal) forwards;
+}
+
+@keyframes fadeInMask {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* 巨型发光声波波纹 */
+.voice-bubble-mic-area {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.voice-bubble-mic-btn {
+  width: 80px;
+  height: 80px;
+  border-radius: var(--radius-full);
+  background: var(--accent-gradient);
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 30px var(--accent-glow);
+  z-index: 2;
+  animation: breatheScale 2s infinite alternate;
+}
+
+@keyframes breatheScale {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.06); }
+}
+
+/* 多重波动涟漪环 */
+.voice-bubble-ripple {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--accent-color);
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  animation: deepRipple 2s cubic-bezier(0.1, 0.8, 0.3, 1) infinite;
+}
+
+.voice-bubble-ripple:nth-child(2) {
+  animation-delay: 0.6s;
+}
+
+.voice-bubble-ripple:nth-child(3) {
+  animation-delay: 1.2s;
+}
+
+@keyframes deepRipple {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+/* 实时字幕文本气泡框 */
+.voice-live-bubble {
+  max-width: 480px;
+  width: 100%;
+  min-height: 110px;
+  background: rgba(28, 28, 36, 0.6);
+  border: 1px solid rgba(255, 122, 0, 0.25);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 0 12px rgba(255, 122, 0, 0.05);
+  margin-bottom: 50px;
+}
+
+.voice-live-text {
+  font-size: 1.4rem;
+  font-weight: 600;
+  text-align: center;
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  word-break: break-all;
+}
+
+/* 临时未说话的置灰 placeholder */
+.voice-live-text.listening {
+  color: var(--color-text-muted);
+  animation: textBreathe 1.5s infinite alternate;
+}
+
+@keyframes textBreathe {
+  0% { opacity: 0.5; }
+  100% { opacity: 0.9; }
+}
+
+.btn-voice-finish {
+  padding: 12px 36px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--color-text-secondary);
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+
+.btn-voice-finish:hover {
+  background: var(--color-danger);
+  color: #fff;
+  border-color: var(--color-danger);
+  box-shadow: 0 4px 12px rgba(255, 69, 58, 0.2);
+}

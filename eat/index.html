@@ -1,141 +1,254 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>今天吃什么？</title>
-  <link rel="icon"
-    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>" />
-  <link rel="stylesheet" href="styles/wechat-variables.css" />
-  <link rel="stylesheet" href="styles/wechat-layout.css" />
-  <link rel="stylesheet" href="styles/wechat-buttons.css" />
-  <link rel="stylesheet" href="styles/style.css" />
+  <meta name="description" content="智能3D滚筒菜品抽签Web App，支持智能分词、离线运行。">
+  
+  <!-- PWA 支持 -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ff7a00">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍱</text></svg>" />
+
+  <!-- CSS 样式层（独立引入，结构清晰） -->
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/layout.css">
+  <link rel="stylesheet" href="styles/input-panel.css">
+  <link rel="stylesheet" href="styles/roulette.css">
+  <link rel="stylesheet" href="styles/drawer.css">
+  <link rel="stylesheet" href="styles/toasts.css">
 </head>
-
 <body>
-  <div class="container">
-    <!-- 盒子容器 -->
-    <div class="box-container">
-      <!-- 盒子主体 -->
-      <div class="box-body">
-        <!-- 卡片显示区域（左侧） -->
-        <div class="card-display-area">
-          <div class="card-background">
-            <img src="box.png" alt="背景" class="card-bg-image" />
-          </div>
-          <div class="card-content-wrapper">
-            <div class="card-container" id="cardContainer" style="display: none">
-              <!-- 卡片将在这里动态生成 -->
-            </div>
-            <div class="result-card" id="resultCard">
-              <div class="result-content">
-                <h2 id="resultTitle">加载中...</h2>
-                <p id="resultDescription">正在加载数据</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 控制区域（右侧） -->
-        <div class="control-panel">
-          <!-- 标题区域 -->
-          <div class="title-area">
-            <h1 class="title">今天吃什么？</h1>
-            <div class="current-group">
-              <span id="currentGroupName">默认组合</span>
-              <button class="change-group-btn" onclick="showGroupSelector()">
-                切换
-              </button>
-            </div>
-          </div>
-
-          <!-- 控制按钮 -->
-          <div class="control-area">
-            <div class="button-container">
-              <button class="start-btn" id="startBtn">开始抽取</button>
-            </div>
-
-            <!-- 进度指示器 -->
-            <div class="progress-indicator" id="progressIndicator" style="display: none">
-              <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
-              </div>
-              <div class="progress-text" id="progressText">准备中...</div>
-            </div>
-
-            <!-- 速度档位选择器 -->
-            <div class="speed-selector">
-              <div class="speed-label">抽奖速度：</div>
-              <div class="speed-options">
-                <button class="speed-btn" data-speed="slow" id="speedSlow">
-                  慢速
-                </button>
-                <button class="speed-btn active" data-speed="normal" id="speedNormal">
-                  正常
-                </button>
-                <button class="speed-btn" data-speed="fast" id="speedFast">
-                  快速
-                </button>
-              </div>
-            </div>
-
-            <button class="manage-btn" onclick="openManagePage()">
-              管理选项
-            </button>
-          </div>
-        </div>
-      </div>
+  <div id="app">
+    <!-- 装饰性漂浮的霓虹美食微件 -->
+    <div class="bg-decorations-wrapper">
+      <div class="neon-food-widget widget-burger">🍔</div>
+      <div class="neon-food-widget widget-chopsticks">🥢</div>
+      <div class="neon-food-widget widget-ramen">🍜</div>
+      <div class="neon-food-widget widget-pizza">🍕</div>
     </div>
 
-    <!-- 组合选择器 -->
-    <div class="group-selector" id="groupSelector" style="display: none">
-      <div class="selector-content">
-        <h3>选择组合</h3>
-        <div class="group-list" id="groupList">
-          <!-- 组合列表将在这里动态生成 -->
-        </div>
-        <button class="close-btn" onclick="hideGroupSelector()">关闭</button>
+    <!-- 顶部标题导航栏 -->
+    <header class="app-header">
+      <div class="app-title">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+          <path d="M8.1 13.34l2.83-2.83L3.91 3.5c-1.56 1.56-1.56 4.09 0 5.66l4.19 4.18zm6.78-1.81c1.53.71 3.68.21 5.27-1.38 1.91-1.91 2.28-4.65.81-6.12-1.46-1.46-4.2-1.1-6.12.81-1.59 1.59-2.09 3.74-1.38 5.27L3.7 19.87l1.41 1.41L12 14.41l6.88 6.88 1.41-1.41L13.41 13l1.47-1.47z"/>
+        </svg>
+        今天吃什么？
       </div>
+      <div class="app-header-actions">
+        <button id="currentMenuBtn" class="btn-header" aria-label="切换或管理菜单">
+          <span id="activeMenuName">加载中...</span>
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- SPA 子视图包裹器 -->
+    <div class="views-container">
+      <!-- 视图一：主抽签页面 -->
+      <section id="viewDraw" class="app-view" style="display: flex;">
+        <!-- 3D 滚筒舞台 -->
+        <div class="roulette-stage">
+          <div id="rouletteCylinder" class="roulette-cylinder">
+            <!-- 3D 卡片由 JS 动态生成 -->
+          </div>
+          <div class="roulette-pointer"></div>
+          <div class="roulette-glass-shade"></div>
+        </div>
+
+        <!-- 今日快捷屏蔽划线列表 -->
+        <div class="blacklist-zone">
+          <div class="zone-title">今日排除（点击划线屏蔽）：</div>
+          <div id="quickBlacklistContainer" class="quick-blacklist-list">
+            <!-- 菜品项目由 JS 渲染 -->
+          </div>
+        </div>
+
+        <!-- 底部大按钮与麦克风区域 (对齐设计图) -->
+        <div class="action-area">
+          <!-- 宽体主抽取按钮 -->
+          <button id="spinBtn" class="btn-spin-wheel" aria-label="开始抽取">
+            <span>🚀</span> <span id="spinBtnText">开始抽取！</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- 视图二：抽取历史记录页面 -->
+      <section id="viewHistory" class="app-view">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+          <h2 class="view-title" style="margin-bottom:0;">抽取历史记录</h2>
+          <button id="clearHistoryBtn" class="btn-text-action" style="color:var(--color-danger);">🗑️ 清空历史</button>
+        </div>
+        <div id="historyListContainer" class="history-list-wrapper">
+          <!-- 历史卡片由 JS 渲染 -->
+        </div>
+      </section>
+
+      <!-- 视图三：发现美食推荐页面 -->
+      <section id="viewExplore" class="app-view">
+        <h2 class="view-title">美食大发现</h2>
+        <p style="color: var(--color-text-secondary); font-size: 0.85rem; margin-bottom: 20px; line-height: 1.4;">
+          为您整理的热门小吃与菜系，点击卡片直接提取并保存到您的菜单中：
+        </p>
+        <div id="exploreCardsContainer" class="explore-cards-grid">
+          <!-- 美食卡片由 JS 渲染 -->
+        </div>
+      </section>
     </div>
-  </div>
 
-  <!-- 添加数据管理相关的脚本 -->
-  <script src="javascript/cookie-manager.js"></script>
-  <script src="javascript/data-manager.js"></script>
-  <script src="javascript/utils.js"></script>
-  <script src="javascript/fireworks.js"></script>
-  <script src="javascript/script.js"></script>
-
-  <!-- 抽奖结果浮层 -->
-  <div class="result-overlay" id="resultOverlay" style="display: none;">
-    <!-- 半透明模糊背景 -->
-    <div class="overlay-background"></div>
-
-    <!-- 烟花效果容器 -->
-    <div class="fireworks-container" id="fireworksContainer"></div>
-
-    <!-- 结果展示区域 -->
-    <div class="result-showcase">
-      <!-- 标题文字 -->
-      <div class="result-title">
-        <h1>今天小羊吃：</h1>
-      </div>
-
-      <!-- 结果卡片 -->
-      <div class="overlay-result-card" id="overlayResultCard">
-        <div class="overlay-result-content">
-          <h2 id="overlayResultTitle">加载中...</h2>
-          <p id="overlayResultDescription">正在加载数据</p>
-        </div>
-      </div>
-
-      <!-- 关闭按钮 -->
-      <button class="close-overlay-btn" onclick="closeResultOverlay()">
-        <span>×</span>
+    <!-- 底部三大导航页签 (SPA) -->
+    <nav class="app-nav-bar">
+      <button class="nav-item active" data-view="viewDraw">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM7.5 18c-.83 0-1.5-.67-1.5-1.5S6.67 15 7.5 15s1.5.67 1.5 1.5S8.33 18 7.5 18zm0-9C6.67 9 6 8.33 6 7.5S6.67 6 7.5 6 9 6.67 9 7.5 8.33 9 7.5 9zm4.5 4.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4.5 4.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm0-9c-.83 0-1.5-.67-1.5-1.5S15.67 6 16.5 6s1.5.67 1.5 1.5S17.33 9 16.5 9z"/>
+          </svg>
+        </span>
+        <span>抽签</span>
       </button>
-    </div>
-  </div>
-</body>
+      <button class="nav-item" data-view="viewHistory">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/>
+          </svg>
+        </span>
+        <span>历史记录</span>
+      </button>
+      <button id="navMyFoodies" class="nav-item">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path d="M3 4h18v2H3V4zm0 4h18v2H3V8zm0 4h18v2H3v-2zm0 4h12v2H3v-2zm0 4h8v2H3v-2z"/>
+          </svg>
+        </span>
+        <span>我的菜单</span>
+      </button>
+      <button class="nav-item" data-view="viewExplore">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/>
+          </svg>
+        </span>
+        <span>美食探索</span>
+      </button>
+    </nav>
 
+    <!-- 抽奖结果弹窗 -->
+    <div id="prizeModal" class="prize-modal-overlay">
+      <div class="prize-modal-content">
+        <div class="prize-modal-confetti"></div>
+        <div class="prize-modal-header">
+          <span class="prize-modal-emoji">🎉</span>
+          <span class="prize-modal-title">恭喜中签</span>
+        </div>
+        <div class="prize-modal-result" id="prizeModalResult"></div>
+        <div class="prize-modal-subtitle">今天就吃这个吧！</div>
+        <button class="prize-modal-close" id="prizeModalClose">好的！</button>
+      </div>
+    </div>
+
+    <!-- SPA 底部滑出式菜单管理抽屉 -->
+    <div id="drawerOverlay" class="drawer-overlay" style="display: none;"></div>
+    <aside id="drawerContainer" class="drawer-container glass-panel">
+      <div class="drawer-handle" id="drawerHandle"></div>
+      
+      <div class="drawer-header">
+        <h2 id="drawerTitle">吃货菜单管理</h2>
+        <button id="closeDrawerBtn" class="btn-close-drawer" aria-label="关闭">×</button>
+      </div>
+
+      <div class="drawer-content">
+        <!-- 视图一：主菜单选择列表 -->
+        <div id="menuListView" class="drawer-view">
+          <div class="drawer-section-title">
+            <span>我的自定义食谱</span>
+            <button id="showCreateMenuBtn" class="btn-text-action">+ 新建菜单</button>
+          </div>
+          <div id="menuCardList" class="menu-card-list">
+            <!-- 菜单卡片由 JS 渲染 -->
+          </div>
+        </div>
+
+        <!-- 视图二：新建 / 编辑菜单表单 -->
+        <div id="menuEditView" class="drawer-view" style="display: none;">
+          <div class="edit-view-header">
+            <button id="backToMenuListBtn" class="btn-text-action">← 返回列表</button>
+            <span id="editViewTitle">编辑菜单</span>
+          </div>
+          
+          <div class="form-group">
+            <label for="menuNameInput">菜单名称</label>
+            <input type="text" id="menuNameInput" placeholder="请输入菜单名称..." maxlength="20">
+          </div>
+
+          <div class="form-group">
+            <label>快速录入菜品（支持空格切分或智能提取）</label>
+            
+            <div id="textInputContainer" class="input-input-wrapper">
+              <input type="text" id="rawFoodInput" placeholder="输入菜名，用空格、中英文逗号隔开..." autocomplete="off">
+              <button id="parseInputBtn" class="btn-accent-sm">提取</button>
+            </div>
+            <p class="input-helper-text">输入菜名，用空格、中英文逗号或顿号隔开，系统会自动提取。</p>
+          </div>
+
+          <!-- 分词识别出的菜品标签（Chips 编辑区） -->
+          <div class="chips-section">
+            <div class="chips-section-title">
+              <span>已生成的菜名标签 (双击可直接编辑)</span>
+              <span id="chipsCount">0</span>
+            </div>
+            <div id="chipsContainer" class="chips-wrapper">
+              <!-- 菜品 Chips 胶囊由 JS 渲染 -->
+            </div>
+          </div>
+
+          <div class="edit-view-actions">
+            <button id="saveMenuBtn" class="btn-primary" style="flex:1; height: 46px; border-radius: var(--radius-sm); font-size: 0.95rem; background: var(--accent-gradient);">保存并激活</button>
+            <button id="deleteMenuBtn" class="btn-danger" style="height: 46px; border-radius: var(--radius-sm); font-size: 0.95rem; display: none;">删除</button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- 全局 Toast 提示容器 -->
+    <div id="toast-container"></div>
+  </div>
+
+  <!-- 主入口脚本 -->
+  <script type="module" src="javascript/app.js"></script>
+
+  <!-- PWA Service Worker 注册 -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .then(registration => {
+            console.log('ServiceWorker 注册成功，Scope:', registration.scope);
+            
+            registration.onupdatefound = () => {
+              const installingWorker = registration.installing;
+              if (installingWorker == null) return;
+              installingWorker.onstatechange = () => {
+                if (installingWorker.state === 'installed') {
+                  if (navigator.serviceWorker.controller) {
+                    window.dispatchEvent(new CustomEvent('sw-update-available'));
+                  }
+                }
+              };
+            };
+          })
+          .catch(error => {
+            console.error('ServiceWorker 注册失败:', error);
+          });
+      });
+    }
+  </script>
+</body>
 </html>
