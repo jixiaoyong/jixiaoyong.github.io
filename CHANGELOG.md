@@ -1,5 +1,23 @@
 # Changelog
 
+## [2026-06-24 09:59:17] Deploy
+
+**Scope**: imissyou-system
+**Authors**: dependabot[bot]
+
+## imissyou-system
+| Type | Description | Author |
+|------|-------------|--------|
+| build | bump astro from 6.4.2 to 6.4.6 (#75) | @dependabot[bot] |
+
+---
+Auto deploy by GitHub Action
+Source: blog_source_code@61aabf1
+Date: 2026-06-24 09:59:17
+
+---
+
+
 ## [2026-05-31 21:38:59] Deploy
 
 **Scope**: blog-system,editor,imissyou-system
