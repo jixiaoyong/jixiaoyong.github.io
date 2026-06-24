@@ -1,5 +1,18 @@
 # Changelog
 
+## [2026-06-24 10:12:36] Deploy
+
+**Scope**: blog,imissyou,editor
+**Authors**: dependabot[bot]
+
+---
+Auto deploy by GitHub Action
+Source: blog_source_code@2665ed6
+Date: 2026-06-24 10:12:36
+
+---
+
+
 ## [2026-06-24 09:59:44] Deploy
 
 **Scope**: editor,imissyou-system

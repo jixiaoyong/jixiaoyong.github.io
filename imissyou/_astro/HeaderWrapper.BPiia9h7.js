@@ -1,4 +1,4 @@
-import{j as e,u as E,I as P}from"./index.SM6-14oM.js";import{g as C,T,z as I}from"./preload-helper.C1_jrCqa.js";import{r as c}from"./index.CW1Nni_W.js";import{r as A}from"./index.MhO8z9sC.js";import{s as v}from"./blog.config.DNWflByI.js";import{g as $,r as x}from"./urlUtils.DgE27Xza.js";import{b as F,I as m}from"./Icon.DnGgpbks.js";const y=({onClick:n,children:d,variant:h="icon",className:l="",title:f,ariaLabel:a,disabled:t=!1,type:o="button"})=>{const b=`
+import{j as e,u as E,I as P}from"./index.SM6-14oM.js";import{g as C,T,z as I}from"./preload-helper.C1_jrCqa.js";import{r as c}from"./index.CW1Nni_W.js";import{r as A}from"./index.MhO8z9sC.js";import{s as v}from"./blog.config.DNWflByI.js";import{g as $,r as x}from"./urlUtils.DgE27Xza.js";import{b as F,I as m}from"./Icon.Bi5UXs4f.js";const y=({onClick:n,children:d,variant:h="icon",className:l="",title:f,ariaLabel:a,disabled:t=!1,type:o="button"})=>{const b=`
     inline-flex items-center justify-center
     transition-all duration-150
     focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2
