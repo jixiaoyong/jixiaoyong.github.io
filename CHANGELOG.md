@@ -1,5 +1,28 @@
 # Changelog
 
+## [2026-06-24 09:59:44] Deploy
+
+**Scope**: editor,imissyou-system
+**Authors**: dependabot[bot]
+
+## editor
+| Type | Description | Author |
+|------|-------------|--------|
+| build | bump vite from 7.3.3 to 7.3.5 (#74) | @dependabot[bot] |
+
+## imissyou-system
+| Type | Description | Author |
+|------|-------------|--------|
+| build | bump vite from 7.3.3 to 7.3.5 (#74) | @dependabot[bot] |
+
+---
+Auto deploy by GitHub Action
+Source: blog_source_code@ea08fc5
+Date: 2026-06-24 09:59:44
+
+---
+
+
 ## [2026-06-24 09:59:17] Deploy
 
 **Scope**: imissyou-system
