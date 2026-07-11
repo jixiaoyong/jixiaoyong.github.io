@@ -214,14 +214,13 @@
 
     .stage {
       min-height: 100dvh;
-      padding: max(32px, env(safe-area-inset-top)) var(--pad) max(48px, env(safe-area-inset-bottom));
+      padding: max(32px, env(safe-area-inset-top)) var(--pad) max(10px, env(safe-area-inset-bottom));
       display: flex;
       flex-direction: column;
       align-items: center;
     }
 
     .home {
-      flex: 1;
       display: flex;
       flex-direction: column;
       width: 100%;
@@ -268,66 +267,56 @@
     .links {
       flex-shrink: 0;
       margin-top: clamp(32px, 7vw, 48px);
-      border-top: 1px solid var(--line);
+      padding-bottom: clamp(52px, 8vw, 72px);
     }
 
     .home-bottom {
-      flex-shrink: 0;
       width: 100%;
-      margin-top: auto;
       padding-top: clamp(16px, 3.5vw, 22px);
     }
-    .link-row {
-      display: flex; align-items: center; justify-content: space-between; gap: 12px;
-      padding: clamp(16px, 3.5vw, 21px) 0; border-bottom: 1px solid var(--line);
-      text-decoration: none; color: inherit;
-      position: relative; isolation: isolate;
-      transition: color 0.28s ease, padding-left 0.28s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    .link-row::before {
-      content: "";
-      position: absolute;
-      top: -1px; bottom: -1px;
-      left: -12px; right: -18px;
-      border-radius: 10px;
-      background: var(--row-hover);
-      -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 11%, #000 89%, transparent 100%);
-      mask-image: linear-gradient(90deg, transparent 0%, #000 11%, #000 89%, transparent 100%);
-      opacity: 0;
-      pointer-events: none;
-      z-index: -1;
-      transition: opacity 0.32s ease;
-    }
-    .link-row:hover, .link-row:focus-visible {
-      padding-left: 10px; color: var(--accent); outline: none;
-    }
-    .link-row:hover::before, .link-row:focus-visible::before { opacity: 1; }
-    .link-main { display: flex; align-items: center; gap: clamp(12px, 3vw, 16px); min-width: 0; }
-    .link-icon {
-      width: 38px; height: 38px; flex-shrink: 0; border-radius: 11px;
-      display: grid; place-items: center;
-      background: var(--accent-soft); color: var(--accent);
-      border: 1px solid transparent;
-      box-shadow: var(--icon-shadow);
-      transition: background 0.28s ease, color 0.28s ease, transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
-        border-color 0.28s ease, box-shadow 0.28s ease;
-    }
-    .link-row:hover .link-icon,
-    .link-row:focus-visible .link-icon {
-      background: var(--icon-hover-bg);
-      color: var(--accent);
-      border-color: var(--accent-border);
-      box-shadow: var(--icon-hover-shadow);
-      transform: scale(1.025);
-    }
-    .link-label { font-family: var(--display); font-size: clamp(1.15rem, 3.5vw, 1.55rem); }
-    .link-arrow {
-      color: var(--muted); flex-shrink: 0;
-      transition: transform 0.22s ease, color 0.22s ease;
-    }
-    .link-row:hover .link-arrow { color: var(--accent); transform: translateX(4px); }
 
-    .links .link-row:last-child { border-bottom: none; }
+    /* -- 紧凑 badge 行 -- */
+    .badge-row {
+      margin-top: clamp(16px, 3vw, 24px);
+      display: flex;
+      flex-wrap: wrap;
+      gap: clamp(8px, 1.8vw, 12px);
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 16px;
+      border-radius: 999px;
+      text-decoration: none;
+      color: var(--text);
+      background: var(--surface-solid);
+      border: 1px solid var(--line);
+      font-size: 0.85rem;
+      font-weight: 500;
+      line-height: 1;
+      transition: color 0.2s, background 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      white-space: nowrap;
+    }
+    .badge:hover {
+      color: var(--accent);
+      background: var(--accent-soft);
+      border-color: var(--accent-border);
+      transform: scale(1.03);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    [data-theme="dark"] .badge {
+      color: var(--muted);
+      background: var(--accent-soft);
+      border-color: transparent;
+    }
+    [data-theme="dark"] .badge:hover {
+      color: var(--accent);
+      background: var(--icon-hover-bg);
+      border-color: var(--accent-border);
+    }
+    .badge-icon { width: 15px; height: 15px; flex-shrink: 0; font-size: 15px; }
+    .badge-email { font-size: 0.78rem; letter-spacing: 0.01em; }
     .contrib,
     .contrib .contrib-head,
     .contrib .sparkline-wrap,
@@ -568,34 +557,24 @@
         <p class="tag">Stay hungry. Stay foolish.</p>
       </div>
       <nav class="links" aria-label="站点导航">
-        <a class="link-row" href="https://jixiaoyong.github.io/blog/" target="_blank" rel="noopener">
-          <span class="link-main">
-            <span class="link-icon" aria-hidden="true"><span class="icon icon--md icon--pen-nib" aria-hidden="true"></span></span>
-            <span class="link-label">Blog</span>
-          </span>
-          <span class="link-arrow" aria-hidden="true"><span class="icon icon--sm icon--chevron-right" aria-hidden="true"></span></span>
-        </a>
-        <a class="link-row" href="https://xiaoyong.pages.dev/" target="_blank" rel="noopener">
-          <span class="link-main">
-            <span class="link-icon" aria-hidden="true"><span class="icon icon--md icon--camera" aria-hidden="true"></span></span>
-            <span class="link-label">Moments</span>
-          </span>
-          <span class="link-arrow" aria-hidden="true"><span class="icon icon--sm icon--chevron-right" aria-hidden="true"></span></span>
-        </a>
-        <a class="link-row" href="https://github.com/jixiaoyong" target="_blank" rel="noopener">
-          <span class="link-main">
-            <span class="link-icon" aria-hidden="true"><span class="icon icon--md icon--github" aria-hidden="true"></span></span>
-            <span class="link-label">Github</span>
-          </span>
-          <span class="link-arrow" aria-hidden="true"><span class="icon icon--sm icon--chevron-right" aria-hidden="true"></span></span>
-        </a>
-        <a class="link-row" href="mailto:jixiaoyong1995@gmail.com">
-          <span class="link-main">
-            <span class="link-icon" aria-hidden="true"><span class="icon icon--md icon--envelope" aria-hidden="true"></span></span>
-            <span class="link-label">Email</span>
-          </span>
-          <span class="link-arrow" aria-hidden="true"><span class="icon icon--sm icon--chevron-right" aria-hidden="true"></span></span>
-        </a>
+        <div class="badge-row">
+          <a class="badge" href="https://jixiaoyong.github.io/blog/" target="_blank" rel="noopener">
+            <span class="badge-icon icon icon--md icon--pen-nib" aria-hidden="true"></span>
+            <span>Blog</span>
+          </a>
+          <a class="badge" href="https://xiaoyong.pages.dev/" target="_blank" rel="noopener">
+            <span class="badge-icon icon icon--md icon--camera" aria-hidden="true"></span>
+            <span>Moments</span>
+          </a>
+          <a class="badge" href="https://github.com/jixiaoyong" target="_blank" rel="noopener">
+            <span class="badge-icon icon icon--md icon--github" aria-hidden="true"></span>
+            <span>GitHub</span>
+          </a>
+          <a class="badge" href="mailto:jixiaoyong1995@gmail.com">
+            <span class="badge-icon icon icon--md icon--envelope" aria-hidden="true"></span>
+            <span class="badge-email">jixiaoyong1995@gmail.com</span>
+          </a>
+        </div>
       </nav>
       <div class="home-bottom">
         <section class="contrib" id="github-contrib" aria-label="GitHub contributions">
