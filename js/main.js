@@ -214,10 +214,17 @@ if (avatarImg) {
 const yearEl = document.getElementById("current-year");
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-/* ── GitHub 贡献图（DOM 就绪即挂载，不等待图片/字体） ── */
+/* ── GitHub 贡献图：通过 requestIdleCallback 空闲调度挂载，极致提升主线程交互响应度(INP) ── */
 function mountGithubContrib() {
-  if (typeof GithubContrib !== "undefined") {
-    GithubContrib.mount(document.getElementById("github-contrib"), {});
+  const runMount = () => {
+    if (typeof GithubContrib !== "undefined") {
+      GithubContrib.mount(document.getElementById("github-contrib"), {});
+    }
+  };
+  if ("requestIdleCallback" in window) {
+    requestIdleCallback(runMount, { timeout: 1500 });
+  } else {
+    setTimeout(runMount, 10);
   }
 }
 

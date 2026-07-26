@@ -369,7 +369,7 @@
     [0, total - 1].forEach((index) => {
       const span = labels[index];
       if (!labelSlotFitsText(span, span.dataset.labelFull)) {
-        span.textContent = span.dataset.labelTwoDigit;
+        span.textContent = span.dataset.labelShort;
       }
     });
   }
@@ -383,7 +383,7 @@
       });
       labels.forEach((span) => {
         if (!labelSlotFitsText(span, span.dataset.labelFull)) {
-          span.textContent = span.dataset.labelTwoDigit;
+          span.textContent = span.dataset.labelShort;
         }
       });
       return;
@@ -594,6 +594,9 @@
       if (showLoading) {
         root.classList.add("contrib-loading");
         loadingStartedAt = Date.now();
+        const demoKeys = monthRange(FALLBACK_START_YEAR, new Date().getFullYear());
+        const skeletonMonths = demoKeys.map((key) => ({ key, count: 0 }));
+        renderSparkline(sparkEl, skeletonMonths, FALLBACK_START_YEAR);
       }
 
       return load({ forceDemo: demo })
