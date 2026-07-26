@@ -3,114 +3,133 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+
   <meta name="google-site-verification" content="tFuBeNEuu-Xgf0dYmyLsVm4CKYhb3C4SnViu88VERUI" />
-  <meta name="description" content="The website of JI,XIAOYONG(A developer. A man who loves the world.)" />
+  <meta name="description" content="The website of JI,XIAOYONG (A developer. A man who loves the world.)" />
   <meta name="keywords" content="jixiaoyong,blog,developer,portfolio" />
   <title>JI,XIAOYONG's Website</title>
 
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://jixiaoyong.github.io/" />
   <meta property="og:title" content="JI,XIAOYONG's Website" />
-  <meta property="og:description" content="The website of JI,XIAOYONG(A developer. A man who loves the world.)" />
-  <meta property="og:image" content="https://jixiaoyong.github.io/imissyou/assets/avatar-light.webp" />
-
-  <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:url" content="https://jixiaoyong.github.io/" />
-  <meta property="twitter:title" content="JI,XIAOYONG's Website" />
-  <meta property="twitter:description" content="The website of JI,XIAOYONG(A developer. A man who loves the world.)" />
-  <meta property="twitter:image" content="https://jixiaoyong.github.io/imissyou/assets/avatar-light.webp" />
+  <meta property="og:description" content="The website of JI,XIAOYONG (A developer. A man who loves the world.)" />
+  <meta property="og:image" content="https://jixiaoyong.github.io/imissyou/assets/avatar-light-transparent.webp?v=16" />
 
   <link rel="icon" href="/favicon.ico" sizes="32x32" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
-  <link rel="icon" type="image/webp" href="/imissyou/assets/avatar-light.webp" />
+  <link rel="icon" type="image/webp" href="/imissyou/assets/avatar-light-transparent.webp?v=16" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
-
-
+  <!-- 官方系统主题切换初始化 (跟随系统、亮色、暗色) -->
   <script>
     (function () {
       var saved = localStorage.getItem("theme");
       var dark = saved === "dark" || (!saved && window.matchMedia("(prefers-color-scheme: dark)").matches);
       document.documentElement.setAttribute("data-theme", dark ? "dark" : "light");
-      var preload = document.createElement("link");
-      preload.rel = "preload";
-      preload.as = "image";
-      preload.href = dark ? "/imissyou/assets/avatar-dark.webp" : "/imissyou/assets/avatar-light.webp";
-      document.head.appendChild(preload);
-      var prefetch = document.createElement("link");
-      prefetch.rel = "prefetch";
-      prefetch.as = "image";
-      prefetch.href = dark ? "/imissyou/assets/avatar-light.webp" : "/imissyou/assets/avatar-dark.webp";
-      document.head.appendChild(prefetch);
     })();
   </script>
 
+  <!-- 引入顶级艺术衬线体与高品质无衬线体 -->
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
-
-  <script defer src="https://www.googletagmanager.com/gtag/js?id=UA-138652239-1"></script>
-  <script defer>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag("js", new Date());
-    gtag("config", "UA-138652239-1");
-  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --pad: clamp(18px, 4.5vw, 40px);
-      --display: "Cormorant Garamond", Georgia, serif;
-      --sans: "DM Sans", system-ui, sans-serif;
-      --accent-2: var(--accent);
+      --font-serif: "Instrument Serif", "Cormorant Garamond", Georgia, serif;
+      --font-sans: "DM Sans", system-ui, -apple-system, sans-serif;
+      --pad-x: clamp(24px, 5vw, 80px);
+      --transition-base: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    /* 暖雾 · 亮色 */
+    /* ==========================================================================
+       亮色模式（上部透明无光斑，底下轻薄隐入内敛暗褐雾）
+       ========================================================================== */
     :root, [data-theme="light"] {
-      --text: #292524; --muted: #a8a29e; --accent: #ea580c;
-      --accent-soft: rgba(234,88,12,0.08); --accent-border: rgba(234,88,12,0.18); --accent-glow: rgba(234,88,12,0.22);
-      --bg: #fffbf5;
-      --mesh: radial-gradient(ellipse 80% 60% at 18% 0%, rgba(254,215,170,0.38), transparent 55%),
-        radial-gradient(ellipse 55% 45% at 88% 25%, rgba(167,139,250,0.1), transparent 50%),
-        radial-gradient(ellipse 50% 40% at 50% 100%, rgba(251,146,60,0.08), transparent 55%);
-      --glow-a: rgba(234,88,12,0.11); --glow-b: rgba(254,215,170,0.16);
-      --surface-solid: #fff;
-      --line: rgba(234,88,12,0.1); --row-hover: rgba(234,88,12,0.05);
-      --icon-hover-bg: rgba(234,88,12,0.13);
-      --icon-shadow: inset 0 1px 0 rgba(255,255,255,0.45);
-      --icon-hover-shadow: inset 0 1px 2px rgba(41,37,36,0.05), 0 1px 3px rgba(234,88,12,0.07);
-      --ring: linear-gradient(145deg, #fb923c, #fcd34d);
-      --avatar-shadow: 0 8px 24px rgba(234,88,12,0.14);
-      --toggle-bg: rgba(255,251,245,0.88); --toggle-border: rgba(234,88,12,0.12);
-      --toggle-chip: rgba(255,255,255,0.85);
-      --c0: rgba(234,88,12,0.07); --c1: rgba(234,88,12,0.28); --c2: rgba(234,88,12,0.48);
-      --c3: rgba(234,88,12,0.68); --c4: #ea580c;
+      --bg: #faf7f2;
+      --bg-mesh: linear-gradient(
+        180deg,
+        transparent 0%,
+        transparent 50%,
+        rgba(75, 65, 58, 0.04) 75%,
+        rgba(45, 38, 33, 0.09) 100%
+      );
+      --text-main: #1e1a17;
+      --text-muted: #4d463f;
+      --accent: #c85828;
+
+      --badge-bg: #f3ebe1;
+      --badge-border: #e6dcd0;
+      --badge-text: #3d352e;
+      --badge-hover-bg: #ffffff;
+      --badge-hover-border: #c85828;
+
+      --card-bg: transparent;
+      --card-border: transparent;
+      --card-shadow: none;
+
+      --line-color: #eae2d8;
+      --toggle-bg: rgba(255, 251, 245, 0.9);
+      --toggle-border: rgba(200, 88, 40, 0.15);
+      --toggle-chip: rgba(255, 255, 255, 0.9);
+      --accent-soft: rgba(200, 88, 40, 0.1);
+      --accent-border: rgba(200, 88, 40, 0.25);
+
+      --c0: rgba(200, 88, 40, 0.12);
+      --c1: rgba(200, 88, 40, 0.35);
+      --c2: rgba(200, 88, 40, 0.6);
+      --c3: rgba(200, 88, 40, 0.82);
+      --c4: #c85828;
     }
 
-    /* 暖夜 · 暗色 */
+    /* ==========================================================================
+       暗色模式
+       ========================================================================== */
     [data-theme="dark"] {
-      --text: #fafaf9; --muted: #a8a29e; --accent: #fb923c;
-      --accent-soft: rgba(251,146,60,0.1); --accent-border: rgba(251,146,60,0.22); --accent-glow: rgba(251,146,60,0.28);
-      --bg: #1c1410;
-      --mesh: radial-gradient(ellipse 60% 50% at 15% 10%, rgba(234,88,12,0.15), transparent 55%),
-        radial-gradient(ellipse 50% 40% at 85% 70%, rgba(167,139,250,0.08), transparent 50%),
-        radial-gradient(ellipse 45% 35% at 50% 100%, rgba(180,83,9,0.12), transparent 55%);
-      --glow-a: rgba(251,146,60,0.12); --glow-b: rgba(120,53,15,0.2);
-      --surface-solid: #292017;
-      --line: rgba(255,255,255,0.08); --row-hover: rgba(251,146,60,0.08);
-      --icon-hover-bg: rgba(251,146,60,0.15);
-      --icon-shadow: inset 0 1px 0 rgba(255,255,255,0.07);
-      --icon-hover-shadow: inset 0 1px 3px rgba(0,0,0,0.2), 0 1px 4px rgba(251,146,60,0.06);
-      --ring: linear-gradient(145deg, #fb923c, #fbbf24);
-      --avatar-shadow: 0 0 28px rgba(251,146,60,0.2);
-      --toggle-bg: rgba(28,20,16,0.92); --toggle-border: rgba(251,146,60,0.12);
-      --toggle-chip: rgba(41,32,26,0.9);
-      --c0: rgba(251,146,60,0.09); --c1: rgba(251,146,60,0.28); --c2: rgba(251,146,60,0.46);
-      --c3: rgba(251,146,60,0.64); --c4: #fb923c;
+      --bg: #14110e;
+      --bg-mesh: linear-gradient(
+        180deg,
+        transparent 0%,
+        transparent 50%,
+        rgba(200, 88, 40, 0.07) 80%,
+        rgba(200, 88, 40, 0.13) 100%
+      );
+      --text-main: #fafaf9;
+      --text-muted: #a8a29e;
+      --accent: #fb923c;
+
+      --badge-bg: rgba(36, 28, 22, 0.85);
+      --badge-border: rgba(251, 146, 60, 0.2);
+      --badge-text: #fafaf9;
+      --badge-hover-bg: rgba(48, 36, 28, 0.95);
+      --badge-hover-border: #fb923c;
+
+      --card-bg: transparent;
+      --card-border: transparent;
+      --card-shadow: none;
+
+      --line-color: rgba(255, 255, 255, 0.1);
+      --toggle-bg: rgba(28, 20, 16, 0.92);
+      --toggle-border: rgba(251, 146, 60, 0.18);
+      --toggle-chip: rgba(41, 32, 26, 0.9);
+      --accent-soft: rgba(251, 146, 60, 0.15);
+      --accent-border: rgba(251, 146, 60, 0.25);
+
+      --c0: rgba(251, 146, 60, 0.12);
+      --c1: rgba(251, 146, 60, 0.35);
+      --c2: rgba(251, 146, 60, 0.6);
+      --c3: rgba(251, 146, 60, 0.82);
+      --c4: #fb923c;
     }
 
+    /* ==========================================================================
+       基础设置与通用图标渲染
+       ========================================================================== */
     html {
       -webkit-text-size-adjust: 100%;
       color-scheme: light dark;
@@ -119,34 +138,63 @@
 
     body {
       min-height: 100dvh;
-      font-family: var(--sans);
-      color: var(--text);
-      background: var(--bg);
-      transition: background 0.45s ease, color 0.3s ease;
+      font-family: var(--font-sans);
+      color: var(--text-main);
+      background-color: var(--bg);
+      transition: background-color var(--transition-base), color var(--transition-base);
       -webkit-tap-highlight-color: transparent;
+      overflow-x: hidden;
+      width: 100%;
+      position: relative;
     }
 
-    .bg, .mesh, .grain, .cursor-glow { position: fixed; inset: 0; pointer-events: none; }
-    .bg { z-index: -3; background: var(--bg); transition: background 0.45s ease; }
-    .mesh { z-index: -2; background: var(--mesh); transition: background 0.45s ease; }
-    .grain {
-      z-index: -1; opacity: 0.03;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    .bg-mesh {
+      position: fixed; inset: 0; pointer-events: none;
+      z-index: -2;
+      background: var(--bg-mesh);
+      transition: background var(--transition-base);
     }
-    .cursor-glow {
-      z-index: -1; width: min(440px, 95vw); height: min(440px, 95vw); border-radius: 50%;
-      transform: translate(-50%, -50%);
-      background: radial-gradient(circle, var(--glow-a) 0%, var(--glow-b) 50%, transparent 72%);
-      opacity: 0; transition: opacity 0.35s;
-    }
-    body[data-glow="on"] .cursor-glow { opacity: 1; }
 
+    /* 真实的 SVG 遮罩图标样式 */
+    .icon {
+      display: inline-block;
+      flex-shrink: 0;
+      line-height: 1;
+      color: inherit;
+      vertical-align: middle;
+      width: 1em;
+      height: 1em;
+      font-size: inherit;
+    }
+    .icon::before {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 100%;
+      background-color: currentColor;
+      -webkit-mask: var(--icon-src) no-repeat center / contain;
+      mask: var(--icon-src) no-repeat center / contain;
+    }
+    .icon--md { width: 15px; height: 15px; font-size: 15px; }
+    .icon--toggle { width: 16px; height: 16px; font-size: 13px; }
+    .icon--pen-nib { --icon-src: url("/assets/icons/pen-nib.svg"); }
+    .icon--camera { --icon-src: url("/assets/icons/camera.svg"); }
+    .icon--github { --icon-src: url("/assets/icons/github.svg"); }
+    .icon--envelope { --icon-src: url("/assets/icons/envelope.svg"); }
+    .icon--palette { --icon-src: url("/assets/icons/palette.svg"); }
+    .icon--desktop { --icon-src: url("/assets/icons/desktop.svg"); }
+    .icon--sun { --icon-src: url("/assets/icons/sun.svg"); }
+    .icon--moon { --icon-src: url("/assets/icons/moon.svg"); }
+
+    /* ==========================================================================
+       官方主题控制条
+       ========================================================================== */
     .theme-toggle-container {
       position: fixed; top: max(16px, env(safe-area-inset-top)); right: max(16px, env(safe-area-inset-right));
       z-index: 100; display: flex; flex-direction: column; gap: 4px;
       background: var(--toggle-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--toggle-border);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
       transition: border-radius 0.2s ease, padding 0.2s ease, box-shadow 0.2s ease;
       overflow: hidden; isolation: isolate;
     }
@@ -167,352 +215,392 @@
     .theme-toggle-container.collapsed .theme-toggle.toggle-expand span:not(.icon) { display: none; }
     .theme-toggle {
       display: flex; align-items: center; gap: 8px; width: 100%;
-      background: none; border: none; color: var(--muted);
+      background: none; border: none; color: var(--text-muted);
       padding: 9px 12px; border-radius: 10px; cursor: pointer;
-      font: 500 12px/1 var(--sans); transition: color 0.15s, background 0.15s;
+      font: 500 13px/1 var(--font-sans); transition: color 0.15s, background 0.15s;
       white-space: nowrap; flex-shrink: 0;
     }
-    .theme-toggle:hover { color: var(--text); background: var(--toggle-chip); }
+    .theme-toggle:hover { color: var(--text-main); background: var(--toggle-chip); }
     .theme-toggle.active { color: var(--accent); background: var(--accent-soft); font-weight: 600; }
 
-    .icon {
-      display: inline-block;
-      flex-shrink: 0;
-      line-height: 1;
-      color: inherit;
-      vertical-align: middle;
-      width: 1em;
-      height: 1em;
-      font-size: inherit;
-    }
-    .icon::before {
-      content: "";
-      display: block;
-      width: 100%;
-      height: 100%;
-      background-color: currentColor;
-      -webkit-mask: var(--icon-src) no-repeat center / contain;
-      mask: var(--icon-src) no-repeat center / contain;
-    }
-    .icon--toggle { width: 16px; height: 16px; font-size: 13px; }
-    .icon--md { width: 15px; height: 15px; font-size: 15px; }
-    .icon--sm { width: 12px; height: 12px; font-size: 12px; }
-    .icon--chip { width: 11px; height: 11px; font-size: 11px; color: var(--accent); }
-    .theme-toggle .icon { width: 16px; height: 16px; font-size: 13px; flex-shrink: 0; }
-    .icon--pen-nib { --icon-src: url("/assets/icons/pen-nib.svg"); }
-    .icon--camera { --icon-src: url("/assets/icons/camera.svg"); }
-    .icon--github { --icon-src: url("/assets/icons/github.svg"); }
-    .icon--envelope { --icon-src: url("/assets/icons/envelope.svg"); }
-    .icon--chevron-right { --icon-src: url("/assets/icons/chevron-right.svg"); }
-    .icon--palette { --icon-src: url("/assets/icons/palette.svg"); }
-    .icon--desktop { --icon-src: url("/assets/icons/desktop.svg"); }
-    .icon--sun { --icon-src: url("/assets/icons/sun.svg"); }
-    .icon--moon { --icon-src: url("/assets/icons/moon.svg"); }
-    .icon--house { --icon-src: url("/assets/icons/house.svg"); }
-    .icon--arrow-left { --icon-src: url("/assets/icons/arrow-left.svg"); }
-    .icon--folder-open { --icon-src: url("/assets/icons/folder-open.svg"); }
-
+    /* ==========================================================================
+       全屏布局舞台：主页面中央展示区
+       ========================================================================== */
     .stage {
       min-height: 100dvh;
-      padding: max(32px, env(safe-area-inset-top)) var(--pad) max(10px, env(safe-area-inset-bottom));
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
+      padding: max(40px, env(safe-area-inset-top)) var(--pad-x) max(24px, env(safe-area-inset-bottom));
+      position: relative;
+      width: 100%;
+      max-width: 100vw;
+      overflow-x: hidden;
+    }
+
+    .stage-main {
+      flex: 1;
+      display: flex;
       align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 24px 0;
     }
 
-    .home {
+    /*
+     * PC 端：右边的肖像自然靠右，挪出的空间全变成两端间的舒适留白间隙 (clamp(60px, 6vw, 96px))
+     */
+    .home-grid {
+      display: flex;
+      justify-content: space-between;
+      align-items: stretch;
+      gap: clamp(60px, 6vw, 96px);
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+      animation: riseIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    @keyframes riseIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .left-section {
+      flex: 0 0 440px;
       display: flex;
       flex-direction: column;
-      width: 100%;
-      max-width: 680px;
-      margin: 0 auto;
-      animation: rise 0.4s ease both;
-    }
-    @keyframes rise { from { transform: translateY(10px); } to { transform: none; } }
-
-    .home-top { flex-shrink: 0; }
-
-    .home .top {
-      margin-bottom: clamp(28px, 6vw, 44px);
-    }
-    .avatar {
-      display: inline-block; cursor: pointer; transition: transform 0.25s ease;
-      border-radius: 50%; line-height: 0;
-    }
-    .avatar:hover { transform: scale(1.04); }
-    .av {
-      width: clamp(72px, 16vw, 92px); height: clamp(72px, 16vw, 92px);
-      border-radius: 50%; object-fit: cover; display: block;
-      background: var(--surface-solid);
-      box-shadow: var(--avatar-shadow);
-    }
-    .av.loaded { opacity: 1; }
-
-    .display-name {
-      font-family: var(--display); font-weight: 500; letter-spacing: -0.03em;
-      line-height: 0.92; color: var(--text); font-size: clamp(2.5rem, 10vw, 4.8rem);
-    }
-    .display-name em { font-style: italic; color: var(--accent); }
-
-    .tag {
-      margin-top: clamp(16px, 4vw, 24px);
-      font-size: clamp(0.95rem, 2.8vw, 1.1rem);
-      max-width: 30ch; color: var(--muted); line-height: 1.55;
-    }
-    .tag::before {
-      content: ""; display: block; width: 28px; height: 2px;
-      background: var(--accent); margin-bottom: 12px; opacity: 0.65;
+      justify-content: space-between;
+      min-width: 0;
+      padding-bottom: 8px;
     }
 
-    .links {
-      flex-shrink: 0;
-      margin-top: clamp(32px, 7vw, 48px);
-      padding-bottom: clamp(52px, 8vw, 72px);
+    .display-title {
+      font-family: var(--font-serif);
+      font-size: clamp(3.8rem, 7.8vw, 6.2rem);
+      font-weight: 500;
+      line-height: 1.04;
+      letter-spacing: -0.022em;
+      color: var(--text-main);
+      margin-bottom: 18px;
     }
 
-    .home-bottom {
-      width: 100%;
-      padding-top: clamp(16px, 3.5vw, 22px);
+    .display-title .accent-italic {
+      font-style: italic;
+      color: var(--accent);
+      font-weight: 500;
+      margin: 0 4px;
     }
 
-    /* -- 紧凑 badge 行 -- */
+    .tagline {
+      font-size: clamp(1.15rem, 2.1vw, 1.35rem);
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-bottom: clamp(32px, 5vw, 44px);
+      letter-spacing: -0.01em;
+    }
+
+    /* 4 个胶囊 Badges */
     .badge-row {
-      margin-top: clamp(16px, 3vw, 24px);
       display: flex;
       flex-wrap: wrap;
-      gap: clamp(8px, 1.8vw, 12px);
+      gap: 16px;
+      margin-bottom: 24px;
     }
+
     .badge {
       display: inline-flex;
       align-items: center;
-      gap: 7px;
-      padding: 9px 16px;
+      gap: 8px;
+      padding: 10px 22px;
       border-radius: 999px;
       text-decoration: none;
-      color: var(--text);
-      background: var(--surface-solid);
-      border: 1px solid var(--line);
-      font-size: 0.85rem;
+      color: var(--badge-text);
+      background: var(--badge-bg);
+      border: 1px solid var(--badge-border);
+      font-size: 15px;
       font-weight: 500;
       line-height: 1;
-      transition: color 0.2s, background 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s;
-      white-space: nowrap;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
+
     .badge:hover {
       color: var(--accent);
-      background: var(--accent-soft);
-      border-color: var(--accent-border);
-      transform: scale(1.03);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      background: var(--badge-hover-bg);
+      border-color: var(--badge-hover-border);
+      transform: translateY(-2px);
     }
-    [data-theme="dark"] .badge {
-      color: var(--muted);
-      background: var(--accent-soft);
-      border-color: transparent;
+
+    .contrib-wrapper {
+      width: 100%;
+      max-width: 440px;
+      min-width: 0;
+      margin-top: auto;
+      padding-top: 48px;
     }
-    [data-theme="dark"] .badge:hover {
-      color: var(--accent);
-      background: var(--icon-hover-bg);
-      border-color: var(--accent-border);
-    }
-    .badge-icon { width: 15px; height: 15px; flex-shrink: 0; font-size: 15px; }
-    .badge-email { font-size: 0.78rem; letter-spacing: 0.01em; }
-    .contrib,
-    .contrib .contrib-head,
-    .contrib .sparkline-wrap,
-    .contrib .sparkline,
-    .contrib .sparkline-year-group,
-    .contrib .sparkline-years {
-      border: none; outline: none;
-    }
-    .contrib { margin: 0 0 clamp(16px, 3.5vw, 24px); padding-top: 0; padding-bottom: 0; }
-    .contrib.contrib-loading .sparkline,
-    .contrib.contrib-loading .sparkline-years { visibility: hidden; }
-    .contrib.contrib-loading .sparkline-wrap {
-      position: relative;
-      min-height: calc(var(--spark-h, 36px) + 7px);
-    }
-    .contrib.contrib-loading .sparkline-wrap::before {
-      content: "";
-      position: absolute;
-      left: 0; right: 0; top: 2px;
-      height: var(--spark-h, 36px);
-      border-radius: 2px;
-      background:
-        repeating-linear-gradient(
-          90deg,
-          var(--c0) 0,
-          var(--c0) 2px,
-          transparent 2px,
-          transparent 3px
-        ),
-        linear-gradient(to top, var(--c1) 0%, var(--c0) 55%, transparent 100%);
-      background-size: 3px 100%, 100% 100%;
-      opacity: 0.55;
-      animation: contrib-skeleton-pulse 1.5s ease-in-out infinite;
-    }
-    .contrib.contrib-loading .sparkline-wrap::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: 2px;
-      background: linear-gradient(
-        105deg,
-        transparent 38%,
-        rgba(234, 88, 12, 0.07) 46%,
-        rgba(234, 88, 12, 0.14) 50%,
-        rgba(234, 88, 12, 0.07) 54%,
-        transparent 62%
-      );
-      background-size: 220% 100%;
-      animation: contrib-shimmer 1.7s ease-in-out infinite;
-      pointer-events: none;
-    }
-    [data-theme="dark"] .contrib.contrib-loading .sparkline-wrap::after {
-      background: linear-gradient(
-        105deg,
-        transparent 38%,
-        rgba(251, 146, 60, 0.06) 46%,
-        rgba(251, 146, 60, 0.13) 50%,
-        rgba(251, 146, 60, 0.06) 54%,
-        transparent 62%
-      );
-      background-size: 220% 100%;
-    }
-    @keyframes contrib-skeleton-pulse {
-      0%, 100% { opacity: 0.42; }
-      50% { opacity: 0.72; }
-    }
-    @keyframes contrib-shimmer {
-      0% { background-position: 120% 0; }
-      100% { background-position: -120% 0; }
-    }
+
     .contrib-head {
-      margin-bottom: 10px; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 14px;
     }
-    .sparkline-wrap { position: relative; padding: 2px 0 0; border: none; }
+
+    .contrib-card {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      width: 100%;
+    }
+
+    .sparkline-wrap {
+      position: relative;
+      padding: 2px 0 0;
+      border: none;
+      width: 100%;
+      min-width: 0;
+    }
+
     .sparkline {
-      display: flex; align-items: flex-end; gap: var(--spark-gap);
-      height: var(--spark-h, 36px); width: 100%; position: relative;
+      display: flex;
+      align-items: flex-end;
+      gap: var(--spark-gap, 1px);
+      height: var(--spark-h, 36px);
+      width: 100%;
+      position: relative;
       --spark-h: 36px;
       --spark-w: 2px;
       --spark-gap: 1px;
     }
+
     .sparkline-year-group {
-      display: flex; align-items: flex-end; justify-content: center;
-      gap: var(--spark-gap);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: var(--spark-gap, 1px);
+      flex: 1 1 0%;
       min-width: 0;
     }
+
     .sparkline-years {
-      display: flex; align-items: flex-start; width: 100%; margin-top: 5px; gap: var(--spark-gap, 1px);
+      display: flex;
+      align-items: flex-start;
+      width: 100%;
+      margin-top: 6px;
+      gap: var(--spark-gap, 1px);
     }
+
     .sparkline-year {
       min-width: 0;
-      font-size: 9px; line-height: 1.2; letter-spacing: 0.02em;
-      color: var(--muted); opacity: 0.72;
-      text-align: center; overflow: hidden; white-space: nowrap;
+      font-size: 10px;
+      line-height: 1.2;
+      letter-spacing: 0.02em;
+      color: var(--text-muted);
+      opacity: 0.8;
+      text-align: center;
+      overflow: hidden;
+      white-space: nowrap;
     }
+
     .sparkline-year--hidden,
     .sparkline-years--decimate .sparkline-year--decimate-hide {
       visibility: hidden;
     }
-    .sparkline-years--slant {
-      align-items: flex-end; height: 18px; margin-top: 2px; overflow: hidden;
-    }
-    .sparkline-years--slant .sparkline-year {
-      transform: rotate(-45deg); transform-origin: left bottom;
-      font-size: 8px; letter-spacing: 0; opacity: 0.65;
-    }
-    .sparkline-wrap--scroll {
-      overflow-x: auto; -webkit-overflow-scrolling: touch;
-      scrollbar-width: thin; scrollbar-color: var(--line) transparent;
-    }
-    .sparkline-wrap--scroll .sparkline,
-    .sparkline-wrap--scroll .sparkline-years {
-      min-width: 520px;
-    }
+
     .spark {
-      flex: 0 0 var(--spark-w, 2px);
-      width: var(--spark-w, 2px);
-      min-width: var(--spark-w, 2px);
-      max-width: var(--spark-w, 2px);
-      border-radius: 1px 1px 0 0; background: var(--c0); border: none;
+      flex: 1 1 2px;
+      min-width: 1px;
+      max-width: 4px;
+      border-radius: 1px 1px 0 0;
+      background: var(--c0);
+      border: none;
       transition: height 0.3s ease, background 0.2s, opacity 0.2s;
-      cursor: default; touch-action: manipulation;
+      cursor: default;
+      touch-action: manipulation;
     }
-    .spark:focus-visible { outline: 1px solid var(--accent-border); outline-offset: 1px; }
+
+    .spark:focus-visible {
+      outline: 1px solid var(--accent-border);
+      outline-offset: 1px;
+    }
+
     .spark-tip {
-      position: absolute; left: 50%; bottom: calc(100% + 6px);
+      position: absolute;
+      left: 50%;
+      bottom: calc(100% + 6px);
       transform: translateX(-50%) translateY(4px);
-      padding: 5px 10px; border-radius: 8px; font-size: 11px; font-weight: 500;
-      white-space: nowrap; pointer-events: none; opacity: 0;
-      background: var(--toggle-bg); color: var(--text);
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 500;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      background: var(--toggle-bg);
+      color: var(--text-main);
       border: 1px solid var(--toggle-border);
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
       transition: opacity 0.2s ease, transform 0.2s ease;
       z-index: 10;
     }
-    .spark-tip.visible { opacity: 1; transform: translateX(-50%) translateY(0); }
-    .spark[data-l="0"] { height: 1px !important; opacity: 0.35; }
+
+    .spark-tip.visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .spark[data-l="0"] { height: 2px !important; opacity: 0.35; }
     .spark[data-l="1"] { background: var(--c1); }
     .spark[data-l="2"] { background: var(--c2); }
     .spark[data-l="3"] { background: var(--c3); }
     .spark[data-l="4"] { background: var(--c4); }
+
+    /* ==========================================================================
+       右侧：3D 人像
+       1) PC桌面版大小精确恢复并克制优化（max-width: 500px, max-height: 680px，绝不会占满全屏高度）；
+       2) 肖像自然向右偏移置放，让空间充当其与左侧内容的间隙；
+       3) 仅最后约 1/4 ~ 1/3 (75%~99%) 处向下平润虚进。
+       ========================================================================== */
+    .right-section {
+      display: flex;
+      justify-content: flex-end; /* PC 肖像朝向右侧停靠 */
+      align-items: flex-end;
+      position: relative;
+      flex: 1 1 auto;
+    }
+
+    .avatar-3d-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 500px; /* 精巧收复此前最完美优雅的杂志构图上限 */
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .avatar-3d-img {
+      width: 100%;
+      height: auto;
+      max-height: 680px; /* 严格锁顶在 680px，彻底告别“快有屏幕那么高” */
+      object-fit: contain;
+      display: block;
+      border: none !important;
+      outline: none !important;
+      background: transparent !important;
+      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 99%);
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 99%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .avatar-3d-wrapper:hover .avatar-3d-img {
+      transform: translateY(-5px);
+    }
+
+    /* ==========================================================================
+       页脚 Colophon
+       ========================================================================== */
     .colophon {
-      padding-top: clamp(14px, 3vw, 20px);
-      border-top: 1px solid var(--line);
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding-top: 22px;
+      border-top: 1px solid var(--line-color);
     }
+
     .colophon-row {
-      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
-      gap: 8px 16px;
-      font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
     }
+
     .colophon-tag {
-      display: inline-flex; align-items: center; gap: 5px;
+      display: inline-flex; align-items: center; gap: 6px;
     }
+
     .colophon-mark {
-      width: 3px; height: 12px; flex-shrink: 0;
-      background: var(--accent); border-radius: 1px;
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 13px;
     }
-    .colophon-row b { color: var(--accent); font-weight: 600; }
-    .colophon-url { letter-spacing: 0.08em; }
-    .colophon-host { color: var(--accent); font-weight: 600; }
-    .colophon-tld { color: var(--muted); opacity: 0.5; font-weight: 400; }
+
+    .colophon-url { color: var(--text-muted); }
+    .colophon-host { color: var(--accent); font-weight: 700; }
+    .colophon-tld { color: var(--text-muted); opacity: 0.75; }
+
     .colophon-copy {
-      margin-top: 12px; font-size: 11px; color: var(--muted); opacity: 0.7; letter-spacing: 0.04em;
+      margin-top: 8px; font-size: 11px; color: var(--text-muted); opacity: 0.75;
     }
 
-    .footer { display: none; }
-
-    .toast {
-      position: fixed; left: 50%; bottom: max(24px, env(safe-area-inset-bottom));
-      transform: translateX(-50%) translateY(20px); opacity: 0; pointer-events: none;
-      padding: 10px 18px; border-radius: 999px; font-size: 13px; font-weight: 500;
-      background: var(--toggle-bg); border: 1px solid var(--toggle-border);
-      color: var(--text); backdrop-filter: blur(12px); z-index: 200;
-      transition: opacity 0.3s, transform 0.3s;
+    /* ==========================================================================
+       移动端响应式处理（肖像为原来 0.75 倍，240px 上限，手机上精致轻灵）
+       ========================================================================== */
+    @media (max-width: 860px) {
+      .home-grid {
+        flex-direction: column;
+        gap: 24px;
+        text-align: center;
+        width: 100%;
+      }
+      .right-section {
+        order: -1;
+        margin-bottom: 4px;
+        justify-content: center;
+      }
+      .left-section {
+        order: 1;
+        align-items: center;
+        width: 100%;
+        flex: 1 1 auto;
+      }
+      .badge-row {
+        justify-content: center;
+        margin-bottom: 48px;
+      }
+      .contrib-wrapper {
+        width: 100%;
+        max-width: 100%;
+        margin-top: 16px;
+        padding-top: 0;
+      }
+      .colophon {
+        width: 100%;
+        max-width: 100%;
+        text-align: center;
+      }
+      .colophon-row {
+        justify-content: center;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+      .colophon-copy {
+        text-align: center;
+        margin: 10px auto 0;
+      }
+      .avatar-3d-wrapper {
+        max-width: 240px;
+        margin: 0 auto;
+        justify-content: center;
+      }
     }
-    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-    @media (max-width: 480px) {
-      .sparkline { --spark-h: 38px; --spark-gap: 1px; }
-      .sparkline-year { font-size: 8px; letter-spacing: 0; }
-      .sparkline-years--adaptive .sparkline-year--mid { font-size: 7px; letter-spacing: -0.02em; }
-      .contrib-head { font-size: 9px; margin-bottom: 8px; }
-    }
     @media (prefers-reduced-motion: reduce) {
-      .home, .cursor-glow, .avatar { animation: none !important; transition: none !important; }
-      .contrib.contrib-loading .sparkline-wrap::before,
-      .contrib.contrib-loading .sparkline-wrap::after { animation: none !important; opacity: 0.55; }
+      .home-grid, .avatar-3d-img { animation: none !important; transition: none !important; }
     }
   </style>
 </head>
-<body data-glow="on">
-  <div class="bg" aria-hidden="true"></div>
-  <div class="mesh" aria-hidden="true"></div>
-  <div class="grain" aria-hidden="true"></div>
-  <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+<body>
+  <div class="bg-mesh" aria-hidden="true"></div>
 
+  <!-- 顶部原生主题选择组件：支持折叠/展开、自动、亮色、暗色 -->
   <div class="theme-toggle-container collapsed">
     <button type="button" class="theme-toggle toggle-expand" aria-label="主题设置">
       <span class="icon icon--toggle icon--palette" aria-hidden="true"></span>
@@ -532,72 +620,83 @@
     </button>
   </div>
 
+  <!-- 中心界面层 -->
   <main class="stage">
-    <article class="home">
-      <div class="home-top">
-        <header class="top">
-          <div class="avatar" id="avatar" tabindex="0" role="button" aria-label="头像">
-            <img class="av" id="avatar-img"
-              src="/imissyou/assets/avatar-light.webp"
-              data-light="/imissyou/assets/avatar-light.webp"
-              data-dark="/imissyou/assets/avatar-dark.webp"
-              alt="JI,XIAOYONG" width="92" height="92"
-              fetchpriority="high" decoding="async" loading="eager" />
+    <div class="stage-main">
+      <div class="home-grid">
+
+        <!-- 左侧文本展示 -->
+        <div class="left-section">
+          <div>
+            <h1 class="display-title">
+              JI, <span class="accent-italic">Xiao</span>Yong
+            </h1>
+            <p class="tagline">Stay hungry. Stay foolish.</p>
+
+            <!-- 4 个胶囊 Badges -->
+            <nav class="badge-row" aria-label="站点导航">
+              <a class="badge" href="https://jixiaoyong.github.io/blog/" target="_blank" rel="noopener">
+                <span class="icon icon--md icon--pen-nib" aria-hidden="true"></span>
+                <span>Blog</span>
+              </a>
+              <a class="badge" href="https://xiaoyong.pages.dev/" target="_blank" rel="noopener">
+                <span class="icon icon--md icon--camera" aria-hidden="true"></span>
+                <span>Moments</span>
+              </a>
+              <a class="badge" href="https://github.com/jixiaoyong" target="_blank" rel="noopener">
+                <span class="icon icon--md icon--github" aria-hidden="true"></span>
+                <span>GitHub</span>
+              </a>
+              <a class="badge" href="mailto:jixiaoyong1995@gmail.com">
+                <span class="icon icon--md icon--envelope" aria-hidden="true"></span>
+                <span>Email</span>
+              </a>
+            </nav>
           </div>
-          <script>
-            (function () {
-              var img = document.getElementById("avatar-img");
-              if (img && document.documentElement.getAttribute("data-theme") === "dark") {
-                img.src = img.dataset.dark;
-              }
-            })();
-          </script>
-        </header>
-        <h1 class="display-name">JI,<br /><em>Xiao</em><br />Yong</h1>
-        <p class="tag">Stay hungry. Stay foolish.</p>
-      </div>
-      <nav class="links" aria-label="站点导航">
-        <div class="badge-row">
-          <a class="badge" href="https://jixiaoyong.github.io/blog/" target="_blank" rel="noopener">
-            <span class="badge-icon icon icon--md icon--pen-nib" aria-hidden="true"></span>
-            <span>Blog</span>
-          </a>
-          <a class="badge" href="https://xiaoyong.pages.dev/" target="_blank" rel="noopener">
-            <span class="badge-icon icon icon--md icon--camera" aria-hidden="true"></span>
-            <span>Moments</span>
-          </a>
-          <a class="badge" href="https://github.com/jixiaoyong" target="_blank" rel="noopener">
-            <span class="badge-icon icon icon--md icon--github" aria-hidden="true"></span>
-            <span>GitHub</span>
-          </a>
-          <a class="badge" href="mailto:jixiaoyong1995@gmail.com">
-            <span class="badge-icon icon icon--md icon--envelope" aria-hidden="true"></span>
-            <span class="badge-email">jixiaoyong1995@gmail.com</span>
-          </a>
+
+          <!-- GitHub Contributions 区域：margin-top: auto 沉稳压底，与右侧3D人像根部水平线100%齐平 -->
+          <div class="contrib-wrapper">
+            <div class="contrib-head"><span>GITHUB CONTRIBUTIONS</span></div>
+            <div class="contrib-card">
+              <section class="contrib" id="github-contrib" aria-label="GitHub contributions">
+                <div class="sparkline-wrap">
+                  <div class="sparkline" id="sparkline"></div>
+                </div>
+              </section>
+            </div>
+          </div>
         </div>
-      </nav>
-      <div class="home-bottom">
-        <section class="contrib" id="github-contrib" aria-label="GitHub contributions">
-          <div class="contrib-head"><span>GitHub Contributions</span></div>
-          <div class="sparkline-wrap">
-            <div class="sparkline" id="sparkline"></div>
+
+        <!-- 右侧 3D 肖像区 -->
+        <div class="right-section">
+          <div class="avatar-3d-wrapper">
+            <img class="avatar-3d-img" id="avatar-img"
+              src="/imissyou/assets/avatar-light-transparent.webp?v=16"
+              alt="JI,XIAOYONG 3D Avatar" width="840" height="990" fetchpriority="high" />
           </div>
-        </section>
-        <footer class="colophon" aria-label="站点信息">
-          <div class="colophon-row">
-            <span class="colophon-tag"><span class="colophon-mark" aria-hidden="true"></span>Writer · Developer</span>
-            <span class="colophon-url"><span class="colophon-host">jixiaoyong</span><span class="colophon-tld">.github.io</span></span>
-          </div>
-          <p class="colophon-copy">&copy; 2016–<span id="current-year"></span> JI,XIAOYONG</p>
-          <script>document.getElementById("current-year").textContent = new Date().getFullYear();</script>
-        </footer>
+        </div>
+
       </div>
-    </article>
+    </div>
+
+    <!-- 底部页脚 Colophon -->
+    <footer class="colophon" aria-label="站点信息">
+      <div class="colophon-row">
+        <span class="colophon-tag">
+          <span class="colophon-mark" aria-hidden="true">|</span>
+          WRITER · DEVELOPER
+        </span>
+        <span class="colophon-url">
+          <span class="colophon-host">JIXIAOYONG</span><span class="colophon-tld">.GITHUB.IO</span>
+        </span>
+      </div>
+      <p class="colophon-copy">&copy; 2016–<span id="current-year"></span> JI,XIAOYONG</p>
+      <script>document.getElementById("current-year").textContent = new Date().getFullYear();</script>
+    </footer>
   </main>
 
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-  <script defer src="js/github-contrib.js"></script>
-  <script defer src="js/main.js"></script>
+  <!-- 加载真正的 github-contrib 与原生切换主题执行逻辑 -->
+  <script defer src="js/github-contrib.js?v=16"></script>
+  <script defer src="js/main.js?v=16"></script>
 </body>
 </html>

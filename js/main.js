@@ -27,14 +27,17 @@ function resolveTheme(theme) {
   return theme;
 }
 
-const AVATAR_LIGHT = "/imissyou/assets/avatar-light.webp";
-const AVATAR_DARK = "/imissyou/assets/avatar-dark.webp";
+const AVATAR_LIGHT = "/imissyou/assets/avatar-light-transparent.webp";
+const AVATAR_DARK = "/imissyou/assets/avatar-light-transparent.webp";
 
 function updateAvatar() {
   const img = document.getElementById("avatar-img");
   if (!img) return;
-  const src = html.getAttribute("data-theme") === "dark" ? AVATAR_DARK : AVATAR_LIGHT;
-  if (img.getAttribute("src") !== src) img.src = src;
+  // 保持 HTML 中自身带有 ?v=xxx 缓存控制号的真实生效路径不变，避免重新加载旧缓存
+  const currentSrc = img.getAttribute("src") || "";
+  if (!currentSrc.includes("avatar-light-transparent.webp")) {
+    img.src = html.getAttribute("data-theme") === "dark" ? AVATAR_DARK : AVATAR_LIGHT;
+  }
 }
 
 function applyTheme(theme) {
