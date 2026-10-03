@@ -1,5 +1,23 @@
 # Changelog
 
+## [2026-10-03 16:47:33] Deploy
+
+**Scope**: imissyou-system
+**Authors**: dependabot[bot], JI,XIAOYONG
+
+## imissyou-system
+| Type | Description | Author |
+|------|-------------|--------|
+| build | bump markdown-it from 14.2.0 to 14.3.2 | @dependabot[bot] |
+
+---
+Auto deploy by GitHub Action
+Source: blog_source_code@089dc7e
+Date: 2026-10-03 16:47:33
+
+---
+
+
 ## [2026-06-24 10:12:36] Deploy
 
 **Scope**: blog,imissyou,editor
