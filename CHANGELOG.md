@@ -1,5 +1,28 @@
 # Changelog
 
+## [2026-10-03 16:47:47] Deploy
+
+**Scope**: editor,imissyou-system
+**Authors**: dependabot[bot]
+
+## editor
+| Type | Description | Author |
+|------|-------------|--------|
+| build | bump react-router and react-router-dom | @dependabot[bot] |
+
+## imissyou-system
+| Type | Description | Author |
+|------|-------------|--------|
+| build | bump react-router and react-router-dom | @dependabot[bot] |
+
+---
+Auto deploy by GitHub Action
+Source: blog_source_code@ba11dbe
+Date: 2026-10-03 16:47:47
+
+---
+
+
 ## [2026-10-03 16:47:33] Deploy
 
 **Scope**: imissyou-system
