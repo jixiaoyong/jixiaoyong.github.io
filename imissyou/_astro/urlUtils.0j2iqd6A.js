@@ -1,0 +1,1 @@
+import"./blog.config.BZfHxsp8.js";var e=()=>{let e=`/imissyou`;return e.endsWith(`/`)?e:`${e}/`},t=t=>{if(!t)return;if(t.startsWith(`http`)||t.startsWith(`//`))return t;let n=e();return t.startsWith(`/`)?n===`/`?t:`${n}${t.substring(1)}`:`${n}${t}`};export{t as n,e as t};

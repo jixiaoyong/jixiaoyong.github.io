@@ -1,5 +1,23 @@
 # Changelog
 
+## [2026-10-03 17:12:55] Deploy
+
+**Scope**: imissyou-system
+**Authors**: dependabot[bot]
+
+## imissyou-system
+| Type | Description | Author |
+|------|-------------|--------|
+| build | bump astro from 6.4.8 to 7.2.8 | @dependabot[bot] |
+
+---
+Auto deploy by GitHub Action
+Source: blog_source_code@3ab0a21
+Date: 2026-10-03 17:12:55
+
+---
+
+
 ## [2026-10-03 16:47:47] Deploy
 
 **Scope**: editor,imissyou-system
