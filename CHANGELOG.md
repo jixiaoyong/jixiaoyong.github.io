@@ -1,5 +1,23 @@
 # Changelog
 
+## [2026-10-05 14:17:28] Deploy
+
+**Scope**: imissyou-system
+**Authors**: jixiaoyong, dependabot[bot]
+
+## imissyou-system
+| Type | Description | Author |
+|------|-------------|--------|
+| fix | restore transparent avatar webp assets to imissyou public dir | @jixiaoyong |
+
+---
+Auto deploy by GitHub Action
+Source: blog_source_code@884d4df
+Date: 2026-10-05 14:17:28
+
+---
+
+
 ## [2026-10-03 17:12:55] Deploy
 
 **Scope**: imissyou-system
