@@ -1,5 +1,28 @@
 # Changelog
 
+## [2026-10-10 23:31:25] Deploy
+
+**Scope**: blog-system,imissyou-system
+**Authors**: jixiaoyong
+
+## blog-system
+| Type | Description | Author |
+|------|-------------|--------|
+| chore | 优化依赖安全漏洞并清理冗余依赖 | @jixiaoyong |
+
+## imissyou-system
+| Type | Description | Author |
+|------|-------------|--------|
+| chore | 优化依赖安全漏洞并清理冗余依赖 | @jixiaoyong |
+
+---
+Auto deploy by GitHub Action
+Source: blog_source_code@5332c34
+Date: 2026-10-10 23:31:25
+
+---
+
+
 ## [2026-10-10 19:02:17] Deploy
 
 **Scope**: imissyou-system
