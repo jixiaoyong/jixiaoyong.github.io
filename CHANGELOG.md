@@ -1,5 +1,23 @@
 # Changelog
 
+## [2026-10-10 23:38:14] Deploy
+
+**Scope**: editor
+**Authors**: jixiaoyong
+
+## editor
+| Type | Description | Author |
+|------|-------------|--------|
+| fix | 修复 shortcode 解码单测并优化 editor 代码高亮包体积 | @jixiaoyong |
+
+---
+Auto deploy by GitHub Action
+Source: blog_source_code@948dc5d
+Date: 2026-10-10 23:38:14
+
+---
+
+
 ## [2026-10-10 23:31:25] Deploy
 
 **Scope**: blog-system,imissyou-system
