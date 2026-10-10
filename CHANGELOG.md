@@ -1,5 +1,23 @@
 # Changelog
 
+## [2026-10-10 19:02:17] Deploy
+
+**Scope**: imissyou-system
+**Authors**: JI,XIAOYONG
+
+## imissyou-system
+| Type | Description | Author |
+|------|-------------|--------|
+| other | 新增长沙和曲阜旅行足迹 | @JI,XIAOYONG |
+
+---
+Auto deploy by GitHub Action
+Source: blog_source_code@85ea404
+Date: 2026-10-10 19:02:17
+
+---
+
+
 ## [2026-10-05 14:17:28] Deploy
 
 **Scope**: imissyou-system
